@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Chat with Admin | Business Store</title>
+
+<!-- CHAT JAVASCRIPT -->
+<script
+    type="module"
+    src="../js/chat.js"
+></script>
+
+<!-- FONT AWESOME -->
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+>
+
+<style>
+
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+
+    /* =====================================================
+       VARIABLES
+    ====================================================== */
+
+    :root {
+
+        --bg: #070a10;
+        --panel: #0d111a;
+        --panel-2: #111722;
+
+        --border: rgba(255,255,255,0.08);
+
+        --text: #f5f7fb;
+        --muted: #8e98aa;
+
+        --cyan: #00f2fe;
+        --purple: #7c3aed;
+
+        --danger: #ff5d73;
+        --success: #42e695;
+
+    }
+
+
+    /* =====================================================
+       BODY
+    ====================================================== */
+
+    body {
+
+        min-height: 100vh;
+
+        background:
+
+            radial-gradient(
+                circle at 20% 10%,
+                rgba(0,242,254,0.08),
+                transparent 30%
+            ),
+
+            radial-gradient(
+                circle at 85% 85%,
+                rgba(124,58,237,0.10),
+                transparent 32%
+            ),
+
+            var(--bg);
+
+        color: var(--text);
+
+        font-family:
+            Inter,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+
+    }
+
+
+    button,
+    input,
+    textarea {
+
+        font: inherit;
+
+    }
+
+
+    button {
+
+        cursor: pointer;
+
+    }
+
+
+    /* =====================================================
+       PAGE
+    ====================================================== */
+
+    .page {
+
+        min-height: 100vh;
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+
+    /* =====================================================
+       TOPBAR
+    ====================================================== */
+
+    .topbar {
+
+        height: 76px;
+
+        padding: 0 28px;
+
+        border-bottom:
+            1px solid var(--border);
+
+        background:
+            rgba(7,10,16,0.88);
+
+        backdrop-filter:
+            blur(18px);
+
+        -webkit-backdrop-filter:
+            blur(18px);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        position: sticky;
+
+        top: 0;
+
+        z-index: 20;
+
+    }
+
+
+    /* =====================================================
+       BRAND
+    ====================================================== */
+
+    .brand {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 12px;
+
+        min-width: 0;
+
+    }
+
+
+    .brand-icon {
+
+        width: 42px;
+        height: 42px;
+
+        border-radius: 13px;
+
+        display: grid;
+
+        place-items: center;
+
+        color: #061014;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--cyan),
+                var(--purple)
+            );
+
+        box-shadow:
+            0 0 22px
+            rgba(0,242,254,0.18);
+
+        flex-shrink: 0;
+
+    }
+
+
+    .brand-text {
+
+        min-width: 0;
+
+    }
+
+
+    .brand-title {
+
+        font-size: 15px;
+
+        font-weight: 800;
+
+        letter-spacing: 0.5px;
+
+    }
+
+
+    .brand-subtitle {
+
+        color: var(--muted);
+
+        font-size: 11px;
+
+        margin-top: 2px;
+
+    }
+
+
+    /* =====================================================
+       BACK TO LOGIN
+    ====================================================== */
+
+    .back-btn {
+
+        border:
+            1px solid var(--border);
+
+        background:
+            rgba(255,255,255,0.04);
+
+        color: var(--text);
+
+        padding: 10px 15px;
+
+        border-radius: 12px;
+
+        display: inline-flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        text-decoration: none;
+
+        transition: 0.2s ease;
+
+    }
+
+
+    .back-btn:hover {
+
+        border-color:
+            rgba(0,242,254,0.4);
+
+        background:
+            rgba(0,242,254,0.07);
+
+        color: var(--cyan);
+
+        transform:
+            translateY(-1px);
+
+    }
+
+
+    /* =====================================================
+       MAIN
+    ====================================================== */
+
+    .main {
+
+        width:
+            min(
+                1100px,
+                calc(100% - 28px)
+            );
+
+        margin: 28px auto;
+
+        flex: 1;
+
+        display: flex;
+
+        flex-direction: column;
+
+    }
+
+
+    /* =====================================================
+       CHAT SHELL
+    ====================================================== */
+
+    .chat-shell {
+
+        min-height:
+            calc(100vh - 132px);
+
+        display: flex;
+
+        flex-direction: column;
+
+        overflow: hidden;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 24px;
+
+        background:
+
+            linear-gradient(
+                145deg,
+                rgba(17,23,34,0.96),
+                rgba(8,12,19,0.97)
+            );
+
+        box-shadow:
+            0 30px 80px
+            rgba(0,0,0,0.35);
+
+    }
+
+
+    /* =====================================================
+       CHAT HEADER
+    ====================================================== */
+
+    .chat-header {
+
+        min-height: 88px;
+
+        padding: 18px 22px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        border-bottom:
+            1px solid var(--border);
+
+        background:
+            rgba(255,255,255,0.025);
+
+    }
+
+
+    .admin-info {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 13px;
+
+        min-width: 0;
+
+    }
+
+
+    .admin-avatar {
+
+        width: 48px;
+        height: 48px;
+
+        border-radius: 50%;
+
+        display: grid;
+
+        place-items: center;
+
+        flex-shrink: 0;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,0.20),
+                rgba(124,58,237,0.28)
+            );
+
+        border:
+            1px solid
+            rgba(0,242,254,0.22);
+
+        color: var(--cyan);
+
+        font-size: 19px;
+
+    }
+
+
+    .admin-name {
+
+        font-size: 16px;
+
+        font-weight: 800;
+
+    }
+
+
+    .admin-status {
+
+        margin-top: 4px;
+
+        color: var(--muted);
+
+        font-size: 12px;
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 6px;
+
+    }
+
+
+    .status-dot {
+
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--success);
+
+        box-shadow:
+            0 0 10px
+            rgba(66,230,149,0.5);
+
+    }
+
+
+    .header-badge {
+
+        color: var(--muted);
+
+        font-size: 11px;
+
+        padding: 8px 11px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 999px;
+
+        white-space: nowrap;
+
+    }
+
+
+    /* =====================================================
+       ERROR BOX
+    ====================================================== */
+
+    .error-box {
+
+        display: none;
+
+        margin: 10px 15px 0;
+
+        padding: 10px 12px;
+
+        border-radius: 10px;
+
+        color: #ffb7c2;
+
+        background:
+            rgba(255,93,115,0.08);
+
+        border:
+            1px solid
+            rgba(255,93,115,0.16);
+
+        font-size: 12px;
+
+    }
+
+
+    .error-box.show {
+
+        display: block;
+
+    }
+
+
+    /* =====================================================
+       MESSAGES
+    ====================================================== */
+
+    .messages {
+
+        flex: 1;
+
+        min-height: 350px;
+
+        padding: 24px;
+
+        overflow-y: auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 14px;
+
+        scroll-behavior: smooth;
+
+    }
+
+
+    .messages::-webkit-scrollbar {
+
+        width: 7px;
+
+    }
+
+
+    .messages::-webkit-scrollbar-track {
+
+        background: transparent;
+
+    }
+
+
+    .messages::-webkit-scrollbar-thumb {
+
+        background:
+            rgba(255,255,255,0.09);
+
+        border-radius: 20px;
+
+    }
+
+
+    /* =====================================================
+       WELCOME
+    ====================================================== */
+
+    .welcome {
+
+        width:
+            min(500px,100%);
+
+        margin: auto;
+
+        text-align: center;
+
+        padding: 35px 20px;
+
+    }
+
+
+    .welcome-icon {
+
+        width: 68px;
+        height: 68px;
+
+        margin: 0 auto 16px;
+
+        border-radius: 22px;
+
+        display: grid;
+
+        place-items: center;
+
+        font-size: 25px;
+
+        color: var(--cyan);
+
+        border:
+            1px solid
+            rgba(0,242,254,0.15);
+
+        background:
+            rgba(0,242,254,0.06);
+
+    }
+
+
+    .welcome h2 {
+
+        font-size: 22px;
+
+        margin-bottom: 8px;
+
+    }
+
+
+    .welcome p {
+
+        color: var(--muted);
+
+        line-height: 1.7;
+
+        font-size: 13px;
+
+    }
+
+
+    /* =====================================================
+       MESSAGE ROW
+    ====================================================== */
+
+    .message-row {
+
+        width: 100%;
+
+        display: flex;
+
+    }
+
+
+    .message-row.customer {
+
+        justify-content: flex-end;
+
+    }
+
+
+    .message-row.admin {
+
+        justify-content: flex-start;
+
+    }
+
+
+    .message-content {
+
+        max-width:
+            min(72%,650px);
+
+    }
+
+
+    /* =====================================================
+       BUBBLES
+    ====================================================== */
+
+    .bubble {
+
+        padding: 11px 14px;
+
+        border-radius: 17px;
+
+        font-size: 14px;
+
+        line-height: 1.55;
+
+        overflow-wrap: anywhere;
+
+    }
+
+
+    .customer .bubble {
+
+        background:
+
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,0.18),
+                rgba(124,58,237,0.24)
+            );
+
+        border:
+            1px solid
+            rgba(0,242,254,0.14);
+
+        border-bottom-right-radius: 5px;
+
+    }
+
+
+    .admin .bubble {
+
+        background:
+            rgba(255,255,255,0.065);
+
+        border:
+            1px solid var(--border);
+
+        border-bottom-left-radius: 5px;
+
+    }
+
+
+    .message-time {
+
+        margin-top: 5px;
+
+        color: #697386;
+
+        font-size: 10px;
+
+    }
+
+
+    .customer .message-time {
+
+        text-align: right;
+
+    }
+
+
+    /* =====================================================
+       SENT IMAGE
+       BIGGER + RESPONSIVE
+    ====================================================== */
+
+    .attachment {
+
+        margin-top: 10px;
+
+        display: block;
+
+        width: auto;
+
+        max-width: 520px;
+
+        max-height: 500px;
+
+        min-width: 180px;
+
+        object-fit: contain;
+
+        border-radius: 16px;
+
+        border:
+            1px solid var(--border);
+
+        cursor: pointer;
+
+        background:
+            rgba(0,0,0,0.25);
+
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+
+    }
+
+
+    .attachment:hover {
+
+        transform:
+            translateY(-2px);
+
+        border-color:
+            rgba(0,242,254,0.4);
+
+        box-shadow:
+            0 12px 35px
+            rgba(0,0,0,0.35);
+
+    }
+
+
+    .image-loading {
+
+        color: var(--muted);
+
+        font-size: 12px;
+
+        padding: 10px 0;
+
+    }
+
+
+    /* =====================================================
+       COMPOSER AREA
+    ====================================================== */
+
+    .composer-area {
+
+        border-top:
+            1px solid var(--border);
+
+        background:
+            rgba(5,8,13,0.65);
+
+        padding: 15px;
+
+    }
+
+
+    /* =====================================================
+       ATTACHMENT PREVIEW
+    ====================================================== */
+
+    .attachment-preview {
+
+        display: none;
+
+        margin-bottom: 10px;
+
+        padding: 8px;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 14px;
+
+        background:
+            rgba(255,255,255,0.035);
+
+        align-items: center;
+
+        gap: 10px;
+
+    }
+
+
+    .attachment-preview.show {
+
+        display: flex;
+
+    }
+
+
+    .attachment-preview-image {
+
+        width: 80px;
+        height: 80px;
+
+        object-fit: cover;
+
+        border-radius: 10px;
+
+        border:
+            1px solid var(--border);
+
+    }
+
+
+    .attachment-preview-info {
+
+        flex: 1;
+
+        min-width: 0;
+
+    }
+
+
+    .attachment-preview-name {
+
+        font-size: 12px;
+
+        font-weight: 700;
+
+        white-space: nowrap;
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+    }
+
+
+    .attachment-preview-size {
+
+        color: var(--muted);
+
+        font-size: 10px;
+
+        margin-top: 3px;
+
+    }
+
+
+    .remove-attachment {
+
+        width: 38px;
+        height: 38px;
+
+        border:
+            1px solid
+            rgba(255,93,115,0.15);
+
+        background:
+            rgba(255,93,115,0.06);
+
+        color: var(--danger);
+
+        border-radius: 10px;
+
+    }
+
+
+    /* =====================================================
+       COMPOSER
+    ====================================================== */
+
+    .composer {
+
+        display: flex;
+
+        align-items: flex-end;
+
+        gap: 9px;
+
+    }
+
+
+    .attach-button {
+
+        width: 46px;
+        height: 46px;
+
+        flex-shrink: 0;
+
+        border:
+            1px solid var(--border);
+
+        border-radius: 13px;
+
+        display: grid;
+
+        place-items: center;
+
+        color: var(--muted);
+
+        background:
+            rgba(255,255,255,0.04);
+
+        cursor: pointer;
+
+        transition: 0.2s ease;
+
+    }
+
+
+    .attach-button:hover {
+
+        color: var(--cyan);
+
+        border-color:
+            rgba(0,242,254,0.35);
+
+        background:
+            rgba(0,242,254,0.05);
+
+    }
+
+
+    #attachmentInput {
+
+        display: none;
+
+    }
+
+
+    /* =====================================================
+       MESSAGE INPUT
+    ====================================================== */
+
+    .message-input {
+
+        flex: 1;
+
+        min-width: 0;
+
+        min-height: 46px;
+
+        max-height: 130px;
+
+        resize: none;
+
+        border:
+            1px solid var(--border);
+
+        outline: none;
+
+        border-radius: 13px;
+
+        background:
+            rgba(255,255,255,0.04);
+
+        color: var(--text);
+
+        padding: 13px 14px;
+
+    }
+
+
+    .message-input::placeholder {
+
+        color: #687285;
+
+    }
+
+
+    .message-input:focus {
+
+        border-color:
+            rgba(0,242,254,0.4);
+
+        box-shadow:
+            0 0 0 3px
+            rgba(0,242,254,0.05);
+
+    }
+
+
+    /* =====================================================
+       SEND BUTTON
+    ====================================================== */
+
+    .send-btn {
+
+        width: 46px;
+        height: 46px;
+
+        flex-shrink: 0;
+
+        border: 0;
+
+        border-radius: 13px;
+
+        color: #061014;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                var(--cyan),
+                #8b5cf6
+            );
+
+        transition: 0.2s ease;
+
+    }
+
+
+    .send-btn:hover {
+
+        transform:
+            translateY(-1px);
+
+    }
+
+
+    .send-btn:disabled {
+
+        opacity: 0.45;
+
+        cursor: not-allowed;
+
+        transform: none;
+
+    }
+
+
+    /* =====================================================
+       COMPOSER NOTE
+    ====================================================== */
+
+    .composer-note {
+
+        color: #626d80;
+
+        font-size: 10px;
+
+        margin: 8px 2px 0;
+
+    }
+
+
+    /* =====================================================
+       LOADING
+    ====================================================== */
+
+    .center-state {
+
+        margin: auto;
+
+        text-align: center;
+
+        color: var(--muted);
+
+        padding: 30px;
+
+    }
+
+
+    .loader {
+
+        width: 30px;
+        height: 30px;
+
+        margin: 0 auto 12px;
+
+        border-radius: 50%;
+
+        border:
+            3px solid
+            rgba(255,255,255,0.08);
+
+        border-top-color:
+            var(--cyan);
+
+        animation:
+            spin 0.8s linear infinite;
+
+    }
+
+
+    @keyframes spin {
+
+        to {
+
+            transform:
+                rotate(360deg);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width:700px) {
+
+        .topbar {
+
+            height: 68px;
+
+            padding: 0 14px;
+
+        }
+
+
+        .brand-icon {
+
+            width: 38px;
+            height: 38px;
+
+        }
+
+
+        .brand-subtitle {
+
+            display: none;
+
+        }
+
+
+        .back-btn {
+
+            padding: 9px 11px;
+
+            font-size: 12px;
+
+        }
+
+
+        .main {
+
+            width: 100%;
+
+            margin: 0;
+
+        }
+
+
+        .chat-shell {
+
+            min-height:
+                calc(100vh - 68px);
+
+            border-radius: 0;
+
+            border-left: 0;
+
+            border-right: 0;
+
+        }
+
+
+        .chat-header {
+
+            min-height: 76px;
+
+            padding: 14px;
+
+        }
+
+
+        .header-badge {
+
+            display: none;
+
+        }
+
+
+        .messages {
+
+            padding: 16px 12px;
+
+        }
+
+
+        .message-content {
+
+            max-width: 88%;
+
+        }
+
+
+        .attachment {
+
+            max-width: 100%;
+
+            max-height: 430px;
+
+            min-width: 0;
+
+        }
+
+
+        .composer-area {
+
+            padding: 10px;
+
+        }
+
+
+        .composer-note {
+
+            padding-left: 2px;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       VERY SMALL MOBILE
+    ====================================================== */
+
+    @media (max-width:420px) {
+
+        .brand-title {
+
+            font-size: 13px;
+
+        }
+
+
+        .admin-name {
+
+            font-size: 14px;
+
+        }
+
+
+        .admin-status {
+
+            font-size: 11px;
+
+        }
+
+
+        .message-content {
+
+            max-width: 92%;
+
+        }
+
+
+        .attach-button,
+        .send-btn {
+
+            width: 42px;
+            height: 42px;
+
+        }
+
+
+        .message-input {
+
+            min-height: 42px;
+
+            padding:
+                11px 12px;
+
+        }
+
+
+        .attachment {
+
+            max-height: 350px;
+
+        }
+
+
+        .attachment-preview-image {
+
+            width: 64px;
+            height: 64px;
+
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<div class="page">
+
+
+<!-- =====================================================
+     TOP NAVIGATION
+====================================================== -->
+
+<header class="topbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+
+            <i class="fa-solid fa-comments"></i>
+
+        </div>
+
+
+        <div class="brand-text">
+
+            <div class="brand-title">
+
+                Customer Support
+
+            </div>
+
+
+            <div class="brand-subtitle">
+
+                Business Store
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         DIRECT LINK TO login.html
+         customer-chat.html is inside /customer/
+    ================================================== -->
+
+    <a
+        href="../customer/customer-home.html"
+        class="back-btn"
+    >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to home
+
+    </a>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="main">
+
+    <section class="chat-shell">
+
+
+        <!-- =================================================
+             CHAT HEADER
+        ================================================== -->
+
+        <div class="chat-header">
+
+            <div class="admin-info">
+
+                <div class="admin-avatar">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                </div>
+
+
+                <div>
+
+                    <div class="admin-name">
+
+                        Business Store Admin
+
+                    </div>
+
+
+                    <div class="admin-status">
+
+                        <span class="status-dot"></span>
+
+                        <span>
+                            Customer Support
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-badge">
+
+                <i class="fa-solid fa-shield-halved"></i>
+
+                Secure Chat
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            class="error-box"
+            id="chatError"
+        ></div>
+
+
+        <!-- =================================================
+             MESSAGES
+        ================================================== -->
+
+        <div
+            class="messages"
+            id="messagesContainer"
+            aria-live="polite"
+        >
+
+            <div
+                class="center-state"
+                id="chatLoading"
+            >
+
+                <div class="loader"></div>
+
+                <div>
+                    Loading your conversation...
+                </div>
+
+            </div>
+
+
+            <div
+                class="welcome"
+                id="emptyChat"
+                style="display:none;"
+            >
+
+                <div class="welcome-icon">
+
+                    <i class="fa-solid fa-headset"></i>
+
+                </div>
+
+
+                <h2>
+                    Need help?
+                </h2>
+
+
+                <p>
+                    Send us your concern and our admin
+                    can help you with orders, products,
+                    checkout, requests, or other questions.
+                    You can also attach a screenshot.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             COMPOSER
+        ================================================== -->
+
+        <div class="composer-area">
+
+
+            <!-- =============================================
+                 ATTACHMENT PREVIEW
+            ============================================== -->
+
+            <div
+                class="attachment-preview"
+                id="attachmentPreview"
+            >
+
+                <img
+                    class="attachment-preview-image"
+                    id="attachmentPreviewImage"
+                    alt="Selected image preview"
+                >
+
+
+                <div class="attachment-preview-info">
+
+                    <div
+                        class="attachment-preview-name"
+                        id="attachmentPreviewName"
+                    >
+                        Image
+                    </div>
+
+
+                    <div
+                        class="attachment-preview-size"
+                        id="attachmentPreviewSize"
+                    >
+                        Ready to send
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="remove-attachment"
+                    id="removeAttachmentBtn"
+                    title="Remove image"
+                >
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+
+            <!-- =============================================
+                 COMPOSER
+            ============================================== -->
+
+            <div class="composer">
+
+
+                <!-- ATTACHMENT BUTTON -->
+
+                <label
+                    class="attach-button"
+                    id="attachmentButton"
+                    for="attachmentInput"
+                    title="Attach image"
+                >
+
+                    <i class="fa-solid fa-paperclip"></i>
+
+                </label>
+
+
+                <input
+                    type="file"
+                    id="attachmentInput"
+                    accept="image/jpeg,image/png,image/webp"
+                >
+
+
+                <!-- MESSAGE INPUT -->
+
+                <textarea
+                    class="message-input"
+                    id="messageInput"
+                    rows="1"
+                    maxlength="2000"
+                    placeholder="Type your concern..."
+                ></textarea>
+
+
+                <!-- SEND -->
+
+                <button
+                    type="button"
+                    class="send-btn"
+                    id="sendMessageBtn"
+                    title="Send message"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                </button>
+
+            </div>
+
+
+            <div class="composer-note">
+
+                JPG, PNG, or WEBP • Maximum 5MB
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+</div>
+
+<!--
+    chat.js handles:
+
+    - Customer authentication
+    - Conversation
+    - Messages
+    - Image upload
+    - Image preview
+    - Realtime
+    - Read status
+    - Sending
+-->
+
+</body>
+
+</html>

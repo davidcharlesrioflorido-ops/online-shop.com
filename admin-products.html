@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Products | Admin | Business Store</title>
+
+<script 
+    type="module" 
+    src="./js/admin-guard.js"
+></script>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin-products.css">
+
+<style>
+
+    /* =====================================================
+       ADMIN NAV NOTIFICATION BADGES
+    ===================================================== */
+
+    .admin-nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        position: relative;
+    }
+
+    .admin-nav a > span:first-child {
+        flex-shrink: 0;
+    }
+
+    .notification-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-width: 20px;
+        height: 20px;
+
+        padding: 0 6px;
+        margin-left: auto;
+
+        box-sizing: border-box;
+
+        border-radius: 999px;
+
+        background: #ff3b30;
+        color: #ffffff;
+
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1;
+
+        box-shadow:
+            0 0 0 2px rgba(255, 59, 48, 0.12),
+            0 0 12px rgba(255, 59, 48, 0.45);
+
+        animation:
+            notificationPulse
+            1.8s
+            ease-in-out
+            infinite;
+
+        flex-shrink: 0;
+    }
+
+    .notification-badge[hidden] {
+        display: none !important;
+    }
+
+    .notification-badge.has-notification {
+        display: inline-flex;
+    }
+
+    @keyframes notificationPulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(1.08);
+            opacity: 0.88;
+        }
+
+    }
+
+
+    /* =====================================================
+       LOGOUT BUTTON
+    ===================================================== */
+
+    .logout-btn {
+        width: 100%;
+        min-height: 46px;
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        gap: 12px;
+
+        padding: 12px 15px;
+        margin: 0;
+
+        box-sizing: border-box;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, 0.08);
+
+        border-radius: 12px;
+
+        background:
+            rgba(255, 255, 255, 0.035);
+
+        color: #8d97aa;
+
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease,
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+
+        -webkit-tap-highlight-color:
+            transparent;
+    }
+
+    .logout-btn span:first-child {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 9px;
+
+        background:
+            rgba(255, 48, 79, 0.08);
+
+        color: #ff5c70;
+
+        font-size: 16px;
+        font-weight: 800;
+
+        transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+    }
+
+    .logout-btn:hover {
+        background:
+            rgba(255, 48, 79, 0.08);
+
+        border-color:
+            rgba(255, 48, 79, 0.24);
+
+        color: #ffffff;
+
+        transform:
+            translateY(-1px);
+
+        box-shadow:
+            0 8px 24px
+            rgba(255, 48, 79, 0.10);
+    }
+
+    .logout-btn:hover span:first-child {
+        background:
+            rgba(255, 48, 79, 0.16);
+
+        color: #ff304f;
+
+        transform:
+            translateX(2px);
+    }
+
+    .logout-btn:active {
+        transform:
+            translateY(0)
+            scale(0.98);
+    }
+
+    .logout-btn:focus-visible {
+        outline:
+            2px solid
+            #ff304f;
+
+        outline-offset: 3px;
+    }
+
+    .logout-btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+
+    /* =====================================================
+       MOBILE BADGE
+    ===================================================== */
+
+    @media (max-width: 768px) {
+
+        .notification-badge {
+            min-width: 19px;
+            height: 19px;
+
+            font-size: 10px;
+
+            padding: 0 5px;
+        }
+
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- =========================================================
+     BACKGROUND EFFECTS
+========================================================= -->
+
+<div class="page-glow glow-one"></div>
+<div class="page-glow glow-two"></div>
+
+<!-- =========================================================
+     ADMIN SIDEBAR
+========================================================= -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+
+<!-- =====================================================
+     LOGO
+====================================================== -->
+
+<a
+    href="admin.html"
+    class="admin-logo"
+>
+
+    <div class="admin-logo-icon">
+        ⚡
+    </div>
+
+    <div class="admin-logo-text">
+        BUSINESS STORE
+    </div>
+
+</a>
+
+
+<!-- =====================================================
+     NAVIGATION
+====================================================== -->
+
+<nav class="admin-nav">
+
+
+    <!-- =================================================
+         DASHBOARD
+    ================================================== -->
+
+    <a href="admin.html">
+
+        <span>▦</span>
+
+        <span>
+            Dashboard
+        </span>
+
+        <span
+            class="notification-badge"
+            data-dashboard-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         PRODUCTS
+    ================================================== -->
+
+    <a
+        href="admin-products.html"
+        class="active"
+    >
+
+        <span>▣</span>
+
+        <span>
+            Products
+        </span>
+
+        <span
+            class="notification-badge"
+            data-product-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         ORDERS
+    ================================================== -->
+
+    <a href="admin-orders.html">
+
+        <span>◫</span>
+
+        <span>
+            Orders
+        </span>
+
+        <span
+            class="notification-badge"
+            data-order-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         REQUESTS
+    ================================================== -->
+
+    <a href="admin-requests.html">
+
+        <span>✉</span>
+
+        <span>
+            Requests
+        </span>
+
+        <span
+            class="notification-badge"
+            data-request-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         ADMIN REGISTRATIONS
+    ================================================== -->
+
+    <a href="admin-registrations.html">
+
+        <span>👤</span>
+
+        <span>
+            Admin Registrations
+        </span>
+
+        <span
+            class="notification-badge"
+            data-admin-registration-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         ADMIN USERS
+         IMPORTANT:
+         BADGE COUNTS ACTIVE USERS ONLY.
+    ================================================== -->
+
+    <a href="admin-users.html">
+
+        <span>👥</span>
+
+        <span>
+            Admin Users
+        </span>
+
+        <span
+            class="notification-badge"
+            id="usersBadge"
+            data-user-count
+            hidden
+            aria-label="0 customers online"
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         ADMIN CHAT
+         Badge = total unread customer messages for admin
+    ================================================== -->
+
+    <a
+        href="admin-chat.html"
+        id="adminChatLink"
+        aria-label="Open Admin Chat"
+    >
+
+        <span>💬</span>
+
+        <span>
+            Admin Chat
+        </span>
+
+        <span
+            class="notification-badge"
+            id="adminChatNotificationBadge"
+            data-chat-count
+            hidden
+        >
+            0
+        </span>
+
+    </a>
+
+
+    <!-- =================================================
+         SETTINGS
+    ================================================== -->
+
+    <a href="admin-settings.html">
+
+        <span>⚙</span>
+
+        <span>
+            Settings
+        </span>
+
+    </a>
+
+
+</nav>
+
+
+<!-- =====================================================
+     SIDEBAR BOTTOM
+====================================================== -->
+
+<div class="sidebar-bottom">
+
+
+    <a
+        href="index.html"
+        class="view-store-btn"
+    >
+
+        <span>↗</span>
+
+        View Store
+
+    </a>
+
+
+    <button
+        type="button"
+        class="logout-btn"
+        id="logoutBtn"
+    >
+
+        <span>⇥</span>
+
+        <span>
+            Logout
+        </span>
+
+    </button>
+
+
+</div>
+
+
+</aside>
+
+<!-- =========================================================
+     SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+<!-- =========================================================
+     MOBILE MENU BUTTON
+========================================================= -->
+
+<button
+class="mobile-menu-button"
+id="mobileMenuButton"
+type="button"
+aria-label="Open menu"
+aria-expanded="false"
+
+>
+
+
+<span></span>
+<span></span>
+<span></span>
+
+
+</button>
+
+<!-- =========================================================
+     PRODUCTS PAGE
+========================================================= -->
+
+<main class="admin-products-page">
+
+
+<div class="admin-products-container">
+
+
+    <!-- =================================================
+         PAGE HEADER
+    ================================================== -->
+
+    <section class="products-heading">
+
+
+        <div>
+
+            <span class="section-label">
+                INVENTORY MANAGEMENT
+            </span>
+
+            <h1>
+                Products
+            </h1>
+
+            <p>
+                Add, edit, remove, and manage the products
+                available in your store.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="primary-admin-btn"
+            id="addProductBtn"
+        >
+
+            <span>+</span>
+
+            Add Product
+
+        </button>
+
+
+    </section>
+
+
+    <!-- =================================================
+         PRODUCT FORM
+    ================================================== -->
+
+    <section
+        class="product-form-card"
+        id="productFormCard"
+        hidden
+    >
+
+
+        <div class="admin-card-header">
+
+
+            <div>
+
+                <span class="section-label">
+                    PRODUCT MANAGEMENT
+                </span>
+
+                <h2 id="productFormTitle">
+                    Add Product
+                </h2>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="close-admin-btn"
+                id="closeProductFormBtn"
+                aria-label="Close product form"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+        <form id="productForm">
+
+
+            <input
+                type="hidden"
+                id="productId"
+            >
+
+
+            <div class="form-grid">
+
+
+                <!-- PRODUCT NAME -->
+
+                <div class="form-group">
+
+                    <label for="productName">
+                        Product Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productName"
+                        placeholder="Enter product name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="productCategory">
+                        Category
+                    </label>
+
+                    <input
+                        type="text"
+                        id="productCategory"
+                        placeholder="Example: Electronics"
+                    >
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+                    <label for="productPrice">
+                        Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productPrice"
+                        placeholder="0.00"
+                        min="0"
+                        step="0.01"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- STOCK -->
+
+                <div class="form-group">
+
+                    <label for="productStock">
+                        Stock
+                    </label>
+
+                    <input
+                        type="number"
+                        id="productStock"
+                        placeholder="0"
+                        min="0"
+                        step="1"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- IMAGE URL -->
+
+                <div class="form-group form-full">
+
+                    <label for="productImageUrl">
+                        Product Image URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="productImageUrl"
+                        placeholder="https://example.com/image.jpg"
+                    >
+
+                    <small>
+                        You can use an image URL or upload an image
+                        through the product manager.
+                    </small>
+
+                </div>
+
+
+                <!-- IMAGE UPLOAD -->
+
+                <div class="form-group form-full">
+
+                    <label for="productImage">
+                        Upload Product Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="productImage"
+                        accept="image/png,image/jpeg,image/webp"
+                    >
+
+                    <small>
+                        JPG, PNG, or WEBP. Recommended: square image.
+                    </small>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group form-full">
+
+                    <label for="productDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="productDescription"
+                        rows="5"
+                        placeholder="Write a short product description..."
+                    ></textarea>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FORM ACTIONS -->
+
+            <div class="form-actions">
+
+
+                <button
+                    type="button"
+                    class="secondary-admin-btn"
+                    id="cancelProductBtn"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="primary-admin-btn"
+                    id="saveProductBtn"
+                >
+                    Save Product
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+    </section>
+
+
+    <!-- =================================================
+         PRODUCTS LIST
+    ================================================== -->
+
+    <section class="products-list-section">
+
+
+        <div class="admin-section-header">
+
+
+            <div>
+
+                <span class="section-label">
+                    STORE INVENTORY
+                </span>
+
+                <h2>
+                    All Products
+                </h2>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- SEARCH -->
+
+        <div class="admin-search-bar">
+
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+                <input
+                    type="search"
+                    id="productSearch"
+                    placeholder="Search products..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <!-- PRODUCTS TABLE -->
+
+        <div class="admin-table-wrapper">
+
+
+            <table class="admin-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Product
+                        </th>
+
+                        <th>
+                            Category
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Stock
+                        </th>
+
+                        <th>
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="productsTableBody">
+
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="table-empty"
+                        >
+
+                            <div class="admin-loading">
+                                Loading products...
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        <!-- MOBILE PRODUCT LIST -->
+
+        <div
+            class="mobile-products-list"
+            id="mobileProductsList"
+        ></div>
+
+
+    </section>
+
+
+    <!-- =================================================
+         RESULT
+    ================================================== -->
+
+    <div
+        id="adminResult"
+        class="admin-result"
+        aria-live="polite"
+    ></div>
+
+
+</div>
+
+
+</main>
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+
+<div class="footer-container">
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 Business Store
+        </span>
+
+        <span>
+            All Rights Reserved.
+        </span>
+
+    </div>
+
+
+</div>
+
+
+</footer>
+
+<!-- =========================================================
+     MOBILE SIDEBAR SCRIPT
+========================================================= -->
+
+<script>
+
+    const mobileMenuButton =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+    const adminSidebar =
+        document.getElementById(
+            "adminSidebar"
+        );
+
+    const sidebarOverlay =
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
+
+    function openSidebar() {
+
+        if (adminSidebar) {
+
+            adminSidebar.classList.add(
+                "open"
+            );
+
+        }
+
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.add(
+                "open"
+            );
+
+        }
+
+
+        if (mobileMenuButton) {
+
+            mobileMenuButton.classList.add(
+                "active"
+            );
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+        }
+
+
+        document.body.classList.add(
+            "sidebar-open"
+        );
+
+    }
+
+
+    function closeSidebar() {
+
+        if (adminSidebar) {
+
+            adminSidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.remove(
+                "open"
+            );
+
+        }
+
+
+        if (mobileMenuButton) {
+
+            mobileMenuButton.classList.remove(
+                "active"
+            );
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+        }
+
+
+        document.body.classList.remove(
+            "sidebar-open"
+        );
+
+    }
+
+
+    if (mobileMenuButton) {
+
+        mobileMenuButton.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    adminSidebar &&
+                    adminSidebar.classList.contains(
+                        "open"
+                    )
+                ) {
+
+                    closeSidebar();
+
+                } else {
+
+                    openSidebar();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    }
+
+
+    if (adminSidebar) {
+
+        adminSidebar
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    closeSidebar
+                );
+
+            });
+
+    }
+
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeSidebar();
+
+            }
+
+        }
+    );
+
+</script>
+
+<!-- =========================================================
+     PRODUCTS JAVASCRIPT
+========================================================= -->
+
+<script
+    type="module"
+    src="js/admin-products.js?v=3"
+></script>
+
+<!-- =========================================================
+     ADMIN NOTIFICATIONS
+========================================================= -->
+
+<script
+    type="module"
+    src="js/admin-notifications.js?v=6"
+></script>
+
+<!-- =========================================================
+     ADMIN CHAT NOTIFICATIONS
+     
+     Counts ALL unread customer messages for the admin.
+     Uses chat_conversations.unread_for_admin.
+========================================================= -->
+
+<script type="module">
+
+    import {
+        supabase
+    } from "./js/supabase.js";
+
+
+    (function () {
+
+        "use strict";
+
+
+        const chatBadge =
+            document.getElementById(
+                "adminChatNotificationBadge"
+            );
+
+
+        function setChatBadge(count) {
+
+            if (!chatBadge) {
+                return;
+            }
+
+
+            const safeCount =
+                Number.isFinite(Number(count))
+                    ? Math.max(0, Math.floor(Number(count)))
+                    : 0;
+
+
+            if (safeCount <= 0) {
+
+                chatBadge.textContent = "0";
+                chatBadge.hidden = true;
+                chatBadge.classList.remove("has-notification");
+                chatBadge.setAttribute(
+                    "aria-label",
+                    "0 unread chat messages"
+                );
+                return;
+            }
+
+
+            chatBadge.textContent =
+                safeCount > 99
+                    ? "99+"
+                    : String(safeCount);
+
+            chatBadge.hidden = false;
+            chatBadge.classList.add("has-notification");
+            chatBadge.setAttribute(
+                "aria-label",
+                safeCount === 1
+                    ? "1 unread chat message"
+                    : `${safeCount} unread chat messages`
+            );
+
+        }
+
+
+        async function updateChatNotification() {
+
+            if (!chatBadge) {
+                return;
+            }
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase
+                        .from("chat_conversations")
+                        .select("unread_for_admin");
+
+
+                if (error) {
+                    throw error;
+                }
+
+
+                /*
+                 * Sum unread messages across ALL conversations.
+                 * This shows the actual number of unread customer
+                 * messages, not merely the number of conversations.
+                 */
+                const totalUnread =
+                    (data || []).reduce(
+                        (total, conversation) => {
+
+                            const unread =
+                                Number(
+                                    conversation?.unread_for_admin || 0
+                                );
+
+                            return total +
+                                (
+                                    Number.isFinite(unread) && unread > 0
+                                        ? Math.floor(unread)
+                                        : 0
+                                );
+
+                        },
+                        0
+                    );
+
+
+                setChatBadge(totalUnread);
+
+            }
+            catch (error) {
+
+                console.warn(
+                    "[Admin Chat] Notification count failed:",
+                    error
+                );
+
+                // Never display a fake number when the query fails.
+                setChatBadge(0);
+
+            }
+
+        }
+
+
+        let chatNotificationChannel = null;
+
+
+        function startChatRealtime() {
+
+            if (chatNotificationChannel) {
+
+                try {
+                    supabase.removeChannel(chatNotificationChannel);
+                }
+                catch (error) {
+                    console.warn(
+                        "[Admin Chat] Previous channel cleanup failed:",
+                        error
+                    );
+                }
+
+            }
+
+
+            chatNotificationChannel =
+                supabase
+                    .channel("admin-products-chat-notifications-v1")
+                    .on(
+                        "postgres_changes",
+                        {
+                            event: "*",
+                            schema: "public",
+                            table: "chat_conversations"
+                        },
+                        () => {
+                            updateChatNotification();
+                        }
+                    )
+                    .subscribe(status => {
+                        console.log(
+                            "[Admin Chat] Notification channel:",
+                            status
+                        );
+                    });
+
+        }
+
+
+        function initChatNotifications() {
+
+            updateChatNotification();
+            startChatRealtime();
+
+            // Backup refresh in case realtime reconnects late.
+            window.setInterval(
+                updateChatNotification,
+                5000
+            );
+
+            window.addEventListener(
+                "focus",
+                updateChatNotification
+            );
+
+            window.addEventListener(
+                "pageshow",
+                updateChatNotification
+            );
+
+            document.addEventListener(
+                "visibilitychange",
+                () => {
+                    if (!document.hidden) {
+                        updateChatNotification();
+                    }
+                }
+            );
+
+        }
+
+
+        if (document.readyState === "loading") {
+
+            document.addEventListener(
+                "DOMContentLoaded",
+                initChatNotifications,
+                { once: true }
+            );
+
+        }
+        else {
+            initChatNotifications();
+        }
+
+    })();
+
+</script>
+
+
+<!-- =========================================================
+     ADMIN AUTHENTICATION
+     
+     IMPORTANT:
+     The Admin Users badge here counts ONLY:
+     
+     role = customer
+     AND
+     status = active
+     
+     It DOES NOT count:
+     
+     - admin accounts
+     - pending customers
+     - rejected customers
+     - inactive customers
+     - deleted accounts
+========================================================= -->
+
+<script type="module">
+
+    import {
+        supabase
+    } from "./js/supabase.js";
+
+
+    /* =========================================================
+       ONLINE USER SETTINGS
+
+       A customer is considered ONLINE when their last_login
+       happened within the last 30 minutes.
+    ========================================================= */
+
+    const ACTIVE_WINDOW_MINUTES = 30;
+
+
+    /* =========================================================
+       ELEMENTS
+    ========================================================= */
+
+    const userCountBadge =
+        document.querySelector(
+            "[data-user-count]"
+        );
+
+
+    const logoutBtn =
+        document.getElementById(
+            "logoutBtn"
+        );
+
+
+    /* =========================================================
+       SAFE NORMALIZER
+    ========================================================= */
+
+    function normalizeValue(value) {
+
+        return String(
+            value ?? ""
+        )
+            .trim()
+            .toLowerCase();
+
+    }
+
+
+    /* =========================================================
+       UPDATE USER BADGE
+    ========================================================= */
+
+    function updateUserBadge(count) {
+
+        if (!userCountBadge) {
+
+            return;
+
+        }
+
+
+        const safeCount =
+            Number.isFinite(
+                Number(count)
+            )
+                ? Number(count)
+                : 0;
+
+
+        /*
+         * IMPORTANT
+         *
+         * Do not show the badge when there
+         * are zero active users.
+         */
+
+        if (safeCount <= 0) {
+
+            userCountBadge.textContent =
+                "0";
+
+            userCountBadge.hidden =
+                true;
+
+            userCountBadge.classList.remove(
+                "has-notification"
+            );
+
+            userCountBadge.setAttribute(
+                "aria-label",
+                "0 customers online"
+            );
+
+            return;
+
+        }
+
+
+        userCountBadge.textContent =
+            safeCount > 99
+                ? "99+"
+                : String(safeCount);
+
+
+        userCountBadge.hidden =
+            false;
+
+        userCountBadge.classList.add(
+            "has-notification"
+        );
+
+        userCountBadge.setAttribute(
+            "aria-label",
+            safeCount === 1
+                ? "1 customer online"
+                : `${safeCount} customers online`
+        );
+
+    }
+
+
+    /* =========================================================
+       LOAD ACCURATE ACTIVE USER COUNT
+       
+       ONLY:
+       
+       role   = customer
+       status = active
+       
+       This prevents the badge from counting
+       admin accounts or inactive customers.
+    ========================================================= */
+
+    async function loadActiveUserCount() {
+
+        if (!userCountBadge) {
+
+            console.warn(
+                "[Admin Users] Badge not found."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const activeSince = new Date(
+                Date.now() -
+                ACTIVE_WINDOW_MINUTES * 60 * 1000
+            );
+
+
+            const {
+                data,
+                error
+            } =
+                await supabase
+                    .from("profiles")
+                    .select("id,role,status,last_login")
+                    .eq("role", "customer")
+                    .ilike("status", "active")
+                    .gte("last_login", activeSince.toISOString());
+
+
+            if (error) {
+
+                console.error(
+                    "[Admin Users] Online user count error:",
+                    error
+                );
+
+                updateUserBadge(0);
+                return;
+
+            }
+
+
+            const now = Date.now();
+
+            const onlineCustomers = (data || []).filter(user => {
+
+                if (!user?.last_login) {
+                    return false;
+                }
+
+
+                const lastSeen =
+                    new Date(user.last_login).getTime();
+
+
+                if (Number.isNaN(lastSeen)) {
+                    return false;
+                }
+
+
+                const difference = now - lastSeen;
+
+
+                return (
+                    difference >= 0 &&
+                    difference <= ACTIVE_WINDOW_MINUTES * 60 * 1000
+                );
+
+            }).length;
+
+
+            console.log(
+                "[Admin Users] ONLINE CUSTOMERS:",
+                onlineCustomers
+            );
+
+
+            updateUserBadge(onlineCustomers);
+
+
+        }
+        catch (error) {
+
+            console.error(
+                "[Admin Users] Unexpected online count error:",
+                error
+            );
+
+            updateUserBadge(0);
+
+        }
+
+    }
+
+
+    /* =========================================================
+       ADMIN ACCESS CHECK
+    ========================================================= */
+
+    async function checkAdminAccess() {
+
+        console.log(
+            "================================="
+        );
+
+        console.log(
+            "ADMIN PRODUCTS AUTH CHECK"
+        );
+
+        console.log(
+            "================================="
+        );
+
+
+        try {
+
+            /* -----------------------------------------
+               GET CURRENT SESSION
+            ----------------------------------------- */
+
+            const {
+                data: sessionData,
+                error: sessionError
+            } =
+                await supabase.auth.getSession();
+
+
+            if (sessionError) {
+
+                console.error(
+                    "SESSION ERROR:",
+                    sessionError
+                );
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            const session =
+                sessionData?.session;
+
+
+            /* -----------------------------------------
+               NO SESSION
+            ----------------------------------------- */
+
+            if (!session) {
+
+                console.warn(
+                    "NO ADMIN SESSION"
+                );
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            const user =
+                session.user;
+
+
+            console.log(
+                "SESSION USER:",
+                user
+            );
+
+
+            /* -----------------------------------------
+               GET ADMIN PROFILE
+            ----------------------------------------- */
+
+            const {
+                data: profile,
+                error: profileError
+            } =
+                await supabase
+                    .from("profiles")
+                    .select(`
+                        id,
+                        name,
+                        email,
+                        role,
+                        status
+                    `)
+                    .eq(
+                        "id",
+                        user.id
+                    )
+                    .maybeSingle();
+
+
+            /* -----------------------------------------
+               PROFILE ERROR
+            ----------------------------------------- */
+
+            if (profileError) {
+
+                console.error(
+                    "PROFILE ERROR:",
+                    profileError
+                );
+
+                await supabase.auth.signOut();
+
+
+                localStorage.removeItem(
+                    "userId"
+                );
+
+                localStorage.removeItem(
+                    "userName"
+                );
+
+                localStorage.removeItem(
+                    "userEmail"
+                );
+
+                localStorage.removeItem(
+                    "userRole"
+                );
+
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               PROFILE NOT FOUND
+            ----------------------------------------- */
+
+            if (!profile) {
+
+                console.error(
+                    "PROFILE NOT FOUND:",
+                    user.id
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            console.log(
+                "ADMIN PROFILE:",
+                profile
+            );
+
+
+            /* -----------------------------------------
+               CHECK ROLE
+            ----------------------------------------- */
+
+            const role =
+                normalizeValue(
+                    profile.role
+                );
+
+
+            console.log(
+                "ADMIN ROLE:",
+                role
+            );
+
+
+            if (role !== "admin") {
+
+                console.warn(
+                    "USER IS NOT ADMIN"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               CHECK STATUS
+            ----------------------------------------- */
+
+            const status =
+                normalizeValue(
+                    profile.status
+                );
+
+
+            console.log(
+                "ADMIN STATUS:",
+                status
+            );
+
+
+            /* -----------------------------------------
+               PENDING
+            ----------------------------------------- */
+
+            if (
+                status === "pending"
+            ) {
+
+                console.warn(
+                    "ADMIN ACCOUNT IS PENDING"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               REJECTED / DECLINED
+            ----------------------------------------- */
+
+            if (
+                status === "rejected" ||
+                status === "declined"
+            ) {
+
+                console.warn(
+                    "ADMIN ACCOUNT WAS REJECTED"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               MUST BE APPROVED
+            ----------------------------------------- */
+
+            if (
+                status !== "approved"
+            ) {
+
+                console.warn(
+                    "INVALID ADMIN STATUS:",
+                    status
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+
+            }
+
+
+            /* -----------------------------------------
+               ADMIN AUTHORIZED
+            ----------------------------------------- */
+
+            console.log(
+                "ADMIN AUTHORIZED"
+            );
+
+
+            document.body.classList.add(
+                "admin-authorized"
+            );
+
+
+            /* -----------------------------------------
+               LOAD ACTIVE USERS
+            ----------------------------------------- */
+
+            await loadActiveUserCount();
+
+
+            /* -----------------------------------------
+               START REALTIME USER MONITOR
+            ----------------------------------------- */
+
+            startActiveUserRealtime();
+
+
+            /* -----------------------------------------
+               START BACKUP AUTO REFRESH
+            ----------------------------------------- */
+
+            startActiveUserAutoRefresh();
+
+        }
+        catch (error) {
+
+            console.error(
+                "ADMIN AUTHENTICATION ERROR:",
+                error
+            );
+
+
+            try {
+
+                await supabase.auth.signOut();
+
+            }
+            catch (signOutError) {
+
+                console.error(
+                    "SIGN OUT ERROR:",
+                    signOutError
+                );
+
+            }
+
+
+            window.location.replace(
+                "./login.html"
+            );
+
+        }
+
+    }
+
+
+    /* =========================================================
+       REALTIME ACTIVE USER MONITOR
+       
+       If a customer becomes:
+       
+       inactive → active
+       
+       or
+       
+       active → inactive
+       
+       the badge updates automatically.
+    ========================================================= */
+
+    let activeUserChannel =
+        null;
+
+
+    function startActiveUserRealtime() {
+
+        if (activeUserChannel) {
+
+            try {
+
+                supabase.removeChannel(
+                    activeUserChannel
+                );
+
+            }
+            catch (error) {
+
+                console.warn(
+                    "Previous user channel cleanup failed:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        activeUserChannel =
+            supabase
+                .channel(
+                    "admin-active-users-counter-v1"
+                )
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "*",
+                        schema: "public",
+                        table: "profiles"
+                    },
+                    payload => {
+
+                        console.log(
+                            "[Admin Users] Profile changed:",
+                            payload?.eventType,
+                            payload?.new,
+                            payload?.old
+                        );
+
+
+                        /*
+                         * We query again instead of trying
+                         * to calculate manually.
+                         *
+                         * This keeps the count accurate.
+                         */
+
+                        loadActiveUserCount();
+
+                    }
+                )
+                .subscribe(
+                    status => {
+
+                        console.log(
+                            "[Admin Users] Realtime status:",
+                            status
+                        );
+
+                    }
+                );
+
+    }
+
+
+    /* =========================================================
+       BACKUP AUTO REFRESH
+       
+       Realtime can occasionally reconnect late.
+       This makes the notification self-correcting.
+    ========================================================= */
+
+    let activeUserRefreshTimer =
+        null;
+
+
+    function startActiveUserAutoRefresh() {
+
+        if (activeUserRefreshTimer) {
+
+            clearInterval(
+                activeUserRefreshTimer
+            );
+
+        }
+
+
+        activeUserRefreshTimer =
+            setInterval(
+                () => {
+
+                    if (
+                        document.visibilityState ===
+                        "visible"
+                    ) {
+
+                        loadActiveUserCount();
+
+                    }
+
+                },
+                5000
+            );
+
+    }
+
+
+    /* =========================================================
+       REFRESH WHEN TAB BECOMES ACTIVE
+    ========================================================= */
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+
+                loadActiveUserCount();
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       REFRESH WHEN WINDOW GETS FOCUS
+    ========================================================= */
+
+    window.addEventListener(
+        "focus",
+        () => {
+
+            loadActiveUserCount();
+
+        }
+    );
+
+
+    /* =========================================================
+       LOGOUT
+    ========================================================= */
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            async () => {
+
+                logoutBtn.disabled =
+                    true;
+
+
+                logoutBtn.innerHTML =
+                    `
+                    <span>⇥</span>
+                    <span>Logging out...</span>
+                    `;
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabase.auth.signOut();
+
+
+                    if (error) {
+
+                        console.error(
+                            "LOGOUT ERROR:",
+                            error
+                        );
+
+
+                        logoutBtn.disabled =
+                            false;
+
+
+                        logoutBtn.innerHTML =
+                            `
+                            <span>⇥</span>
+                            <span>Logout</span>
+                            `;
+
+
+                        alert(
+                            "Logout failed. Please try again."
+                        );
+
+
+                        return;
+
+                    }
+
+
+                    /* -----------------------------------------
+                       CLEAR LOCAL STORAGE
+                    ----------------------------------------- */
+
+                    localStorage.removeItem(
+                        "userId"
+                    );
+
+                    localStorage.removeItem(
+                        "userName"
+                    );
+
+                    localStorage.removeItem(
+                        "userEmail"
+                    );
+
+                    localStorage.removeItem(
+                        "userPhone"
+                    );
+
+                    localStorage.removeItem(
+                        "userRole"
+                    );
+
+                    localStorage.removeItem(
+                        "adminUserId"
+                    );
+
+                    localStorage.removeItem(
+                        "adminName"
+                    );
+
+                    localStorage.removeItem(
+                        "adminEmail"
+                    );
+
+                    localStorage.removeItem(
+                        "adminAccessToken"
+                    );
+
+                    localStorage.removeItem(
+                        "adminRefreshToken"
+                    );
+
+
+                    /* -----------------------------------------
+                       REDIRECT
+                    ----------------------------------------- */
+
+                    window.location.replace(
+                        "./login.html"
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "LOGOUT ERROR:",
+                        error
+                    );
+
+                    window.location.replace(
+                        "./login.html"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       CLEANUP
+    ========================================================= */
+
+    window.addEventListener(
+        "beforeunload",
+        () => {
+
+            if (
+                activeUserRefreshTimer
+            ) {
+
+                clearInterval(
+                    activeUserRefreshTimer
+                );
+
+            }
+
+
+            if (
+                activeUserChannel
+            ) {
+
+                try {
+
+                    supabase.removeChannel(
+                        activeUserChannel
+                    );
+
+                }
+                catch (error) {
+
+                    console.warn(
+                        "Active user channel cleanup failed:",
+                        error
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =========================================================
+       START
+    ========================================================= */
+
+    checkAdminAccess();
+
+</script>
+
+</body>
+
+</html>

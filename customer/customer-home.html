@@ -1,0 +1,4891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Customer Home | Business Store</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           CUSTOMER HOME
+        ===================================================== */
+
+        :root {
+            --home-bg: #070a10;
+            --home-card: rgba(255, 255, 255, 0.035);
+            --home-card-strong: rgba(255, 255, 255, 0.055);
+            --cyan: #00f2fe;
+            --purple: #7c3aed;
+            --white: #ffffff;
+            --muted: #9aa5b5;
+            --muted-dark: #6f7a8b;
+            --border: rgba(255, 255, 255, 0.08);
+            --cyan-border: rgba(0, 242, 254, 0.18);
+        }
+
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .customer-page {
+            position: relative;
+            min-height: calc(100vh - 80px);
+            padding: 35px 20px 60px;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0, 242, 254, 0.055),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(124, 58, 237, 0.07),
+                    transparent 30%
+                );
+        }
+
+        .customer-page::before {
+            content: "";
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            top: 15%;
+            right: -250px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 242, 254, 0.035);
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+        .customer-page::after {
+            content: "";
+            position: fixed;
+
+            width: 450px;
+            height: 450px;
+
+            bottom: -200px;
+            left: -200px;
+
+            border-radius: 50%;
+
+            background: rgba(124, 58, 237, 0.04);
+
+            filter: blur(100px);
+
+            pointer-events: none;
+        }
+
+        .customer-container {
+            position: relative;
+            z-index: 2;
+
+            width: min(1180px, 100%);
+
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .customer-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 25px;
+
+            padding: 14px 16px 14px 20px;
+
+            background: rgba(10, 14, 23, 0.88);
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+
+            border-radius: 18px;
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            margin-bottom: 28px;
+
+            box-shadow:
+                0 15px 45px rgba(0, 0, 0, 0.25);
+
+            position: sticky;
+            top: 15px;
+
+            z-index: 50;
+        }
+
+        .customer-nav-title {
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            font-size: 0.95rem;
+            font-weight: 900;
+
+            white-space: nowrap;
+        }
+
+        .customer-nav-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: #00f2fe;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.12),
+                    rgba(124, 58, 237, 0.12)
+                );
+
+            border: 1px solid rgba(0, 242, 254, 0.18);
+
+            box-shadow:
+                0 0 20px rgba(0, 242, 254, 0.08);
+
+            font-size: 1rem;
+        }
+
+        .customer-nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+
+            gap: 5px;
+
+            flex-wrap: wrap;
+        }
+
+        .customer-nav-links a,
+        .customer-logout {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 38px;
+
+            padding: 8px 12px;
+
+            border: 1px solid transparent;
+            border-radius: 10px;
+
+            color: #929cac;
+
+            background: transparent;
+
+            text-decoration: none;
+
+            font-size: 0.72rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .customer-nav-links a:hover,
+        .customer-logout:hover {
+            color: var(--cyan);
+
+            background:
+                rgba(0, 242, 254, 0.055);
+
+            border-color:
+                rgba(0, 242, 254, 0.16);
+
+            transform: translateY(-1px);
+        }
+
+        .customer-nav-links a.active {
+            color: var(--cyan);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.10),
+                    rgba(124, 58, 237, 0.08)
+                );
+
+            border-color:
+                rgba(0, 242, 254, 0.20);
+
+            box-shadow:
+                inset 0 0 18px rgba(0, 242, 254, 0.025);
+        }
+
+        /* CHAT NAV BUTTON */
+
+        .customer-nav-links a.chat-nav-link {
+            color: #c8b5ff;
+
+            background:
+                rgba(124, 58, 237, 0.055);
+
+            border-color:
+                rgba(124, 58, 237, 0.12);
+        }
+
+        .customer-nav-links a.chat-nav-link:hover {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.09),
+                    rgba(124, 58, 237, 0.12)
+                );
+
+            border-color:
+                rgba(124, 58, 237, 0.25);
+
+            box-shadow:
+                0 8px 22px rgba(124, 58, 237, 0.08);
+        }
+
+        .customer-logout {
+            margin-left: 3px;
+            color: #ff9999;
+        }
+
+        .customer-logout:hover {
+            color: #ff6b6b;
+
+            border-color:
+                rgba(255, 107, 107, 0.18);
+
+            background:
+                rgba(255, 107, 107, 0.055);
+        }
+
+
+        /* =====================================================
+           CART BADGE
+        ===================================================== */
+
+        .cart-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 20px;
+            height: 20px;
+
+            margin-left: 5px;
+            padding: 0 6px;
+
+            border-radius: 999px;
+
+            background: var(--cyan);
+
+            color: #061016;
+
+            font-size: 0.62rem;
+            font-weight: 900;
+
+            line-height: 1;
+
+            box-shadow:
+                0 0 15px rgba(0, 242, 254, 0.22);
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .customer-welcome {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 310px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 45px;
+
+            border: 1px solid rgba(0, 242, 254, 0.13);
+
+            border-radius: 26px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.075),
+                    rgba(124, 58, 237, 0.065) 48%,
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.28);
+
+            margin-bottom: 25px;
+        }
+
+        .customer-welcome::before {
+            content: "";
+
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            top: -270px;
+            right: -130px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0, 242, 254, 0.15),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+        }
+
+        .customer-welcome::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            bottom: -220px;
+            left: 35%;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(124, 58, 237, 0.12),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 3;
+
+            max-width: 720px;
+        }
+
+        .welcome-label {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 16px;
+
+            padding: 7px 11px;
+
+            color: var(--cyan);
+
+            background:
+                rgba(0, 242, 254, 0.055);
+
+            border:
+                1px solid rgba(0, 242, 254, 0.14);
+
+            border-radius: 999px;
+
+            font-size: 0.62rem;
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .welcome-label::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--cyan);
+
+            box-shadow:
+                0 0 10px rgba(0, 242, 254, 0.8);
+        }
+
+        .customer-welcome h1 {
+            margin: 0 0 15px;
+
+            max-width: 750px;
+
+            color: #ffffff;
+
+            font-size: clamp(2.25rem, 5vw, 4.2rem);
+
+            font-weight: 900;
+
+            letter-spacing: -0.045em;
+
+            line-height: 1.02;
+        }
+
+        #customerName {
+            background:
+                linear-gradient(
+                    90deg,
+                    #00f2fe,
+                    #8b5cf6
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        .customer-welcome p {
+            max-width: 620px;
+
+            margin: 0;
+
+            color: #aab4c3;
+
+            font-size: 0.95rem;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================================
+           HERO ACTIONS
+        ===================================================== */
+
+        .hero-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .hero-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 10px;
+
+            min-height: 45px;
+
+            padding: 11px 17px;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-size: 0.73rem;
+            font-weight: 900;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .hero-button.primary {
+            background: var(--cyan);
+
+            color: #061016;
+
+            box-shadow:
+                0 10px 30px rgba(0, 242, 254, 0.13);
+        }
+
+        .hero-button.primary:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 35px rgba(0, 242, 254, 0.23);
+        }
+
+        .hero-button.secondary {
+            color: #c8d0db;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.09);
+        }
+
+        .hero-button.secondary:hover {
+            transform: translateY(-2px);
+
+            color: #ffffff;
+
+            background:
+                rgba(255, 255, 255, 0.065);
+
+            border-color:
+                rgba(255, 255, 255, 0.15);
+        }
+
+
+        /* =====================================================
+           CHAT HERO BUTTON
+        ===================================================== */
+
+        .hero-button.chat-button {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124, 58, 237, 0.85),
+                    rgba(0, 242, 254, 0.75)
+                );
+
+            border:
+                1px solid rgba(0, 242, 254, 0.20);
+
+            box-shadow:
+                0 10px 30px rgba(124, 58, 237, 0.13);
+        }
+
+        .hero-button.chat-button:hover {
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 15px 35px rgba(124, 58, 237, 0.22);
+        }
+
+
+        /* =====================================================
+           HERO DECORATION
+        ===================================================== */
+
+        .hero-decoration {
+            position: absolute;
+
+            right: 50px;
+            top: 50%;
+
+            width: 220px;
+            height: 220px;
+
+            transform: translateY(-50%);
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.09);
+
+            opacity: 0.8;
+        }
+
+        .hero-decoration::before {
+            content: "";
+
+            position: absolute;
+
+            inset: 22px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(124, 58, 237, 0.12);
+        }
+
+        .hero-decoration::after {
+            content: "✦";
+
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+
+            color: rgba(0, 242, 254, 0.35);
+
+            font-size: 4rem;
+
+            text-shadow:
+                0 0 30px rgba(0, 242, 254, 0.22);
+        }
+
+
+        /* =====================================================
+           ANNOUNCEMENT
+        ===================================================== */
+
+        .announcement-section {
+            display: none;
+
+            position: relative;
+
+            overflow: hidden;
+
+            margin-top: 25px;
+
+            min-height: 210px;
+
+            padding: 34px 38px;
+
+            border-radius: 24px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.18);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.095),
+                    rgba(124, 58, 237, 0.10) 48%,
+                    rgba(255, 255, 255, 0.035)
+                );
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.30),
+                0 0 45px rgba(0, 242, 254, 0.045);
+        }
+
+        .announcement-section::before {
+            content: "";
+
+            position: absolute;
+
+            width: 360px;
+            height: 360px;
+
+            right: -100px;
+            top: -210px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0, 242, 254, 0.18),
+                    transparent 68%
+                );
+
+            filter: blur(5px);
+
+            pointer-events: none;
+        }
+
+        .announcement-section::after {
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+            height: 300px;
+
+            left: -180px;
+            bottom: -220px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(124, 58, 237, 0.17),
+                    transparent 68%
+                );
+
+            pointer-events: none;
+        }
+
+        .announcement-inner {
+            position: relative;
+
+            z-index: 3;
+
+            display: grid;
+
+            grid-template-columns:
+                auto minmax(0, 1fr);
+
+            gap: 24px;
+
+            align-items: center;
+        }
+
+        .announcement-icon {
+            width: 72px;
+            height: 72px;
+
+            flex: 0 0 72px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            font-size: 2rem;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.15),
+                    rgba(124, 58, 237, 0.18)
+                );
+
+            border:
+                1px solid rgba(0, 242, 254, 0.22);
+
+            box-shadow:
+                0 0 35px rgba(0, 242, 254, 0.08),
+                inset 0 0 25px rgba(124, 58, 237, 0.06);
+        }
+
+        .announcement-content {
+            min-width: 0;
+        }
+
+        .announcement-label {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 9px;
+
+            color: var(--cyan);
+
+            font-size: 0.63rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .announcement-label::before {
+            content: "";
+
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: var(--cyan);
+
+            box-shadow:
+                0 0 12px rgba(0, 242, 254, 0.75);
+        }
+
+        .announcement-content h2 {
+            margin: 0 0 9px;
+
+            color: #ffffff;
+
+            font-size: clamp(1.55rem, 3vw, 2.35rem);
+
+            line-height: 1.15;
+
+            font-weight: 900;
+
+            letter-spacing: -0.025em;
+        }
+
+        .announcement-content p {
+            margin: 0;
+
+            max-width: 850px;
+
+            color: rgba(255, 255, 255, 0.70);
+
+            font-size: 0.92rem;
+
+            line-height: 1.75;
+
+            white-space: pre-line;
+        }
+
+        .announcement-line {
+            width: 100%;
+
+            height: 1px;
+
+            margin-top: 24px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0, 242, 254, 0.25),
+                    rgba(124, 58, 237, 0.18),
+                    transparent
+                );
+        }
+
+
+        /* =====================================================
+           PROMOTIONAL COVERFLOW
+        ===================================================== */
+
+        .promotional-section {
+            position: relative;
+
+            padding: 70px 0 30px;
+
+            overflow: hidden;
+        }
+
+        .promotional-section::before {
+            content: "";
+
+            position: absolute;
+
+            width: 550px;
+            height: 550px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 242, 254, 0.07);
+
+            filter: blur(110px);
+
+            top: -220px;
+            left: -180px;
+
+            pointer-events: none;
+        }
+
+        .promotional-section::after {
+            content: "";
+
+            position: absolute;
+
+            width: 550px;
+            height: 550px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124, 58, 237, 0.08);
+
+            filter: blur(110px);
+
+            bottom: -240px;
+            right: -180px;
+
+            pointer-events: none;
+        }
+
+        .promotional-container {
+            position: relative;
+
+            z-index: 2;
+
+            width: 100%;
+
+            margin: 0 auto;
+        }
+
+        .promotional-heading {
+            text-align: center;
+
+            max-width: 750px;
+
+            margin: 0 auto 35px;
+        }
+
+        .promotional-heading .section-eyebrow {
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: var(--cyan);
+
+            font-size: 0.63rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .promotional-heading h2 {
+            margin: 0 0 10px;
+
+            color: #ffffff;
+
+            font-size: clamp(1.9rem, 4vw, 2.8rem);
+
+            line-height: 1.1;
+
+            font-weight: 900;
+        }
+
+        .promotional-heading p {
+            margin: 0;
+
+            color: rgba(255, 255, 255, 0.60);
+
+            line-height: 1.7;
+
+            font-size: 0.78rem;
+        }
+
+        .promotional-loading {
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 260px;
+
+            gap: 15px;
+
+            opacity: 0.7;
+        }
+
+        .promotional-loading-spinner {
+            width: 44px;
+            height: 44px;
+
+            border-radius: 50%;
+
+            border:
+                3px solid rgba(255, 255, 255, 0.12);
+
+            border-top-color: #00f2fe;
+
+            animation:
+                promotionalSpin 0.8s linear infinite;
+        }
+
+        @keyframes promotionalSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .promotional-coverflow {
+            position: relative;
+
+            width: 100%;
+
+            max-width: 1100px;
+
+            height: 610px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            perspective: 1600px;
+
+            overflow: visible;
+        }
+
+        .promotional-card {
+            position: absolute;
+
+            top: 50%;
+            left: 50%;
+
+            width: 330px;
+
+            transform-style: preserve-3d;
+
+            transform:
+                translate(-50%, -50%)
+                translateX(0)
+                scale(0.72)
+                rotateY(0deg);
+
+            opacity: 0;
+
+            z-index: 1;
+
+            pointer-events: none;
+
+            filter:
+                brightness(0.55)
+                saturate(0.7)
+                blur(0.3px);
+
+            transition:
+                transform 0.7s cubic-bezier(.22, 1, .36, 1),
+                opacity 0.7s ease,
+                filter 0.7s ease;
+        }
+
+        .promotional-card.active {
+            transform:
+                translate(-50%, -50%)
+                translateX(0)
+                scale(1)
+                rotateY(0deg);
+
+            opacity: 1;
+
+            z-index: 10;
+
+            pointer-events: auto;
+
+            filter:
+                brightness(1)
+                saturate(1)
+                blur(0);
+
+            box-shadow:
+                0 35px 100px rgba(0, 0, 0, 0.65),
+                0 0 60px rgba(0, 242, 254, 0.08);
+        }
+
+        .promotional-card.prev {
+            transform:
+                translate(-50%, -50%)
+                translateX(-345px)
+                scale(0.72)
+                rotateY(28deg);
+
+            opacity: 0.72;
+
+            z-index: 5;
+
+            pointer-events: auto;
+
+            filter:
+                brightness(0.55)
+                saturate(0.75);
+        }
+
+        .promotional-card.next {
+            transform:
+                translate(-50%, -50%)
+                translateX(345px)
+                scale(0.72)
+                rotateY(-28deg);
+
+            opacity: 0.72;
+
+            z-index: 5;
+
+            pointer-events: auto;
+
+            filter:
+                brightness(0.55)
+                saturate(0.75);
+        }
+
+        .promotional-card-inner {
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.12);
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .promotional-video-wrapper {
+            position: relative;
+
+            width: 100%;
+
+            aspect-ratio: 9 / 14;
+
+            background: #030509;
+
+            overflow: hidden;
+        }
+
+        .promotional-video {
+            display: block;
+
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            background: #030509;
+        }
+
+        .promotional-video-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.02) 35%,
+                    rgba(0, 0, 0, 0.75) 100%
+                );
+        }
+
+        .promotional-content {
+            position: absolute;
+
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 24px;
+
+            z-index: 3;
+        }
+
+        .promotional-number {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            width: 36px;
+            height: 36px;
+
+            margin-bottom: 14px;
+
+            border-radius: 11px;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            color: #00f2fe;
+
+            background:
+                rgba(0, 242, 254, 0.10);
+
+            border:
+                1px solid rgba(0, 242, 254, 0.22);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .promotional-content h3 {
+            margin: 0 0 9px;
+
+            font-size: 21px;
+
+            line-height: 1.25;
+
+            color: #ffffff;
+        }
+
+        .promotional-content p {
+            margin: 0 0 18px;
+
+            color: rgba(255, 255, 255, 0.70);
+
+            line-height: 1.55;
+
+            font-size: 13px;
+        }
+
+        .promotional-button {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            min-height: 42px;
+
+            padding: 10px 17px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+            color: #071017;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+
+            transition:
+                transform 0.25s ease,
+                opacity 0.25s ease;
+        }
+
+        .promotional-button:hover {
+            transform: translateY(-2px);
+
+            opacity: 0.9;
+        }
+
+        .promotional-button-arrow {
+            font-size: 17px;
+        }
+
+        .promotional-arrow {
+            position: absolute;
+
+            top: 50%;
+
+            width: 50px;
+            height: 50px;
+
+            transform: translateY(-50%);
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.12);
+
+            border-radius: 50%;
+
+            color: #ffffff;
+
+            background:
+                rgba(10, 13, 22, 0.75);
+
+            backdrop-filter: blur(14px);
+
+            cursor: pointer;
+
+            font-size: 22px;
+
+            z-index: 30;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .promotional-arrow:hover {
+            background:
+                rgba(0, 242, 254, 0.10);
+
+            border-color:
+                rgba(0, 242, 254, 0.35);
+
+            transform:
+                translateY(-50%)
+                scale(1.08);
+        }
+
+        .promotional-arrow-left {
+            left: 0;
+        }
+
+        .promotional-arrow-right {
+            right: 0;
+        }
+
+        .promotional-dots {
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            margin-top: 10px;
+        }
+
+        .promotional-dot {
+            width: 9px;
+            height: 9px;
+
+            padding: 0;
+
+            border: 0;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+
+            background:
+                rgba(255, 255, 255, 0.22);
+
+            transition:
+                width 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .promotional-dot.active {
+            width: 28px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+        }
+
+        .promotional-empty {
+            display: none;
+
+            text-align: center;
+
+            padding: 30px;
+
+            color:
+                rgba(255, 255, 255, 0.5);
+        }
+
+
+        /* =====================================================
+           QUICK STATS
+        ===================================================== */
+
+        .stats-section {
+            margin-top: 25px;
+        }
+
+        .stats-heading {
+            display: flex;
+
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+        .stats-heading-left span {
+            color: var(--cyan);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .stats-heading-left h2 {
+            margin: 5px 0 0;
+
+            color: #ffffff;
+
+            font-size: 1.5rem;
+
+            font-weight: 900;
+        }
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .stat-card {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 125px;
+
+            padding: 20px;
+
+            border-radius: 17px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.075);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.045),
+                    rgba(255, 255, 255, 0.018)
+                );
+        }
+
+        .stat-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+            height: 120px;
+
+            right: -65px;
+            top: -65px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 242, 254, 0.065);
+
+            filter: blur(3px);
+
+            pointer-events: none;
+        }
+
+        .stat-icon {
+            font-size: 1.25rem;
+
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            position: relative;
+
+            z-index: 2;
+
+            color: #ffffff;
+
+            font-size: 1.65rem;
+
+            font-weight: 900;
+
+            line-height: 1;
+        }
+
+        .stat-label {
+            position: relative;
+
+            z-index: 2;
+
+            margin-top: 7px;
+
+            color: #788394;
+
+            font-size: 0.68rem;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           QUICK ACCESS
+        ===================================================== */
+
+        .quick-section {
+            margin-top: 30px;
+        }
+
+        .quick-section-heading {
+            display: flex;
+
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 17px;
+        }
+
+        .quick-heading-left span {
+            color: var(--cyan);
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.18em;
+        }
+
+        .quick-heading-left h2 {
+            margin: 5px 0 0;
+
+            color: #ffffff;
+
+            font-size: 1.5rem;
+
+            font-weight: 900;
+
+            letter-spacing: -0.02em;
+        }
+
+        .quick-heading-right {
+            color: #697586;
+
+            font-size: 0.7rem;
+        }
+
+        .quick-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 14px;
+        }
+
+        .quick-card {
+            position: relative;
+
+            overflow: hidden;
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-height: 205px;
+
+            padding: 22px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.075);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.04),
+                    rgba(255, 255, 255, 0.018)
+                );
+
+            color: #ffffff;
+
+            text-decoration: none;
+
+            transition:
+                transform 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                background 0.3s ease;
+        }
+
+        .quick-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            top: -70px;
+            right: -70px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 242, 254, 0.07);
+
+            filter: blur(2px);
+
+            transition:
+                transform 0.35s ease;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-7px);
+
+            border-color:
+                rgba(0, 242, 254, 0.22);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0, 242, 254, 0.065),
+                    rgba(124, 58, 237, 0.045)
+                );
+
+            box-shadow:
+                0 22px 45px rgba(0, 0, 0, 0.30),
+                0 0 30px rgba(0, 242, 254, 0.035);
+        }
+
+        .quick-card:hover::before {
+            transform: scale(1.35);
+        }
+
+        .quick-card.chat-card {
+            border-color:
+                rgba(124, 58, 237, 0.14);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124, 58, 237, 0.055),
+                    rgba(0, 242, 254, 0.025)
+                );
+        }
+
+        .quick-card.chat-card:hover {
+            border-color:
+                rgba(124, 58, 237, 0.28);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124, 58, 237, 0.09),
+                    rgba(0, 242, 254, 0.055)
+                );
+
+            box-shadow:
+                0 22px 45px rgba(0, 0, 0, 0.30),
+                0 0 35px rgba(124, 58, 237, 0.08);
+        }
+
+        .quick-card-top {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .quick-number {
+            color: #596474;
+
+            font-size: 0.62rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+        }
+
+        .quick-arrow {
+            width: 29px;
+            height: 29px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            color: #697586;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+
+            border:
+                1px solid rgba(255, 255, 255, 0.06);
+
+            font-size: 0.8rem;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .quick-card:hover .quick-arrow {
+            color: var(--cyan);
+
+            background:
+                rgba(0, 242, 254, 0.08);
+
+            transform:
+                translate(2px, -2px);
+        }
+
+        .quick-icon {
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 18px;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.08),
+                    rgba(124, 58, 237, 0.10)
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            font-size: 1.35rem;
+
+            box-shadow:
+                inset 0 0 20px rgba(0, 242, 254, 0.025);
+        }
+
+        .quick-card.chat-card .quick-icon {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(124, 58, 237, 0.14),
+                    rgba(0, 242, 254, 0.09)
+                );
+
+            border-color:
+                rgba(124, 58, 237, 0.16);
+        }
+
+        .quick-card h3 {
+            margin: 0 0 7px;
+
+            color: #ffffff;
+
+            font-size: 0.98rem;
+
+            font-weight: 900;
+        }
+
+        .quick-card p {
+            margin: 0;
+
+            color: #7f8999;
+
+            font-size: 0.72rem;
+
+            line-height: 1.6;
+        }
+
+        .quick-card-footer {
+            display: flex;
+
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: auto;
+
+            padding-top: 20px;
+
+            color: var(--cyan);
+
+            font-size: 0.67rem;
+
+            font-weight: 800;
+        }
+
+        .quick-card.chat-card .quick-card-footer {
+            color: #bba7ff;
+        }
+
+
+        /* =====================================================
+           ACCOUNT PREVIEW
+        ===================================================== */
+
+        .account-preview {
+            position: relative;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 18px;
+
+            padding: 22px 24px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.075);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    100deg,
+                    rgba(255, 255, 255, 0.035),
+                    rgba(0, 242, 254, 0.025)
+                );
+        }
+
+        .account-preview::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: -100px;
+            bottom: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124, 58, 237, 0.08);
+
+            filter: blur(10px);
+
+            pointer-events: none;
+        }
+
+        .account-preview-info {
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 14px;
+
+            min-width: 0;
+        }
+
+        .account-avatar {
+            position: relative;
+
+            width: 54px;
+            height: 54px;
+
+            flex: 0 0 54px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.12),
+                    rgba(124, 58, 237, 0.13)
+                );
+
+            border:
+                1px solid rgba(0, 242, 254, 0.19);
+
+            color: var(--cyan);
+
+            font-size: 1.1rem;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 0 25px rgba(0, 242, 254, 0.06);
+        }
+
+        .account-avatar::after {
+            content: "";
+
+            position: absolute;
+
+            width: 9px;
+            height: 9px;
+
+            right: -2px;
+            bottom: -2px;
+
+            border-radius: 50%;
+
+            background: #35e58b;
+
+            border:
+                2px solid #0c111a;
+
+            box-shadow:
+                0 0 10px rgba(53, 229, 139, 0.45);
+        }
+
+        .account-preview-text {
+            min-width: 0;
+        }
+
+        .account-preview-text span {
+            display: block;
+
+            color: #687485;
+
+            font-size: 0.58rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.15em;
+        }
+
+        .account-preview-text strong {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #ffffff;
+
+            font-size: 0.92rem;
+
+            font-weight: 900;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .account-preview-text small {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #7d8898;
+
+            font-size: 0.69rem;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+        .account-status {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            margin-left: 10px;
+
+            color: #6f7c8c;
+
+            font-size: 0.62rem;
+
+            font-weight: 700;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: #35e58b;
+
+            box-shadow:
+                0 0 9px rgba(53, 229, 139, 0.55);
+        }
+
+        .account-button {
+            position: relative;
+
+            z-index: 3;
+
+            flex-shrink: 0;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 9px;
+
+            min-height: 41px;
+
+            padding: 10px 16px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.16);
+
+            border-radius: 10px;
+
+            background:
+                rgba(0, 242, 254, 0.075);
+
+            color: var(--cyan);
+
+            text-decoration: none;
+
+            font-size: 0.7rem;
+
+            font-weight: 900;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .account-button:hover {
+            transform: translateY(-2px);
+
+            background:
+                rgba(0, 242, 254, 0.12);
+
+            box-shadow:
+                0 10px 25px rgba(0, 242, 254, 0.08);
+        }
+
+
+        /* =====================================================
+           REQUEST BANNER
+        ===================================================== */
+
+        .request-banner {
+            position: relative;
+
+            overflow: hidden;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-top: 18px;
+
+            padding: 24px 26px;
+
+            border:
+                1px solid rgba(124, 58, 237, 0.16);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    105deg,
+                    rgba(124, 58, 237, 0.07),
+                    rgba(0, 242, 254, 0.035)
+                );
+        }
+
+        .request-banner::before {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            right: 12%;
+            top: -140px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(124, 58, 237, 0.08);
+
+            filter: blur(10px);
+        }
+
+        .request-content {
+            position: relative;
+
+            z-index: 2;
+        }
+
+        .request-content span {
+            color: #9a7ff0;
+
+            font-size: 0.6rem;
+
+            font-weight: 900;
+
+            letter-spacing: 0.16em;
+        }
+
+        .request-content h3 {
+            margin: 5px 0 0;
+
+            color: #ffffff;
+
+            font-size: 1rem;
+
+            font-weight: 900;
+        }
+
+        .request-content p {
+            margin: 4px 0 0;
+
+            color: #7d8898;
+
+            font-size: 0.7rem;
+        }
+
+        .request-button {
+            position: relative;
+
+            z-index: 3;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            min-height: 40px;
+
+            padding: 9px 15px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(124, 58, 237, 0.14);
+
+            border:
+                1px solid rgba(124, 58, 237, 0.24);
+
+            color: #bba7ff;
+
+            text-decoration: none;
+
+            font-size: 0.68rem;
+
+            font-weight: 900;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .request-button:hover {
+            transform: translateY(-2px);
+
+            background:
+                rgba(124, 58, 237, 0.20);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .customer-footer {
+            margin-top: 28px;
+
+            text-align: center;
+
+            color: #4f5a69;
+
+            font-size: 0.62rem;
+        }
+
+
+        /* =====================================================
+           TABLET
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .quick-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+        }
+
+        @media (max-width: 1050px) {
+
+            .promotional-coverflow {
+                height: 590px;
+            }
+
+            .promotional-card {
+                width: 300px;
+            }
+
+            .promotional-card.prev {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(-275px)
+                    scale(0.68)
+                    rotateY(25deg);
+            }
+
+            .promotional-card.next {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(275px)
+                    scale(0.68)
+                    rotateY(-25deg);
+            }
+
+            .hero-decoration {
+                right: 20px;
+
+                opacity: 0.35;
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .customer-page {
+                padding: 20px 14px 45px;
+            }
+
+            .customer-nav {
+                position: relative;
+
+                top: 0;
+
+                padding: 14px;
+
+                border-radius: 15px;
+            }
+
+            .customer-nav {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .customer-nav-links {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                gap: 5px;
+
+                width: 100%;
+            }
+
+            .customer-nav-links a,
+            .customer-logout {
+                width: 100%;
+            }
+
+            .customer-welcome {
+                min-height: auto;
+
+                padding: 32px 23px;
+
+                border-radius: 20px;
+            }
+
+            .customer-welcome h1 {
+                font-size: 2.25rem;
+            }
+
+            .customer-welcome p {
+                font-size: 0.82rem;
+            }
+
+            .hero-decoration {
+                width: 150px;
+                height: 150px;
+
+                right: -55px;
+                top: 25%;
+
+                opacity: 0.22;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+
+                flex-direction: column;
+
+                max-width: 300px;
+            }
+
+            .hero-button {
+                width: 100%;
+            }
+
+
+            /* ANNOUNCEMENT MOBILE */
+
+            .announcement-section {
+                min-height: auto;
+
+                padding: 25px 21px;
+
+                border-radius: 20px;
+            }
+
+            .announcement-inner {
+                grid-template-columns: 1fr;
+
+                gap: 16px;
+            }
+
+            .announcement-icon {
+                width: 58px;
+                height: 58px;
+
+                flex-basis: 58px;
+
+                border-radius: 16px;
+
+                font-size: 1.55rem;
+            }
+
+            .announcement-content h2 {
+                font-size: 1.55rem;
+            }
+
+            .announcement-content p {
+                font-size: 0.82rem;
+            }
+
+
+            /* PROMOTIONAL MOBILE */
+
+            .promotional-section {
+                padding: 55px 0 25px;
+            }
+
+            .promotional-heading {
+                margin-bottom: 20px;
+            }
+
+            .promotional-coverflow {
+                height: 560px;
+
+                perspective: 1000px;
+            }
+
+            .promotional-card {
+                width: min(78vw, 315px);
+            }
+
+            .promotional-card.prev {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(-145px)
+                    scale(0.68)
+                    rotateY(22deg);
+
+                opacity: 0.42;
+            }
+
+            .promotional-card.next {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(145px)
+                    scale(0.68)
+                    rotateY(-22deg);
+
+                opacity: 0.42;
+            }
+
+            .promotional-video-wrapper {
+                aspect-ratio: 9 / 14;
+            }
+
+            .promotional-content {
+                padding: 21px;
+            }
+
+            .promotional-content h3 {
+                font-size: 19px;
+            }
+
+            .promotional-arrow {
+                width: 42px;
+                height: 42px;
+
+                font-size: 18px;
+            }
+
+            .promotional-arrow-left {
+                left: 0;
+            }
+
+            .promotional-arrow-right {
+                right: 0;
+            }
+
+
+            /* STATS MOBILE */
+
+            .stats-heading {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            /* QUICK ACCESS MOBILE */
+
+            .quick-section-heading {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 5px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-card {
+                min-height: 185px;
+            }
+
+
+            /* ACCOUNT */
+
+            .account-preview {
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                padding: 20px;
+            }
+
+            .account-button {
+                width: 100%;
+            }
+
+            .account-status {
+                margin-left: 0;
+
+                margin-top: 4px;
+            }
+
+
+            /* REQUEST */
+
+            .request-banner {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .request-button {
+                width: 100%;
+            }
+
+        }
+
+
+        /* =====================================================
+           SMALL MOBILE
+        ===================================================== */
+
+        @media (max-width: 420px) {
+
+            .customer-welcome {
+                padding: 28px 19px;
+            }
+
+            .customer-welcome h1 {
+                font-size: 1.95rem;
+            }
+
+            .customer-nav-links a,
+            .customer-logout {
+                font-size: 0.67rem;
+
+                padding-left: 7px;
+                padding-right: 7px;
+            }
+
+            .quick-card {
+                padding: 19px;
+            }
+
+            .promotional-coverflow {
+                height: 530px;
+            }
+
+            .promotional-card {
+                width: 75vw;
+            }
+
+            .promotional-card.prev {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(-120px)
+                    scale(0.62)
+                    rotateY(20deg);
+            }
+
+            .promotional-card.next {
+                transform:
+                    translate(-50%, -50%)
+                    translateX(120px)
+                    scale(0.62)
+                    rotateY(-20deg);
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         CUSTOMER PORTAL
+    ===================================================== -->
+
+    <main class="customer-page">
+
+        <div class="customer-container">
+
+
+            <!-- =================================================
+                 CUSTOMER NAVIGATION
+            ================================================= -->
+
+            <nav class="customer-nav">
+
+                <a
+                    href="customer-home.html"
+                    class="customer-nav-title"
+                >
+
+                    <span class="customer-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        Customer Portal
+                    </span>
+
+                </a>
+
+
+                <div class="customer-nav-links">
+
+                    <a
+                        href="customer-home.html"
+                        class="active"
+                    >
+                        Home
+                    </a>
+
+                    <a href="customer-products.html">
+                        Products
+                    </a>
+
+                    <a href="customer-request.html">
+                        Request
+                    </a>
+
+                    <a href="customer-cart.html">
+
+                        🛒 Cart
+
+                        <span
+                            id="cartCount"
+                            class="cart-badge"
+                        >
+                            0
+                        </span>
+
+                    </a>
+
+                    <a href="customer-orders.html">
+                        Orders
+                    </a>
+
+                    <!-- =================================================
+                         CHAT WITH ADMIN
+                    ================================================= -->
+
+                    <a
+                        href="customer-chat.html"
+                        class="chat-nav-link"
+                    >
+                        💬 Chat
+                    </a>
+
+                    <a href="customer-account.html">
+                        My Account
+                    </a>
+
+                    <button
+                        type="button"
+                        id="logoutBtn"
+                        class="customer-logout"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </nav>
+
+
+            <!-- =================================================
+                 HERO / WELCOME
+            ================================================= -->
+
+            <section class="customer-welcome">
+
+                <div class="welcome-content">
+
+                    <span class="welcome-label">
+                        CUSTOMER DASHBOARD
+                    </span>
+
+                    <h1>
+
+                        Welcome back,
+
+                        <span id="customerName">
+                            Customer
+                        </span>.
+
+                    </h1>
+
+                    <p>
+                        Your personal shopping space.
+                        Browse products, manage your cart,
+                        check your orders, send requests,
+                        chat with the admin,
+                        and manage your account — all in one place.
+                    </p>
+
+                    <div class="hero-actions">
+
+                        <a
+                            href="customer-products.html"
+                            class="hero-button primary"
+                        >
+
+                            <span>
+                                🛍️
+                            </span>
+
+                            <span>
+                                Shop Products
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="customer-orders.html"
+                            class="hero-button secondary"
+                        >
+
+                            <span>
+                                📦
+                            </span>
+
+                            <span>
+                                View Orders
+                            </span>
+
+                        </a>
+
+                        <a
+                            href="customer-chat.html"
+                            class="hero-button chat-button"
+                        >
+
+                            <span>
+                                💬
+                            </span>
+
+                            <span>
+                                Chat with Admin
+                            </span>
+
+                            <span>
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="hero-decoration"></div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ANNOUNCEMENT
+            ================================================= -->
+
+            <section
+                class="announcement-section"
+                id="announcementSection"
+            >
+
+                <div class="announcement-inner">
+
+                    <div class="announcement-icon">
+                        📢
+                    </div>
+
+                    <div class="announcement-content">
+
+                        <div class="announcement-label">
+                            STORE ANNOUNCEMENT
+                        </div>
+
+                        <h2 id="announcementTitle">
+                            Important Update
+                        </h2>
+
+                        <p id="announcementText"></p>
+
+                        <div class="announcement-line"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PROMOTIONAL COVERFLOW
+            ================================================= -->
+
+            <section
+                class="promotional-section"
+                id="promotionalVideosSection"
+                style="display:none;"
+            >
+
+                <div class="promotional-container">
+
+                    <div class="promotional-heading">
+
+                        <span class="section-eyebrow">
+                            🎥 FEATURED
+                        </span>
+
+                        <h2>
+                            Discover Our Store
+                        </h2>
+
+                        <p>
+                            Check out our latest products,
+                            announcements, and special offers.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="promotional-loading"
+                        id="promotionalLoading"
+                    >
+
+                        <div
+                            class="promotional-loading-spinner"
+                        ></div>
+
+                        <p>
+                            Loading promotional videos...
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="promotional-coverflow"
+                        id="promotionalCoverflow"
+                        style="display:none;"
+                    >
+
+                        <button
+                            type="button"
+                            class="promotional-arrow promotional-arrow-left"
+                            id="promotionalPrev"
+                            aria-label="Previous promotional video"
+                        >
+                            ←
+                        </button>
+
+
+                        <div id="promotionalVideosGrid"></div>
+
+
+                        <button
+                            type="button"
+                            class="promotional-arrow promotional-arrow-right"
+                            id="promotionalNext"
+                            aria-label="Next promotional video"
+                        >
+                            →
+                        </button>
+
+                    </div>
+
+
+                    <div
+                        class="promotional-dots"
+                        id="promotionalDots"
+                    ></div>
+
+
+                    <div
+                        class="promotional-empty"
+                        id="promotionalEmpty"
+                    >
+                        No promotional videos available.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 QUICK STATS
+            ================================================= -->
+
+            <section class="stats-section">
+
+                <div class="stats-heading">
+
+                    <div class="stats-heading-left">
+
+                        <span>
+                            QUICK STATS
+                        </span>
+
+                        <h2>
+                            Your activity
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="stats-grid">
+
+
+                    <!-- CART -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🛒
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="statCartItems"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Items in Cart
+                        </div>
+
+                    </div>
+
+
+                    <!-- ORDERS -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            📦
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="statOrders"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Total Orders
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIVE ORDERS -->
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon">
+                            🚚
+                        </div>
+
+                        <div
+                            class="stat-value"
+                            id="statActiveOrders"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            Active Orders
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 QUICK ACCESS
+            ================================================= -->
+
+            <section class="quick-section">
+
+                <div class="quick-section-heading">
+
+                    <div class="quick-heading-left">
+
+                        <span>
+                            QUICK ACCESS
+                        </span>
+
+                        <h2>
+                            Your store shortcuts
+                        </h2>
+
+                    </div>
+
+                    <div class="quick-heading-right">
+                        Choose where you want to go
+                    </div>
+
+                </div>
+
+
+                <div class="quick-grid">
+
+
+                    <!-- PRODUCTS -->
+
+                    <a
+                        href="customer-products.html"
+                        class="quick-card"
+                    >
+
+                        <div>
+
+                            <div class="quick-card-top">
+
+                                <span class="quick-number">
+                                    01
+                                </span>
+
+                                <span class="quick-arrow">
+                                    ↗
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-icon">
+                                🛍️
+                            </div>
+
+
+                            <h3>
+                                Browse Products
+                            </h3>
+
+
+                            <p>
+                                Explore available products
+                                and add the items you want
+                                to your personal cart.
+                            </p>
+
+                        </div>
+
+
+                        <div class="quick-card-footer">
+
+                            Explore Store
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- CART -->
+
+                    <a
+                        href="customer-cart.html"
+                        class="quick-card"
+                    >
+
+                        <div>
+
+                            <div class="quick-card-top">
+
+                                <span class="quick-number">
+                                    02
+                                </span>
+
+                                <span class="quick-arrow">
+                                    ↗
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-icon">
+                                🛒
+                            </div>
+
+
+                            <h3>
+                                My Cart
+                            </h3>
+
+
+                            <p>
+                                Review your selected items
+                                and prepare them for checkout.
+                            </p>
+
+                        </div>
+
+
+                        <div class="quick-card-footer">
+
+                            Open Cart
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- ORDERS -->
+
+                    <a
+                        href="customer-orders.html"
+                        class="quick-card"
+                    >
+
+                        <div>
+
+                            <div class="quick-card-top">
+
+                                <span class="quick-number">
+                                    03
+                                </span>
+
+                                <span class="quick-arrow">
+                                    ↗
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-icon">
+                                📦
+                            </div>
+
+
+                            <h3>
+                                My Orders
+                            </h3>
+
+
+                            <p>
+                                Check your orders and
+                                follow their current progress.
+                            </p>
+
+                        </div>
+
+
+                        <div class="quick-card-footer">
+
+                            View Orders
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- CHAT -->
+
+                    <a
+                        href="customer-chat.html"
+                        class="quick-card chat-card"
+                    >
+
+                        <div>
+
+                            <div class="quick-card-top">
+
+                                <span class="quick-number">
+                                    04
+                                </span>
+
+                                <span class="quick-arrow">
+                                    ↗
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-icon">
+                                💬
+                            </div>
+
+
+                            <h3>
+                                Chat with Admin
+                            </h3>
+
+
+                            <p>
+                                Send a message to the admin,
+                                ask questions, and send pictures
+                                when you need help.
+                            </p>
+
+                        </div>
+
+
+                        <div class="quick-card-footer">
+
+                            Open Chat
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                    <!-- ACCOUNT -->
+
+                    <a
+                        href="customer-account.html"
+                        class="quick-card"
+                    >
+
+                        <div>
+
+                            <div class="quick-card-top">
+
+                                <span class="quick-number">
+                                    05
+                                </span>
+
+                                <span class="quick-arrow">
+                                    ↗
+                                </span>
+
+                            </div>
+
+
+                            <div class="quick-icon">
+                                👤
+                            </div>
+
+
+                            <h3>
+                                My Account
+                            </h3>
+
+
+                            <p>
+                                Manage your profile,
+                                settings, and account details.
+                            </p>
+
+                        </div>
+
+
+                        <div class="quick-card-footer">
+
+                            Manage Account
+
+                            <span>
+                                →
+                            </span>
+
+                        </div>
+
+                    </a>
+
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ACCOUNT PREVIEW
+            ================================================= -->
+
+            <section class="account-preview">
+
+                <div class="account-preview-info">
+
+                    <div
+                        class="account-avatar"
+                        id="accountAvatar"
+                    >
+                        ?
+                    </div>
+
+
+                    <div class="account-preview-text">
+
+                        <span>
+                            SIGNED IN AS
+                        </span>
+
+                        <strong id="accountName">
+                            Loading...
+                        </strong>
+
+                        <small id="accountEmail">
+                            Loading...
+                        </small>
+
+
+                        <div class="account-status">
+
+                            <span class="status-dot"></span>
+
+                            <span>
+                                Account active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="customer-account.html"
+                    class="account-button"
+                >
+
+                    Manage Account
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </section>
+
+
+            <!-- =================================================
+                 REQUEST BANNER
+            ================================================= -->
+
+            <section class="request-banner">
+
+                <div class="request-content">
+
+                    <span>
+                        NEED SOMETHING ELSE?
+                    </span>
+
+                    <h3>
+                        Send a product or service request.
+                    </h3>
+
+                    <p>
+                        Tell us what you need and submit
+                        your request directly from your account.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="customer-request.html"
+                    class="request-button"
+                >
+
+                    Make a Request
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </section>
+
+
+            <!-- =================================================
+                 FOOTER
+            ================================================= -->
+
+            <div class="customer-footer">
+
+                Business Store
+
+                <span>
+                    •
+                </span>
+
+                Customer Portal
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         CUSTOMER HOME JAVASCRIPT
+    ===================================================== -->
+
+    <script type="module">
+
+        import {
+            supabase
+        } from "../js/supabase.js";
+
+        import {
+            getCurrentUser,
+            logoutUser
+        } from "../js/auth.js";
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const customerName =
+            document.getElementById("customerName");
+
+        const accountName =
+            document.getElementById("accountName");
+
+        const accountEmail =
+            document.getElementById("accountEmail");
+
+        const accountAvatar =
+            document.getElementById("accountAvatar");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const cartCount =
+            document.getElementById("cartCount");
+
+        const statCartItems =
+            document.getElementById("statCartItems");
+
+        const statOrders =
+            document.getElementById("statOrders");
+
+        const statActiveOrders =
+            document.getElementById("statActiveOrders");
+
+
+        /* =====================================================
+           USER-SPECIFIC CART
+        ===================================================== */
+
+        const CART_KEY_PREFIX =
+            "businessStoreCart";
+
+        let currentUser = null;
+
+
+        function getCartKey() {
+
+            if (!currentUser?.id) {
+                return null;
+            }
+
+            return `${CART_KEY_PREFIX}_${currentUser.id}`;
+        }
+
+
+        function getCart() {
+
+            const cartKey =
+                getCartKey();
+
+            if (!cartKey) {
+                return [];
+            }
+
+            try {
+
+                const cart =
+                    JSON.parse(
+                        localStorage.getItem(cartKey) || "[]"
+                    );
+
+                return Array.isArray(cart)
+                    ? cart
+                    : [];
+
+            } catch (error) {
+
+                console.error(
+                    "CART READ ERROR:",
+                    error
+                );
+
+                return [];
+            }
+        }
+
+
+        function updateCartCount() {
+
+            const cart =
+                getCart();
+
+            const totalQuantity =
+                cart.reduce(
+                    (total, item) =>
+                        total +
+                        (Number(item.quantity) || 0),
+                    0
+                );
+
+            if (cartCount) {
+                cartCount.textContent =
+                    totalQuantity;
+            }
+
+            if (statCartItems) {
+                statCartItems.textContent =
+                    totalQuantity;
+            }
+
+            return totalQuantity;
+        }
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value ?? "";
+
+            return div.innerHTML;
+        }
+
+
+        /* =====================================================
+           SAFE URL
+        ===================================================== */
+
+        function safeUrl(value) {
+
+            if (!value) {
+                return "";
+            }
+
+            try {
+
+                const url =
+                    new URL(
+                        value,
+                        window.location.href
+                    );
+
+                if (
+                    url.protocol === "http:" ||
+                    url.protocol === "https:"
+                ) {
+                    return url.href;
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "INVALID URL:",
+                    value
+                );
+            }
+
+            return "";
+        }
+
+
+        /* =====================================================
+           ANNOUNCEMENT
+        ===================================================== */
+
+        async function loadAnnouncement() {
+
+            const section =
+                document.getElementById(
+                    "announcementSection"
+                );
+
+            const title =
+                document.getElementById(
+                    "announcementTitle"
+                );
+
+            const text =
+                document.getElementById(
+                    "announcementText"
+                );
+
+            if (!section) {
+                return;
+            }
+
+            try {
+
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from("shop_settings")
+                    .select("*")
+                    .limit(1)
+                    .maybeSingle();
+
+
+                if (error) {
+
+                    console.warn(
+                        "ANNOUNCEMENT LOAD ERROR:",
+                        error
+                    );
+
+                    section.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                if (!data) {
+
+                    section.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                const announcementText =
+                    data.announcement ??
+                    data.shop_announcement ??
+                    data.announcement_text ??
+                    data.announcement_message ??
+                    data.announcement_content ??
+                    "";
+
+
+                const enabledField =
+                    data.announcement_enabled ??
+                    data.announcementEnabled ??
+                    data.shop_announcement_enabled ??
+                    data.shopAnnouncementEnabled;
+
+
+                const isEnabled =
+                    enabledField === undefined ||
+                    enabledField === null
+                        ? true
+                        : Boolean(enabledField);
+
+
+                if (
+                    !isEnabled ||
+                    !String(announcementText).trim()
+                ) {
+
+                    section.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                if (title) {
+
+                    title.textContent =
+                        "Important Update";
+                }
+
+
+                if (text) {
+
+                    text.textContent =
+                        String(
+                            announcementText
+                        ).trim();
+                }
+
+
+                section.style.display =
+                    "block";
+
+
+            } catch (error) {
+
+                console.error(
+                    "ANNOUNCEMENT ERROR:",
+                    error
+                );
+
+                section.style.display =
+                    "none";
+            }
+        }
+
+
+        /* =====================================================
+           PROMOTIONAL COVERFLOW
+        ===================================================== */
+
+        const promotionalVideosSection =
+            document.getElementById(
+                "promotionalVideosSection"
+            );
+
+        const promotionalLoading =
+            document.getElementById(
+                "promotionalLoading"
+            );
+
+        const promotionalCoverflow =
+            document.getElementById(
+                "promotionalCoverflow"
+            );
+
+        const promotionalVideosGrid =
+            document.getElementById(
+                "promotionalVideosGrid"
+            );
+
+        const promotionalDots =
+            document.getElementById(
+                "promotionalDots"
+            );
+
+        const promotionalEmpty =
+            document.getElementById(
+                "promotionalEmpty"
+            );
+
+        const promotionalPrev =
+            document.getElementById(
+                "promotionalPrev"
+            );
+
+        const promotionalNext =
+            document.getElementById(
+                "promotionalNext"
+            );
+
+
+        let promotionalVideos = [];
+
+        let currentPromoIndex = 0;
+
+        let promotionalTimer = null;
+
+        let isPromoHovered = false;
+
+
+        /* =====================================================
+           LOAD PROMOTIONAL VIDEOS
+        ===================================================== */
+
+        async function loadPromotionalVideos() {
+
+            if (
+                !promotionalVideosSection ||
+                !promotionalLoading
+            ) {
+                return;
+            }
+
+            promotionalLoading.style.display =
+                "flex";
+
+            promotionalCoverflow.style.display =
+                "none";
+
+            promotionalDots.innerHTML =
+                "";
+
+            promotionalEmpty.style.display =
+                "none";
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from("promotional_videos")
+                    .select(`
+                        id,
+                        title,
+                        description,
+                        video_url,
+                        button_text,
+                        button_link,
+                        display_order,
+                        is_active
+                    `)
+                    .eq("is_active", true)
+                    .order(
+                        "display_order",
+                        {
+                            ascending: true
+                        }
+                    )
+                    .limit(3);
+
+
+                if (error) {
+
+                    console.error(
+                        "PROMOTIONAL VIDEO ERROR:",
+                        error
+                    );
+
+                    promotionalLoading.style.display =
+                        "none";
+
+                    promotionalVideosSection.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                promotionalVideos =
+                    Array.isArray(data)
+                        ? data
+                        : [];
+
+
+                if (
+                    promotionalVideos.length === 0
+                ) {
+
+                    promotionalLoading.style.display =
+                        "none";
+
+                    promotionalVideosSection.style.display =
+                        "none";
+
+                    return;
+                }
+
+
+                promotionalVideosSection.style.display =
+                    "block";
+
+
+                buildPromotionalCards();
+
+
+                promotionalLoading.style.display =
+                    "none";
+
+                promotionalCoverflow.style.display =
+                    "flex";
+
+
+                updatePromotionalCoverflow();
+
+                startPromotionalAutoplay();
+
+
+            } catch (error) {
+
+                console.error(
+                    "PROMOTIONAL LOAD ERROR:",
+                    error
+                );
+
+                promotionalLoading.style.display =
+                    "none";
+
+                promotionalVideosSection.style.display =
+                    "none";
+            }
+        }
+
+
+        /* =====================================================
+           BUILD PROMOTIONAL CARDS
+        ===================================================== */
+
+        function buildPromotionalCards() {
+
+            promotionalVideosGrid.innerHTML =
+                "";
+
+            promotionalDots.innerHTML =
+                "";
+
+
+            promotionalVideos.forEach(
+                (video, index) => {
+
+                    const title =
+                        escapeHtml(
+                            video.title ||
+                            `Promotion ${index + 1}`
+                        );
+
+                    const description =
+                        escapeHtml(
+                            video.description || ""
+                        );
+
+                    const videoUrl =
+                        safeUrl(
+                            video.video_url
+                        );
+
+                    const buttonText =
+                        escapeHtml(
+                            video.button_text ||
+                            "SHOP NOW"
+                        );
+
+                    const buttonLink =
+                        safeUrl(
+                            video.button_link
+                        );
+
+
+                    if (!videoUrl) {
+                        return;
+                    }
+
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+                    card.className =
+                        "promotional-card";
+
+                    card.dataset.index =
+                        index;
+
+
+                    card.innerHTML = `
+
+                        <div class="promotional-card-inner">
+
+                            <div class="promotional-video-wrapper">
+
+                                <video
+                                    class="promotional-video"
+                                    src="${videoUrl}"
+                                    controls
+                                    muted
+                                    playsinline
+                                    preload="metadata"
+                                ></video>
+
+                                <div
+                                    class="promotional-video-overlay"
+                                ></div>
+
+
+                                <div class="promotional-content">
+
+                                    <div class="promotional-number">
+                                        ${String(index + 1).padStart(2, "0")}
+                                    </div>
+
+                                    <h3>
+                                        ${title}
+                                    </h3>
+
+                                    ${
+                                        description
+                                            ? `
+                                                <p>
+                                                    ${description}
+                                                </p>
+                                              `
+                                            : ""
+                                    }
+
+                                    ${
+                                        buttonLink
+                                            ? `
+                                                <a
+                                                    class="promotional-button"
+                                                    href="${buttonLink}"
+                                                >
+                                                    ${buttonText}
+
+                                                    <span class="promotional-button-arrow">
+                                                        →
+                                                    </span>
+                                                </a>
+                                              `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+
+                    card.addEventListener(
+                        "click",
+                        (event) => {
+
+                            if (
+                                event.target.closest(
+                                    "video"
+                                ) ||
+                                event.target.closest(
+                                    "a"
+                                )
+                            ) {
+                                return;
+                            }
+
+                            currentPromoIndex =
+                                index;
+
+                            updatePromotionalCoverflow();
+
+                            restartPromotionalAutoplay();
+                        }
+                    );
+
+
+                    promotionalVideosGrid.appendChild(
+                        card
+                    );
+
+
+                    const dot =
+                        document.createElement(
+                            "button"
+                        );
+
+                    dot.type =
+                        "button";
+
+                    dot.className =
+                        "promotional-dot";
+
+                    dot.setAttribute(
+                        "aria-label",
+                        `Go to promotional video ${index + 1}`
+                    );
+
+                    dot.addEventListener(
+                        "click",
+                        () => {
+
+                            currentPromoIndex =
+                                index;
+
+                            updatePromotionalCoverflow();
+
+                            restartPromotionalAutoplay();
+                        }
+                    );
+
+
+                    promotionalDots.appendChild(
+                        dot
+                    );
+
+                }
+            );
+        }
+
+
+        /* =====================================================
+           PREVIOUS INDEX
+        ===================================================== */
+
+        function getPreviousIndex() {
+
+            if (
+                promotionalVideos.length === 0
+            ) {
+                return 0;
+            }
+
+            return (
+                currentPromoIndex -
+                1 +
+                promotionalVideos.length
+            ) %
+            promotionalVideos.length;
+        }
+
+
+        /* =====================================================
+           NEXT INDEX
+        ===================================================== */
+
+        function getNextIndex() {
+
+            if (
+                promotionalVideos.length === 0
+            ) {
+                return 0;
+            }
+
+            return (
+                currentPromoIndex +
+                1
+            ) %
+            promotionalVideos.length;
+        }
+
+
+        /* =====================================================
+           UPDATE COVERFLOW
+        ===================================================== */
+
+        function updatePromotionalCoverflow() {
+
+            const cards =
+                promotionalVideosGrid.querySelectorAll(
+                    ".promotional-card"
+                );
+
+            const dots =
+                promotionalDots.querySelectorAll(
+                    ".promotional-dot"
+                );
+
+
+            const previousIndex =
+                getPreviousIndex();
+
+            const nextIndex =
+                getNextIndex();
+
+
+            cards.forEach(
+                (card) => {
+
+                    const index =
+                        Number(
+                            card.dataset.index
+                        );
+
+
+                    card.classList.remove(
+                        "active",
+                        "prev",
+                        "next"
+                    );
+
+
+                    if (
+                        index ===
+                        currentPromoIndex
+                    ) {
+
+                        card.classList.add(
+                            "active"
+                        );
+
+                    } else if (
+                        index ===
+                        previousIndex
+                    ) {
+
+                        card.classList.add(
+                            "prev"
+                        );
+
+                    } else if (
+                        index ===
+                        nextIndex
+                    ) {
+
+                        card.classList.add(
+                            "next"
+                        );
+                    }
+
+                }
+            );
+
+
+            dots.forEach(
+                (dot, index) => {
+
+                    dot.classList.toggle(
+                        "active",
+                        index ===
+                        currentPromoIndex
+                    );
+
+                }
+            );
+
+
+            playCurrentVideo();
+        }
+
+
+        /* =====================================================
+           NEXT PROMOTIONAL VIDEO
+        ===================================================== */
+
+        function nextPromotionalVideo() {
+
+            if (
+                promotionalVideos.length <= 1
+            ) {
+                return;
+            }
+
+            currentPromoIndex =
+                getNextIndex();
+
+            updatePromotionalCoverflow();
+        }
+
+
+        /* =====================================================
+           PREVIOUS PROMOTIONAL VIDEO
+        ===================================================== */
+
+        function previousPromotionalVideo() {
+
+            if (
+                promotionalVideos.length <= 1
+            ) {
+                return;
+            }
+
+            currentPromoIndex =
+                getPreviousIndex();
+
+            updatePromotionalCoverflow();
+        }
+
+
+        /* =====================================================
+           PLAY CURRENT VIDEO
+        ===================================================== */
+
+        function playCurrentVideo() {
+
+            const videos =
+                promotionalVideosGrid.querySelectorAll(
+                    ".promotional-video"
+                );
+
+
+            videos.forEach(
+                (video, index) => {
+
+                    if (
+                        index !==
+                        currentPromoIndex
+                    ) {
+
+                        video.pause();
+
+                        video.currentTime =
+                            0;
+
+                        return;
+                    }
+
+
+                    video.muted =
+                        true;
+
+
+                    const playPromise =
+                        video.play();
+
+
+                    if (
+                        playPromise &&
+                        typeof playPromise.catch ===
+                        "function"
+                    ) {
+
+                        playPromise.catch(
+                            () => {}
+                        );
+                    }
+
+                }
+            );
+        }
+
+
+        /* =====================================================
+           START AUTOPLAY
+        ===================================================== */
+
+        function startPromotionalAutoplay() {
+
+            stopPromotionalAutoplay();
+
+
+            if (
+                promotionalVideos.length <= 1
+            ) {
+                return;
+            }
+
+
+            promotionalTimer =
+                setInterval(
+                    () => {
+
+                        if (
+                            isPromoHovered
+                        ) {
+                            return;
+                        }
+
+                        nextPromotionalVideo();
+
+                    },
+                    6000
+                );
+        }
+
+
+        /* =====================================================
+           STOP AUTOPLAY
+        ===================================================== */
+
+        function stopPromotionalAutoplay() {
+
+            if (
+                promotionalTimer
+            ) {
+
+                clearInterval(
+                    promotionalTimer
+                );
+
+                promotionalTimer =
+                    null;
+            }
+        }
+
+
+        /* =====================================================
+           RESTART AUTOPLAY
+        ===================================================== */
+
+        function restartPromotionalAutoplay() {
+
+            startPromotionalAutoplay();
+        }
+
+
+        /* =====================================================
+           ARROWS
+        ===================================================== */
+
+        promotionalPrev?.addEventListener(
+            "click",
+            () => {
+
+                previousPromotionalVideo();
+
+                restartPromotionalAutoplay();
+            }
+        );
+
+
+        promotionalNext?.addEventListener(
+            "click",
+            () => {
+
+                nextPromotionalVideo();
+
+                restartPromotionalAutoplay();
+            }
+        );
+
+
+        /* =====================================================
+           HOVER PAUSE
+        ===================================================== */
+
+        promotionalCoverflow?.addEventListener(
+            "mouseenter",
+            () => {
+
+                isPromoHovered =
+                    true;
+            }
+        );
+
+
+        promotionalCoverflow?.addEventListener(
+            "mouseleave",
+            () => {
+
+                isPromoHovered =
+                    false;
+            }
+        );
+
+
+        /* =====================================================
+           MOBILE SWIPE
+        ===================================================== */
+
+        let promoTouchStartX =
+            0;
+
+        let promoTouchEndX =
+            0;
+
+
+        promotionalCoverflow?.addEventListener(
+            "touchstart",
+            (event) => {
+
+                promoTouchStartX =
+                    event.changedTouches[0].screenX;
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        promotionalCoverflow?.addEventListener(
+            "touchend",
+            (event) => {
+
+                promoTouchEndX =
+                    event.changedTouches[0].screenX;
+
+
+                const difference =
+                    promoTouchStartX -
+                    promoTouchEndX;
+
+
+                if (
+                    Math.abs(difference) <
+                    50
+                ) {
+                    return;
+                }
+
+
+                if (
+                    difference > 0
+                ) {
+
+                    nextPromotionalVideo();
+
+                } else {
+
+                    previousPromotionalVideo();
+
+                }
+
+
+                restartPromotionalAutoplay();
+            },
+            {
+                passive: true
+            }
+        );
+
+
+        /* =====================================================
+           VISIBILITY CHANGE
+        ===================================================== */
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.hidden
+                ) {
+
+                    stopPromotionalAutoplay();
+
+                } else {
+
+                    if (
+                        promotionalVideos.length >
+                        1
+                    ) {
+
+                        startPromotionalAutoplay();
+
+                        playCurrentVideo();
+                    }
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           LOAD CUSTOMER ORDERS / STATS
+        ===================================================== */
+
+        async function loadCustomerStats() {
+
+            if (!currentUser?.id) {
+                return;
+            }
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from("orders")
+                    .select("id,status")
+                    .eq(
+                        "user_id",
+                        currentUser.id
+                    );
+
+
+                if (error) {
+
+                    console.warn(
+                        "CUSTOMER ORDER STATS:",
+                        error.message
+                    );
+
+
+                    if (statOrders) {
+                        statOrders.textContent =
+                            "0";
+                    }
+
+                    if (statActiveOrders) {
+                        statActiveOrders.textContent =
+                            "0";
+                    }
+
+                    return;
+                }
+
+
+                const orders =
+                    Array.isArray(data)
+                        ? data
+                        : [];
+
+
+                if (statOrders) {
+
+                    statOrders.textContent =
+                        orders.length;
+                }
+
+
+                const completedStatuses = [
+                    "completed",
+                    "cancelled",
+                    "cancelled_by_customer",
+                    "cancelled_by_admin",
+                    "delivered"
+                ];
+
+
+                const activeOrders =
+                    orders.filter(
+                        (order) => {
+
+                            const status =
+                                String(
+                                    order.status ||
+                                    ""
+                                )
+                                .toLowerCase()
+                                .trim();
+
+
+                            return !completedStatuses.includes(
+                                status
+                            );
+
+                        }
+                    );
+
+
+                if (statActiveOrders) {
+
+                    statActiveOrders.textContent =
+                        activeOrders.length;
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "ORDER STATS ERROR:",
+                    error
+                );
+
+            }
+        }
+
+
+        /* =====================================================
+           LOAD CUSTOMER
+        ===================================================== */
+
+        async function loadCustomer() {
+
+            console.log(
+                "CUSTOMER HOME STARTING..."
+            );
+
+
+            const user =
+                await getCurrentUser();
+
+
+            /* =============================================
+               NOT LOGGED IN
+            ============================================== */
+
+            if (!user) {
+
+                console.log(
+                    "NO CUSTOMER SESSION → LOGIN"
+                );
+
+                window.location.href =
+                    "../login.html";
+
+                return;
+            }
+
+
+            /* =============================================
+               SAVE CURRENT USER
+            ============================================== */
+
+            currentUser =
+                user;
+
+
+            console.log(
+                "CUSTOMER LOGGED IN:",
+                user.email
+            );
+
+
+            console.log(
+                "CUSTOMER CART KEY:",
+                getCartKey()
+            );
+
+
+            /* =============================================
+               CUSTOMER NAME
+            ============================================== */
+
+            const metadata =
+                user.user_metadata || {};
+
+
+            const fullName =
+                metadata.full_name ||
+                metadata.name ||
+                user.email?.split("@")[0] ||
+                "Customer";
+
+
+            const firstLetter =
+                fullName
+                    .trim()
+                    .charAt(0)
+                    .toUpperCase() ||
+                "?";
+
+
+            /* =============================================
+               DISPLAY CUSTOMER NAME
+            ============================================== */
+
+            if (customerName) {
+
+                customerName.textContent =
+                    fullName;
+            }
+
+
+            if (accountName) {
+
+                accountName.textContent =
+                    fullName;
+            }
+
+
+            if (accountEmail) {
+
+                accountEmail.textContent =
+                    user.email || "";
+            }
+
+
+            if (accountAvatar) {
+
+                accountAvatar.textContent =
+                    firstLetter;
+            }
+
+
+            /* =============================================
+               CART COUNT
+            ============================================== */
+
+            updateCartCount();
+
+
+            /* =============================================
+               LOAD ANNOUNCEMENT
+            ============================================== */
+
+            await loadAnnouncement();
+
+
+            /* =============================================
+               LOAD ORDER STATS
+            ============================================== */
+
+            await loadCustomerStats();
+
+
+            /* =============================================
+               LOAD PROMOTIONAL VIDEOS
+            ============================================== */
+
+            await loadPromotionalVideos();
+
+
+            console.log(
+                "CUSTOMER HOME READY"
+            );
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        logoutBtn?.addEventListener(
+            "click",
+            async () => {
+
+                logoutBtn.disabled =
+                    true;
+
+                logoutBtn.textContent =
+                    "Logging out...";
+
+
+                const success =
+                    await logoutUser();
+
+
+                if (!success) {
+
+                    console.error(
+                        "LOGOUT FAILED"
+                    );
+
+                    logoutBtn.disabled =
+                        false;
+
+                    logoutBtn.textContent =
+                        "Logout";
+
+                    alert(
+                        "Unable to logout. Please try again."
+                    );
+
+                    return;
+                }
+
+
+                console.log(
+                    "CUSTOMER LOGGED OUT"
+                );
+
+
+                window.location.href =
+                    "../login.html";
+
+            }
+        );
+
+
+        /* =====================================================
+           CART STORAGE UPDATE
+        ===================================================== */
+
+        window.addEventListener(
+            "storage",
+            () => {
+
+                if (!currentUser?.id) {
+                    return;
+                }
+
+                updateCartCount();
+
+            }
+        );
+
+
+        /* =====================================================
+           PAGE SHOW
+        ===================================================== */
+
+        window.addEventListener(
+            "pageshow",
+            () => {
+
+                if (!currentUser?.id) {
+                    return;
+                }
+
+                updateCartCount();
+
+                loadCustomerStats();
+
+            }
+        );
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadCustomer();
+
+    </script>
+
+</body>
+
+</html>

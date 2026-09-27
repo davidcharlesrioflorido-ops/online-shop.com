@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="description"
+    content="Explore available products from Business Store."
+>
+
+<title>Products | Business Store</title>
+
+
+<!-- =====================================================
+     SHARED STYLE
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+
+
+<!-- =====================================================
+     PRODUCTS STYLE
+====================================================== -->
+
+<link
+    rel="stylesheet"
+    href="css/products.css"
+>
+
+
+<!-- =====================================================
+     PRODUCTS PAGE FINAL OVERRIDES
+====================================================== -->
+
+<style>
+
+/* =====================================================
+   GLOBAL
+====================================================== */
+
+html,
+body {
+
+    max-width: 100%;
+
+    overflow-x: hidden;
+
+}
+
+
+/* =====================================================
+   PRODUCTS HERO
+====================================================== */
+
+.products-hero {
+
+    position: relative;
+
+    width: 100%;
+
+    min-height: 330px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    isolation: isolate;
+
+    background: #070a10;
+
+}
+
+
+/* =====================================================
+   DEFAULT HERO BACKGROUND
+====================================================== */
+
+.products-hero::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -50px;
+
+    z-index: -2;
+
+    background-image:
+        var(
+            --shop-banner-image,
+            none
+        );
+
+    background-position: center center;
+
+    background-repeat: no-repeat;
+
+    background-size: cover;
+
+    filter: blur(35px);
+
+    transform: scale(1.12);
+
+    opacity: 0.95;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   HERO OVERLAY
+====================================================== */
+
+.products-hero::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: -1;
+
+    background:
+        rgba(7, 10, 16, 0.03);
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   HERO CONTAINER
+====================================================== */
+
+.products-hero .section-container {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+}
+
+
+/* =====================================================
+   NORMAL HERO CONTENT
+====================================================== */
+
+.products-hero-content {
+
+    max-width: 600px;
+
+    padding: 30px 0;
+
+}
+
+
+.products-hero-content h1 {
+
+    line-height: 1.05;
+
+    margin-bottom: 12px;
+
+}
+
+
+.products-hero-content p {
+
+    max-width: 540px;
+
+    line-height: 1.65;
+
+}
+
+
+/* =====================================================
+   ACTUAL SHOP BANNER IMAGE
+
+   IMPORTANT:
+   The real uploaded image stays completely visible.
+====================================================== */
+
+.products-hero-banner-image {
+
+    position: relative !important;
+
+    z-index: 5 !important;
+
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    max-width: 100% !important;
+
+    max-height: none !important;
+
+    min-width: 0 !important;
+
+    min-height: 0 !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    border: 0 !important;
+
+    outline: 0 !important;
+
+    object-fit: contain !important;
+
+    object-position: center center !important;
+
+    transform: none !important;
+
+}
+
+
+/* =====================================================
+   BANNER EXISTS
+
+   The actual image determines its natural height.
+   This prevents cropping.
+====================================================== */
+
+.products-hero.has-shop-banner {
+
+    position: relative !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    padding: 0 !important;
+
+    margin: 0 !important;
+
+    display: block !important;
+
+    overflow: hidden !important;
+
+    background: #070a10 !important;
+
+}
+
+
+/* =====================================================
+   BANNER BACKGROUND
+
+   Same uploaded image, blurred.
+====================================================== */
+
+.products-hero.has-shop-banner::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -60px;
+
+    z-index: 0;
+
+    background-image:
+        var(
+            --shop-banner-image,
+            none
+        );
+
+    background-position: center center;
+
+    background-repeat: no-repeat;
+
+    background-size: cover;
+
+    filter: blur(35px);
+
+    transform: scale(1.12);
+
+    opacity: 0.95;
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   BANNER OVERLAY
+====================================================== */
+
+.products-hero.has-shop-banner::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 1;
+
+    background:
+        rgba(7, 10, 16, 0.02);
+
+    pointer-events: none;
+
+}
+
+
+/* =====================================================
+   HIDE NORMAL HERO CONTENT WHEN BANNER EXISTS
+====================================================== */
+
+.products-hero.has-shop-banner
+.section-container {
+
+    display: none !important;
+
+}
+
+
+.products-hero.has-shop-banner
+.products-hero-content {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   BANNER IMAGE WHEN ACTIVE
+====================================================== */
+
+.products-hero.has-shop-banner
+.products-hero-banner-image {
+
+    position: relative !important;
+
+    top: auto !important;
+
+    left: auto !important;
+
+    right: auto !important;
+
+    bottom: auto !important;
+
+    z-index: 5 !important;
+
+    display: block !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    max-width: 100% !important;
+
+    max-height: none !important;
+
+    min-width: 0 !important;
+
+    min-height: 0 !important;
+
+    margin: 0 !important;
+
+    padding: 0 !important;
+
+    object-fit: contain !important;
+
+    object-position: center center !important;
+
+    transform: none !important;
+
+}
+
+
+/* =====================================================
+   NO BANNER
+
+   Restore normal hero.
+====================================================== */
+
+.products-hero:not(.has-shop-banner) {
+
+    min-height: 330px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   NO BANNER IMAGE
+====================================================== */
+
+.products-hero:not(.has-shop-banner)
+.products-hero-banner-image {
+
+    display: none !important;
+
+}
+
+
+/* =====================================================
+   PRODUCT GRID - DESKTOP
+====================================================== */
+
+.product-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            4,
+            minmax(0, 1fr)
+        );
+
+    gap: 22px;
+
+    width: 100%;
+
+}
+
+
+.product-grid > * {
+
+    min-width: 0;
+
+    max-width: 100%;
+
+}
+
+
+/* =====================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 1100px) {
+
+    .product-grid {
+
+        grid-template-columns:
+            repeat(
+                3,
+                minmax(0, 1fr)
+            );
+
+        gap: 18px;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 700px) {
+
+
+    /* -------------------------------------------------
+       BANNER
+    ------------------------------------------------- */
+
+    .products-hero.has-shop-banner {
+
+        height: auto !important;
+
+        min-height: 0 !important;
+
+        max-height: none !important;
+
+        padding: 0 !important;
+
+        margin: 0 !important;
+
+    }
+
+
+    .products-hero.has-shop-banner
+    .products-hero-banner-image {
+
+        width: 100% !important;
+
+        height: auto !important;
+
+        max-width: 100% !important;
+
+        max-height: none !important;
+
+        object-fit: contain !important;
+
+        object-position: center center !important;
+
+    }
+
+
+    /* -------------------------------------------------
+       NORMAL HERO
+    ------------------------------------------------- */
+
+    .products-hero:not(.has-shop-banner) {
+
+        min-height: 280px;
+
+        padding: 0;
+
+    }
+
+
+    .products-hero-content {
+
+        padding: 20px 0;
+
+    }
+
+
+    .products-hero-content h1 {
+
+        font-size:
+            clamp(
+                27px,
+                8vw,
+                38px
+            );
+
+        line-height: 1.05;
+
+    }
+
+
+    .products-hero-content p {
+
+        font-size: 13px;
+
+        line-height: 1.5;
+
+        max-width: 330px;
+
+    }
+
+
+    /* -------------------------------------------------
+       EXACTLY 2 PRODUCTS PER ROW
+    ------------------------------------------------- */
+
+    .product-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 12px;
+
+    }
+
+
+    .product-grid > * {
+
+        width: 100%;
+
+        min-width: 0;
+
+        max-width: 100%;
+
+    }
+
+
+    .product-grid img {
+
+        width: 100%;
+
+        max-width: 100%;
+
+        height: auto;
+
+        object-fit: contain;
+
+    }
+
+
+    .product-grid h3,
+    .product-grid h4,
+    .product-grid p {
+
+        max-width: 100%;
+
+        overflow-wrap: anywhere;
+
+        word-break: break-word;
+
+    }
+
+
+    /* -------------------------------------------------
+       CTA
+    ------------------------------------------------- */
+
+    .products-cta-card {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 18px;
+
+    }
+
+
+    .products-cta-card
+    .primary-button {
+
+        width: 100%;
+
+        justify-content: center;
+
+    }
+
+}
+
+
+/* =====================================================
+   SMALL PHONES
+====================================================== */
+
+@media (max-width: 420px) {
+
+
+    /* -------------------------------------------------
+       BANNER
+    ------------------------------------------------- */
+
+    .products-hero.has-shop-banner {
+
+        height: auto !important;
+
+        min-height: 0 !important;
+
+        max-height: none !important;
+
+    }
+
+
+    .products-hero.has-shop-banner
+    .products-hero-banner-image {
+
+        width: 100% !important;
+
+        height: auto !important;
+
+        max-width: 100% !important;
+
+        max-height: none !important;
+
+        object-fit: contain !important;
+
+    }
+
+
+    /* -------------------------------------------------
+       NORMAL HERO
+    ------------------------------------------------- */
+
+    .products-hero:not(.has-shop-banner) {
+
+        min-height: 245px;
+
+    }
+
+
+    .products-hero-content {
+
+        padding: 15px 0;
+
+    }
+
+
+    .products-hero-content
+    .section-eyebrow {
+
+        font-size: 9px;
+
+        letter-spacing: 1.4px;
+
+    }
+
+
+    .products-hero-content h1 {
+
+        font-size: 25px;
+
+        margin-bottom: 7px;
+
+    }
+
+
+    .products-hero-content p {
+
+        font-size: 11px;
+
+        line-height: 1.45;
+
+        max-width: 280px;
+
+    }
+
+
+    /* -------------------------------------------------
+       EXACTLY 2 PRODUCTS
+    ------------------------------------------------- */
+
+    .product-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 9px;
+
+    }
+
+}
+
+
+/* =====================================================
+   IMAGE SAFETY
+====================================================== */
+
+img {
+
+    max-width: 100%;
+
+}
+
+
+/* =====================================================
+   BANNER IMAGE SAFETY
+====================================================== */
+
+.products-hero.has-shop-banner img {
+
+    vertical-align: middle;
+
+}
+
+
+/* =====================================================
+   PREVENT HORIZONTAL OVERFLOW
+====================================================== */
+
+.products-hero,
+.products-page-section,
+.products-cta,
+.product-grid {
+
+    max-width: 100%;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     BACKGROUND EFFECTS
+====================================================== -->
+
+<div class="page-glow glow-one"></div>
+
+<div class="page-glow glow-two"></div>
+
+
+<!-- =====================================================
+     SHOP ANNOUNCEMENT
+====================================================== -->
+
+<div
+    class="shop-announcement"
+    data-shop-announcement
+    style="display: none;"
+></div>
+
+
+<!-- =====================================================
+     NAVIGATION
+====================================================== -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="logo"
+            aria-label="Business Store Home"
+        >
+
+            <span class="logo-icon">
+
+                <span class="logo-fallback">
+                    ✦
+                </span>
+
+                <img
+                    src=""
+                    alt="Shop Logo"
+                    class="shop-logo"
+                    data-shop-logo
+                    style="display: none;"
+                >
+
+            </span>
+
+
+            <span
+                class="logo-text"
+                data-shop-name
+            >
+                Business Store
+            </span>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <nav
+            class="desktop-nav"
+            aria-label="Main navigation"
+        >
+
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                Home
+            </a>
+
+
+            <a
+                href="products.html"
+                class="nav-link active"
+            >
+                Products
+            </a>
+
+
+            <a
+                href="request.html"
+                class="nav-link"
+            >
+                Request
+            </a>
+
+        </nav>
+
+
+        <!-- NAV ACTIONS -->
+
+        <div class="nav-actions">
+
+
+            <a
+                href="login.html"
+                class="cart-button"
+                id="headerCartButton"
+                aria-label="Shopping Cart"
+            >
+
+                <span class="cart-icon">
+                    🛒
+                </span>
+
+                <span class="cart-text">
+                    Cart
+                </span>
+
+                <span
+                    id="cartCount"
+                    class="cart-badge"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="login.html"
+                class="admin-button"
+            >
+                Login
+            </a>
+
+        </div>
+
+
+        <!-- MOBILE BUTTON -->
+
+        <button
+            type="button"
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <div
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="index.html">
+            Home
+        </a>
+
+
+        <a
+            href="products.html"
+            class="active"
+        >
+            Products
+        </a>
+
+
+        <a href="request.html">
+            Request
+        </a>
+
+
+        <a href="login.html">
+            🛒 Cart
+        </a>
+
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main>
+
+
+    <!-- =================================================
+         PRODUCTS HERO / SHOP BANNER
+    ================================================== -->
+
+    <section
+        class="products-hero"
+        data-shop-banner
+    >
+
+        <div class="section-container">
+
+
+            <!-- =================================================
+                 DEFAULT HERO CONTENT
+
+                 Automatically hidden when a banner exists.
+            ================================================= -->
+
+            <div class="products-hero-content">
+
+                <p class="section-eyebrow">
+                    OUR COLLECTION
+                </p>
+
+
+                <h1>
+
+                    Explore Our
+
+                    <span>
+                        Products.
+                    </span>
+
+                </h1>
+
+
+                <p data-shop-description>
+
+                    Browse our available products,
+                    choose what you need, and shop
+                    with ease.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PRODUCTS
+    ================================================== -->
+
+    <section class="products-page-section">
+
+        <div class="section-container">
+
+
+            <div class="products-toolbar">
+
+                <div>
+
+                    <p class="section-eyebrow">
+                        AVAILABLE NOW
+                    </p>
+
+
+                    <h2>
+                        All Products
+                    </h2>
+
+                </div>
+
+
+                <div class="product-page-info">
+
+                    <span>
+                        Quality products
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="product-grid"
+                id="productGrid"
+            >
+
+                <div class="loading-products">
+
+                    <div
+                        class="loading-spinner"
+                    ></div>
+
+
+                    <span>
+                        Loading products...
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         CART CTA
+    ================================================== -->
+
+    <section class="products-cta">
+
+        <div class="section-container">
+
+            <div class="products-cta-card">
+
+
+                <div class="products-cta-content">
+
+                    <p class="section-eyebrow">
+                        YOUR SHOPPING CART
+                    </p>
+
+
+                    <h2>
+                        Ready to checkout?
+                    </h2>
+
+
+                    <p>
+
+                        Review the products you've
+                        added to your cart.
+
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="login.html"
+                    class="primary-button"
+                    id="viewCartButton"
+                >
+
+                    View Cart
+
+                    <span>
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="logo"
+                aria-label="Business Store Home"
+            >
+
+                <span class="logo-icon">
+
+                    <span class="logo-fallback">
+                        ✦
+                    </span>
+
+
+                    <img
+                        src=""
+                        alt="Shop Logo"
+                        class="shop-logo"
+                        data-shop-logo
+                        style="display: none;"
+                    >
+
+                </span>
+
+
+                <span
+                    class="logo-text"
+                    data-shop-name
+                >
+                    Business Store
+                </span>
+
+            </a>
+
+
+            <p data-shop-description>
+                Modern shopping made simple.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+
+                © 2026
+
+                <span data-shop-name>
+                    Business Store
+                </span>
+
+            </span>
+
+
+            <span>
+                All Rights Reserved.
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     STORE JAVASCRIPT
+====================================================== -->
+
+<script
+    type="module"
+    src="js/store.js"
+></script>
+
+
+<!-- =====================================================
+     STORE SETTINGS
+====================================================== -->
+
+<script
+    type="module"
+    src="js/store-settings.js"
+></script>
+
+
+<!-- =====================================================
+     MOBILE MENU
+====================================================== -->
+
+<script>
+
+const mobileMenuButton =
+    document.getElementById(
+        "mobileMenuButton"
+    );
+
+
+const mobileNav =
+    document.getElementById(
+        "mobileNav"
+    );
+
+
+if (
+    mobileMenuButton &&
+    mobileNav
+) {
+
+    mobileMenuButton.addEventListener(
+        "click",
+        () => {
+
+            const isOpen =
+                mobileNav.classList.toggle(
+                    "open"
+                );
+
+
+            mobileMenuButton.classList.toggle(
+                "active"
+            );
+
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                String(isOpen)
+            );
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(
+            ".mobile-nav a"
+        )
+        .forEach(link => {
+
+            link.addEventListener(
+                "click",
+                () => {
+
+                    mobileNav.classList.remove(
+                        "open"
+                    );
+
+
+                    mobileMenuButton.classList.remove(
+                        "active"
+                    );
+
+
+                    mobileMenuButton.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                }
+            );
+
+        });
+
+}
+
+</script>
+
+
+<!-- =====================================================
+     CART / LOGIN PROTECTION
+====================================================== -->
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+/* =====================================================
+   CHECK LOGIN
+====================================================== */
+
+async function checkLogin() {
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabase.auth.getSession();
+
+
+        if (error) {
+
+            console.error(
+                "SESSION CHECK ERROR:",
+                error
+            );
+
+            return false;
+
+        }
+
+
+        return !!data?.session;
+
+    } catch (error) {
+
+        console.error(
+            "SESSION CHECK ERROR:",
+            error
+        );
+
+        return false;
+
+    }
+
+}
+
+
+/* =====================================================
+   VIEW CART
+====================================================== */
+
+const viewCartButton =
+    document.getElementById(
+        "viewCartButton"
+    );
+
+
+if (viewCartButton) {
+
+    viewCartButton.addEventListener(
+        "click",
+        async event => {
+
+            event.preventDefault();
+
+
+            const loggedIn =
+                await checkLogin();
+
+
+            if (!loggedIn) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "cart.html";
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   HEADER CART
+====================================================== */
+
+const headerCartButton =
+    document.getElementById(
+        "headerCartButton"
+    );
+
+
+if (headerCartButton) {
+
+    headerCartButton.addEventListener(
+        "click",
+        async event => {
+
+            event.preventDefault();
+
+
+            const loggedIn =
+                await checkLogin();
+
+
+            if (!loggedIn) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "cart.html";
+
+        }
+    );
+
+}
+
+</script>
+
+
+</body>
+
+</html>

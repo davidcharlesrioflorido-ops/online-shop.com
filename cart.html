@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Cart | Business Store</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/cart.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           CART PAGE OVERRIDE
+        ===================================================== */
+
+        .cart-page .product-actions,
+        .cart-page .cart-btn,
+        .cart-page .buy-btn,
+        .cart-page .buy-now-btn,
+        .cart-page .product-btn,
+        .cart-page .add-to-cart,
+        .cart-page .add-cart-btn,
+        .cart-page .buy-button {
+            display: none !important;
+        }
+
+
+        /* =====================================================
+           LOGIN LINK
+        ===================================================== */
+
+        #loginNav,
+        #mobileLoginLink {
+            text-decoration: none;
+        }
+
+
+        /* =====================================================
+           QUANTITY CONTROLS
+        ===================================================== */
+
+        .cart-item .quantity-controls {
+            display: inline-flex;
+        }
+
+
+        /* =====================================================
+           CHECKOUT
+        ===================================================== */
+
+        #checkoutBtn {
+            width: 100%;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .nav-actions {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND
+    ====================================================== -->
+
+    <div class="page-glow glow-one"></div>
+    <div class="page-glow glow-two"></div>
+
+
+    <!-- =====================================================
+         SHOP ANNOUNCEMENT
+    ====================================================== -->
+
+    <div
+        class="shop-announcement"
+        data-shop-announcement
+        style="display: none;"
+    ></div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <header class="navbar cart-header">
+
+        <div class="nav-container">
+
+
+            <!-- =================================================
+                 LOGO
+            ================================================== -->
+
+            <a
+                href="../index.html"
+                class="logo"
+                aria-label="Business Store Home"
+            >
+
+                <span class="logo-icon">
+
+                    <span class="logo-fallback">
+                        ✦
+                    </span>
+
+                    <img
+                        src=""
+                        alt="Shop Logo"
+                        class="shop-logo"
+                        data-shop-logo
+                        style="display: none;"
+                    >
+
+                </span>
+
+
+                <span
+                    class="logo-text"
+                    data-shop-name
+                >
+                    Business Store
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 DESKTOP NAVIGATION
+            ================================================== -->
+
+            <nav
+                class="desktop-nav"
+                aria-label="Main navigation"
+            >
+
+
+                <!-- HOME -->
+
+                <a
+                    href="../index.html"
+                    class="nav-link"
+                    id="navHome"
+                >
+                    Home
+                </a>
+
+
+                <!-- PRODUCTS -->
+
+                <a
+                    href="../products.html"
+                    class="nav-link"
+                    id="navProducts"
+                >
+                    Products
+                </a>
+
+
+                <!-- REQUEST -->
+
+                <a
+                    href="../request.html"
+                    class="nav-link"
+                    id="navRequest"
+                >
+                    Request
+                </a>
+
+            </nav>
+
+
+            <!-- =================================================
+                 NAV ACTIONS
+            ================================================== -->
+
+            <div class="nav-actions">
+
+
+                <!-- CART -->
+
+                <a
+                    href="./customer-cart.html"
+                    class="cart-button active"
+                    id="customerCartNav"
+                    aria-label="Shopping Cart"
+                >
+
+                    <span class="cart-icon">
+                        🛒
+                    </span>
+
+                    <span class="cart-text">
+                        Cart
+                    </span>
+
+                    <span
+                        id="cartCount"
+                        class="cart-badge"
+                        style="display: none;"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- LOGIN -->
+
+                <a
+                    href="../login.html"
+                    class="login-button"
+                    id="loginNav"
+                >
+                    Login
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 MOBILE MENU BUTTON
+            ================================================== -->
+
+            <button
+                type="button"
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </div>
+
+
+        <!-- =====================================================
+             MOBILE NAVIGATION
+        ====================================================== -->
+
+        <div
+            class="mobile-nav"
+            id="mobileNav"
+        >
+
+
+            <!-- HOME -->
+
+            <a
+                href="../index.html"
+                id="mobileHomeLink"
+            >
+                Home
+            </a>
+
+
+            <!-- PRODUCTS -->
+
+            <a
+                href="../products.html"
+                id="mobileProductsLink"
+            >
+                Products
+            </a>
+
+
+            <!-- REQUEST -->
+
+            <a
+                href="../request.html"
+                id="mobileRequestLink"
+            >
+                Request
+            </a>
+
+
+            <!-- CART -->
+
+            <a
+                href="./customer-cart.html"
+                class="active"
+                id="mobileCartLink"
+            >
+                🛒 Cart
+            </a>
+
+
+            <!-- LOGIN -->
+
+            <a
+                href="../login.html"
+                id="mobileLoginLink"
+            >
+                Login
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="cart-page">
+
+
+        <!-- =================================================
+             CART HERO
+        ================================================== -->
+
+        <section class="cart-hero">
+
+            <div class="cart-container">
+
+                <div class="cart-hero-content">
+
+                    <span class="cart-eyebrow">
+                        YOUR SHOPPING CART
+                    </span>
+
+
+                    <h1>
+
+                        Review Your
+                        <span>Items.</span>
+
+                    </h1>
+
+
+                    <p data-shop-description>
+
+                        Check your selected products before
+                        continuing to checkout.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CART CONTENT
+        ================================================== -->
+
+        <section class="cart-section">
+
+            <div class="cart-container">
+
+                <div class="cart-layout">
+
+
+                    <!-- =====================================
+                         CART ITEMS
+                    ====================================== -->
+
+                    <section class="cart-items-panel">
+
+
+                        <div class="cart-panel-header">
+
+                            <div>
+
+                                <span class="cart-eyebrow">
+                                    SELECTED ITEMS
+                                </span>
+
+                                <h2>
+                                    Your Cart
+                                </h2>
+
+                            </div>
+
+
+                            <div
+                                class="cart-item-count"
+                                id="cartCountText"
+                            >
+                                0 Items
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            id="cartItems"
+                            class="cart-items"
+                        >
+
+                            <div class="cart-loading">
+
+                                <div class="loading-spinner"></div>
+
+                                <p>
+                                    Loading cart...
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONTINUE SHOPPING -->
+
+                        <a
+                            href="../products.html"
+                            class="continue-shopping"
+                            id="continueShoppingLink"
+                        >
+
+                            <span class="continue-arrow">
+                                ←
+                            </span>
+
+                            <span>
+                                Continue Shopping
+                            </span>
+
+                        </a>
+
+                    </section>
+
+
+                    <!-- =====================================
+                         ORDER SUMMARY
+                    ====================================== -->
+
+                    <aside
+                        class="cart-summary"
+                        aria-label="Order Summary"
+                    >
+
+                        <div class="summary-top">
+
+                            <span class="cart-eyebrow">
+                                ORDER SUMMARY
+                            </span>
+
+                            <h2>
+                                Summary
+                            </h2>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Items
+                            </span>
+
+                            <strong id="cartCountSummary">
+                                0
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Subtotal
+                            </span>
+
+                            <strong id="cartSubtotal">
+                                ₱0.00
+                            </strong>
+
+                        </div>
+
+
+                        <div class="summary-row">
+
+                            <span>
+                                Delivery Fee
+                            </span>
+
+                            <strong
+                                id="deliveryFee"
+                                data-delivery-fee
+                            >
+                                ₱0.00
+                            </strong>
+
+                        </div>
+
+
+                        <div
+                            id="minimumOrderNotice"
+                            class="minimum-order-notice"
+                            style="display: none;"
+                        >
+
+                            <span class="notice-icon">
+                                !
+                            </span>
+
+                            <p>
+
+                                Minimum order:
+
+                                <strong data-minimum-order>
+                                    ₱0.00
+                                </strong>
+
+                            </p>
+
+                        </div>
+
+
+                        <div class="summary-divider"></div>
+
+
+                        <div class="summary-total">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong id="cartTotal">
+                                ₱0.00
+                            </strong>
+
+                        </div>
+
+
+                        <!-- CHECKOUT -->
+
+                        <button
+                            type="button"
+                            id="checkoutBtn"
+                            class="checkout-button"
+                            disabled
+                        >
+
+                            <span>
+                                Proceed to Checkout
+                            </span>
+
+                            <span class="checkout-arrow">
+                                →
+                            </span>
+
+                        </button>
+
+
+                        <div class="delivery-information">
+
+                            <span class="cart-eyebrow">
+                                DELIVERY INFORMATION
+                            </span>
+
+                            <p data-delivery-information>
+                                Delivery information will
+                                appear here.
+                            </p>
+
+                        </div>
+
+                    </aside>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="cart-footer">
+
+        <div class="footer-container">
+
+            <div class="footer-bottom">
+
+                <span>
+
+                    © 2026
+
+                    <span data-shop-name>
+                        Business Store
+                    </span>
+
+                </span>
+
+
+                <span>
+                    All Rights Reserved.
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         SHOP SETTINGS
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="../js/store-settings.js"
+    ></script>
+
+
+    <!-- =====================================================
+         CUSTOMER CART SYSTEM
+    ====================================================== -->
+
+    <script type="module">
+
+        import { supabase } from "../js/supabase.js";
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const cartItemsElement =
+            document.getElementById("cartItems");
+
+        const cartCount =
+            document.getElementById("cartCount");
+
+        const cartCountText =
+            document.getElementById("cartCountText");
+
+        const cartCountSummary =
+            document.getElementById("cartCountSummary");
+
+        const cartSubtotal =
+            document.getElementById("cartSubtotal");
+
+        const deliveryFeeElement =
+            document.getElementById("deliveryFee");
+
+        const cartTotal =
+            document.getElementById("cartTotal");
+
+        const checkoutBtn =
+            document.getElementById("checkoutBtn");
+
+        const minimumOrderNotice =
+            document.getElementById("minimumOrderNotice");
+
+        const deliveryInformation =
+            document.querySelector(
+                "[data-delivery-information]"
+            );
+
+        const loginNav =
+            document.getElementById("loginNav");
+
+        const mobileLoginLink =
+            document.getElementById("mobileLoginLink");
+
+        const customerCartNav =
+            document.getElementById("customerCartNav");
+
+        const mobileCartLink =
+            document.getElementById("mobileCartLink");
+
+
+        /* =====================================================
+           STATE
+        ===================================================== */
+
+        let currentUser = null;
+
+        let cart = [];
+
+        let deliveryFee = 0;
+
+        let minimumOrder = 0;
+
+
+        /* =====================================================
+           FORMAT PRICE
+        ===================================================== */
+
+        function formatPrice(value) {
+
+            const number =
+                Number(value) || 0;
+
+            return "₱" +
+                number.toLocaleString(
+                    "en-PH",
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        /* =====================================================
+           USER CART KEY
+        ===================================================== */
+
+        function getCartKey() {
+
+            if (!currentUser?.id) {
+                return null;
+            }
+
+            return `businessStoreCart_${currentUser.id}`;
+
+        }
+
+
+        /* =====================================================
+           LOAD CART
+        ===================================================== */
+
+        function loadCart() {
+
+            const key =
+                getCartKey();
+
+            if (!key) {
+
+                cart = [];
+
+                return;
+
+            }
+
+
+            try {
+
+                const saved =
+                    localStorage.getItem(key);
+
+                const parsed =
+                    JSON.parse(
+                        saved || "[]"
+                    );
+
+                cart =
+                    Array.isArray(parsed)
+                        ? parsed
+                        : [];
+
+            } catch (error) {
+
+                console.error(
+                    "CART LOAD ERROR:",
+                    error
+                );
+
+                cart = [];
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SAVE CART
+        ===================================================== */
+
+        function saveCart() {
+
+            const key =
+                getCartKey();
+
+            if (!key) {
+                return;
+            }
+
+            localStorage.setItem(
+                key,
+                JSON.stringify(cart)
+            );
+
+            updateCartBadge();
+
+        }
+
+
+        /* =====================================================
+           TOTAL QUANTITY
+        ===================================================== */
+
+        function getTotalQuantity() {
+
+            return cart.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    return (
+                        total +
+                        Number(
+                            item.quantity ||
+                            item.qty ||
+                            0
+                        )
+                    );
+
+                },
+                0
+            );
+
+        }
+
+
+        /* =====================================================
+           SUBTOTAL
+        ===================================================== */
+
+        function getSubtotal() {
+
+            return cart.reduce(
+                (
+                    total,
+                    item
+                ) => {
+
+                    const price =
+                        Number(
+                            item.price || 0
+                        );
+
+                    const quantity =
+                        Number(
+                            item.quantity ||
+                            item.qty ||
+                            0
+                        );
+
+                    return (
+                        total +
+                        price * quantity
+                    );
+
+                },
+                0
+            );
+
+        }
+
+
+        /* =====================================================
+           CART BADGE
+        ===================================================== */
+
+        function updateCartBadge() {
+
+            const quantity =
+                getTotalQuantity();
+
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    quantity;
+
+                cartCount.style.display =
+                    quantity > 0
+                        ? "inline-flex"
+                        : "none";
+
+            }
+
+
+            if (cartCountText) {
+
+                cartCountText.textContent =
+                    quantity === 1
+                        ? "1 Item"
+                        : `${quantity} Items`;
+
+            }
+
+
+            if (cartCountSummary) {
+
+                cartCountSummary.textContent =
+                    quantity;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           SHOP SETTINGS
+        ===================================================== */
+
+        async function loadShopSettings() {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase
+                        .from("shop_settings")
+                        .select("*")
+                        .limit(1)
+                        .maybeSingle();
+
+
+                if (error) {
+
+                    console.error(
+                        "SHOP SETTINGS ERROR:",
+                        error
+                    );
+
+                    return;
+
+                }
+
+
+                if (data) {
+
+                    deliveryFee =
+                        Number(
+                            data.delivery_fee || 0
+                        );
+
+                    minimumOrder =
+                        Number(
+                            data.minimum_order || 0
+                        );
+
+
+                    if (
+                        deliveryInformation
+                    ) {
+
+                        deliveryInformation.textContent =
+                            data.delivery_information ||
+                            "Delivery information is currently unavailable.";
+
+                    }
+
+
+                    const minimumElement =
+                        document.querySelector(
+                            "[data-minimum-order]"
+                        );
+
+                    if (minimumElement) {
+
+                        minimumElement.textContent =
+                            formatPrice(
+                                minimumOrder
+                            );
+
+                    }
+
+                }
+
+
+                renderCart();
+
+            } catch (error) {
+
+                console.error(
+                    "SETTINGS ERROR:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CREATE CART ITEM
+        ===================================================== */
+
+        function createCartItem(
+            item,
+            index
+        ) {
+
+            const quantity =
+                Math.max(
+                    1,
+                    Number(
+                        item.quantity ||
+                        item.qty ||
+                        1
+                    )
+                );
+
+
+            const price =
+                Number(
+                    item.price || 0
+                );
+
+
+            const subtotal =
+                price * quantity;
+
+
+            const itemElement =
+                document.createElement(
+                    "article"
+                );
+
+
+            itemElement.className =
+                "cart-item";
+
+
+            /* IMAGE */
+
+            const imageContainer =
+                document.createElement(
+                    "div"
+                );
+
+
+            imageContainer.className =
+                "item-image";
+
+
+            const imageUrl =
+                item.image_url ||
+                item.image ||
+                "";
+
+
+            if (imageUrl) {
+
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+
+                image.src =
+                    imageUrl;
+
+                image.alt =
+                    item.name ||
+                    "Product";
+
+                image.loading =
+                    "lazy";
+
+
+                image.onerror =
+                    () => {
+
+                        imageContainer.innerHTML =
+                            "🛍️";
+
+                        imageContainer.classList.add(
+                            "no-image"
+                        );
+
+                    };
+
+
+                imageContainer.appendChild(
+                    image
+                );
+
+            } else {
+
+                imageContainer.textContent =
+                    "🛍️";
+
+                imageContainer.classList.add(
+                    "no-image"
+                );
+
+            }
+
+
+            /* INFO */
+
+            const info =
+                document.createElement(
+                    "div"
+                );
+
+
+            const itemName =
+                document.createElement(
+                    "div"
+                );
+
+
+            itemName.className =
+                "item-name";
+
+
+            itemName.textContent =
+                item.name ||
+                "Unnamed Product";
+
+
+            const itemPrice =
+                document.createElement(
+                    "div"
+                );
+
+
+            itemPrice.className =
+                "item-price";
+
+
+            itemPrice.textContent =
+                formatPrice(
+                    price
+                );
+
+
+            /* QUANTITY */
+
+            const quantityControls =
+                document.createElement(
+                    "div"
+                );
+
+
+            quantityControls.className =
+                "quantity-controls";
+
+
+            const minusButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            minusButton.type =
+                "button";
+
+            minusButton.textContent =
+                "−";
+
+            minusButton.setAttribute(
+                "aria-label",
+                "Decrease quantity"
+            );
+
+
+            const quantityNumber =
+                document.createElement(
+                    "span"
+                );
+
+
+            quantityNumber.className =
+                "quantity-number";
+
+
+            quantityNumber.textContent =
+                quantity;
+
+
+            const plusButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            plusButton.type =
+                "button";
+
+            plusButton.textContent =
+                "+";
+
+            plusButton.setAttribute(
+                "aria-label",
+                "Increase quantity"
+            );
+
+
+            /* DECREASE */
+
+            minusButton.addEventListener(
+                "click",
+                () => {
+
+                    if (
+                        quantity <= 1
+                    ) {
+
+                        cart.splice(
+                            index,
+                            1
+                        );
+
+                    } else {
+
+                        cart[index].quantity =
+                            quantity - 1;
+
+                    }
+
+
+                    saveCart();
+
+                    renderCart();
+
+                }
+            );
+
+
+            /* INCREASE */
+
+            plusButton.addEventListener(
+                "click",
+                () => {
+
+                    cart[index].quantity =
+                        quantity + 1;
+
+                    saveCart();
+
+                    renderCart();
+
+                }
+            );
+
+
+            quantityControls.appendChild(
+                minusButton
+            );
+
+            quantityControls.appendChild(
+                quantityNumber
+            );
+
+            quantityControls.appendChild(
+                plusButton
+            );
+
+
+            info.appendChild(
+                itemName
+            );
+
+            info.appendChild(
+                itemPrice
+            );
+
+            info.appendChild(
+                quantityControls
+            );
+
+
+            /* RIGHT */
+
+            const right =
+                document.createElement(
+                    "div"
+                );
+
+
+            right.className =
+                "item-right";
+
+
+            const subtotalElement =
+                document.createElement(
+                    "div"
+                );
+
+
+            subtotalElement.className =
+                "item-subtotal";
+
+
+            subtotalElement.textContent =
+                formatPrice(
+                    subtotal
+                );
+
+
+            const removeButton =
+                document.createElement(
+                    "button"
+                );
+
+
+            removeButton.type =
+                "button";
+
+
+            removeButton.className =
+                "remove-btn";
+
+
+            removeButton.textContent =
+                "Remove";
+
+
+            removeButton.addEventListener(
+                "click",
+                () => {
+
+                    cart.splice(
+                        index,
+                        1
+                    );
+
+                    saveCart();
+
+                    renderCart();
+
+                }
+            );
+
+
+            right.appendChild(
+                subtotalElement
+            );
+
+            right.appendChild(
+                removeButton
+            );
+
+
+            itemElement.appendChild(
+                imageContainer
+            );
+
+            itemElement.appendChild(
+                info
+            );
+
+            itemElement.appendChild(
+                right
+            );
+
+
+            return itemElement;
+
+        }
+
+
+        /* =====================================================
+           EMPTY CART
+        ===================================================== */
+
+        function renderEmptyCart() {
+
+            cartItemsElement.innerHTML = `
+
+                <div class="empty-cart">
+
+                    <div class="empty-icon">
+                        🛒
+                    </div>
+
+                    <h3>
+                        Your cart is empty
+                    </h3>
+
+                    <p>
+                        Add some products before checking out.
+                    </p>
+
+                    <a
+                        href="../products.html"
+                        class="shop-btn"
+                    >
+                        Browse Products
+                    </a>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           RENDER CART
+        ===================================================== */
+
+        function renderCart() {
+
+            updateCartBadge();
+
+
+            if (!cartItemsElement) {
+                return;
+            }
+
+
+            cartItemsElement.innerHTML =
+                "";
+
+
+            if (
+                cart.length === 0
+            ) {
+
+                renderEmptyCart();
+
+                renderSummary();
+
+                return;
+
+            }
+
+
+            cart.forEach(
+                (
+                    item,
+                    index
+                ) => {
+
+                    cartItemsElement.appendChild(
+                        createCartItem(
+                            item,
+                            index
+                        )
+                    );
+
+                }
+            );
+
+
+            renderSummary();
+
+        }
+
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        function renderSummary() {
+
+            const subtotal =
+                getSubtotal();
+
+
+            const meetsMinimum =
+                minimumOrder <= 0 ||
+                subtotal >= minimumOrder;
+
+
+            const actualDeliveryFee =
+                cart.length > 0 &&
+                meetsMinimum
+                    ? deliveryFee
+                    : 0;
+
+
+            const total =
+                subtotal +
+                actualDeliveryFee;
+
+
+            if (cartSubtotal) {
+
+                cartSubtotal.textContent =
+                    formatPrice(
+                        subtotal
+                    );
+
+            }
+
+
+            if (deliveryFeeElement) {
+
+                deliveryFeeElement.textContent =
+                    formatPrice(
+                        actualDeliveryFee
+                    );
+
+            }
+
+
+            if (cartTotal) {
+
+                cartTotal.textContent =
+                    formatPrice(
+                        total
+                    );
+
+            }
+
+
+            if (minimumOrderNotice) {
+
+                if (
+                    cart.length > 0 &&
+                    minimumOrder > 0 &&
+                    subtotal < minimumOrder
+                ) {
+
+                    minimumOrderNotice.style.display =
+                        "flex";
+
+                } else {
+
+                    minimumOrderNotice.style.display =
+                        "none";
+
+                }
+
+            }
+
+
+            if (checkoutBtn) {
+
+                checkoutBtn.disabled =
+                    cart.length === 0 ||
+                    !meetsMinimum;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CHECKOUT
+        ===================================================== */
+
+        checkoutBtn?.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    cart.length === 0
+                ) {
+                    return;
+                }
+
+
+                const subtotal =
+                    getSubtotal();
+
+
+                if (
+                    minimumOrder > 0 &&
+                    subtotal < minimumOrder
+                ) {
+
+                    alert(
+                        `Minimum order is ${formatPrice(minimumOrder)}.`
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                    Stock is NOT deducted here.
+
+                    Stock deduction happens in checkout
+                    after successful order placement.
+                */
+
+                window.location.href =
+                    "../checkout.html";
+
+            }
+        );
+
+
+        /* =====================================================
+           SESSION
+        ===================================================== */
+
+        async function initializeCart() {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.auth.getSession();
+
+
+                if (error) {
+
+                    console.error(
+                        "SESSION ERROR:",
+                        error
+                    );
+
+                    window.location.replace(
+                        "../login.html"
+                    );
+
+                    return;
+
+                }
+
+
+                const session =
+                    data?.session;
+
+
+                if (
+                    !session?.user
+                ) {
+
+                    window.location.replace(
+                        "../login.html"
+                    );
+
+                    return;
+
+                }
+
+
+                currentUser =
+                    session.user;
+
+
+                /* =================================================
+                   FINAL NAVIGATION PATHS
+
+                   CART FILE IS INSIDE /customer/
+
+                   Home     -> ../index.html
+                   Products -> ../products.html
+                   Request  -> ../request.html
+                   Cart     -> ./customer-cart.html
+                   Login    -> ../login.html
+                ================================================= */
+
+
+                const navHome =
+                    document.getElementById("navHome");
+
+                const navProducts =
+                    document.getElementById("navProducts");
+
+                const navRequest =
+                    document.getElementById("navRequest");
+
+                const mobileHomeLink =
+                    document.getElementById("mobileHomeLink");
+
+                const mobileProductsLink =
+                    document.getElementById("mobileProductsLink");
+
+                const mobileRequestLink =
+                    document.getElementById("mobileRequestLink");
+
+
+                if (navHome) {
+
+                    navHome.href =
+                        "../index.html";
+
+                }
+
+
+                if (navProducts) {
+
+                    navProducts.href =
+                        "../products.html";
+
+                }
+
+
+                if (navRequest) {
+
+                    navRequest.href =
+                        "../request.html";
+
+                }
+
+
+                if (mobileHomeLink) {
+
+                    mobileHomeLink.href =
+                        "../index.html";
+
+                }
+
+
+                if (mobileProductsLink) {
+
+                    mobileProductsLink.href =
+                        "../products.html";
+
+                }
+
+
+                if (mobileRequestLink) {
+
+                    mobileRequestLink.href =
+                        "../request.html";
+
+                }
+
+
+                if (loginNav) {
+
+                    loginNav.href =
+                        "../login.html";
+
+                    loginNav.textContent =
+                        "Login";
+
+                }
+
+
+                if (mobileLoginLink) {
+
+                    mobileLoginLink.href =
+                        "../login.html";
+
+                    mobileLoginLink.textContent =
+                        "Login";
+
+                }
+
+
+                if (customerCartNav) {
+
+                    customerCartNav.href =
+                        "./customer-cart.html";
+
+                }
+
+
+                if (mobileCartLink) {
+
+                    mobileCartLink.href =
+                        "./customer-cart.html";
+
+                }
+
+
+                /* LOAD USER CART */
+
+                loadCart();
+
+                updateCartBadge();
+
+                await loadShopSettings();
+
+                renderCart();
+
+
+            } catch (error) {
+
+                console.error(
+                    "CART INITIALIZATION ERROR:",
+                    error
+                );
+
+                window.location.replace(
+                    "../login.html"
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        const mobileMenuButton =
+            document.getElementById(
+                "mobileMenuButton"
+            );
+
+
+        const mobileNav =
+            document.getElementById(
+                "mobileNav"
+            );
+
+
+        if (
+            mobileMenuButton &&
+            mobileNav
+        ) {
+
+            mobileMenuButton.addEventListener(
+                "click",
+                () => {
+
+                    const isOpen =
+                        mobileNav.classList.toggle(
+                            "open"
+                        );
+
+
+                    mobileMenuButton.classList.toggle(
+                        "active"
+                    );
+
+
+                    mobileMenuButton.setAttribute(
+                        "aria-expanded",
+                        isOpen
+                            ? "true"
+                            : "false"
+                    );
+
+                }
+            );
+
+
+            mobileNav
+                .querySelectorAll("a")
+                .forEach(
+                    link => {
+
+                        link.addEventListener(
+                            "click",
+                            () => {
+
+                                mobileNav.classList.remove(
+                                    "open"
+                                );
+
+
+                                mobileMenuButton.classList.remove(
+                                    "active"
+                                );
+
+
+                                mobileMenuButton.setAttribute(
+                                    "aria-expanded",
+                                    "false"
+                                );
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =====================================================
+           PAGE SHOW
+        ===================================================== */
+
+        window.addEventListener(
+            "pageshow",
+            () => {
+
+                if (
+                    currentUser
+                ) {
+
+                    loadCart();
+
+                    renderCart();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           STORAGE UPDATE
+        ===================================================== */
+
+        window.addEventListener(
+            "storage",
+            event => {
+
+                const key =
+                    getCartKey();
+
+
+                if (
+                    key &&
+                    event.key === key
+                ) {
+
+                    loadCart();
+
+                    renderCart();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        initializeCart();
+
+    </script>
+
+
+</body>
+
+</html>

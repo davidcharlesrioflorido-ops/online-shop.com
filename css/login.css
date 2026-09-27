@@ -1,0 +1,403 @@
+css
+/* =========================================================
+   BUSINESS STORE - LOGIN / SIGN UP
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at top left, rgba(0, 229, 255, 0.12), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(124, 58, 237, 0.14), transparent 35%),
+        #070a10;
+    color: #ffffff;
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.auth-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+}
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.auth-card {
+    width: 100%;
+    max-width: 450px;
+    padding: 38px;
+    border-radius: 24px;
+
+    background: rgba(15, 20, 30, 0.88);
+    border: 1px solid rgba(0, 229, 255, 0.18);
+
+    box-shadow:
+        0 25px 70px rgba(0, 0, 0, 0.55),
+        0 0 40px rgba(0, 229, 255, 0.06);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.brand {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.brand-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        rgba(0, 229, 255, 0.18),
+        rgba(124, 58, 237, 0.18)
+    );
+
+    border: 1px solid rgba(0, 229, 255, 0.25);
+
+    color: #00e5ff;
+    font-size: 28px;
+
+    box-shadow: 0 0 25px rgba(0, 229, 255, 0.12);
+}
+
+.brand h1 {
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 8px;
+}
+
+.brand p {
+    color: #9ca3af;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+#loginForm,
+#signupForm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #d1d5db;
+}
+
+.input-group input {
+    width: 100%;
+    height: 48px;
+    padding: 0 15px;
+
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255, 255, 255, 0.045);
+    color: #ffffff;
+
+    font-size: 14px;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+.input-group input::placeholder {
+    color: #6b7280;
+}
+
+.input-group input:focus {
+    background: rgba(255, 255, 255, 0.065);
+    border-color: rgba(0, 229, 255, 0.65);
+
+    box-shadow:
+        0 0 0 3px rgba(0, 229, 255, 0.08),
+        0 0 20px rgba(0, 229, 255, 0.08);
+}
+
+/* =========================================================
+   BUTTON
+   ========================================================= */
+
+#loginBtn,
+#signupBtn {
+    width: 100%;
+    height: 50px;
+
+    margin-top: 3px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(
+        135deg,
+        #00e5ff,
+        #0099ff
+    );
+
+    color: #031016;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        opacity 0.25s ease;
+}
+
+#loginBtn:hover,
+#signupBtn:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(0, 229, 255, 0.2),
+        0 0 25px rgba(0, 229, 255, 0.12);
+}
+
+#loginBtn:active,
+#signupBtn:active {
+    transform: translateY(0);
+}
+
+#loginBtn:disabled,
+#signupBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* =========================================================
+   RESULT / MESSAGE
+   ========================================================= */
+
+.result {
+    min-height: 20px;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    text-align: center;
+}
+
+.result.success {
+    color: #34d399;
+}
+
+.result.error {
+    color: #fb7185;
+}
+
+.result.info {
+    color: #67e8f9;
+}
+
+/* =========================================================
+   SIGN UP AREA
+   ========================================================= */
+
+.signup-area {
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.signup-area a {
+    color: #00e5ff;
+    text-decoration: none;
+    font-weight: 700;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.signup-area a:hover {
+    color: #67e8f9;
+
+    text-shadow:
+        0 0 10px rgba(0, 229, 255, 0.45);
+}
+
+/* =========================================================
+   LOGIN AREA
+   ========================================================= */
+
+.login-area {
+    margin-top: 25px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.login-area a {
+    color: #00e5ff;
+    text-decoration: none;
+    font-weight: 700;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.login-area a:hover {
+    color: #67e8f9;
+
+    text-shadow:
+        0 0 10px rgba(0, 229, 255, 0.45);
+}
+
+/* =========================================================
+   BACK TO STORE
+   ========================================================= */
+
+.back-link {
+    display: block;
+
+    margin-top: 18px;
+
+    text-align: center;
+
+    color: #6b7280;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition:
+        color 0.2s ease,
+        text-shadow 0.2s ease;
+}
+
+.back-link:hover {
+    color: #d1d5db;
+
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .auth-page {
+        padding: 20px 15px;
+    }
+
+    .auth-card {
+        padding: 28px 22px;
+        border-radius: 20px;
+    }
+
+    .brand {
+        margin-bottom: 25px;
+    }
+
+    .brand-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 25px;
+    }
+
+    .brand h1 {
+        font-size: 25px;
+    }
+
+    .brand p {
+        font-size: 13px;
+    }
+
+    .input-group input {
+        height: 47px;
+    }
+
+    #loginBtn,
+    #signupBtn {
+        height: 49px;
+    }
+
+    .signup-area,
+    .login-area {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .auth-card {
+        padding: 25px 18px;
+    }
+
+    .brand h1 {
+        font-size: 23px;
+    }
+
+    .input-group input {
+        font-size: 13px;
+    }
+}
+

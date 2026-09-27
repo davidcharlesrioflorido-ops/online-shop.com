@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | Business Store</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(circle at top left, rgba(0, 242, 254, 0.08), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(139, 92, 246, 0.10), transparent 35%),
+                #080b12;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            min-height: 100vh;
+        }
+
+        .customer-page {
+            min-height: calc(100vh - 80px);
+            padding: 60px 20px;
+        }
+
+        .customer-container {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .customer-nav {
+            width: min(1180px, calc(100% - 30px));
+            margin: 15px auto 0;
+            padding: 16px 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+
+            background: rgba(15, 20, 32, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            position: relative;
+            z-index: 10;
+        }
+
+        .customer-nav-title {
+            color: #00f2fe;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .customer-nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .customer-nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 10px 13px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .customer-nav-links a:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-1px);
+        }
+
+        .customer-nav-links a.active {
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.08);
+        }
+
+        .cart-link {
+            position: relative;
+        }
+
+        #cartCount {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 20px;
+            height: 20px;
+            padding: 0 6px;
+
+            margin-left: 4px;
+
+            background: #8b5cf6;
+            color: #fff;
+
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        .customer-logout {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.25s ease;
+        }
+
+        .customer-logout:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.45);
+            color: #fca5a5;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .orders-header {
+            padding: 30px;
+            margin-bottom: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.10),
+                    rgba(139, 92, 246, 0.12)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.25);
+        }
+
+        .orders-header h1 {
+            margin: 0 0 8px;
+            font-size: clamp(28px, 5vw, 42px);
+            line-height: 1.1;
+        }
+
+        .orders-header h1 span {
+            color: #00f2fe;
+        }
+
+        .orders-header p {
+            margin: 0;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FILTERS
+        ========================= */
+
+        .orders-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .filter-btn {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+
+            padding: 11px 16px;
+            border-radius: 12px;
+
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 13px;
+
+            transition: 0.25s ease;
+        }
+
+        .filter-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .filter-btn.active {
+            color: #001014;
+            background: #00f2fe;
+            border-color: #00f2fe;
+        }
+
+        /* =========================
+           ORDERS
+        ========================= */
+
+        #ordersContainer {
+            display: grid;
+            gap: 18px;
+        }
+
+        .order-card {
+            background: rgba(15, 20, 32, 0.82);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 22px;
+
+            transition: 0.25s ease;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.20);
+        }
+
+        .order-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 242, 254, 0.22);
+        }
+
+        .order-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .order-number {
+            color: #fff;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .order-date {
+            color: #64748b;
+            font-size: 13px;
+        }
+
+        .status-badge {
+            padding: 7px 11px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .status-pending {
+            background: rgba(234, 179, 8, 0.12);
+            color: #fde047;
+        }
+
+        .status-processing {
+            background: rgba(59, 130, 246, 0.12);
+            color: #93c5fd;
+        }
+
+        .status-success {
+            background: rgba(34, 197, 94, 0.12);
+            color: #86efac;
+        }
+
+        .status-danger {
+            background: rgba(239, 68, 68, 0.12);
+            color: #fca5a5;
+        }
+
+        .status-default {
+            background: rgba(148, 163, 184, 0.12);
+            color: #cbd5e1;
+        }
+
+        .order-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 14px;
+        }
+
+        .info-label {
+            display: block;
+            color: #64748b;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .order-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .order-total {
+            font-size: 21px;
+            font-weight: 900;
+            color: #00f2fe;
+        }
+
+        .view-order-btn {
+            border: 0;
+            background: linear-gradient(135deg, #00f2fe, #8b5cf6);
+            color: #fff;
+
+            padding: 11px 17px;
+            border-radius: 11px;
+
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .view-order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 242, 254, 0.18);
+        }
+
+        /* =========================
+           EMPTY / LOADING / ERROR
+        ========================= */
+
+        .state-card {
+            padding: 45px 25px;
+            text-align: center;
+
+            background: rgba(15, 20, 32, 0.80);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+        }
+
+        .state-card h3 {
+            margin: 0 0 8px;
+            font-size: 21px;
+        }
+
+        .state-card p {
+            margin: 0 auto 20px;
+            color: #94a3b8;
+            max-width: 520px;
+            line-height: 1.6;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: linear-gradient(135deg, #00f2fe, #8b5cf6);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 11px;
+            font-weight: 800;
+        }
+
+        .error-card {
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.20);
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 900px) {
+            .customer-nav {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .customer-nav-title {
+                text-align: center;
+            }
+
+            .customer-nav-links {
+                width: 100%;
+            }
+
+            .customer-nav-links a {
+                font-size: 13px;
+                padding: 9px 10px;
+            }
+
+            .customer-logout {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .customer-page {
+                padding: 30px 14px;
+            }
+
+            .orders-header {
+                padding: 22px;
+            }
+
+            .orders-header h1 {
+                font-size: 30px;
+            }
+
+            .order-info {
+                grid-template-columns: 1fr;
+            }
+
+            .order-top,
+            .order-bottom {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .status-badge {
+                align-self: flex-start;
+            }
+
+            .view-order-btn {
+                width: 100%;
+            }
+
+            .order-card {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <nav class="customer-nav">
+
+        <div class="customer-nav-title">
+            BUSINESS STORE
+        </div>
+
+        <div class="customer-nav-links">
+
+            <a href="customer-home.html">
+                Home
+            </a>
+
+            <a href="customer-products.html">
+                Products
+            </a>
+
+            <a href="customer-request.html">
+                Request
+            </a>
+
+            <a href="customer-cart.html" class="cart-link">
+                Cart
+                <span id="cartCount">0</span>
+            </a>
+
+            <a href="customer-orders.html" class="active">
+                Orders
+            </a>
+
+            <a href="customer-account.html">
+                My Account
+            </a>
+
+        </div>
+
+        <button
+            type="button"
+            class="customer-logout"
+            id="logoutBtn"
+        >
+            Logout
+        </button>
+
+    </nav>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="customer-page">
+
+        <div class="customer-container">
+
+            <!-- HEADER -->
+
+            <section class="orders-header">
+
+                <h1>
+                    My <span>Orders</span>
+                </h1>
+
+                <p>
+                    View your order history, payment status, and order progress.
+                </p>
+
+            </section>
+
+
+            <!-- FILTERS -->
+
+            <div class="orders-filters">
+
+                <button
+                    type="button"
+                    class="filter-btn active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-filter="active"
+                >
+                    Active
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-filter="completed"
+                >
+                    Completed
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-btn"
+                    data-filter="rejected"
+                >
+                    Rejected
+                </button>
+
+            </div>
+
+
+            <!-- ORDERS -->
+
+            <div id="ordersContainer">
+
+                <div class="state-card">
+
+                    <h3>
+                        Loading orders...
+                    </h3>
+
+                    <p>
+                        Please wait while we load your orders.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================
+         SCRIPT
+    ========================= -->
+
+    <script type="module">
+
+        import {
+            supabase
+        } from "../js/supabase.js";
+
+        import {
+            getCurrentUser,
+            logoutUser
+        } from "../js/auth.js";
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const ordersContainer =
+            document.getElementById("ordersContainer");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const cartCount =
+            document.getElementById("cartCount");
+
+        const filterButtons =
+            document.querySelectorAll(".filter-btn");
+
+
+        let allOrders = [];
+        let currentFilter = "all";
+        let currentUser = null;
+
+
+        /* =====================================================
+           CART CONFIGURATION
+           
+           IMPORTANT:
+           Each customer has their own cart key.
+           
+           Example:
+           Account A:
+           businessStoreCart_UUID_A
+
+           Account B:
+           businessStoreCart_UUID_B
+        ===================================================== */
+
+        const CART_KEY_PREFIX = "businessStoreCart";
+
+
+        /* =====================================================
+           GET CURRENT USER CART KEY
+        ===================================================== */
+
+        function getCartKey() {
+
+            if (!currentUser?.id) {
+                return null;
+            }
+
+            return `${CART_KEY_PREFIX}_${currentUser.id}`;
+        }
+
+
+        /* =====================================================
+           GET CURRENT USER CART
+        ===================================================== */
+
+        function getCart() {
+
+            const cartKey = getCartKey();
+
+            if (!cartKey) {
+                return [];
+            }
+
+            try {
+
+                const cart =
+                    JSON.parse(
+                        localStorage.getItem(cartKey) || "[]"
+                    );
+
+                return Array.isArray(cart)
+                    ? cart
+                    : [];
+
+            } catch (error) {
+
+                console.error(
+                    "CART READ ERROR:",
+                    error
+                );
+
+                return [];
+            }
+        }
+
+
+        /* =====================================================
+           AUTHENTICATION
+        ===================================================== */
+
+        async function checkAuthentication() {
+
+            try {
+
+                currentUser =
+                    await getCurrentUser();
+
+                if (!currentUser) {
+
+                    window.location.href =
+                        "../login.html";
+
+                    return false;
+                }
+
+                return true;
+
+            } catch (error) {
+
+                console.error(
+                    "Authentication error:",
+                    error
+                );
+
+                window.location.href =
+                    "../login.html";
+
+                return false;
+            }
+        }
+
+
+        /* =====================================================
+           CART COUNT
+           
+           Shows ONLY the logged-in customer's cart.
+           
+           If cart has:
+           Product A = quantity 2
+           Product B = quantity 3
+
+           Badge = 5
+        ===================================================== */
+
+        function updateCartCount() {
+
+            try {
+
+                const cart = getCart();
+
+                const count =
+                    cart.reduce(
+                        (total, item) =>
+                            total +
+                            (Number(item.quantity) || 0),
+                        0
+                    );
+
+                if (cartCount) {
+                    cartCount.textContent = count;
+                }
+
+                console.log(
+                    "ORDERS PAGE CART KEY:",
+                    getCartKey()
+                );
+
+                console.log(
+                    "ORDERS PAGE CART COUNT:",
+                    count
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "Cart count error:",
+                    error
+                );
+
+                if (cartCount) {
+                    cartCount.textContent = "0";
+                }
+            }
+        }
+
+
+        /* =====================================================
+           FORMAT PRICE
+        ===================================================== */
+
+        function formatPrice(value) {
+
+            const amount =
+                Number(value || 0);
+
+            return "₱" +
+                amount.toLocaleString(
+                    "en-PH",
+                    {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }
+                );
+        }
+
+
+        /* =====================================================
+           FORMAT DATE
+        ===================================================== */
+
+        function formatDate(value) {
+
+            if (!value) {
+                return "No date";
+            }
+
+            const date =
+                new Date(value);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+                return String(value);
+            }
+
+            return date.toLocaleString(
+                "en-PH",
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            );
+        }
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHTML(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        function getStatusClass(status) {
+
+            const value =
+                String(status || "")
+                    .toLowerCase()
+                    .trim();
+
+            if (
+                value.includes("completed") ||
+                value.includes("approved") ||
+                value === "done"
+            ) {
+                return "status-success";
+            }
+
+            if (
+                value.includes("rejected") ||
+                value.includes("cancelled") ||
+                value.includes("canceled")
+            ) {
+                return "status-danger";
+            }
+
+            if (
+                value.includes("pending") ||
+                value.includes("verification")
+            ) {
+                return "status-pending";
+            }
+
+            if (
+                value.includes("progress") ||
+                value.includes("deliver") ||
+                value.includes("processing")
+            ) {
+                return "status-processing";
+            }
+
+            return "status-default";
+        }
+
+
+        /* =====================================================
+           GET ORDER STATUS
+        ===================================================== */
+
+        function getOrderStatus(order) {
+
+            return (
+                order.status ||
+                order.order_status ||
+                order.payment_status ||
+                "Pending"
+            );
+        }
+
+
+        /* =====================================================
+           GET ORDER TOTAL
+        ===================================================== */
+
+        function getOrderTotal(order) {
+
+            return Number(
+                order.total_amount ??
+                order.total ??
+                order.amount ??
+                order.grand_total ??
+                0
+            );
+        }
+
+
+        /* =====================================================
+           GET ORDER ID
+        ===================================================== */
+
+        function getOrderId(order) {
+
+            return (
+                order.id ||
+                order.order_id ||
+                order.uuid ||
+                ""
+            );
+        }
+
+
+        /* =====================================================
+           CHECK ORDER BELONGS TO USER
+        ===================================================== */
+
+        function belongsToCurrentUser(order) {
+
+            if (!currentUser) {
+                return false;
+            }
+
+            const userId =
+                String(currentUser.id || "")
+                    .toLowerCase();
+
+            const userEmail =
+                String(currentUser.email || "")
+                    .toLowerCase();
+
+            const possibleIds = [
+
+                order.user_id,
+                order.customer_id,
+                order.profile_id,
+                order.uid
+
+            ]
+                .filter(Boolean)
+                .map(value =>
+                    String(value).toLowerCase()
+                );
+
+            const possibleEmails = [
+
+                order.email,
+                order.customer_email,
+                order.customerEmail,
+                order.user_email
+
+            ]
+                .filter(Boolean)
+                .map(value =>
+                    String(value).toLowerCase()
+                );
+
+            if (
+                possibleIds.includes(userId)
+            ) {
+                return true;
+            }
+
+            if (
+                possibleEmails.includes(userEmail)
+            ) {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        /* =====================================================
+           LOAD ORDERS
+        ===================================================== */
+
+        async function loadOrders() {
+
+            ordersContainer.innerHTML = `
+                <div class="state-card">
+                    <h3>Loading orders...</h3>
+                    <p>
+                        Please wait while we load your orders.
+                    </p>
+                </div>
+            `;
+
+            try {
+
+                const {
+                    data,
+                    error
+                } = await supabase
+                    .from("orders")
+                    .select("*");
+
+                if (error) {
+                    throw error;
+                }
+
+                let orders = data || [];
+
+
+                /* =================================================
+                   FILTER ORDERS FOR CURRENT CUSTOMER
+                ================================================= */
+
+                const userOrders =
+                    orders.filter(
+                        belongsToCurrentUser
+                    );
+
+
+                if (userOrders.length > 0) {
+
+                    orders = userOrders;
+
+                } else {
+
+                    orders = [];
+                }
+
+
+                /* =================================================
+                   SORT NEWEST FIRST
+                ================================================= */
+
+                orders.sort(
+                    (a, b) => {
+
+                        const dateA =
+                            new Date(
+                                a.created_at ||
+                                a.order_date ||
+                                0
+                            ).getTime();
+
+                        const dateB =
+                            new Date(
+                                b.created_at ||
+                                b.order_date ||
+                                0
+                            ).getTime();
+
+                        return dateB - dateA;
+                    }
+                );
+
+
+                allOrders = orders;
+
+                renderOrders();
+
+            } catch (error) {
+
+                console.error(
+                    "Load orders error:",
+                    error
+                );
+
+                ordersContainer.innerHTML = `
+                    <div class="state-card error-card">
+
+                        <h3>
+                            Unable to load orders
+                        </h3>
+
+                        <p>
+                            ${escapeHTML(
+                                error.message ||
+                                "Something went wrong while loading your orders."
+                            )}
+                        </p>
+
+                    </div>
+                `;
+            }
+        }
+
+
+        /* =====================================================
+           FILTER ORDERS
+        ===================================================== */
+
+        function filterOrders() {
+
+            if (currentFilter === "all") {
+                return allOrders;
+            }
+
+            return allOrders.filter(order => {
+
+                const status =
+                    String(
+                        getOrderStatus(order)
+                    )
+                    .toLowerCase()
+                    .trim();
+
+
+                /* COMPLETED */
+
+                if (
+                    currentFilter === "completed"
+                ) {
+
+                    return (
+                        status.includes("completed") ||
+                        status.includes("approved") ||
+                        status === "done"
+                    );
+                }
+
+
+                /* REJECTED */
+
+                if (
+                    currentFilter === "rejected"
+                ) {
+
+                    return (
+                        status.includes("rejected") ||
+                        status.includes("cancelled") ||
+                        status.includes("canceled")
+                    );
+                }
+
+
+                /* ACTIVE */
+
+                if (
+                    currentFilter === "active"
+                ) {
+
+                    return !(
+                        status.includes("completed") ||
+                        status.includes("approved") ||
+                        status.includes("rejected") ||
+                        status.includes("cancelled") ||
+                        status.includes("canceled") ||
+                        status === "done"
+                    );
+                }
+
+
+                return true;
+            });
+        }
+
+
+        /* =====================================================
+           RENDER ORDERS
+        ===================================================== */
+
+        function renderOrders() {
+
+            const orders =
+                filterOrders();
+
+
+            if (orders.length === 0) {
+
+                ordersContainer.innerHTML = `
+                    <div class="state-card">
+
+                        <h3>
+                            No orders found
+                        </h3>
+
+                        <p>
+                            You don't have any orders in this section yet.
+                        </p>
+
+                        <a
+                            href="customer-products.html"
+                            class="browse-btn"
+                        >
+                            Browse Products
+                        </a>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            ordersContainer.innerHTML =
+                orders.map(order => {
+
+                    const orderId =
+                        getOrderId(order);
+
+                    const status =
+                        getOrderStatus(order);
+
+                    const total =
+                        getOrderTotal(order);
+
+                    const createdAt =
+                        order.created_at ||
+                        order.order_date ||
+                        order.createdAt;
+
+                    const paymentStatus =
+                        order.payment_status ||
+                        order.paymentStatus ||
+                        status ||
+                        "Pending";
+
+
+                    return `
+                        <article class="order-card">
+
+                            <div class="order-top">
+
+                                <div>
+
+                                    <div class="order-number">
+                                        Order #${escapeHTML(
+                                            orderId || "N/A"
+                                        )}
+                                    </div>
+
+                                    <div class="order-date">
+                                        ${escapeHTML(
+                                            formatDate(createdAt)
+                                        )}
+                                    </div>
+
+                                </div>
+
+                                <span
+                                    class="status-badge ${getStatusClass(status)}"
+                                >
+                                    ${escapeHTML(status)}
+                                </span>
+
+                            </div>
+
+
+                            <div class="order-info">
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Payment Status
+                                    </span>
+
+                                    <span class="info-value">
+                                        ${escapeHTML(
+                                            paymentStatus
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Order Status
+                                    </span>
+
+                                    <span class="info-value">
+                                        ${escapeHTML(status)}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="info-box">
+
+                                    <span class="info-label">
+                                        Order ID
+                                    </span>
+
+                                    <span class="info-value">
+                                        ${escapeHTML(
+                                            orderId || "N/A"
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="order-bottom">
+
+                                <div class="order-total">
+                                    ${formatPrice(total)}
+                                </div>
+
+                                ${
+                                    orderId
+                                    ?
+                                    `
+                                    <button
+                                        type="button"
+                                        class="view-order-btn"
+                                        data-order-id="${escapeHTML(
+                                            orderId
+                                        )}"
+                                    >
+                                        View Order
+                                    </button>
+                                    `
+                                    :
+                                    ""
+                                }
+
+                            </div>
+
+                        </article>
+                    `;
+
+                }).join("");
+
+
+            /* =================================================
+               VIEW ORDER BUTTONS
+            ================================================= */
+
+            document
+                .querySelectorAll(".view-order-btn")
+                .forEach(button => {
+
+                    button.addEventListener(
+                        "click",
+                        () => {
+
+                            const orderId =
+                                button.dataset.orderId;
+
+                            if (!orderId) {
+                                return;
+                            }
+
+                            const detailUrl =
+                                `../order-details.html?id=${encodeURIComponent(
+                                    orderId
+                                )}`;
+
+                            window.location.href =
+                                detailUrl;
+                        }
+                    );
+
+                });
+        }
+
+
+        /* =====================================================
+           FILTER BUTTONS
+        ===================================================== */
+
+        filterButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    filterButtons.forEach(btn => {
+
+                        btn.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                    currentFilter =
+                        button.dataset.filter ||
+                        "all";
+
+                    renderOrders();
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        logoutBtn.addEventListener(
+            "click",
+            async () => {
+
+                logoutBtn.disabled = true;
+
+                logoutBtn.textContent =
+                    "Logging out...";
+
+                try {
+
+                    await logoutUser();
+
+                    window.location.href =
+                        "../login.html";
+
+                } catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+                    logoutBtn.disabled = false;
+
+                    logoutBtn.textContent =
+                        "Logout";
+
+                    alert(
+                        "Logout failed. Please try again."
+                    );
+                }
+            }
+        );
+
+
+        /* =====================================================
+           UPDATE CART WHEN PAGE BECOMES VISIBLE
+           
+           Useful when customer:
+           Products → Add to Cart → Orders
+           Cart → Orders
+        ===================================================== */
+
+        window.addEventListener(
+            "pageshow",
+            () => {
+
+                if (currentUser) {
+                    updateCartCount();
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           INITIALIZE
+        ===================================================== */
+
+        async function initOrdersPage() {
+
+            const authenticated =
+                await checkAuthentication();
+
+            if (!authenticated) {
+                return;
+            }
+
+            /* 
+             * IMPORTANT:
+             * currentUser is already available here.
+             * Therefore the correct account cart key
+             * can now be loaded.
+             */
+
+            updateCartCount();
+
+            await loadOrders();
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        initOrdersPage();
+
+    </script>
+
+</body>
+
+</html>

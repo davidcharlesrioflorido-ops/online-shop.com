@@ -1,0 +1,3237 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Business Store</title>
+
+    <link rel="stylesheet" href="css/login.css">
+
+    <style>
+        /* =========================================================
+           NEON CYAN BUSINESS STORE AUTH
+        ========================================================= */
+
+        :root {
+            --cyan: #00f2fe;
+            --cyan-light: #8fffff;
+            --cyan-dark: #00b8d4;
+            --purple: #7c3aed;
+            --purple-light: #a78bfa;
+
+            --bg: #05070d;
+            --bg-2: #080b14;
+
+            --white: #ffffff;
+            --muted: rgba(255, 255, 255, 0.58);
+
+            --border: rgba(0, 242, 254, 0.18);
+            --border-white: rgba(255, 255, 255, 0.09);
+
+            --danger: #ff7b8a;
+            --success: #66f7b2;
+            --warning: #ffd166;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            color: var(--white);
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0, 242, 254, 0.13),
+                    transparent 27%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(124, 58, 237, 0.16),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(0, 242, 254, 0.07),
+                    transparent 35%
+                ),
+                linear-gradient(
+                    135deg,
+                    #03050a 0%,
+                    #070a12 45%,
+                    #090611 100%
+                );
+
+            overflow-x: hidden;
+        }
+
+        /* =========================================================
+           BACKGROUND GRID
+        ========================================================= */
+
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.018) 1px,
+                    transparent 1px
+                );
+
+            background-size: 45px 45px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 92%
+                );
+
+            z-index: 0;
+        }
+
+        /* =========================================================
+           BACKGROUND GLOWS
+        ========================================================= */
+
+        .glow {
+            position: fixed;
+
+            width: 360px;
+            height: 360px;
+
+            border-radius: 50%;
+
+            pointer-events: none;
+
+            filter: blur(100px);
+
+            opacity: 0.17;
+
+            z-index: 0;
+
+            animation:
+                glowMove
+                9s
+                ease-in-out
+                infinite;
+        }
+
+        .glow-one {
+            top: -150px;
+            left: -120px;
+
+            background: var(--cyan);
+        }
+
+        .glow-two {
+            right: -140px;
+            bottom: -130px;
+
+            background: var(--purple);
+
+            animation-delay: -4s;
+        }
+
+        @keyframes glowMove {
+            0%,
+            100% {
+                transform:
+                    translate3d(0, 0, 0)
+                    scale(1);
+            }
+
+            50% {
+                transform:
+                    translate3d(25px, 20px, 0)
+                    scale(1.08);
+            }
+        }
+
+        /* =========================================================
+           AUTH PAGE
+        ========================================================= */
+
+        .auth-page {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 35px 18px;
+
+            position: relative;
+            z-index: 1;
+        }
+
+        /* =========================================================
+           AUTH CARD
+        ========================================================= */
+
+        .auth-card {
+            width: 100%;
+            max-width: 490px;
+
+            position: relative;
+
+            padding: 42px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            border-radius: 30px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.075),
+                    rgba(255, 255, 255, 0.025)
+                );
+
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+
+            box-shadow:
+                0 40px 100px rgba(0, 0, 0, 0.65),
+                0 0 0 1px
+                rgba(0, 242, 254, 0.025),
+                inset 0 1px 0
+                rgba(255, 255, 255, 0.07);
+
+            overflow: hidden;
+        }
+
+        .auth-card::before {
+            content: "";
+
+            position: absolute;
+
+            top: 0;
+            left: 12%;
+            right: 12%;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    var(--cyan),
+                    var(--purple),
+                    transparent
+                );
+
+            box-shadow:
+                0 0 18px
+                rgba(0, 242, 254, 0.65);
+
+            opacity: 0.9;
+        }
+
+        .auth-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            top: -120px;
+            right: -100px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0, 242, 254, 0.09);
+
+            filter: blur(50px);
+
+            pointer-events: none;
+        }
+
+        /* =========================================================
+           VIEWS
+        ========================================================= */
+
+        .auth-view {
+            display: none;
+
+            animation:
+                authViewIn
+                0.42s
+                cubic-bezier(.22, .61, .36, 1)
+                both;
+        }
+
+        .auth-view.active {
+            display: block;
+        }
+
+        @keyframes authViewIn {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateX(24px)
+                    scale(0.985);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateX(0)
+                    scale(1);
+            }
+        }
+
+        /* =========================================================
+           BRAND
+        ========================================================= */
+
+        .brand {
+            text-align: center;
+
+            margin-bottom: 34px;
+        }
+
+        .brand-icon {
+            width: 66px;
+            height: 66px;
+
+            margin:
+                0 auto
+                18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 20px;
+
+            color: var(--cyan);
+
+            font-size: 29px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0, 242, 254, 0.15),
+                    rgba(124, 58, 237, 0.10)
+                );
+
+            border:
+                1px solid
+                rgba(0, 242, 254, 0.28);
+
+            box-shadow:
+                0 0 35px
+                rgba(0, 242, 254, 0.10),
+                inset 0 0 20px
+                rgba(0, 242, 254, 0.035);
+
+            animation:
+                brandFloat
+                4s
+                ease-in-out
+                infinite;
+        }
+
+        @keyframes brandFloat {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .brand h1 {
+            margin: 0 0 9px;
+
+            font-size: 30px;
+            font-weight: 800;
+
+            letter-spacing: -0.8px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    var(--cyan-light),
+                    var(--purple-light)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           VIEW HEADER
+        ========================================================= */
+
+        .view-header {
+            margin-bottom: 27px;
+        }
+
+        .view-header h2 {
+            margin: 0 0 8px;
+
+            font-size: 26px;
+            font-weight: 750;
+
+            letter-spacing: -0.5px;
+
+            color: #ffffff;
+        }
+
+        .view-header p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           INPUTS
+        ========================================================= */
+
+        .input-group {
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color:
+                rgba(255, 255, 255, 0.78);
+
+            font-size: 12px;
+            font-weight: 650;
+
+            letter-spacing: 0.2px;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 51px;
+
+            padding: 0 15px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.10);
+
+            border-radius: 13px;
+
+            outline: none;
+
+            color: #ffffff;
+
+            background:
+                rgba(0, 0, 0, 0.25);
+
+            font-family: inherit;
+            font-size: 14px;
+
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .input-group input::placeholder {
+            color:
+                rgba(255, 255, 255, 0.30);
+        }
+
+        .input-group input:focus {
+            border-color:
+                rgba(0, 242, 254, 0.65);
+
+            background:
+                rgba(0, 242, 254, 0.035);
+
+            box-shadow:
+                0 0 0 4px
+                rgba(0, 242, 254, 0.075),
+                0 0 20px
+                rgba(0, 242, 254, 0.045);
+        }
+
+        /* =========================================================
+           BUTTONS
+        ========================================================= */
+
+        #loginBtn,
+        .forgot-submit-btn,
+        .admin-submit-btn,
+        .signup-submit-btn {
+            width: 100%;
+            height: 52px;
+
+            border: 0;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #00c6d7 48%,
+                    #7c3aed
+                );
+
+            color: #02070c;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            letter-spacing: 0.1px;
+
+            box-shadow:
+                0 12px 35px
+                rgba(0, 242, 254, 0.13);
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                filter 0.25s ease;
+        }
+
+        #loginBtn:hover,
+        .forgot-submit-btn:hover,
+        .admin-submit-btn:hover,
+        .signup-submit-btn:hover {
+            transform: translateY(-2px);
+
+            filter: brightness(1.08);
+
+            box-shadow:
+                0 17px 40px
+                rgba(0, 242, 254, 0.22),
+                0 0 25px
+                rgba(124, 58, 237, 0.12);
+        }
+
+        #loginBtn:active,
+        .forgot-submit-btn:active,
+        .admin-submit-btn:active,
+        .signup-submit-btn:active {
+            transform: translateY(0);
+        }
+
+        #loginBtn:disabled,
+        .forgot-submit-btn:disabled,
+        .admin-submit-btn:disabled,
+        .signup-submit-btn:disabled {
+            opacity: 0.5;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            filter: none;
+        }
+
+        /* =========================================================
+           FORGOT PASSWORD
+        ========================================================= */
+
+        .forgot-password-area {
+            margin-top: 4px;
+            margin-bottom: 4px;
+
+            text-align: right;
+        }
+
+        .forgot-password-btn {
+            padding: 4px 0;
+
+            border: 0;
+
+            background: transparent;
+
+            color: var(--cyan);
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            transition:
+                color 0.2s ease,
+                text-shadow 0.2s ease;
+        }
+
+        .forgot-password-btn:hover {
+            color: var(--cyan-light);
+
+            text-decoration: underline;
+
+            text-shadow:
+                0 0 12px
+                rgba(0, 242, 254, 0.45);
+        }
+
+        /* =========================================================
+           RESULT
+        ========================================================= */
+
+        .result {
+            min-height: 18px;
+
+            margin-top: 14px;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+        }
+
+        .result.success {
+            color: var(--success);
+        }
+
+        .result.error {
+            color: var(--danger);
+        }
+
+        .result.info {
+            color: var(--cyan);
+        }
+
+        /* =========================================================
+           SIGNUP AREA
+        ========================================================= */
+
+        .signup-area {
+            margin-top: 25px;
+
+            padding-top: 21px;
+
+            border-top:
+                1px solid
+                rgba(255, 255, 255, 0.08);
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color:
+                rgba(255, 255, 255, 0.48);
+        }
+
+        .signup-area button {
+            margin-left: 5px;
+
+            padding: 0;
+
+            border: 0;
+
+            background: transparent;
+
+            color: var(--cyan);
+
+            text-decoration: none;
+
+            font-family: inherit;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .signup-area button:hover {
+            text-decoration: underline;
+
+            text-shadow:
+                0 0 10px
+                rgba(0, 242, 254, 0.4);
+        }
+
+        /* =========================================================
+           ADMIN AREA
+        ========================================================= */
+
+        .admin-register-area {
+            margin-top: 27px;
+
+            text-align: center;
+        }
+
+        .admin-divider {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 17px;
+        }
+
+        .admin-divider span {
+            flex: 1;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.10)
+                );
+        }
+
+        .admin-divider span:last-child {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0.10),
+                    transparent
+                );
+        }
+
+        .admin-divider small {
+            color:
+                rgba(0, 242, 254, 0.50);
+
+            font-size: 9px;
+
+            letter-spacing: 2.8px;
+
+            font-weight: 700;
+        }
+
+        .admin-register-area p {
+            margin: 0 0 12px;
+
+            color:
+                rgba(255, 255, 255, 0.50);
+
+            font-size: 12px;
+        }
+
+        .admin-register-btn {
+            width: 100%;
+            height: 48px;
+
+            border:
+                1px solid
+                rgba(0, 242, 254, 0.25);
+
+            border-radius: 12px;
+
+            background:
+                rgba(0, 242, 254, 0.025);
+
+            color: var(--cyan);
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 13px;
+            font-weight: 700;
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .admin-register-btn:hover {
+            background:
+                rgba(0, 242, 254, 0.07);
+
+            border-color:
+                rgba(0, 242, 254, 0.65);
+
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 0 22px
+                rgba(0, 242, 254, 0.08);
+        }
+
+        /* =========================================================
+           BACK BUTTONS
+        ========================================================= */
+
+        .back-button,
+        .forgot-cancel-btn,
+        .admin-cancel-btn,
+        .signup-cancel-btn {
+            width: 100%;
+            height: 45px;
+
+            margin-top: 11px;
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.09);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            color:
+                rgba(255, 255, 255, 0.65);
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .back-button:hover,
+        .forgot-cancel-btn:hover,
+        .admin-cancel-btn:hover,
+        .signup-cancel-btn:hover {
+            background:
+                rgba(255, 255, 255, 0.055);
+
+            border-color:
+                rgba(0, 242, 254, 0.22);
+
+            color: #ffffff;
+        }
+
+        /* =========================================================
+           FORGOT VIEW
+        ========================================================= */
+
+        .forgot-step {
+            display: none;
+
+            animation:
+                stepIn
+                0.3s
+                ease
+                both;
+        }
+
+        .forgot-step.active {
+            display: block;
+        }
+
+        @keyframes stepIn {
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+        /* =========================================================
+           PROGRESS
+        ========================================================= */
+
+        .forgot-progress {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 27px;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+
+            flex-shrink: 0;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255, 255, 255, 0.14);
+
+            transition:
+                background 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .progress-dot.active {
+            background: var(--cyan);
+
+            transform: scale(1.35);
+
+            box-shadow:
+                0 0 14px
+                rgba(0, 242, 254, 0.65);
+        }
+
+        .progress-line {
+            flex: 1;
+
+            height: 1px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0, 242, 254, 0.16),
+                    rgba(255, 255, 255, 0.08)
+                );
+        }
+
+        /* =========================================================
+           PIN
+        ========================================================= */
+
+        .pin-input {
+            text-align: center;
+
+            letter-spacing: 9px;
+
+            font-size: 23px !important;
+
+            font-weight: 800;
+        }
+
+        .email-pin-notice {
+            margin-bottom: 20px;
+
+            padding: 14px 15px;
+
+            border:
+                1px solid
+                rgba(0, 242, 254, 0.16);
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.045),
+                    rgba(124, 58, 237, 0.035)
+                );
+
+            color:
+                rgba(255, 255, 255, 0.62);
+
+            font-size: 12px;
+
+            line-height: 1.6;
+        }
+
+        .email-pin-notice strong {
+            color: var(--cyan);
+        }
+
+        /* =========================================================
+           RESEND PIN
+        ========================================================= */
+
+        .resend-pin-area {
+            margin-top: 15px;
+
+            text-align: center;
+        }
+
+        .resend-pin-btn {
+            border: 0;
+
+            background: transparent;
+
+            color: var(--cyan);
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 12px;
+        }
+
+        .resend-pin-btn:hover {
+            text-decoration: underline;
+        }
+
+        .resend-pin-btn:disabled {
+            opacity: 0.4;
+
+            cursor: not-allowed;
+        }
+
+        /* =========================================================
+           ADMIN HEADER
+        ========================================================= */
+
+        .admin-icon {
+            width: 57px;
+            height: 57px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            color: var(--purple-light);
+
+            font-size: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(124, 58, 237, 0.17),
+                    rgba(0, 242, 254, 0.07)
+                );
+
+            border:
+                1px solid
+                rgba(124, 58, 237, 0.30);
+
+            box-shadow:
+                0 0 30px
+                rgba(124, 58, 237, 0.10);
+        }
+
+        .admin-register-header {
+            margin-bottom: 24px;
+        }
+
+        .admin-register-header p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 13px;
+
+            line-height: 1.65;
+        }
+
+        /* =========================================================
+           SIGNUP HEADER
+        ========================================================= */
+
+        .signup-icon {
+            width: 57px;
+            height: 57px;
+
+            margin-bottom: 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            color: var(--cyan);
+
+            font-size: 24px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(0, 242, 254, 0.14),
+                    rgba(124, 58, 237, 0.08)
+                );
+
+            border:
+                1px solid
+                rgba(0, 242, 254, 0.27);
+
+            box-shadow:
+                0 0 30px
+                rgba(0, 242, 254, 0.09);
+        }
+
+        /* =========================================================
+           PASSWORD INFO
+        ========================================================= */
+
+        .password-info {
+            margin-top: -7px;
+
+            margin-bottom: 18px;
+
+            color:
+                rgba(255, 255, 255, 0.36);
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           STORE LINK
+        ========================================================= */
+
+        .back-link {
+            display: block;
+
+            margin-top: 25px;
+
+            color:
+                rgba(255, 255, 255, 0.36);
+
+            text-align: center;
+
+            font-size: 12px;
+
+            text-decoration: none;
+
+            transition:
+                color 0.2s ease,
+                text-shadow 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cyan);
+
+            text-shadow:
+                0 0 12px
+                rgba(0, 242, 254, 0.4);
+        }
+
+        /* =========================================================
+           HIDDEN
+        ========================================================= */
+
+        [hidden] {
+            display: none !important;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 600px) {
+
+            .auth-page {
+                padding: 20px 13px;
+            }
+
+            .auth-card {
+                padding: 30px 21px;
+
+                border-radius: 24px;
+            }
+
+            .brand {
+                margin-bottom: 29px;
+            }
+
+            .brand-icon {
+                width: 56px;
+                height: 56px;
+
+                border-radius: 17px;
+
+                font-size: 25px;
+            }
+
+            .brand h1 {
+                font-size: 25px;
+            }
+
+            .view-header h2 {
+                font-size: 22px;
+            }
+
+            .input-group input {
+                height: 49px;
+            }
+
+            #loginBtn,
+            .forgot-submit-btn,
+            .admin-submit-btn,
+            .signup-submit-btn {
+                height: 50px;
+            }
+
+            .glow {
+                width: 260px;
+                height: 260px;
+
+                filter: blur(80px);
+            }
+        }
+
+        @media (max-width: 380px) {
+
+            .auth-card {
+                padding: 27px 17px;
+            }
+
+            .brand h1 {
+                font-size: 23px;
+            }
+
+            .pin-input {
+                letter-spacing: 7px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         BACKGROUND EFFECTS
+    ========================================================== -->
+
+    <div class="glow glow-one"></div>
+    <div class="glow glow-two"></div>
+
+
+    <main class="auth-page">
+
+        <div class="auth-card">
+
+            <!-- =================================================
+                 LOGIN VIEW
+            ================================================== -->
+
+            <section
+                id="loginView"
+                class="auth-view active"
+            >
+
+                <div class="brand">
+
+                    <div class="brand-icon">
+                        ✦
+                    </div>
+
+                    <h1>
+                        Business Store
+                    </h1>
+
+                    <p id="authSubtitle">
+                        Sign in to continue to your account.
+                    </p>
+
+                </div>
+
+
+                <form id="loginForm">
+
+                    <div class="input-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="password">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="forgot-password-area">
+
+                        <button
+                            type="button"
+                            id="forgotPasswordBtn"
+                            class="forgot-password-btn"
+                        >
+                            Forgot Password?
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="loginBtn"
+                    >
+                        Login
+                    </button>
+
+
+                    <div
+                        id="loginResult"
+                        class="result"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+
+                <!-- CUSTOMER SIGNUP -->
+
+                <div class="signup-area">
+
+                    <span>
+                        Don't have a customer account?
+                    </span>
+
+                    <button
+                        type="button"
+                        id="signupBtn"
+                    >
+                        Create Account
+                    </button>
+
+                </div>
+
+
+                <!-- ADMIN -->
+
+                <div class="admin-register-area">
+
+                    <div class="admin-divider">
+
+                        <span></span>
+
+                        <small>
+                            ADMIN
+                        </small>
+
+                        <span></span>
+
+                    </div>
+
+                    <p>
+                        Need an administrator account?
+                    </p>
+
+                    <button
+                        type="button"
+                        id="adminRegisterBtn"
+                        class="admin-register-btn"
+                    >
+                        Register as Admin
+                    </button>
+
+                </div>
+
+
+                <a
+                    href="./index.html"
+                    class="back-link"
+                >
+                    ← Back to Store
+                </a>
+
+            </section>
+
+
+            <!-- =================================================
+                 CUSTOMER SIGNUP VIEW
+            ================================================== -->
+
+            <section
+                id="signupView"
+                class="auth-view"
+            >
+
+                <div class="view-header">
+
+                    <div class="signup-icon">
+                        +
+                    </div>
+
+                    <h2>
+                        Create Account
+                    </h2>
+
+                    <p>
+                        Create your customer account and start
+                        shopping with Business Store.
+                    </p>
+
+                </div>
+
+
+                <form id="signupForm">
+
+                    <div class="input-group">
+
+                        <label for="signupName">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="signupName"
+                            name="signupName"
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="signupEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            name="signupEmail"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="signupPhone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="signupPhone"
+                            name="signupPhone"
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                        >
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="signupPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            name="signupPassword"
+                            placeholder="Minimum 6 characters"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="password-info">
+                        Your password must contain at least 6 characters.
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="signupConfirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupConfirmPassword"
+                            name="signupConfirmPassword"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="signupSubmitBtn"
+                        class="signup-submit-btn"
+                    >
+                        Create Customer Account
+                    </button>
+
+
+                    <div
+                        id="signupResult"
+                        class="result"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <button
+                        type="button"
+                        id="cancelSignupBtn"
+                        class="signup-cancel-btn"
+                    >
+                        ← Back to Login
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- =================================================
+                 FORGOT PASSWORD VIEW
+            ================================================== -->
+
+            <section
+                id="forgotView"
+                class="auth-view"
+            >
+
+                <div class="view-header">
+
+                    <h2>
+                        Forgot Password
+                    </h2>
+
+                    <p>
+                        Recover your account securely using a
+                        verification PIN.
+                    </p>
+
+                </div>
+
+
+                <div class="forgot-progress">
+
+                    <span
+                        class="progress-dot active"
+                        id="forgotProgress1"
+                    ></span>
+
+                    <span class="progress-line"></span>
+
+                    <span
+                        class="progress-dot"
+                        id="forgotProgress2"
+                    ></span>
+
+                    <span class="progress-line"></span>
+
+                    <span
+                        class="progress-dot"
+                        id="forgotProgress3"
+                    ></span>
+
+                </div>
+
+
+                <div
+                    id="forgotPasswordPanel"
+                    class="forgot-password-panel"
+                >
+
+                    <!-- STEP 1 -->
+
+                    <div
+                        id="forgotStepEmail"
+                        class="forgot-step active"
+                    >
+
+                        <form id="forgotEmailForm">
+
+                            <div class="input-group">
+
+                                <label for="forgotEmail">
+                                    Account Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="forgotEmail"
+                                    name="forgotEmail"
+                                    placeholder="Enter your account email"
+                                    autocomplete="email"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                id="sendForgotPinBtn"
+                                class="forgot-submit-btn"
+                            >
+                                Send PIN
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <!-- STEP 2 -->
+
+                    <div
+                        id="forgotStepPin"
+                        class="forgot-step"
+                    >
+
+                        <div class="email-pin-notice">
+
+                            <strong>
+                                PIN sent successfully
+                            </strong>
+
+                            <br>
+
+                            Check your email inbox for your
+                            6-digit verification PIN.
+                            If you don't see it, check your
+                            <strong>Spam or Junk folder</strong>.
+
+                        </div>
+
+
+                        <form id="forgotPinForm">
+
+                            <div class="input-group">
+
+                                <label for="forgotPin">
+                                    Verification PIN
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="forgotPin"
+                                    name="forgotPin"
+                                    class="pin-input"
+                                    placeholder="000000"
+                                    inputmode="numeric"
+                                    autocomplete="one-time-code"
+                                    maxlength="6"
+                                    minlength="6"
+                                    pattern="[0-9]{6}"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                id="verifyForgotPinBtn"
+                                class="forgot-submit-btn"
+                            >
+                                Verify PIN
+                            </button>
+
+                        </form>
+
+
+                        <div class="resend-pin-area">
+
+                            <button
+                                type="button"
+                                id="resendForgotPinBtn"
+                                class="resend-pin-btn"
+                            >
+                                Didn't receive the PIN? Resend
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STEP 3 -->
+
+                    <div
+                        id="forgotStepPassword"
+                        class="forgot-step"
+                    >
+
+                        <div class="email-pin-notice">
+
+                            <strong>
+                                PIN verified
+                            </strong>
+
+                            <br>
+
+                            Create a new password for your account.
+
+                        </div>
+
+
+                        <form id="forgotPasswordForm">
+
+                            <div class="input-group">
+
+                                <label for="forgotNewPassword">
+                                    New Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="forgotNewPassword"
+                                    name="forgotNewPassword"
+                                    placeholder="Enter your new password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label for="forgotConfirmPassword">
+                                    Confirm Password
+                                </label>
+
+                                <input
+                                    type="password"
+                                    id="forgotConfirmPassword"
+                                    name="forgotConfirmPassword"
+                                    placeholder="Confirm your new password"
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <button
+                                type="submit"
+                                id="updateForgotPasswordBtn"
+                                class="forgot-submit-btn"
+                            >
+                                Update Password
+                            </button>
+
+                        </form>
+
+                    </div>
+
+
+                    <div
+                        id="forgotPasswordResult"
+                        class="result"
+                        aria-live="polite"
+                    ></div>
+
+
+                    <!-- BACK TO LOGIN -->
+
+                    <button
+                        type="button"
+                        id="cancelForgotPasswordBtn"
+                        class="forgot-cancel-btn"
+                    >
+                        ← Back to Login
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ADMIN REGISTRATION VIEW
+            ================================================== -->
+
+            <section
+                id="adminView"
+                class="auth-view"
+            >
+
+                <div class="view-header">
+
+                    <div class="admin-icon">
+                        ♛
+                    </div>
+
+                    <h2>
+                        Admin Registration
+                    </h2>
+
+                    <p>
+                        Request administrator access to manage
+                        your Business Store.
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="adminRegisterPanel"
+                    class="admin-register-panel"
+                >
+
+                    <div class="admin-register-header">
+
+                        <p>
+                            Your registration must be approved
+                            by an existing administrator before
+                            you can log in.
+                        </p>
+
+                    </div>
+
+
+                    <form id="adminRegisterForm">
+
+                        <div class="input-group">
+
+                            <label for="adminName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="adminName"
+                                name="adminName"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="adminEmail">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                id="adminEmail"
+                                name="adminEmail"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="adminPassword">
+                                Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="adminPassword"
+                                name="adminPassword"
+                                placeholder="Minimum 6 characters"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="input-group">
+
+                            <label for="adminConfirmPassword">
+                                Confirm Password
+                            </label>
+
+                            <input
+                                type="password"
+                                id="adminConfirmPassword"
+                                name="adminConfirmPassword"
+                                placeholder="Confirm your password"
+                                autocomplete="new-password"
+                                minlength="6"
+                                required
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            id="adminSubmitBtn"
+                            class="admin-submit-btn"
+                        >
+                            Request Admin Approval
+                        </button>
+
+
+                        <button
+                            type="button"
+                            id="cancelAdminBtn"
+                            class="admin-cancel-btn"
+                        >
+                            ← Back to Login
+                        </button>
+
+
+                        <div
+                            id="adminRegisterResult"
+                            class="result"
+                            aria-live="polite"
+                        ></div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =========================================================
+         EXISTING LOGIN SYSTEM
+         DO NOT REMOVE
+    ========================================================== -->
+
+    <script
+        type="module"
+        src="./js/login.js?v=5"
+    ></script>
+
+
+    <!-- =========================================================
+         PAGE NAVIGATION
+         CUSTOMER SIGNUP
+         FORGOT PASSWORD RETURN FIX
+    ========================================================== -->
+
+    <script type="module">
+
+        import { supabase } from "./js/supabase.js";
+
+
+        /* =====================================================
+           VIEWS
+        ===================================================== */
+
+        const loginView =
+            document.getElementById("loginView");
+
+        const signupView =
+            document.getElementById("signupView");
+
+        const forgotView =
+            document.getElementById("forgotView");
+
+        const adminView =
+            document.getElementById("adminView");
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        const signupBtn =
+            document.getElementById("signupBtn");
+
+        const cancelSignupBtn =
+            document.getElementById("cancelSignupBtn");
+
+        const forgotPasswordBtn =
+            document.getElementById("forgotPasswordBtn");
+
+        const cancelForgotPasswordBtn =
+            document.getElementById(
+                "cancelForgotPasswordBtn"
+            );
+
+        const adminRegisterBtn =
+            document.getElementById(
+                "adminRegisterBtn"
+            );
+
+        const cancelAdminBtn =
+            document.getElementById(
+                "cancelAdminBtn"
+            );
+
+
+        /* =====================================================
+           PANELS
+        ===================================================== */
+
+        const forgotPasswordPanel =
+            document.getElementById(
+                "forgotPasswordPanel"
+            );
+
+        const adminRegisterPanel =
+            document.getElementById(
+                "adminRegisterPanel"
+            );
+
+
+        /* =====================================================
+           FORGOT PASSWORD STATE
+        ===================================================== */
+
+        let forgotResetHandled = false;
+        let forgotSuccessTimer = null;
+
+
+        /* =====================================================
+           SHOW VIEW
+        ===================================================== */
+
+        function showAuthView(view) {
+
+            [
+                loginView,
+                signupView,
+                forgotView,
+                adminView
+            ].forEach((item) => {
+
+                if (item) {
+                    item.classList.remove("active");
+                }
+
+            });
+
+            if (view) {
+                view.classList.add("active");
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+
+
+        /* =====================================================
+           RESET SIGNUP UI
+        ===================================================== */
+
+        function resetSignupUI() {
+
+            const signupResult =
+                document.getElementById(
+                    "signupResult"
+                );
+
+            const signupForm =
+                document.getElementById(
+                    "signupForm"
+                );
+
+            if (signupResult) {
+                signupResult.textContent = "";
+                signupResult.className = "result";
+            }
+
+            if (signupForm) {
+                signupForm.reset();
+            }
+        }
+
+
+        /* =====================================================
+           UPDATE FORGOT PROGRESS
+        ===================================================== */
+
+        const progress1 =
+            document.getElementById(
+                "forgotProgress1"
+            );
+
+        const progress2 =
+            document.getElementById(
+                "forgotProgress2"
+            );
+
+        const progress3 =
+            document.getElementById(
+                "forgotProgress3"
+            );
+
+
+        function updateForgotProgress() {
+
+            const emailStep =
+                document.getElementById(
+                    "forgotStepEmail"
+                );
+
+            const pinStep =
+                document.getElementById(
+                    "forgotStepPin"
+                );
+
+            const passwordStep =
+                document.getElementById(
+                    "forgotStepPassword"
+                );
+
+
+            if (
+                !emailStep ||
+                !pinStep ||
+                !passwordStep
+            ) {
+                return;
+            }
+
+
+            if (progress1) {
+
+                progress1.classList.toggle(
+                    "active",
+                    emailStep.classList.contains("active") ||
+                    pinStep.classList.contains("active") ||
+                    passwordStep.classList.contains("active")
+                );
+
+            }
+
+
+            if (progress2) {
+
+                progress2.classList.toggle(
+                    "active",
+                    pinStep.classList.contains("active") ||
+                    passwordStep.classList.contains("active")
+                );
+
+            }
+
+
+            if (progress3) {
+
+                progress3.classList.toggle(
+                    "active",
+                    passwordStep.classList.contains("active")
+                );
+
+            }
+        }
+
+
+        /* =====================================================
+           RESET FORGOT PASSWORD UI
+        ===================================================== */
+
+        function resetForgotPasswordUI() {
+
+            if (forgotSuccessTimer) {
+
+                clearTimeout(
+                    forgotSuccessTimer
+                );
+
+                forgotSuccessTimer = null;
+            }
+
+
+            /*
+             * IMPORTANT:
+             * This is reset whenever the Forgot Password
+             * screen is opened.
+             *
+             * It does NOT mean PIN verification succeeded.
+             */
+
+            forgotResetHandled = false;
+
+
+            const emailStep =
+                document.getElementById(
+                    "forgotStepEmail"
+                );
+
+            const pinStep =
+                document.getElementById(
+                    "forgotStepPin"
+                );
+
+            const passwordStep =
+                document.getElementById(
+                    "forgotStepPassword"
+                );
+
+
+            if (emailStep) {
+                emailStep.classList.add("active");
+            }
+
+            if (pinStep) {
+                pinStep.classList.remove("active");
+            }
+
+            if (passwordStep) {
+                passwordStep.classList.remove("active");
+            }
+
+
+            const forgotPin =
+                document.getElementById(
+                    "forgotPin"
+                );
+
+            const newPassword =
+                document.getElementById(
+                    "forgotNewPassword"
+                );
+
+            const confirmPassword =
+                document.getElementById(
+                    "forgotConfirmPassword"
+                );
+
+
+            if (forgotPin) {
+                forgotPin.value = "";
+            }
+
+            if (newPassword) {
+                newPassword.value = "";
+            }
+
+            if (confirmPassword) {
+                confirmPassword.value = "";
+            }
+
+
+            const result =
+                document.getElementById(
+                    "forgotPasswordResult"
+                );
+
+            if (result) {
+
+                result.textContent = "";
+
+                result.className =
+                    "result";
+            }
+
+
+            updateForgotProgress();
+        }
+
+
+        /* =====================================================
+           CUSTOMER SIGNUP VIEW
+        ===================================================== */
+
+        if (signupBtn) {
+
+            signupBtn.addEventListener(
+                "click",
+                () => {
+
+                    resetSignupUI();
+
+                    showAuthView(
+                        signupView
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (cancelSignupBtn) {
+
+            cancelSignupBtn.addEventListener(
+                "click",
+                () => {
+
+                    resetSignupUI();
+
+                    showAuthView(
+                        loginView
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD VIEW
+        ===================================================== */
+
+        if (forgotPasswordBtn) {
+
+            forgotPasswordBtn.addEventListener(
+                "click",
+                () => {
+
+                    resetForgotPasswordUI();
+
+                    if (forgotPasswordPanel) {
+                        forgotPasswordPanel.hidden = false;
+                    }
+
+                    showAuthView(
+                        forgotView
+                    );
+
+
+                    const forgotEmail =
+                        document.getElementById(
+                            "forgotEmail"
+                        );
+
+                    if (forgotEmail) {
+
+                        setTimeout(
+                            () => {
+                                forgotEmail.focus();
+                            },
+                            250
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD → LOGIN
+        ===================================================== */
+
+        if (cancelForgotPasswordBtn) {
+
+            cancelForgotPasswordBtn.addEventListener(
+                "click",
+                () => {
+
+                    resetForgotPasswordUI();
+
+                    if (forgotPasswordPanel) {
+                        forgotPasswordPanel.hidden = false;
+                    }
+
+                    showAuthView(
+                        loginView
+                    );
+
+
+                    const loginEmail =
+                        document.getElementById(
+                            "email"
+                        );
+
+                    if (loginEmail) {
+
+                        setTimeout(
+                            () => {
+                                loginEmail.focus();
+                            },
+                            250
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           ADMIN VIEW
+        ===================================================== */
+
+        if (adminRegisterBtn) {
+
+            adminRegisterBtn.addEventListener(
+                "click",
+                () => {
+
+                    if (adminRegisterPanel) {
+                        adminRegisterPanel.hidden = false;
+                    }
+
+                    if (forgotPasswordPanel) {
+                        forgotPasswordPanel.hidden = true;
+                    }
+
+                    showAuthView(
+                        adminView
+                    );
+
+                }
+            );
+
+        }
+
+
+        if (cancelAdminBtn) {
+
+            cancelAdminBtn.addEventListener(
+                "click",
+                () => {
+
+                    if (adminRegisterPanel) {
+                        adminRegisterPanel.hidden = false;
+                    }
+
+                    if (forgotPasswordPanel) {
+                        forgotPasswordPanel.hidden = true;
+                    }
+
+                    showAuthView(
+                        loginView
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           FORGOT PASSWORD STEP OBSERVER
+        ===================================================== */
+
+        const emailStepElement =
+            document.getElementById(
+                "forgotStepEmail"
+            );
+
+        const pinStepElement =
+            document.getElementById(
+                "forgotStepPin"
+            );
+
+        const passwordStepElement =
+            document.getElementById(
+                "forgotStepPassword"
+            );
+
+
+        if (
+            emailStepElement &&
+            pinStepElement &&
+            passwordStepElement
+        ) {
+
+            const progressObserver =
+                new MutationObserver(
+                    updateForgotProgress
+                );
+
+
+            progressObserver.observe(
+                emailStepElement,
+                {
+                    attributes: true,
+                    attributeFilter: ["class"]
+                }
+            );
+
+
+            progressObserver.observe(
+                pinStepElement,
+                {
+                    attributes: true,
+                    attributeFilter: ["class"]
+                }
+            );
+
+
+            progressObserver.observe(
+                passwordStepElement,
+                {
+                    attributes: true,
+                    attributeFilter: ["class"]
+                }
+            );
+
+        }
+
+
+        updateForgotProgress();
+
+
+        /* =====================================================
+           SUCCESSFUL PASSWORD UPDATE ONLY
+           
+           IMPORTANT:
+           This function is NOT called when:
+           - email is submitted
+           - PIN is sent
+           - PIN is verified
+           
+           It is ONLY triggered when login.js writes a
+           successful PASSWORD UPDATE message.
+        ===================================================== */
+
+        const forgotPasswordResult =
+            document.getElementById(
+                "forgotPasswordResult"
+            );
+
+
+        function returnToLoginAfterForgot() {
+
+            if (forgotResetHandled) {
+                return;
+            }
+
+            forgotResetHandled = true;
+
+
+            if (forgotSuccessTimer) {
+
+                clearTimeout(
+                    forgotSuccessTimer
+                );
+
+                forgotSuccessTimer = null;
+            }
+
+
+            /*
+             * Save the email before clearing the
+             * Forgot Password fields.
+             */
+
+            const forgotEmail =
+                document.getElementById(
+                    "forgotEmail"
+                );
+
+            const loginEmail =
+                document.getElementById(
+                    "email"
+                );
+
+            const emailValue =
+                forgotEmail?.value.trim() || "";
+
+
+            if (
+                loginEmail &&
+                emailValue
+            ) {
+
+                loginEmail.value =
+                    emailValue;
+
+            }
+
+
+            /*
+             * Clear old password.
+             */
+
+            const loginPassword =
+                document.getElementById(
+                    "password"
+                );
+
+            if (loginPassword) {
+                loginPassword.value = "";
+            }
+
+
+            /*
+             * NOW return to Login.
+             */
+
+            showAuthView(
+                loginView
+            );
+
+
+            /*
+             * Reset Forgot Password steps.
+             */
+
+            const emailStep =
+                document.getElementById(
+                    "forgotStepEmail"
+                );
+
+            const pinStep =
+                document.getElementById(
+                    "forgotStepPin"
+                );
+
+            const passwordStep =
+                document.getElementById(
+                    "forgotStepPassword"
+                );
+
+
+            if (emailStep) {
+                emailStep.classList.add("active");
+            }
+
+            if (pinStep) {
+                pinStep.classList.remove("active");
+            }
+
+            if (passwordStep) {
+                passwordStep.classList.remove("active");
+            }
+
+
+            /*
+             * Clear PIN and new password fields.
+             */
+
+            const forgotPin =
+                document.getElementById(
+                    "forgotPin"
+                );
+
+            const newPassword =
+                document.getElementById(
+                    "forgotNewPassword"
+                );
+
+            const confirmPassword =
+                document.getElementById(
+                    "forgotConfirmPassword"
+                );
+
+
+            if (forgotPin) {
+                forgotPin.value = "";
+            }
+
+            if (newPassword) {
+                newPassword.value = "";
+            }
+
+            if (confirmPassword) {
+                confirmPassword.value = "";
+            }
+
+
+            /*
+             * Clear Forgot Password result.
+             */
+
+            if (forgotPasswordResult) {
+
+                forgotPasswordResult.textContent = "";
+
+                forgotPasswordResult.className =
+                    "result";
+            }
+
+
+            updateForgotProgress();
+
+
+            /*
+             * Focus password so user can immediately
+             * log in using the new password.
+             */
+
+            setTimeout(
+                () => {
+
+                    if (loginPassword) {
+                        loginPassword.focus();
+                    }
+
+                },
+                300
+            );
+
+        }
+
+
+        /* =====================================================
+           WATCH ONLY FOR FINAL PASSWORD UPDATE SUCCESS
+        ===================================================== */
+
+        if (forgotPasswordResult) {
+
+            const forgotSuccessObserver =
+                new MutationObserver(
+                    () => {
+
+                        if (forgotResetHandled) {
+                            return;
+                        }
+
+
+                        const message =
+                            forgotPasswordResult
+                                .textContent
+                                .trim()
+                                .toLowerCase();
+
+
+                        const hasSuccessClass =
+                            forgotPasswordResult
+                                .classList
+                                .contains("success");
+
+
+                        /*
+                         * IMPORTANT:
+                         *
+                         * We intentionally DO NOT use
+                         * generic "successfully" here.
+                         *
+                         * Why?
+                         *
+                         * Because:
+                         *
+                         * "PIN sent successfully"
+                         *
+                         * must NOT return to Login.
+                         *
+                         * "PIN verified successfully"
+                         *
+                         * must NOT return to Login.
+                         *
+                         * Only the actual password update
+                         * success should trigger the redirect.
+                         */
+
+                        const isPasswordUpdateSuccess =
+                            message.includes(
+                                "password updated"
+                            ) ||
+                            message.includes(
+                                "password changed"
+                            ) ||
+                            message.includes(
+                                "password reset"
+                            ) ||
+                            message.includes(
+                                "new password updated"
+                            ) ||
+                            message.includes(
+                                "password has been updated"
+                            ) ||
+                            message.includes(
+                                "password has been changed"
+                            ) ||
+                            message.includes(
+                                "password updated successfully"
+                            ) ||
+                            message.includes(
+                                "password changed successfully"
+                            ) ||
+                            message.includes(
+                                "password reset successfully"
+                            );
+
+
+                        /*
+                         * The success class AND a specific
+                         * password-update message are required.
+                         */
+
+                        if (
+                            hasSuccessClass &&
+                            isPasswordUpdateSuccess
+                        ) {
+
+                            /*
+                             * Wait 1.5 seconds so the user
+                             * can see the success message.
+                             */
+
+                            if (forgotSuccessTimer) {
+
+                                clearTimeout(
+                                    forgotSuccessTimer
+                                );
+
+                            }
+
+
+                            forgotSuccessTimer =
+                                setTimeout(
+                                    () => {
+
+                                        returnToLoginAfterForgot();
+
+                                    },
+                                    1500
+                                );
+
+                        }
+
+                    }
+                );
+
+
+            forgotSuccessObserver.observe(
+                forgotPasswordResult,
+                {
+                    childList: true,
+                    characterData: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ["class"]
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           CUSTOMER SIGNUP
+        ===================================================== */
+
+        const signupForm =
+            document.getElementById(
+                "signupForm"
+            );
+
+        const signupResult =
+            document.getElementById(
+                "signupResult"
+            );
+
+        const signupSubmitBtn =
+            document.getElementById(
+                "signupSubmitBtn"
+            );
+
+
+        function showSignupMessage(
+            message,
+            type = "info"
+        ) {
+
+            if (!signupResult) {
+                return;
+            }
+
+            signupResult.textContent =
+                message;
+
+            signupResult.className =
+                "result " + type;
+        }
+
+
+        if (signupForm) {
+
+            signupForm.addEventListener(
+                "submit",
+                async (event) => {
+
+                    event.preventDefault();
+
+
+                    const fullName =
+                        document.getElementById(
+                            "signupName"
+                        )
+                            ?.value
+                            .trim() || "";
+
+
+                    const email =
+                        document.getElementById(
+                            "signupEmail"
+                        )
+                            ?.value
+                            .trim() || "";
+
+
+                    const phone =
+                        document.getElementById(
+                            "signupPhone"
+                        )
+                            ?.value
+                            .trim() || "";
+
+
+                    const password =
+                        document.getElementById(
+                            "signupPassword"
+                        )
+                            ?.value || "";
+
+
+                    const confirmPassword =
+                        document.getElementById(
+                            "signupConfirmPassword"
+                        )
+                            ?.value || "";
+
+
+                    /* -----------------------------------------
+                       VALIDATION
+                    ----------------------------------------- */
+
+                    if (
+                        !fullName ||
+                        !email ||
+                        !password ||
+                        !confirmPassword
+                    ) {
+
+                        showSignupMessage(
+                            "Please complete all required fields.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+
+                    if (password.length < 6) {
+
+                        showSignupMessage(
+                            "Password must contain at least 6 characters.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+
+                    if (
+                        password !==
+                        confirmPassword
+                    ) {
+
+                        showSignupMessage(
+                            "Passwords do not match.",
+                            "error"
+                        );
+
+                        return;
+                    }
+
+
+                    if (signupSubmitBtn) {
+
+                        signupSubmitBtn.disabled =
+                            true;
+
+                        signupSubmitBtn.textContent =
+                            "Creating Account...";
+
+                    }
+
+
+                    showSignupMessage(
+                        "Creating your customer account...",
+                        "info"
+                    );
+
+
+                    try {
+
+                        /* -------------------------------------
+                           CREATE SUPABASE AUTH USER
+                        ------------------------------------- */
+
+                        const {
+                            data,
+                            error
+                        } =
+                            await supabase.auth.signUp({
+
+                                email: email,
+
+                                password: password,
+
+                                options: {
+
+                                    data: {
+
+                                        full_name:
+                                            fullName,
+
+                                        name:
+                                            fullName,
+
+                                        phone:
+                                            phone,
+
+                                        role:
+                                            "customer"
+
+                                    }
+
+                                }
+
+                            });
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        const user =
+                            data?.user;
+
+
+                        if (!user) {
+
+                            throw new Error(
+                                "Account could not be created."
+                            );
+
+                        }
+
+
+                        /* -------------------------------------
+                           CREATE / UPDATE CUSTOMER PROFILE
+                        ------------------------------------- */
+
+                        const {
+                            error: profileError
+                        } =
+                            await supabase
+                                .from("profiles")
+                                .upsert(
+                                    {
+                                        id:
+                                            user.id,
+
+                                        name:
+                                            fullName,
+
+                                        email:
+                                            email,
+
+                                        phone:
+                                            phone,
+
+                                        role:
+                                            "customer",
+
+                                        status:
+                                            "approved"
+
+                                    },
+                                    {
+                                        onConflict:
+                                            "id"
+                                    }
+                                );
+
+
+                        if (profileError) {
+
+                            console.warn(
+                                "Profile creation warning:",
+                                profileError
+                            );
+
+                        }
+
+
+                        /* -------------------------------------
+                           SIGN OUT AFTER SIGNUP
+                        ------------------------------------- */
+
+                        await supabase.auth.signOut();
+
+
+                        signupForm.reset();
+
+
+                        showSignupMessage(
+                            "Account created successfully! You can now log in.",
+                            "success"
+                        );
+
+
+                        /*
+                         * Customer signup successfully created.
+                         * Return to Login.
+                         */
+
+                        setTimeout(
+                            () => {
+
+                                showAuthView(
+                                    loginView
+                                );
+
+
+                                if (signupResult) {
+
+                                    signupResult.textContent =
+                                        "";
+
+                                    signupResult.className =
+                                        "result";
+
+                                }
+
+                            },
+                            1200
+                        );
+
+
+                    } catch (error) {
+
+                        console.error(
+                            "Customer signup error:",
+                            error
+                        );
+
+
+                        let message =
+                            error?.message ||
+                            "Unable to create your account.";
+
+
+                        const lowerMessage =
+                            message.toLowerCase();
+
+
+                        if (
+                            lowerMessage.includes(
+                                "already registered"
+                            ) ||
+                            lowerMessage.includes(
+                                "user already registered"
+                            ) ||
+                            lowerMessage.includes(
+                                "already exists"
+                            )
+                        ) {
+
+                            message =
+                                "An account with this email already exists.";
+
+                        }
+
+
+                        showSignupMessage(
+                            message,
+                            "error"
+                        );
+
+
+                    } finally {
+
+                        if (signupSubmitBtn) {
+
+                            signupSubmitBtn.disabled =
+                                false;
+
+                            signupSubmitBtn.textContent =
+                                "Create Customer Account";
+
+                        }
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+

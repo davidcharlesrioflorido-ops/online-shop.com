@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Request | Customer Portal</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css"
+    >
+
+    <style>
+        /* =====================================================
+           CUSTOMER REQUEST PAGE
+        ===================================================== */
+
+        .customer-page {
+            min-height: 100vh;
+            padding: 40px 20px 70px;
+        }
+
+        .customer-container {
+            width: min(1050px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .customer-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 17px 22px;
+            margin-bottom: 35px;
+            background: rgba(15, 20, 32, 0.92);
+            border: 1px solid rgba(0, 242, 254, 0.12);
+            border-radius: 16px;
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        .customer-nav-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .customer-nav-icon {
+            color: #00f2fe;
+            font-size: 1.2rem;
+        }
+
+        .customer-nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .customer-nav-links a,
+        .customer-logout {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+            padding: 9px 12px;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            background: transparent;
+            color: #aeb7c5;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .customer-nav-links a:hover,
+        .customer-logout:hover {
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.06);
+            border-color: rgba(0, 242, 254, 0.18);
+            transform: translateY(-1px);
+        }
+
+        .customer-nav-links a.active {
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.08);
+            border-color: rgba(0, 242, 254, 0.20);
+        }
+
+        .customer-logout {
+            color: #ff9d9d;
+        }
+
+        .customer-logout:hover {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.06);
+            border-color: rgba(255, 107, 107, 0.20);
+        }
+
+        /* CART COUNT */
+
+        #cartCount {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 18px;
+            height: 18px;
+            margin-left: 4px;
+            padding: 0 5px;
+            border-radius: 999px;
+            background: rgba(0, 242, 254, 0.12);
+            border: 1px solid rgba(0, 242, 254, 0.18);
+            color: #00f2fe;
+            font-size: 0.6rem;
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           PAGE HEADING
+        ===================================================== */
+
+        .request-heading {
+            margin-bottom: 25px;
+        }
+
+        .request-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #00f2fe;
+            font-size: 0.68rem;
+            font-weight: 900;
+            letter-spacing: 0.18em;
+        }
+
+        .request-heading h1 {
+            margin: 0 0 9px;
+            color: #ffffff;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.1;
+        }
+
+        .request-heading p {
+            max-width: 650px;
+            margin: 0;
+            color: #8993a3;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           REQUEST LAYOUT
+        ===================================================== */
+
+        .request-layout {
+            display: grid;
+            grid-template-columns:
+                minmax(0, 0.85fr)
+                minmax(0, 1.15fr);
+            gap: 20px;
+        }
+
+        /* =====================================================
+           INFORMATION CARD
+        ===================================================== */
+
+        .request-info-card {
+            padding: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .request-info-card h2 {
+            margin: 0 0 12px;
+            color: #ffffff;
+            font-size: 1.25rem;
+        }
+
+        .request-info-card > p {
+            margin: 0 0 24px;
+            color: #8993a3;
+            font-size: 0.8rem;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           INFO ITEMS
+        ===================================================== */
+
+        .info-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 11px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .info-icon {
+            width: 35px;
+            height: 35px;
+            flex: 0 0 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9px;
+            background: rgba(0, 242, 254, 0.07);
+            border: 1px solid rgba(0, 242, 254, 0.14);
+            font-size: 0.95rem;
+        }
+
+        .info-text strong {
+            display: block;
+            margin-bottom: 3px;
+            color: #ffffff;
+            font-size: 0.75rem;
+        }
+
+        .info-text span {
+            color: #7f8999;
+            font-size: 0.68rem;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           FORM CARD
+        ===================================================== */
+
+        .request-form-card {
+            padding: 28px;
+            border: 1px solid rgba(0, 242, 254, 0.12);
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.035),
+                    rgba(108, 92, 231, 0.035)
+                );
+        }
+
+        .request-form-card h2 {
+            margin: 0 0 5px;
+            color: #ffffff;
+            font-size: 1.25rem;
+        }
+
+        .form-subtitle {
+            margin: 0 0 23px;
+            color: #7f8999;
+            font-size: 0.72rem;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .request-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group label {
+            color: #c5ccd6;
+            font-size: 0.7rem;
+            font-weight: 800;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 10px;
+            outline: none;
+            background: rgba(5, 9, 16, 0.55);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 0.78rem;
+            box-sizing: border-box;
+            transition:
+                border-color 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .form-group input {
+            min-height: 44px;
+        }
+
+        .form-group select {
+            min-height: 44px;
+            cursor: pointer;
+        }
+
+        .form-group select option {
+            background: #0b1018;
+            color: #ffffff;
+        }
+
+        .form-group textarea {
+            min-height: 145px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #596474;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: rgba(0, 242, 254, 0.35);
+            background: rgba(5, 9, 16, 0.72);
+            box-shadow:
+                0 0 0 3px rgba(0, 242, 254, 0.05);
+        }
+
+        /* =====================================================
+           SUBMIT
+        ===================================================== */
+
+        .submit-request-btn {
+            width: 100%;
+            min-height: 46px;
+            margin-top: 3px;
+            padding: 11px 18px;
+            border: 1px solid #00f2fe;
+            border-radius: 10px;
+            background: #00f2fe;
+            color: #061015;
+            font-size: 0.74rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .submit-request-btn:hover {
+            transform: translateY(-2px);
+            background: #5df7ff;
+            box-shadow:
+                0 8px 25px rgba(0, 242, 254, 0.16);
+        }
+
+        .submit-request-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* =====================================================
+           RESULT
+        ===================================================== */
+
+        .request-result {
+            min-height: 20px;
+            margin-top: 3px;
+            font-size: 0.72rem;
+            line-height: 1.5;
+        }
+
+        .request-result.success {
+            color: #72f5b5;
+        }
+
+        .request-result.error {
+            color: #ff9696;
+        }
+
+        /* =====================================================
+           MY REQUESTS
+        ===================================================== */
+
+        .my-requests-section {
+            margin-top: 25px;
+        }
+
+        .my-requests-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .my-requests-label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00f2fe;
+            font-size: 0.64rem;
+            font-weight: 900;
+            letter-spacing: 0.16em;
+        }
+
+        .my-requests-header h2 {
+            margin: 0;
+            color: #ffffff;
+            font-size: 1.35rem;
+        }
+
+        .refresh-requests-btn {
+            min-height: 38px;
+            padding: 8px 13px;
+            border: 1px solid rgba(0, 242, 254, 0.16);
+            border-radius: 9px;
+            background: rgba(0, 242, 254, 0.05);
+            color: #00f2fe;
+            font-size: 0.68rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .refresh-requests-btn:hover {
+            background: rgba(0, 242, 254, 0.10);
+            border-color: rgba(0, 242, 254, 0.30);
+            transform: translateY(-1px);
+        }
+
+        .requests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .request-card {
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 15px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 255, 255, 0.025),
+                    rgba(0, 242, 254, 0.018)
+                );
+            transition:
+                border-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .request-card:hover {
+            border-color: rgba(0, 242, 254, 0.18);
+            transform: translateY(-1px);
+        }
+
+        .request-card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 13px;
+        }
+
+        .request-card-date {
+            color: #657084;
+            font-size: 0.65rem;
+        }
+
+        .request-type {
+            display: inline-flex;
+            align-items: center;
+            min-height: 27px;
+            padding: 5px 10px;
+            margin-top: 8px;
+            border-radius: 999px;
+            color: #00f2fe;
+            background: rgba(0, 242, 254, 0.06);
+            border: 1px solid rgba(0, 242, 254, 0.15);
+            font-size: 0.62rem;
+            font-weight: 900;
+        }
+
+        .request-status {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 27px;
+            padding: 5px 10px;
+            border-radius: 999px;
+            font-size: 0.62rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .status-pending {
+            color: #ffd166;
+            background: rgba(255, 209, 102, 0.08);
+            border: 1px solid rgba(255, 209, 102, 0.18);
+        }
+
+        .status-reviewing {
+            color: #4facfe;
+            background: rgba(79, 172, 254, 0.08);
+            border: 1px solid rgba(79, 172, 254, 0.18);
+        }
+
+        .status-approved,
+        .status-completed {
+            color: #72f5b5;
+            background: rgba(114, 245, 181, 0.08);
+            border: 1px solid rgba(114, 245, 181, 0.18);
+        }
+
+        .status-rejected {
+            color: #ff9696;
+            background: rgba(255, 150, 150, 0.08);
+            border: 1px solid rgba(255, 150, 150, 0.18);
+        }
+
+        .request-card-title {
+            margin: 0 0 7px;
+            color: #ffffff;
+            font-size: 0.82rem;
+            font-weight: 800;
+        }
+
+        .request-card-message {
+            margin: 0;
+            color: #9aa5b5;
+            font-size: 0.73rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .admin-reply-box {
+            margin-top: 17px;
+            padding: 15px;
+            border-left: 2px solid #00f2fe;
+            border-radius: 0 10px 10px 0;
+            background: rgba(0, 242, 254, 0.045);
+        }
+
+        .admin-reply-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 7px;
+            color: #00f2fe;
+            font-size: 0.66rem;
+            font-weight: 900;
+        }
+
+        .admin-reply-message {
+            margin: 0;
+            color: #dce4ed;
+            font-size: 0.72rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .admin-reply-time {
+            display: block;
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 0.6rem;
+        }
+
+        .no-reply {
+            margin-top: 17px;
+            padding: 13px 15px;
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            color: #687486;
+            background: rgba(255, 255, 255, 0.015);
+            font-size: 0.67rem;
+        }
+
+        .empty-requests {
+            padding: 35px 20px;
+            text-align: center;
+            border: 1px dashed rgba(255, 255, 255, 0.09);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.018);
+        }
+
+        .empty-requests-icon {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .empty-requests h3 {
+            margin: 0 0 6px;
+            color: #ffffff;
+            font-size: 0.9rem;
+        }
+
+        .empty-requests p {
+            margin: 0;
+            color: #687486;
+            font-size: 0.68rem;
+        }
+
+        .requests-loading {
+            padding: 25px;
+            text-align: center;
+            color: #7f8999;
+            font-size: 0.7rem;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 850px) {
+            .customer-nav {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .customer-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .request-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .customer-page {
+                padding: 25px 14px 50px;
+            }
+
+            .customer-nav {
+                padding: 15px;
+                border-radius: 14px;
+            }
+
+            .customer-nav-links {
+                display: grid;
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+                width: 100%;
+            }
+
+            .customer-nav-links a,
+            .customer-logout {
+                width: 100%;
+            }
+
+            .request-info-card,
+            .request-form-card {
+                padding: 21px;
+            }
+
+            .my-requests-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .refresh-requests-btn {
+                width: 100%;
+            }
+
+            .request-card-top {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="customer-page">
+
+        <div class="customer-container">
+
+            <!-- =================================================
+                 CUSTOMER NAVIGATION
+            ================================================== -->
+
+            <nav class="customer-nav">
+
+                <a
+                    href="customer-home.html"
+                    class="customer-nav-title"
+                >
+                    <span class="customer-nav-icon">
+                        ✦
+                    </span>
+
+                    <span>
+                        Customer Portal
+                    </span>
+                </a>
+
+                <div class="customer-nav-links">
+
+                    <a href="customer-home.html">
+                        Home
+                    </a>
+
+                    <a href="customer-products.html">
+                        Products
+                    </a>
+
+                    <a
+                        href="customer-request.html"
+                        class="active"
+                    >
+                        Request
+                    </a>
+
+                    <a href="customer-cart.html">
+                        🛒 Cart
+                        <span id="cartCount">0</span>
+                    </a>
+
+                    <a href="customer-orders.html">
+                        Orders
+                    </a>
+
+                    <a href="customer-account.html">
+                        My Account
+                    </a>
+
+                    <button
+                        type="button"
+                        id="logoutBtn"
+                        class="customer-logout"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+            </nav>
+
+            <!-- =================================================
+                 HEADING
+            ================================================== -->
+
+            <section class="request-heading">
+
+                <span class="request-label">
+                    CUSTOMER REQUEST
+                </span>
+
+                <h1>
+                    Make a Request
+                </h1>
+
+                <p>
+                    Need something that is not currently
+                    available? Send us a request and our team
+                    can review it.
+                </p>
+
+            </section>
+
+            <!-- =================================================
+                 REQUEST CONTENT
+            ================================================== -->
+
+            <section class="request-layout">
+
+                <!-- INFORMATION -->
+
+                <div class="request-info-card">
+
+                    <h2>
+                        How it works
+                    </h2>
+
+                    <p>
+                        Submit your request with enough
+                        information so we can understand
+                        what you need.
+                    </p>
+
+                    <div class="info-list">
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                📝
+                            </div>
+
+                            <div class="info-text">
+
+                                <strong>
+                                    Submit your request
+                                </strong>
+
+                                <span>
+                                    Tell us what product,
+                                    service, or item you need.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                🔎
+                            </div>
+
+                            <div class="info-text">
+
+                                <strong>
+                                    Request review
+                                </strong>
+
+                                <span>
+                                    Your request will be
+                                    reviewed by the store team.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="info-item">
+
+                            <div class="info-icon">
+                                📩
+                            </div>
+
+                            <div class="info-text">
+
+                                <strong>
+                                    Receive an update
+                                </strong>
+
+                                <span>
+                                    Check your request below
+                                    for the latest status and
+                                    admin message.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- FORM -->
+
+                <div class="request-form-card">
+
+                    <h2>
+                        Request Form
+                    </h2>
+
+                    <p class="form-subtitle">
+                        Fill out the form below.
+                    </p>
+
+                    <form
+                        id="requestForm"
+                        class="request-form"
+                    >
+
+                        <!-- NAME -->
+
+                        <div class="form-group">
+
+                            <label for="name">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group">
+
+                            <label for="email">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="Enter your email address"
+                                autocomplete="email"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+                        <!-- REQUEST TYPE -->
+
+                        <div class="form-group">
+
+                            <label for="requestType">
+                                Request Type
+                            </label>
+
+                            <select
+                                id="requestType"
+                                name="request_type"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select a request type
+                                </option>
+
+                                <option value="Order Request">
+                                    🛒 Order Request
+                                </option>
+
+                                <option value="Order Concern">
+                                    ⚠️ Order Concern
+                                </option>
+
+                                <option value="Payment Concern">
+                                    💳 Payment Concern
+                                </option>
+
+                                <option value="Delivery Concern">
+                                    🚚 Delivery Concern
+                                </option>
+
+                                <option value="Product Concern">
+                                    📦 Product Concern
+                                </option>
+
+                                <option value="Cancellation Request">
+                                    🔄 Cancellation Request
+                                </option>
+
+                                <option value="Other Concern">
+                                    💬 Other Concern
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- MESSAGE -->
+
+                        <div class="form-group">
+
+                            <label for="message">
+                                Request Details
+                            </label>
+
+                            <textarea
+                                id="message"
+                                name="message"
+                                rows="6"
+                                maxlength="2000"
+                                placeholder="Describe what you need..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+                        <!-- SUBMIT -->
+
+                        <button
+                            type="submit"
+                            id="submitBtn"
+                            class="submit-request-btn"
+                        >
+                            Submit Request
+                        </button>
+
+                        <!-- RESULT -->
+
+                        <div
+                            id="requestResult"
+                            class="request-result"
+                            aria-live="polite"
+                        ></div>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 MY REQUESTS
+            ================================================== -->
+
+            <section class="my-requests-section">
+
+                <div class="my-requests-header">
+
+                    <div>
+
+                        <span class="my-requests-label">
+                            REQUEST HISTORY
+                        </span>
+
+                        <h2>
+                            My Requests
+                        </h2>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="refreshRequestsBtn"
+                        class="refresh-requests-btn"
+                    >
+                        ↻ Refresh
+                    </button>
+
+                </div>
+
+                <div
+                    id="requestsList"
+                    class="requests-list"
+                >
+
+                    <div class="requests-loading">
+                        Loading your requests...
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script type="module">
+
+        import { supabase }
+            from "../js/supabase.js";
+
+        import {
+            getCurrentUser,
+            logoutUser
+        } from "../js/auth.js";
+
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const requestForm =
+            document.getElementById("requestForm");
+
+        const nameInput =
+            document.getElementById("name");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const requestTypeInput =
+            document.getElementById("requestType");
+
+        const messageInput =
+            document.getElementById("message");
+
+        const submitBtn =
+            document.getElementById("submitBtn");
+
+        const requestResult =
+            document.getElementById("requestResult");
+
+        const logoutBtn =
+            document.getElementById("logoutBtn");
+
+        const cartCount =
+            document.getElementById("cartCount");
+
+        const requestsList =
+            document.getElementById("requestsList");
+
+        const refreshRequestsBtn =
+            document.getElementById("refreshRequestsBtn");
+
+
+        /* =====================================================
+           CURRENT USER
+        ===================================================== */
+
+        let currentUser = null;
+
+
+        /* =====================================================
+           ACCOUNT-SPECIFIC CART
+           
+           IMPORTANT:
+           Each customer has their own cart.
+
+           Example:
+           businessStoreCart_123456
+           businessStoreCart_abcdef
+        ===================================================== */
+
+        const CART_KEY_PREFIX =
+            "businessStoreCart";
+
+        function getCartKey() {
+
+            if (!currentUser?.id) {
+                return null;
+            }
+
+            return `${CART_KEY_PREFIX}_${currentUser.id}`;
+        }
+
+
+        /* =====================================================
+           GET CURRENT CUSTOMER CART
+        ===================================================== */
+
+        function getCart() {
+
+            const cartKey = getCartKey();
+
+            // No logged-in customer = empty cart
+            if (!cartKey) {
+                return [];
+            }
+
+            try {
+
+                const cart =
+                    JSON.parse(
+                        localStorage.getItem(cartKey) || "[]"
+                    );
+
+                return Array.isArray(cart)
+                    ? cart
+                    : [];
+
+            } catch (error) {
+
+                console.error(
+                    "CART READ ERROR:",
+                    error
+                );
+
+                return [];
+            }
+        }
+
+
+        /* =====================================================
+           CART COUNT
+           
+           This now reads ONLY the logged-in customer's cart.
+        ===================================================== */
+
+        function updateCartCount() {
+
+            const cart = getCart();
+
+            const totalQuantity =
+                cart.reduce(
+                    (total, item) =>
+                        total +
+                        (Number(item.quantity) || 0),
+                    0
+                );
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    totalQuantity;
+
+            }
+
+            console.log(
+                "ACCOUNT CART KEY:",
+                getCartKey()
+            );
+
+            console.log(
+                "ACCOUNT CART COUNT:",
+                totalQuantity
+            );
+        }
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        /* =====================================================
+           FORMAT DATE
+        ===================================================== */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "No date";
+            }
+
+            const date =
+                new Date(dateValue);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+                return "No date";
+            }
+
+            return date.toLocaleString(
+                undefined,
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit"
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           STATUS CLASS
+        ===================================================== */
+
+        function getStatusClass(status) {
+
+            const normalized =
+                String(status || "Pending")
+                    .trim()
+                    .toLowerCase()
+                    .replace(/\s+/g, "-");
+
+            const allowed = [
+                "pending",
+                "reviewing",
+                "approved",
+                "rejected",
+                "completed"
+            ];
+
+            if (!allowed.includes(normalized)) {
+                return "status-pending";
+            }
+
+            return `status-${normalized}`;
+        }
+
+
+        /* =====================================================
+           LOAD CUSTOMER
+        ===================================================== */
+
+        async function loadCustomer() {
+
+            console.log(
+                "CUSTOMER REQUEST STARTING..."
+            );
+
+            const user =
+                await getCurrentUser();
+
+            if (!user) {
+
+                console.log(
+                    "NO CUSTOMER SESSION → LOGIN"
+                );
+
+                window.location.href =
+                    "../login.html";
+
+                return null;
+            }
+
+            currentUser = user;
+
+            console.log(
+                "CUSTOMER LOGGED IN:",
+                user.email
+            );
+
+
+            /* ---------------------------------------------
+               LOAD CUSTOMER PROFILE DATA
+            --------------------------------------------- */
+
+            const metadata =
+                user.user_metadata || {};
+
+            const fullName =
+                metadata.full_name ||
+                metadata.name ||
+                "";
+
+
+            if (
+                nameInput &&
+                fullName
+            ) {
+
+                nameInput.value =
+                    fullName;
+
+            }
+
+
+            if (
+                emailInput &&
+                user.email
+            ) {
+
+                emailInput.value =
+                    user.email;
+
+            }
+
+
+            /* ---------------------------------------------
+               UPDATE ACCOUNT-SPECIFIC CART COUNT
+            --------------------------------------------- */
+
+            updateCartCount();
+
+
+            /* ---------------------------------------------
+               LOAD REQUEST HISTORY
+            --------------------------------------------- */
+
+            await loadMyRequests();
+
+
+            console.log(
+                "CUSTOMER REQUEST READY"
+            );
+
+            return user;
+        }
+
+
+        /* =====================================================
+           LOAD MY REQUESTS
+        ===================================================== */
+
+        async function loadMyRequests() {
+
+            if (!currentUser) {
+                return;
+            }
+
+            if (requestsList) {
+
+                requestsList.innerHTML = `
+                    <div class="requests-loading">
+                        Loading your requests...
+                    </div>
+                `;
+
+            }
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } = await supabase
+
+                    .from("requests")
+
+                    .select(
+                        "id, customer_id, name, email, request_type, message, status, admin_reply, created_at, updated_at"
+                    )
+
+                    .eq(
+                        "customer_id",
+                        currentUser.id
+                    )
+
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        "LOAD REQUESTS ERROR:",
+                        error
+                    );
+
+                    requestsList.innerHTML = `
+                        <div class="empty-requests">
+
+                            <div class="empty-requests-icon">
+                                ⚠️
+                            </div>
+
+                            <h3>
+                                Unable to load requests
+                            </h3>
+
+                            <p>
+                                ${escapeHtml(error.message)}
+                            </p>
+
+                        </div>
+                    `;
+
+                    return;
+                }
+
+
+                renderRequests(
+                    data || []
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "REQUEST HISTORY ERROR:",
+                    error
+                );
+
+                requestsList.innerHTML = `
+                    <div class="empty-requests">
+
+                        <div class="empty-requests-icon">
+                            ⚠️
+                        </div>
+
+                        <h3>
+                            Something went wrong
+                        </h3>
+
+                        <p>
+                            Please refresh the page and try again.
+                        </p>
+
+                    </div>
+                `;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RENDER REQUESTS
+        ===================================================== */
+
+        function renderRequests(requests) {
+
+            if (!requestsList) {
+                return;
+            }
+
+
+            if (!requests.length) {
+
+                requestsList.innerHTML = `
+                    <div class="empty-requests">
+
+                        <div class="empty-requests-icon">
+                            📭
+                        </div>
+
+                        <h3>
+                            No requests yet
+                        </h3>
+
+                        <p>
+                            Your submitted requests will appear here.
+                        </p>
+
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            requestsList.innerHTML =
+                requests.map(
+                    request => {
+
+                        const status =
+                            request.status ||
+                            "Pending";
+
+                        const requestType =
+                            request.request_type ||
+                            "Other Concern";
+
+                        const adminReply =
+                            String(
+                                request.admin_reply || ""
+                            ).trim();
+
+
+                        return `
+                            <article class="request-card">
+
+                                <div class="request-card-top">
+
+                                    <div>
+
+                                        <div class="request-card-date">
+
+                                            Submitted:
+                                            ${escapeHtml(
+                                                formatDate(
+                                                    request.created_at
+                                                )
+                                            )}
+
+                                        </div>
+
+                                        <div class="request-type">
+
+                                            ${escapeHtml(
+                                                requestType
+                                            )}
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <span
+                                        class="request-status ${getStatusClass(status)}"
+                                    >
+
+                                        ${escapeHtml(status)}
+
+                                    </span>
+
+                                </div>
+
+
+                                <h3 class="request-card-title">
+                                    Your Request
+                                </h3>
+
+
+                                <p class="request-card-message">
+
+                                    ${escapeHtml(
+                                        request.message
+                                    )}
+
+                                </p>
+
+
+                                ${
+                                    adminReply
+                                    ?
+
+                                    `
+                                    <div class="admin-reply-box">
+
+                                        <div class="admin-reply-title">
+
+                                            <span>
+                                                ✦
+                                            </span>
+
+                                            <span>
+                                                Admin Response
+                                            </span>
+
+                                        </div>
+
+
+                                        <p class="admin-reply-message">
+
+                                            ${escapeHtml(
+                                                adminReply
+                                            )}
+
+                                        </p>
+
+
+                                        <span class="admin-reply-time">
+
+                                            Updated:
+                                            ${escapeHtml(
+                                                formatDate(
+                                                    request.updated_at ||
+                                                    request.created_at
+                                                )
+                                            )}
+
+                                        </span>
+
+                                    </div>
+                                    `
+
+                                    :
+
+                                    `
+                                    <div class="no-reply">
+
+                                        ⏳ No admin response yet.
+                                        Your request is still being reviewed.
+
+                                    </div>
+                                    `
+                                }
+
+                            </article>
+                        `;
+
+                    }
+                ).join("");
+
+        }
+
+
+        /* =====================================================
+           SUBMIT REQUEST
+        ===================================================== */
+
+        requestForm?.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                const user =
+                    await getCurrentUser();
+
+
+                if (!user) {
+
+                    window.location.href =
+                        "../login.html";
+
+                    return;
+                }
+
+
+                currentUser = user;
+
+
+                const name =
+                    nameInput?.value.trim() || "";
+
+
+                const email =
+                    emailInput?.value.trim() || "";
+
+
+                const requestType =
+                    requestTypeInput?.value || "";
+
+
+                const message =
+                    messageInput?.value.trim() || "";
+
+
+                /* ---------------------------------------------
+                   VALIDATION
+                --------------------------------------------- */
+
+                if (!name) {
+
+                    requestResult.textContent =
+                        "Please enter your full name.";
+
+                    requestResult.className =
+                        "request-result error";
+
+                    return;
+                }
+
+
+                if (!email) {
+
+                    requestResult.textContent =
+                        "Please enter your email address.";
+
+                    requestResult.className =
+                        "request-result error";
+
+                    return;
+                }
+
+
+                if (!requestType) {
+
+                    requestResult.textContent =
+                        "Please select a request type.";
+
+                    requestResult.className =
+                        "request-result error";
+
+                    return;
+                }
+
+
+                if (!message) {
+
+                    requestResult.textContent =
+                        "Please enter your request.";
+
+                    requestResult.className =
+                        "request-result error";
+
+                    return;
+                }
+
+
+                /* ---------------------------------------------
+                   DISABLE BUTTON
+                --------------------------------------------- */
+
+                submitBtn.disabled = true;
+
+                submitBtn.textContent =
+                    "Submitting...";
+
+
+                requestResult.textContent = "";
+
+                requestResult.className =
+                    "request-result";
+
+
+                try {
+
+                    /* -----------------------------------------
+                       INSERT REQUEST
+                    ----------------------------------------- */
+
+                    const {
+                        error
+                    } = await supabase
+
+                        .from("requests")
+
+                        .insert({
+
+                            customer_id:
+                                user.id,
+
+                            name:
+                                name,
+
+                            email:
+                                email,
+
+                            request_type:
+                                requestType,
+
+                            message:
+                                message,
+
+                            status:
+                                "Pending",
+
+                            admin_reply:
+                                null,
+
+                            updated_at:
+                                new Date().toISOString()
+
+                        });
+
+
+                    if (error) {
+
+                        console.error(
+                            "REQUEST INSERT ERROR:",
+                            error
+                        );
+
+                        requestResult.textContent =
+                            error.message ||
+                            "Unable to submit your request.";
+
+                        requestResult.className =
+                            "request-result error";
+
+                        return;
+                    }
+
+
+                    /* -----------------------------------------
+                       SUCCESS
+                    ----------------------------------------- */
+
+                    requestResult.textContent =
+                        "Request submitted successfully.";
+
+                    requestResult.className =
+                        "request-result success";
+
+
+                    messageInput.value = "";
+
+                    requestTypeInput.value = "";
+
+
+                    /* -----------------------------------------
+                       RELOAD REQUEST HISTORY
+                    ----------------------------------------- */
+
+                    await loadMyRequests();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "REQUEST ERROR:",
+                        error
+                    );
+
+                    requestResult.textContent =
+                        "Something went wrong. Please try again.";
+
+                    requestResult.className =
+                        "request-result error";
+
+                } finally {
+
+                    submitBtn.disabled = false;
+
+                    submitBtn.textContent =
+                        "Submit Request";
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           REFRESH REQUESTS
+        ===================================================== */
+
+        refreshRequestsBtn?.addEventListener(
+            "click",
+            async () => {
+
+                if (!currentUser) {
+                    return;
+                }
+
+
+                refreshRequestsBtn.disabled = true;
+
+                refreshRequestsBtn.textContent =
+                    "↻ Loading...";
+
+
+                await loadMyRequests();
+
+
+                refreshRequestsBtn.disabled = false;
+
+                refreshRequestsBtn.textContent =
+                    "↻ Refresh";
+
+            }
+        );
+
+
+        /* =====================================================
+           REALTIME REQUEST UPDATES
+        ===================================================== */
+
+        function startRealtimeUpdates() {
+
+            if (!currentUser) {
+                return;
+            }
+
+
+            supabase
+
+                .channel(
+                    `customer-requests-${currentUser.id}`
+                )
+
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "*",
+                        schema: "public",
+                        table: "requests",
+                        filter:
+                            `customer_id=eq.${currentUser.id}`
+                    },
+
+                    payload => {
+
+                        console.log(
+                            "REQUEST UPDATED:",
+                            payload
+                        );
+
+                        loadMyRequests();
+
+                    }
+                )
+
+                .subscribe(
+                    status => {
+
+                        console.log(
+                            "REQUEST REALTIME:",
+                            status
+                        );
+
+                    }
+                );
+
+        }
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        logoutBtn?.addEventListener(
+            "click",
+            async () => {
+
+                logoutBtn.disabled = true;
+
+                logoutBtn.textContent =
+                    "Logging out...";
+
+
+                const success =
+                    await logoutUser();
+
+
+                if (!success) {
+
+                    logoutBtn.disabled = false;
+
+                    logoutBtn.textContent =
+                        "Logout";
+
+                    alert(
+                        "Unable to logout. Please try again."
+                    );
+
+                    return;
+                }
+
+
+                window.location.href =
+                    "../login.html";
+
+            }
+        );
+
+
+        /* =====================================================
+           CART EVENTS
+           
+           Re-check cart when returning to this page.
+        ===================================================== */
+
+        window.addEventListener(
+            "storage",
+            updateCartCount
+        );
+
+
+        window.addEventListener(
+            "pageshow",
+            updateCartCount
+        );
+
+
+        /*
+         * Also update when the page becomes visible again.
+         * This helps when customer adds/removes products
+         * from another page and comes back here.
+         */
+
+        document.addEventListener(
+            "visibilitychange",
+            () => {
+
+                if (
+                    document.visibilityState ===
+                    "visible"
+                ) {
+
+                    updateCartCount();
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        async function startPage() {
+
+            const user =
+                await loadCustomer();
+
+
+            if (user) {
+
+                startRealtimeUpdates();
+
+            }
+
+        }
+
+
+        startPage();
+
+    </script>
+
+</body>
+
+</html>

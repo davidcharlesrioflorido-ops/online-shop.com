@@ -1,0 +1,4168 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Business Store</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* =====================================================
+           CUSTOMER ACCOUNT STYLES
+        ===================================================== */
+
+        :root {
+            --account-bg: #070a10;
+            --account-card: rgba(15, 20, 32, 0.78);
+            --white: #ffffff;
+            --text: #aeb7c5;
+            --muted: #8993a3;
+            --dim: #657080;
+
+            --cyan: #00f2fe;
+            --purple: #7c3aed;
+
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .customer-page {
+            position: relative;
+            min-height: 100vh;
+            padding: 45px 20px 70px;
+            overflow: hidden;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0, 242, 254, 0.07),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(124, 58, 237, 0.08),
+                    transparent 30%
+                ),
+                var(--account-bg);
+        }
+
+        .customer-page::before {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            top: 15%;
+            left: -250px;
+            border-radius: 50%;
+            background: rgba(0, 242, 254, 0.035);
+            filter: blur(90px);
+            pointer-events: none;
+        }
+
+        .customer-page::after {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            right: -280px;
+            bottom: 5%;
+            border-radius: 50%;
+            background: rgba(124, 58, 237, 0.04);
+            filter: blur(100px);
+            pointer-events: none;
+        }
+
+        .customer-container {
+            position: relative;
+            z-index: 2;
+            width: min(1180px, 100%);
+            margin: 0 auto;
+        }
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .customer-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            padding: 13px 15px 13px 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(18, 24, 38, 0.94),
+                    rgba(9, 13, 22, 0.94)
+                );
+
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 18px;
+
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.25);
+
+            margin-bottom: 25px;
+        }
+
+        .customer-nav-title {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            color: var(--white);
+            text-decoration: none;
+
+            font-size: 0.92rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .customer-nav-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            color: var(--cyan);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.12),
+                    rgba(124, 58, 237, 0.10)
+                );
+
+            border: 1px solid rgba(0, 242, 254, 0.15);
+
+            box-shadow:
+                0 0 22px rgba(0, 242, 254, 0.07);
+
+            font-size: 1rem;
+        }
+
+        .customer-nav-links {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .customer-nav-links a,
+        .customer-logout {
+            position: relative;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            gap: 5px;
+
+            min-height: 38px;
+            padding: 8px 12px;
+
+            border: 1px solid transparent;
+            border-radius: 10px;
+
+            color: #9ea8b7;
+            background: transparent;
+
+            text-decoration: none;
+
+            font-size: 0.7rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .customer-nav-links a:hover {
+            color: var(--cyan);
+            background: rgba(0, 242, 254, 0.055);
+            border-color: rgba(0, 242, 254, 0.14);
+            transform: translateY(-1px);
+        }
+
+        .customer-nav-links a.active {
+            color: var(--cyan);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.10),
+                    rgba(124, 58, 237, 0.07)
+                );
+
+            border-color: rgba(0, 242, 254, 0.20);
+        }
+
+        /* =====================================================
+           CART BADGE
+        ===================================================== */
+
+        #cartCount {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 19px;
+            height: 19px;
+
+            padding: 0 5px;
+            margin-left: 2px;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #67f7ff
+                );
+
+            color: #061016;
+
+            font-size: 0.56rem;
+            font-weight: 950;
+
+            box-shadow:
+                0 0 12px rgba(0, 242, 254, 0.18);
+        }
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        .customer-logout {
+            margin-left: 3px;
+
+            color: #ff9d9d;
+
+            border-color: rgba(255, 107, 107, 0.12);
+
+            background: rgba(255, 107, 107, 0.035);
+        }
+
+        .customer-logout:hover {
+            color: #ffffff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255, 85, 85, 0.15),
+                    rgba(255, 107, 107, 0.07)
+                );
+
+            border-color: rgba(255, 107, 107, 0.30);
+
+            box-shadow:
+                0 8px 25px rgba(255, 80, 80, 0.08);
+
+            transform: translateY(-1px);
+        }
+
+        .customer-logout:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* =====================================================
+           ACCOUNT HEADER
+        ===================================================== */
+
+        .account-header {
+            position: relative;
+            overflow: hidden;
+
+            padding: 38px 40px;
+
+            border: 1px solid rgba(0, 242, 254, 0.13);
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.075),
+                    rgba(124, 58, 237, 0.065),
+                    rgba(15, 20, 32, 0.72)
+                );
+
+            box-shadow: var(--shadow);
+
+            margin-bottom: 20px;
+        }
+
+        .account-header::before {
+            content: "";
+
+            position: absolute;
+
+            width: 280px;
+            height: 280px;
+
+            top: -180px;
+            right: -80px;
+
+            border-radius: 50%;
+
+            background: rgba(0, 242, 254, 0.08);
+
+            pointer-events: none;
+        }
+
+        .account-header::after {
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            bottom: -120px;
+            left: 35%;
+
+            border-radius: 50%;
+
+            background: rgba(124, 58, 237, 0.07);
+
+            filter: blur(20px);
+
+            pointer-events: none;
+        }
+
+        .account-label {
+            position: relative;
+            z-index: 2;
+
+            display: inline-flex;
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 12px;
+
+            color: var(--cyan);
+
+            font-size: 0.64rem;
+            font-weight: 900;
+
+            letter-spacing: 0.19em;
+        }
+
+        .account-label::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: var(--cyan);
+
+            box-shadow:
+                0 0 12px rgba(0, 242, 254, 0.65);
+        }
+
+        .account-header h1 {
+            position: relative;
+            z-index: 2;
+
+            margin: 0 0 10px;
+
+            color: var(--white);
+
+            font-size: clamp(2rem, 5vw, 3.15rem);
+
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+        }
+
+        .account-header p {
+            position: relative;
+            z-index: 2;
+
+            max-width: 680px;
+
+            margin: 0;
+
+            color: var(--text);
+
+            font-size: 0.84rem;
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           ACCOUNT LAYOUT
+        ===================================================== */
+
+        .account-layout {
+            display: grid;
+
+            grid-template-columns:
+                250px
+                minmax(0, 1fr);
+
+            gap: 18px;
+
+            align-items: start;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .account-sidebar {
+            position: sticky;
+            top: 20px;
+
+            padding: 18px;
+
+            border: 1px solid var(--border);
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18, 24, 38, 0.80),
+                    rgba(8, 12, 20, 0.76)
+                );
+
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.25);
+
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+
+        /* =====================================================
+           PROFILE MINI
+        ===================================================== */
+
+        .profile-mini {
+            text-align: center;
+
+            padding-bottom: 19px;
+            margin-bottom: 15px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.065);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+
+            width: 102px;
+            height: 102px;
+
+            margin: 3px auto 14px;
+        }
+
+        .avatar {
+            width: 102px;
+            height: 102px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 30% 20%,
+                    rgba(0, 242, 254, 0.16),
+                    transparent 50%
+                ),
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.11),
+                    rgba(124, 58, 237, 0.14)
+                );
+
+            border:
+                2px solid rgba(0, 242, 254, 0.30);
+
+            color: var(--cyan);
+
+            font-size: 2rem;
+            font-weight: 950;
+
+            box-shadow:
+                0 0 35px rgba(0, 242, 254, 0.08);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            display: none;
+
+            object-fit: cover;
+        }
+
+        .avatar.has-image img {
+            display: block;
+        }
+
+        .avatar.has-image .avatar-letter {
+            display: none;
+        }
+
+        .avatar-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        .avatar-edit-button {
+            position: absolute;
+
+            right: -3px;
+            bottom: -3px;
+
+            width: 33px;
+            height: 33px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border:
+                2px solid #070a10;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #75f8ff
+                );
+
+            color: #061016;
+
+            font-size: 0.78rem;
+            font-weight: 900;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .avatar-edit-button:hover {
+            transform: scale(1.08) rotate(-4deg);
+
+            box-shadow:
+                0 0 22px rgba(0, 242, 254, 0.28);
+        }
+
+        .avatar-edit-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .avatar-actions {
+            display: flex;
+            justify-content: center;
+
+            gap: 6px;
+
+            margin-top: 9px;
+
+            flex-wrap: wrap;
+        }
+
+        .avatar-action-btn {
+            min-height: 29px;
+
+            padding: 6px 10px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.15);
+
+            border-radius: 8px;
+
+            background:
+                rgba(0, 242, 254, 0.035);
+
+            color: var(--cyan);
+
+            font-size: 0.58rem;
+            font-weight: 900;
+
+            cursor: pointer;
+        }
+
+        .avatar-action-btn.danger {
+            color: #ff9d9d;
+
+            border-color:
+                rgba(255, 107, 107, 0.14);
+
+            background:
+                rgba(255, 107, 107, 0.025);
+        }
+
+        .avatar-action-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #avatarInput {
+            display: none;
+        }
+
+        .profile-mini h2 {
+            margin: 0 0 5px;
+
+            color: var(--white);
+
+            font-size: 0.95rem;
+            font-weight: 900;
+
+            word-break: break-word;
+        }
+
+        .profile-mini p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 0.66rem;
+
+            word-break: break-word;
+        }
+
+        .profile-photo-help {
+            margin: 9px 0 12px;
+
+            color: var(--dim);
+
+            font-size: 0.55rem;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           SIDE MENU
+        ===================================================== */
+
+        .side-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .side-menu button {
+            position: relative;
+
+            width: 100%;
+            min-height: 44px;
+
+            padding: 10px 13px;
+
+            border: 1px solid transparent;
+            border-radius: 10px;
+
+            background: transparent;
+
+            color: #9ca6b5;
+
+            text-align: left;
+
+            font-size: 0.7rem;
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                color 0.25s ease,
+                background 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease;
+        }
+
+        .side-menu button:hover {
+            color: var(--cyan);
+
+            background:
+                rgba(0, 242, 254, 0.045);
+
+            border-color:
+                rgba(0, 242, 254, 0.13);
+
+            transform: translateX(2px);
+        }
+
+        .side-menu button.active {
+            color: var(--cyan);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.10),
+                    rgba(124, 58, 237, 0.06)
+                );
+
+            border-color:
+                rgba(0, 242, 254, 0.18);
+        }
+
+        .side-menu button.active::before {
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+            top: 50%;
+
+            width: 3px;
+            height: 20px;
+
+            border-radius: 99px;
+
+            background: var(--cyan);
+
+            transform: translateY(-50%);
+
+            box-shadow:
+                0 0 12px rgba(0, 242, 254, 0.45);
+        }
+
+        /* =====================================================
+           ACCOUNT CONTENT
+        ===================================================== */
+
+        .account-content {
+            min-width: 0;
+        }
+
+        .account-section {
+            display: none;
+
+            padding: 28px;
+
+            border:
+                1px solid var(--border);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(18, 24, 38, 0.70),
+                    rgba(8, 12, 20, 0.68)
+                );
+
+            box-shadow:
+                0 18px 50px rgba(0, 0, 0, 0.20);
+
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .account-section.active {
+            display: block;
+        }
+
+        /* =====================================================
+           SECTION TITLE
+        ===================================================== */
+
+        .section-title {
+            margin-bottom: 24px;
+        }
+
+        .section-title span {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: var(--cyan);
+
+            font-size: 0.62rem;
+            font-weight: 900;
+
+            letter-spacing: 0.17em;
+        }
+
+        .section-title h2 {
+            margin: 0 0 7px;
+
+            color: var(--white);
+
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+
+        .section-title p {
+            margin: 0;
+
+            color: var(--muted);
+
+            font-size: 0.73rem;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           PROFILE PHOTO
+        ===================================================== */
+
+        .profile-photo-section {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+
+            margin-bottom: 25px;
+            padding: 17px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.09);
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.035),
+                    rgba(124, 58, 237, 0.025)
+                );
+        }
+
+        .profile-photo-large {
+            width: 82px;
+            height: 82px;
+
+            flex: 0 0 82px;
+
+            overflow: hidden;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            border:
+                2px solid rgba(0, 242, 254, 0.25);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.10),
+                    rgba(124, 58, 237, 0.11)
+                );
+
+            color: var(--cyan);
+
+            font-size: 1.65rem;
+            font-weight: 950;
+        }
+
+        .profile-photo-large img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: none;
+        }
+
+        .profile-photo-large.has-image img {
+            display: block;
+        }
+
+        .profile-photo-large.has-image .photo-letter {
+            display: none;
+        }
+
+        .photo-letter {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 100%;
+            height: 100%;
+        }
+
+        .profile-photo-content {
+            min-width: 0;
+        }
+
+        .profile-photo-content h3 {
+            margin: 0 0 5px;
+
+            color: var(--white);
+
+            font-size: 0.87rem;
+            font-weight: 900;
+        }
+
+        .profile-photo-content p {
+            margin: 0 0 11px;
+
+            color: var(--muted);
+
+            font-size: 0.65rem;
+            line-height: 1.5;
+        }
+
+        .profile-photo-buttons {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            color: #aeb7c5;
+
+            font-size: 0.66rem;
+            font-weight: 900;
+        }
+
+        .form-group input {
+            width: 100%;
+            min-height: 45px;
+
+            padding: 0 13px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 10px;
+
+            outline: none;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            color: var(--white);
+
+            font-size: 0.75rem;
+        }
+
+        .form-group input:focus {
+            border-color:
+                rgba(0, 242, 254, 0.35);
+
+            background:
+                rgba(0, 242, 254, 0.035);
+
+            box-shadow:
+                0 0 0 3px rgba(0, 242, 254, 0.035);
+        }
+
+        .form-group input:disabled {
+            opacity: 0.52;
+            cursor: not-allowed;
+        }
+
+        .form-help {
+            color: #626d7c;
+
+            font-size: 0.61rem;
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           PIN
+        ===================================================== */
+
+        .pin-input {
+            letter-spacing: 0.3em;
+            text-align: center;
+
+            font-size: 1.2rem !important;
+            font-weight: 900;
+        }
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .save-btn,
+        .orders-link {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            min-height: 43px;
+
+            padding: 10px 17px;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #6df6ff
+                );
+
+            color: #061016;
+
+            font-size: 0.72rem;
+            font-weight: 950;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            border: none;
+        }
+
+        .save-btn {
+            margin-top: 21px;
+        }
+
+        .save-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* =====================================================
+           RESULT
+        ===================================================== */
+
+        .result {
+            display: none;
+
+            margin-top: 14px;
+            padding: 11px 13px;
+
+            border-radius: 10px;
+
+            font-size: 0.69rem;
+            line-height: 1.5;
+        }
+
+        .result.success {
+            display: block;
+
+            background:
+                rgba(70, 200, 130, 0.07);
+
+            border:
+                1px solid rgba(70, 200, 130, 0.18);
+
+            color: #8de0ad;
+        }
+
+        .result.error {
+            display: block;
+
+            background:
+                rgba(255, 90, 90, 0.07);
+
+            border:
+                1px solid rgba(255, 90, 90, 0.18);
+
+            color: #ffaaaa;
+        }
+
+        /* =====================================================
+           ACCOUNT CARDS
+        ===================================================== */
+
+        .account-cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 13px;
+        }
+
+        .account-card {
+            padding: 19px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .account-card:hover {
+            transform: translateY(-3px);
+
+            border-color:
+                rgba(0, 242, 254, 0.18);
+        }
+
+        .card-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #697485;
+
+            font-size: 0.58rem;
+            font-weight: 900;
+
+            letter-spacing: 0.12em;
+        }
+
+        .card-value {
+            color: var(--white);
+
+            font-size: 0.75rem;
+            font-weight: 800;
+
+            word-break: break-word;
+        }
+
+        .orders-link {
+            margin-top: 20px;
+        }
+
+        /* =====================================================
+           SETTINGS BOX
+        ===================================================== */
+
+        .setting-box {
+            position: relative;
+
+            padding: 20px;
+
+            margin-bottom: 13px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.07);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 255, 255, 0.025);
+        }
+
+        .setting-box:last-child {
+            margin-bottom: 0;
+        }
+
+        .setting-box h3 {
+            margin: 0 0 6px;
+
+            color: var(--white);
+
+            font-size: 0.88rem;
+            font-weight: 900;
+        }
+
+        .setting-box p {
+            margin: 0 0 14px;
+
+            color: var(--muted);
+
+            font-size: 0.69rem;
+            line-height: 1.6;
+        }
+
+        /* =====================================================
+           SECONDARY BUTTON
+        ===================================================== */
+
+        .secondary-btn {
+            min-height: 40px;
+
+            padding: 9px 14px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.17);
+
+            border-radius: 9px;
+
+            background:
+                rgba(0, 242, 254, 0.04);
+
+            color: var(--cyan);
+
+            font-size: 0.68rem;
+            font-weight: 900;
+
+            cursor: pointer;
+        }
+
+        .secondary-btn:hover {
+            background:
+                rgba(0, 242, 254, 0.08);
+
+            border-color:
+                rgba(0, 242, 254, 0.30);
+        }
+
+        .secondary-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .danger-btn {
+            color: #ff9d9d;
+
+            border-color:
+                rgba(255, 107, 107, 0.17);
+
+            background:
+                rgba(255, 107, 107, 0.035);
+        }
+
+        .danger-btn:hover {
+            color: #ffffff;
+
+            border-color:
+                rgba(255, 107, 107, 0.30);
+
+            background:
+                rgba(255, 107, 107, 0.08);
+        }
+
+        /* =====================================================
+           INFO GRID
+        ===================================================== */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+
+            margin-top: 15px;
+        }
+
+        .info-item {
+            padding: 13px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.055);
+
+            border-radius: 10px;
+
+            background:
+                rgba(255, 255, 255, 0.018);
+        }
+
+        .info-item span {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #697485;
+
+            font-size: 0.56rem;
+            font-weight: 900;
+
+            letter-spacing: 0.08em;
+        }
+
+        .info-item strong {
+            color: var(--white);
+
+            font-size: 0.68rem;
+
+            word-break: break-word;
+        }
+
+        /* =====================================================
+           CART STATUS
+        ===================================================== */
+
+        .cart-status {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+
+            margin-top: 15px;
+            padding: 14px;
+
+            border:
+                1px solid rgba(0, 242, 254, 0.08);
+
+            border-radius: 10px;
+
+            background:
+                rgba(0, 242, 254, 0.025);
+        }
+
+        .cart-status-text {
+            min-width: 0;
+        }
+
+        .cart-status-title {
+            display: block;
+
+            color: var(--white);
+
+            font-size: 0.7rem;
+            font-weight: 900;
+        }
+
+        .cart-status-description {
+            display: block;
+
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 0.61rem;
+        }
+
+        .cart-status-count {
+            flex: 0 0 auto;
+
+            color: var(--cyan);
+
+            font-size: 0.8rem;
+            font-weight: 950;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .customer-nav {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .customer-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .account-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .account-sidebar {
+                position: static;
+            }
+
+            .side-menu {
+                display: grid;
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .side-menu button {
+                text-align: center;
+            }
+
+            .side-menu button.active::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .customer-page {
+                padding: 25px 13px 50px;
+            }
+
+            .customer-nav {
+                padding: 14px;
+                border-radius: 15px;
+            }
+
+            .customer-nav-links {
+                display: grid;
+
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+
+                width: 100%;
+            }
+
+            .customer-nav-links a,
+            .customer-logout {
+                width: 100%;
+            }
+
+            .customer-logout {
+                margin-left: 0;
+            }
+
+            .account-header {
+                padding: 28px 21px;
+                border-radius: 18px;
+            }
+
+            .account-header h1 {
+                font-size: 2rem;
+            }
+
+            .account-header p {
+                font-size: 0.75rem;
+            }
+
+            .account-sidebar {
+                padding: 16px;
+            }
+
+            .side-menu {
+                grid-template-columns: 1fr;
+            }
+
+            .side-menu button {
+                text-align: left;
+            }
+
+            .account-section {
+                padding: 22px 17px;
+                border-radius: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+            .account-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .save-btn,
+            .orders-link {
+                width: 100%;
+            }
+
+            .profile-photo-section {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .profile-photo-large {
+                width: 75px;
+                height: 75px;
+                flex-basis: 75px;
+            }
+
+            .profile-photo-buttons {
+                width: 100%;
+            }
+
+            .profile-photo-buttons button {
+                flex: 1;
+            }
+
+            .setting-box {
+                padding: 17px;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-status {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<main class="customer-page">
+
+    <div class="customer-container">
+
+        <!-- =====================================================
+             NAVIGATION
+        ===================================================== -->
+
+        <nav class="customer-nav">
+
+            <a
+                href="customer-home.html"
+                class="customer-nav-title"
+            >
+                <span class="customer-nav-icon">✦</span>
+                <span>Customer Portal</span>
+            </a>
+
+            <div class="customer-nav-links">
+
+                <a href="customer-home.html">
+                    Home
+                </a>
+
+                <a href="customer-products.html">
+                    Products
+                </a>
+
+                <a href="customer-request.html">
+                    Request
+                </a>
+
+                <a href="customer-cart.html">
+                    🛒 Cart
+                    <span id="cartCount">0</span>
+                </a>
+
+                <a href="customer-orders.html">
+                    Orders
+                </a>
+
+                <a
+                    href="customer-account.html"
+                    class="active"
+                >
+                    My Account
+                </a>
+
+                <button
+                    type="button"
+                    id="logoutBtn"
+                    class="customer-logout"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </nav>
+
+
+        <!-- =====================================================
+             HEADER
+        ===================================================== -->
+
+        <section class="account-header">
+
+            <span class="account-label">
+                CUSTOMER ACCOUNT
+            </span>
+
+            <h1>
+                My Account
+            </h1>
+
+            <p>
+                Manage your profile, orders, password,
+                shopping preferences, and account settings
+                from one place.
+            </p>
+
+        </section>
+
+
+        <!-- =====================================================
+             ACCOUNT LAYOUT
+        ===================================================== -->
+
+        <div class="account-layout">
+
+            <!-- =================================================
+                 SIDEBAR
+            ================================================= -->
+
+            <aside class="account-sidebar">
+
+                <div class="profile-mini">
+
+                    <div class="avatar-wrapper">
+
+                        <div
+                            class="avatar"
+                            id="avatar"
+                        >
+
+                            <span
+                                class="avatar-letter"
+                                id="avatarLetter"
+                            >
+                                ?
+                            </span>
+
+                            <img
+                                id="avatarImage"
+                                src=""
+                                alt="Customer profile picture"
+                            >
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="avatar-edit-button"
+                            id="avatarEditBtn"
+                            title="Change profile picture"
+                        >
+                            ✎
+                        </button>
+
+                    </div>
+
+
+                    <input
+                        type="file"
+                        id="avatarInput"
+                        accept="image/jpeg,image/png,image/webp"
+                    >
+
+
+                    <div class="avatar-actions">
+
+                        <button
+                            type="button"
+                            class="avatar-action-btn"
+                            id="changeAvatarBtn"
+                        >
+                            Change Photo
+                        </button>
+
+                        <button
+                            type="button"
+                            class="avatar-action-btn danger"
+                            id="removeAvatarBtn"
+                        >
+                            Remove
+                        </button>
+
+                    </div>
+
+
+                    <p class="profile-photo-help">
+                        JPG, PNG or WEBP. Maximum 5MB.
+                    </p>
+
+                    <h2 id="miniName">
+                        Customer
+                    </h2>
+
+                    <p id="miniEmail">
+                        Loading...
+                    </p>
+
+                </div>
+
+
+                <div class="side-menu">
+
+                    <button
+                        type="button"
+                        class="active"
+                        data-section="profile"
+                    >
+                        Profile
+                    </button>
+
+                    <button
+                        type="button"
+                        data-section="orders"
+                    >
+                        My Orders
+                    </button>
+
+                    <button
+                        type="button"
+                        data-section="settings"
+                    >
+                        Account Settings
+                    </button>
+
+                </div>
+
+            </aside>
+
+
+            <!-- =================================================
+                 CONTENT
+            ================================================= -->
+
+            <section class="account-content">
+
+
+                <!-- =================================================
+                     PROFILE SECTION
+                ================================================= -->
+
+                <section
+                    class="account-section active"
+                    id="profileSection"
+                >
+
+                    <div class="section-title">
+
+                        <span>
+                            PROFILE
+                        </span>
+
+                        <h2>
+                            Profile Information
+                        </h2>
+
+                        <p>
+                            Keep your customer information
+                            updated for orders and delivery.
+                        </p>
+
+                    </div>
+
+
+                    <!-- PROFILE PHOTO -->
+
+                    <div class="profile-photo-section">
+
+                        <div
+                            class="profile-photo-large"
+                            id="profilePhotoLarge"
+                        >
+
+                            <span
+                                class="photo-letter"
+                                id="photoLetter"
+                            >
+                                ?
+                            </span>
+
+                            <img
+                                id="profilePhotoImage"
+                                src=""
+                                alt="Customer profile picture"
+                            >
+
+                        </div>
+
+
+                        <div class="profile-photo-content">
+
+                            <h3>
+                                Profile Picture
+                            </h3>
+
+                            <p>
+                                Add a profile picture so your
+                                account is easier to recognize.
+                            </p>
+
+                            <div class="profile-photo-buttons">
+
+                                <button
+                                    type="button"
+                                    class="secondary-btn"
+                                    id="profileChangeBtn"
+                                >
+                                    Upload Photo
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="secondary-btn danger-btn"
+                                    id="profileRemoveBtn"
+                                >
+                                    Remove Photo
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROFILE FORM -->
+
+                    <form id="profileForm">
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+
+                                <label for="fullName">
+                                    Full Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="fullName"
+                                    maxlength="100"
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="phone">
+                                    Phone Number
+                                </label>
+
+                                <input
+                                    type="tel"
+                                    id="phone"
+                                    maxlength="30"
+                                    placeholder="Enter your phone number"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label for="address">
+                                    Complete Address
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="address"
+                                    maxlength="255"
+                                    placeholder="House number, street, barangay"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="city">
+                                    City
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="city"
+                                    maxlength="100"
+                                    placeholder="Enter your city"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="province">
+                                    Province
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="province"
+                                    maxlength="100"
+                                    placeholder="Enter your province"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="postalCode">
+                                    Postal Code
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="postalCode"
+                                    maxlength="20"
+                                    placeholder="Enter postal code"
+                                >
+
+                            </div>
+
+
+                            <div class="form-group">
+
+                                <label for="email">
+                                    Email Address
+                                </label>
+
+                                <input
+                                    type="email"
+                                    id="email"
+                                    disabled
+                                >
+
+                                <span class="form-help">
+                                    Email is managed through
+                                    your login account.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="save-btn"
+                            id="saveProfileBtn"
+                        >
+                            Save Profile
+                        </button>
+
+                    </form>
+
+
+                    <div
+                        class="result"
+                        id="profileResult"
+                    ></div>
+
+                </section>
+
+
+                <!-- =================================================
+                     ORDERS SECTION
+                ================================================= -->
+
+                <section
+                    class="account-section"
+                    id="ordersSection"
+                >
+
+                    <div class="section-title">
+
+                        <span>
+                            ORDERS
+                        </span>
+
+                        <h2>
+                            My Orders
+                        </h2>
+
+                        <p>
+                            View and track all your orders
+                            from one place.
+                        </p>
+
+                    </div>
+
+
+                    <div class="account-cards">
+
+                        <div class="account-card">
+
+                            <span class="card-label">
+                                ORDER TRACKING
+                            </span>
+
+                            <div class="card-value">
+                                Pending Payment → Completed
+                            </div>
+
+                        </div>
+
+
+                        <div class="account-card">
+
+                            <span class="card-label">
+                                ACCOUNT
+                            </span>
+
+                            <div
+                                class="card-value"
+                                id="orderEmail"
+                            >
+                                --
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <a
+                        href="customer-orders.html"
+                        class="orders-link"
+                    >
+                        View My Orders →
+                    </a>
+
+                </section>
+
+
+                <!-- =================================================
+                     SETTINGS SECTION
+                ================================================= -->
+
+                <section
+                    class="account-section"
+                    id="settingsSection"
+                >
+
+                    <div class="section-title">
+
+                        <span>
+                            SETTINGS
+                        </span>
+
+                        <h2>
+                            Account Settings
+                        </h2>
+
+                        <p>
+                            Manage your security,
+                            shopping preferences,
+                            and account session.
+                        </p>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         ACCOUNT INFORMATION
+                    ================================================= -->
+
+                    <div class="setting-box">
+
+                        <h3>
+                            Account Information
+                        </h3>
+
+                        <p>
+                            Basic information connected to
+                            your Business Store account.
+                        </p>
+
+
+                        <div class="info-grid">
+
+                            <div class="info-item">
+
+                                <span>
+                                    EMAIL ADDRESS
+                                </span>
+
+                                <strong id="settingsEmail">
+                                    --
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <span>
+                                    ACCOUNT STATUS
+                                </span>
+
+                                <strong id="accountStatus">
+                                    Active
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <span>
+                                    MEMBER SINCE
+                                </span>
+
+                                <strong id="memberSince">
+                                    --
+                                </strong>
+
+                            </div>
+
+
+                            <div class="info-item">
+
+                                <span>
+                                    CART ITEMS
+                                </span>
+
+                                <strong id="settingsCartCount">
+                                    0
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         PASSWORD & SECURITY
+                    ================================================= -->
+
+                    <div class="setting-box">
+
+                        <h3>
+                            Password & Security
+                        </h3>
+
+                        <p>
+                            Change your account password securely
+                            using a 6-digit PIN verification code
+                            sent to your email. If you can’t find
+                            the email in your inbox, please check
+                            your Spam or Junk folder.
+                        </p>
+
+
+                        <!-- STEP 1 -->
+
+                        <div id="pinStep1">
+
+                            <button
+                                type="button"
+                                class="secondary-btn"
+                                id="sendPinBtn"
+                            >
+                                Send Verification PIN
+                            </button>
+
+                        </div>
+
+
+                        <!-- STEP 2 & 3 -->
+
+                        <form
+                            id="changePasswordForm"
+                            style="display: none; margin-top: 15px;"
+                        >
+
+                            <div class="form-grid">
+
+                                <div class="form-group full">
+
+                                    <label for="pinCode">
+                                        6-Digit Verification PIN
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="pinCode"
+                                        class="pin-input"
+                                        maxlength="6"
+                                        inputmode="numeric"
+                                        pattern="[0-9]{6}"
+                                        placeholder="000000"
+                                        required
+                                    >
+
+                                    <span class="form-help">
+                                        Check your email for the
+                                        6-digit verification PIN.
+                                    </span>
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="newPassword">
+                                        New Password
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        id="newPassword"
+                                        minlength="6"
+                                        placeholder="Enter new password"
+                                        required
+                                    >
+
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <label for="confirmPassword">
+                                        Confirm New Password
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        minlength="6"
+                                        placeholder="Confirm new password"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:10px;
+                                    margin-top:15px;
+                                    flex-wrap:wrap;
+                                    align-items:center;
+                                "
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="secondary-btn"
+                                    id="verifyPinAndChangePasswordBtn"
+                                >
+                                    Change Password
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="secondary-btn danger-btn"
+                                    id="cancelPasswordChangeBtn"
+                                >
+                                    Cancel
+                                </button>
+
+
+                                <button
+                                    type="button"
+                                    class="secondary-btn"
+                                    id="resendPinBtn"
+                                    style="margin-left:auto;"
+                                >
+                                    Resend PIN
+                                </button>
+
+                            </div>
+
+                        </form>
+
+
+                        <div
+                            class="result"
+                            id="passwordResult"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         SHOPPING PREFERENCES
+                    ================================================= -->
+
+                    <div class="setting-box">
+
+                        <h3>
+                            Shopping Preferences
+                        </h3>
+
+                        <p>
+                            Your shopping cart is separated
+                            by account on this device.
+                        </p>
+
+
+                        <div class="cart-status">
+
+                            <div class="cart-status-text">
+
+                                <span class="cart-status-title">
+                                    My Cart
+                                </span>
+
+                                <span class="cart-status-description">
+                                    Only this account can access
+                                    this saved cart.
+                                </span>
+
+                            </div>
+
+
+                            <strong
+                                class="cart-status-count"
+                                id="settingsCartCountLarge"
+                            >
+                                0 items
+                            </strong>
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="secondary-btn danger-btn"
+                            id="clearCartBtn"
+                            style="margin-top:14px;"
+                        >
+                            Clear My Cart
+                        </button>
+
+
+                        <div
+                            class="result"
+                            id="cartResult"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- =================================================
+                         LOGOUT
+                    ================================================= -->
+
+                    <div class="setting-box">
+
+                        <h3>
+                            Logout
+                        </h3>
+
+                        <p>
+                            Sign out of your Business Store
+                            customer account on this device.
+                        </p>
+
+                        <button
+                            type="button"
+                            class="secondary-btn danger-btn"
+                            id="settingsLogoutBtn"
+                        >
+                            Logout Account
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script type="module">
+
+    import { supabase } from "../js/supabase.js";
+    import {
+        getCurrentUser,
+        logoutUser
+    } from "../js/auth.js";
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const avatar =
+        document.getElementById("avatar");
+
+    const avatarImage =
+        document.getElementById("avatarImage");
+
+    const avatarLetter =
+        document.getElementById("avatarLetter");
+
+    const avatarInput =
+        document.getElementById("avatarInput");
+
+    const avatarEditBtn =
+        document.getElementById("avatarEditBtn");
+
+    const changeAvatarBtn =
+        document.getElementById("changeAvatarBtn");
+
+    const removeAvatarBtn =
+        document.getElementById("removeAvatarBtn");
+
+
+    const profilePhotoLarge =
+        document.getElementById("profilePhotoLarge");
+
+    const profilePhotoImage =
+        document.getElementById("profilePhotoImage");
+
+    const photoLetter =
+        document.getElementById("photoLetter");
+
+    const profileChangeBtn =
+        document.getElementById("profileChangeBtn");
+
+    const profileRemoveBtn =
+        document.getElementById("profileRemoveBtn");
+
+
+    const miniName =
+        document.getElementById("miniName");
+
+    const miniEmail =
+        document.getElementById("miniEmail");
+
+
+    const emailInput =
+        document.getElementById("email");
+
+    const fullNameInput =
+        document.getElementById("fullName");
+
+    const phoneInput =
+        document.getElementById("phone");
+
+    const addressInput =
+        document.getElementById("address");
+
+    const cityInput =
+        document.getElementById("city");
+
+    const provinceInput =
+        document.getElementById("province");
+
+    const postalCodeInput =
+        document.getElementById("postalCode");
+
+
+    const profileForm =
+        document.getElementById("profileForm");
+
+    const saveProfileBtn =
+        document.getElementById("saveProfileBtn");
+
+
+    const profileResult =
+        document.getElementById("profileResult");
+
+    const passwordResult =
+        document.getElementById("passwordResult");
+
+    const cartResult =
+        document.getElementById("cartResult");
+
+
+    const sendPinBtn =
+        document.getElementById("sendPinBtn");
+
+    const pinStep1 =
+        document.getElementById("pinStep1");
+
+    const changePasswordForm =
+        document.getElementById("changePasswordForm");
+
+    const pinCodeInput =
+        document.getElementById("pinCode");
+
+    const newPasswordInput =
+        document.getElementById("newPassword");
+
+    const confirmPasswordInput =
+        document.getElementById("confirmPassword");
+
+    const verifyPinAndChangePasswordBtn =
+        document.getElementById(
+            "verifyPinAndChangePasswordBtn"
+        );
+
+    const cancelPasswordChangeBtn =
+        document.getElementById(
+            "cancelPasswordChangeBtn"
+        );
+
+    const resendPinBtn =
+        document.getElementById("resendPinBtn");
+
+
+    const logoutBtn =
+        document.getElementById("logoutBtn");
+
+    const settingsLogoutBtn =
+        document.getElementById("settingsLogoutBtn");
+
+
+    const cartCount =
+        document.getElementById("cartCount");
+
+    const settingsCartCount =
+        document.getElementById(
+            "settingsCartCount"
+        );
+
+    const settingsCartCountLarge =
+        document.getElementById(
+            "settingsCartCountLarge"
+        );
+
+
+    const orderEmail =
+        document.getElementById("orderEmail");
+
+    const settingsEmail =
+        document.getElementById(
+            "settingsEmail"
+        );
+
+    const accountStatus =
+        document.getElementById(
+            "accountStatus"
+        );
+
+    const memberSince =
+        document.getElementById(
+            "memberSince"
+        );
+
+
+    const clearCartBtn =
+        document.getElementById("clearCartBtn");
+
+
+    /* =====================================================
+       CONSTANTS
+    ===================================================== */
+
+    const PROFILE_BUCKET =
+        "profile-pictures";
+
+    const MAX_IMAGE_SIZE =
+        5 * 1024 * 1024;
+
+    const CART_KEY_PREFIX =
+        "businessStoreCart";
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let currentUser = null;
+    let currentAvatarUrl = null;
+
+
+    /* =====================================================
+       KEY
+    ===================================================== */
+
+    function getCartKey() {
+
+        if (!currentUser?.id) {
+            return null;
+        }
+
+        return `${CART_KEY_PREFIX}_${currentUser.id}`;
+    }
+
+
+    /* =====================================================
+       CART
+    ===================================================== */
+
+    function getCart() {
+
+        const cartKey =
+            getCartKey();
+
+        if (!cartKey) {
+            return [];
+        }
+
+        try {
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem(cartKey) || "[]"
+                );
+
+            return Array.isArray(cart)
+                ? cart
+                : [];
+
+        } catch (error) {
+
+            console.error(
+                "CART READ ERROR:",
+                error
+            );
+
+            return [];
+        }
+    }
+
+
+    function getCartQuantity() {
+
+        return getCart().reduce(
+            (total, item) =>
+                total +
+                (Number(item.quantity) || 0),
+            0
+        );
+    }
+
+
+    function updateCartCount() {
+
+        const totalQuantity =
+            getCartQuantity();
+
+
+        if (cartCount) {
+            cartCount.textContent =
+                totalQuantity;
+        }
+
+
+        if (settingsCartCount) {
+            settingsCartCount.textContent =
+                totalQuantity;
+        }
+
+
+        if (settingsCartCountLarge) {
+
+            settingsCartCountLarge.textContent =
+                `${totalQuantity} ${
+                    totalQuantity === 1
+                        ? "item"
+                        : "items"
+                }`;
+        }
+    }
+
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    function getUserName() {
+
+        if (!currentUser) {
+            return "Customer";
+        }
+
+        const metadata =
+            currentUser.user_metadata || {};
+
+        return (
+            metadata.full_name ||
+            metadata.name ||
+            currentUser.email?.split("@")[0] ||
+            "Customer"
+        );
+    }
+
+
+    function setAvatarLetter(name) {
+
+        const safeName =
+            String(name || "").trim();
+
+        const firstLetter =
+            safeName.charAt(0).toUpperCase() || "?";
+
+
+        if (avatarLetter) {
+            avatarLetter.textContent =
+                firstLetter;
+        }
+
+
+        if (photoLetter) {
+            photoLetter.textContent =
+                firstLetter;
+        }
+    }
+
+
+    function showAvatarImage(url) {
+
+        currentAvatarUrl =
+            url || null;
+
+
+        if (!url) {
+
+            avatar.classList.remove(
+                "has-image"
+            );
+
+            profilePhotoLarge.classList.remove(
+                "has-image"
+            );
+
+            avatarImage.removeAttribute(
+                "src"
+            );
+
+            profilePhotoImage.removeAttribute(
+                "src"
+            );
+
+            return;
+        }
+
+
+        avatarImage.src = url;
+
+        profilePhotoImage.src = url;
+
+        avatar.classList.add(
+            "has-image"
+        );
+
+        profilePhotoLarge.classList.add(
+            "has-image"
+        );
+    }
+
+
+    function displayUser() {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        const name =
+            getUserName();
+
+        const email =
+            currentUser.email || "";
+
+
+        miniName.textContent =
+            name;
+
+        miniEmail.textContent =
+            email;
+
+        emailInput.value =
+            email;
+
+        orderEmail.textContent =
+            email;
+
+        settingsEmail.textContent =
+            email;
+
+
+        setAvatarLetter(name);
+
+
+        if (accountStatus) {
+
+            accountStatus.textContent =
+                currentUser.aud ===
+                "authenticated"
+                    ? "Active"
+                    : "Verified";
+        }
+
+
+        if (
+            memberSince &&
+            currentUser.created_at
+        ) {
+
+            const date =
+                new Date(
+                    currentUser.created_at
+                );
+
+            memberSince.textContent =
+                date.toLocaleDateString(
+                    "en-PH",
+                    {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric"
+                    }
+                );
+        }
+    }
+
+
+    /* =====================================================
+       LOAD PROFILE
+    ===================================================== */
+
+    async function loadProfile() {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from("profiles")
+                .select(
+                    "full_name, phone, address, city, province, postal_code, avatar_url"
+                )
+                .eq(
+                    "id",
+                    currentUser.id
+                )
+                .maybeSingle();
+
+
+            if (error) {
+
+                console.error(
+                    "PROFILE LOAD ERROR:",
+                    error
+                );
+
+                return;
+            }
+
+
+            if (!data) {
+
+                showAvatarImage(null);
+
+                fullNameInput.value =
+                    getUserName();
+
+                return;
+            }
+
+
+            fullNameInput.value =
+                data.full_name || "";
+
+            phoneInput.value =
+                data.phone || "";
+
+            addressInput.value =
+                data.address || "";
+
+            cityInput.value =
+                data.city || "";
+
+            provinceInput.value =
+                data.province || "";
+
+            postalCodeInput.value =
+                data.postal_code || "";
+
+
+            if (data.full_name) {
+
+                miniName.textContent =
+                    data.full_name;
+
+                setAvatarLetter(
+                    data.full_name
+                );
+            }
+
+
+            if (data.avatar_url) {
+
+                showAvatarImage(
+                    data.avatar_url
+                );
+
+            } else {
+
+                showAvatarImage(null);
+            }
+
+        } catch (error) {
+
+            console.error(
+                "PROFILE ERROR:",
+                error
+            );
+        }
+    }
+
+
+    /* =====================================================
+       IMAGE VALIDATION
+    ===================================================== */
+
+    function validateImage(file) {
+
+        if (!file) {
+
+            return {
+                valid: false,
+                message:
+                    "Please select an image."
+            };
+        }
+
+
+        const allowedTypes = [
+            "image/jpeg",
+            "image/png",
+            "image/webp"
+        ];
+
+
+        if (!allowedTypes.includes(file.type)) {
+
+            return {
+                valid: false,
+                message:
+                    "Only JPG, PNG, and WEBP images are allowed."
+            };
+        }
+
+
+        if (file.size > MAX_IMAGE_SIZE) {
+
+            return {
+                valid: false,
+                message:
+                    "Profile picture must be 5MB or smaller."
+            };
+        }
+
+
+        return {
+            valid: true
+        };
+    }
+
+
+    /* =====================================================
+       AVATAR BUTTON STATE
+    ===================================================== */
+
+    function setAvatarButtonsDisabled(
+        disabled
+    ) {
+
+        changeAvatarBtn.disabled =
+            disabled;
+
+        profileChangeBtn.disabled =
+            disabled;
+
+        avatarEditBtn.disabled =
+            disabled;
+
+        removeAvatarBtn.disabled =
+            disabled;
+
+        profileRemoveBtn.disabled =
+            disabled;
+    }
+
+
+    /* =====================================================
+       UPLOAD PROFILE PICTURE
+    ===================================================== */
+
+    async function uploadProfilePicture(
+        file
+    ) {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        const validation =
+            validateImage(file);
+
+
+        if (!validation.valid) {
+
+            showResult(
+                profileResult,
+                validation.message,
+                "error"
+            );
+
+            return;
+        }
+
+
+        setAvatarButtonsDisabled(true);
+
+        changeAvatarBtn.textContent =
+            "Uploading...";
+
+        profileChangeBtn.textContent =
+            "Uploading...";
+
+
+        try {
+
+            const extension =
+                file.name
+                    .split(".")
+                    .pop()
+                    .toLowerCase();
+
+
+            const filePath =
+                `${currentUser.id}/avatar-${Date.now()}.${extension}`;
+
+
+            const {
+                error: uploadError
+            } = await supabase.storage
+                .from(PROFILE_BUCKET)
+                .upload(
+                    filePath,
+                    file,
+                    {
+                        cacheControl: "3600",
+                        upsert: false,
+                        contentType:
+                            file.type
+                    }
+                );
+
+
+            if (uploadError) {
+
+                console.error(
+                    "AVATAR UPLOAD ERROR:",
+                    uploadError
+                );
+
+                showResult(
+                    profileResult,
+                    "Unable to upload profile picture. Please check Storage policies.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const {
+                data: publicData
+            } = supabase.storage
+                .from(PROFILE_BUCKET)
+                .getPublicUrl(
+                    filePath
+                );
+
+
+            const publicUrl =
+                publicData?.publicUrl;
+
+
+            if (!publicUrl) {
+
+                showResult(
+                    profileResult,
+                    "Uploaded, but public URL generation failed.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const avatarUrl =
+                `${publicUrl}?v=${Date.now()}`;
+
+
+            const {
+                error: profileError
+            } = await supabase
+                .from("profiles")
+                .update({
+                    avatar_url:
+                        avatarUrl,
+
+                    updated_at:
+                        new Date().toISOString()
+                })
+                .eq(
+                    "id",
+                    currentUser.id
+                );
+
+
+            if (profileError) {
+
+                console.error(
+                    "AVATAR PROFILE SAVE ERROR:",
+                    profileError
+                );
+
+                showResult(
+                    profileResult,
+                    "Picture uploaded, but failed to link to profile.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showAvatarImage(
+                avatarUrl
+            );
+
+
+            showResult(
+                profileResult,
+                "Profile picture updated successfully.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "PROFILE PICTURE ERROR:",
+                error
+            );
+
+            showResult(
+                profileResult,
+                "Error uploading profile picture.",
+                "error"
+            );
+
+        } finally {
+
+            setAvatarButtonsDisabled(
+                false
+            );
+
+            changeAvatarBtn.textContent =
+                "Change Photo";
+
+            profileChangeBtn.textContent =
+                "Upload Photo";
+        }
+    }
+
+
+    /* =====================================================
+       OPEN AVATAR PICKER
+    ===================================================== */
+
+    function openAvatarPicker() {
+
+        if (currentUser) {
+            avatarInput.click();
+        }
+    }
+
+
+    avatarInput.addEventListener(
+        "change",
+        async () => {
+
+            const file =
+                avatarInput.files?.[0];
+
+            if (file) {
+
+                await uploadProfilePicture(
+                    file
+                );
+            }
+
+            avatarInput.value = "";
+        }
+    );
+
+
+    avatarEditBtn.addEventListener(
+        "click",
+        openAvatarPicker
+    );
+
+    changeAvatarBtn.addEventListener(
+        "click",
+        openAvatarPicker
+    );
+
+    profileChangeBtn.addEventListener(
+        "click",
+        openAvatarPicker
+    );
+
+
+    /* =====================================================
+       REMOVE PROFILE PICTURE
+    ===================================================== */
+
+    async function removeProfilePicture() {
+
+        if (!currentUser) {
+            return;
+        }
+
+
+        if (!currentAvatarUrl) {
+
+            showResult(
+                profileResult,
+                "You do not have a profile picture to remove.",
+                "error"
+            );
+
+            return;
+        }
+
+
+        if (
+            !window.confirm(
+                "Are you sure you want to remove your profile picture?"
+            )
+        ) {
+            return;
+        }
+
+
+        setAvatarButtonsDisabled(
+            true
+        );
+
+        removeAvatarBtn.textContent =
+            "Removing...";
+
+        profileRemoveBtn.textContent =
+            "Removing...";
+
+
+        try {
+
+            const cleanUrl =
+                currentAvatarUrl.split("?")[0];
+
+
+            const marker =
+                `/storage/v1/object/public/${PROFILE_BUCKET}/`;
+
+
+            let filePath = null;
+
+
+            if (
+                cleanUrl.includes(marker)
+            ) {
+
+                filePath =
+                    decodeURIComponent(
+                        cleanUrl.split(marker)[1]
+                    );
+            }
+
+
+            if (filePath) {
+
+                await supabase.storage
+                    .from(PROFILE_BUCKET)
+                    .remove([
+                        filePath
+                    ]);
+            }
+
+
+            const {
+                error: profileError
+            } = await supabase
+                .from("profiles")
+                .update({
+                    avatar_url: null,
+                    updated_at:
+                        new Date().toISOString()
+                })
+                .eq(
+                    "id",
+                    currentUser.id
+                );
+
+
+            if (profileError) {
+
+                showResult(
+                    profileResult,
+                    "Unable to remove your profile picture.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showAvatarImage(null);
+
+
+            showResult(
+                profileResult,
+                "Profile picture has been removed.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "REMOVE AVATAR ERROR:",
+                error
+            );
+
+            showResult(
+                profileResult,
+                "Error removing profile picture.",
+                "error"
+            );
+
+        } finally {
+
+            setAvatarButtonsDisabled(
+                false
+            );
+
+            removeAvatarBtn.textContent =
+                "Remove";
+
+            profileRemoveBtn.textContent =
+                "Remove Photo";
+        }
+    }
+
+
+    removeAvatarBtn.addEventListener(
+        "click",
+        removeProfilePicture
+    );
+
+    profileRemoveBtn.addEventListener(
+        "click",
+        removeProfilePicture
+    );
+
+
+    /* =====================================================
+       PROFILE FORM
+    ===================================================== */
+
+    profileForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            if (!currentUser) {
+                return;
+            }
+
+
+            const fullName =
+                fullNameInput.value.trim();
+
+
+            if (!fullName) {
+
+                showResult(
+                    profileResult,
+                    "Please enter your full name.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            saveProfileBtn.disabled =
+                true;
+
+            saveProfileBtn.textContent =
+                "Saving...";
+
+
+            try {
+
+                const {
+                    error
+                } = await supabase
+                    .from("profiles")
+                    .upsert(
+                        {
+                            id:
+                                currentUser.id,
+
+                            full_name:
+                                fullName,
+
+                            phone:
+                                phoneInput.value.trim(),
+
+                            address:
+                                addressInput.value.trim(),
+
+                            city:
+                                cityInput.value.trim(),
+
+                            province:
+                                provinceInput.value.trim(),
+
+                            postal_code:
+                                postalCodeInput.value.trim(),
+
+                            avatar_url:
+                                currentAvatarUrl,
+
+                            updated_at:
+                                new Date().toISOString()
+                        },
+                        {
+                            onConflict: "id"
+                        }
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        "PROFILE SAVE ERROR:",
+                        error
+                    );
+
+                    showResult(
+                        profileResult,
+                        "Unable to save profile.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                miniName.textContent =
+                    fullName;
+
+                setAvatarLetter(
+                    fullName
+                );
+
+
+                showResult(
+                    profileResult,
+                    "Profile saved successfully.",
+                    "success"
+                );
+
+            } catch (error) {
+
+                console.error(
+                    "SAVE PROFILE ERROR:",
+                    error
+                );
+
+                showResult(
+                    profileResult,
+                    "Error saving profile.",
+                    "error"
+                );
+
+            } finally {
+
+                saveProfileBtn.disabled =
+                    false;
+
+                saveProfileBtn.textContent =
+                    "Save Profile";
+            }
+        }
+    );
+
+
+    /* =====================================================
+       RESULT HELPER
+    ===================================================== */
+
+    function showResult(
+        element,
+        message,
+        type
+    ) {
+
+        if (!element) {
+            return;
+        }
+
+
+        element.textContent =
+            message;
+
+        element.className =
+            "result " + type;
+    }
+
+
+    /* =====================================================
+       SIDE NAVIGATION
+    ===================================================== */
+
+    const menuButtons =
+        document.querySelectorAll(
+            ".side-menu button"
+        );
+
+
+    const sections = {
+
+        profile:
+            document.getElementById(
+                "profileSection"
+            ),
+
+        orders:
+            document.getElementById(
+                "ordersSection"
+            ),
+
+        settings:
+            document.getElementById(
+                "settingsSection"
+            )
+    };
+
+
+    menuButtons.forEach(
+        button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const section =
+                        button.dataset.section;
+
+
+                    menuButtons.forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    Object.values(
+                        sections
+                    ).forEach(
+                        item =>
+                            item.classList.remove(
+                                "active"
+                            )
+                    );
+
+
+                    if (
+                        sections[section]
+                    ) {
+
+                        sections[
+                            section
+                        ].classList.add(
+                            "active"
+                        );
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CART CLEARING
+    ===================================================== */
+
+    clearCartBtn.addEventListener(
+        "click",
+        () => {
+
+            if (!currentUser) {
+                return;
+            }
+
+
+            if (!getCart().length) {
+
+                showResult(
+                    cartResult,
+                    "Your cart is already empty.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                !window.confirm(
+                    "Are you sure you want to clear all items from your cart?"
+                )
+            ) {
+                return;
+            }
+
+
+            const cartKey =
+                getCartKey();
+
+
+            localStorage.removeItem(
+                cartKey
+            );
+
+
+            updateCartCount();
+
+
+            window.dispatchEvent(
+                new StorageEvent(
+                    "storage",
+                    {
+                        key: cartKey
+                    }
+                )
+            );
+
+
+            showResult(
+                cartResult,
+                "Your cart has been cleared successfully.",
+                "success"
+            );
+        }
+    );
+
+
+    /* =====================================================
+       PASSWORD PIN
+    ===================================================== */
+
+    async function sendPasswordPIN() {
+
+        if (!currentUser?.email) {
+            return;
+        }
+
+
+        sendPinBtn.disabled =
+            true;
+
+        sendPinBtn.textContent =
+            "Sending PIN...";
+
+
+        if (resendPinBtn) {
+
+            resendPinBtn.disabled =
+                true;
+
+            resendPinBtn.textContent =
+                "Sending...";
+        }
+
+
+        try {
+
+            const {
+                data: {
+                    session
+                }
+            } =
+                await supabase.auth.getSession();
+
+
+            const token =
+                session?.access_token;
+
+
+            const {
+                data,
+                error
+            } =
+                await supabase.functions.invoke(
+                    "super-service",
+                    {
+                        body: {
+                            action: "send",
+                            email:
+                                currentUser.email
+                        },
+
+                        headers: {
+                            Authorization:
+                                `Bearer ${token}`
+                        }
+                    }
+                );
+
+
+            if (
+                error ||
+                (data && !data.success)
+            ) {
+
+                showResult(
+                    passwordResult,
+                    data?.message ||
+                    error?.message ||
+                    "Failed to send verification PIN.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            showResult(
+                passwordResult,
+                "A 6-digit verification PIN has been sent to your email.",
+                "success"
+            );
+
+
+            pinStep1.style.display =
+                "none";
+
+            changePasswordForm.style.display =
+                "block";
+
+        } catch (err) {
+
+            console.error(
+                "SEND PIN EXCEPTION:",
+                err
+            );
+
+            showResult(
+                passwordResult,
+                "An error occurred while sending the PIN.",
+                "error"
+            );
+
+        } finally {
+
+            sendPinBtn.disabled =
+                false;
+
+            sendPinBtn.textContent =
+                "Send Verification PIN";
+
+
+            if (resendPinBtn) {
+
+                resendPinBtn.disabled =
+                    false;
+
+                resendPinBtn.textContent =
+                    "Resend PIN";
+            }
+        }
+    }
+
+
+    sendPinBtn.addEventListener(
+        "click",
+        sendPasswordPIN
+    );
+
+
+    resendPinBtn.addEventListener(
+        "click",
+        sendPasswordPIN
+    );
+
+
+    /* =====================================================
+       CANCEL PASSWORD CHANGE
+    ===================================================== */
+
+    cancelPasswordChangeBtn.addEventListener(
+        "click",
+        () => {
+
+            changePasswordForm.reset();
+
+            changePasswordForm.style.display =
+                "none";
+
+            pinStep1.style.display =
+                "block";
+
+            passwordResult.textContent =
+                "";
+
+            passwordResult.className =
+                "result";
+        }
+    );
+
+
+    /* =====================================================
+       CHANGE PASSWORD
+    ===================================================== */
+
+    changePasswordForm.addEventListener(
+        "submit",
+        async event => {
+
+            event.preventDefault();
+
+
+            if (!currentUser?.email) {
+                return;
+            }
+
+
+            const pin =
+                pinCodeInput.value.trim();
+
+            const newPassword =
+                newPasswordInput.value;
+
+            const confirmPassword =
+                confirmPasswordInput.value;
+
+
+            if (
+                !/^\d{6}$/.test(pin)
+            ) {
+
+                showResult(
+                    passwordResult,
+                    "Please enter a valid 6-digit PIN.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                newPassword.length < 6
+            ) {
+
+                showResult(
+                    passwordResult,
+                    "Password must be at least 6 characters long.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            if (
+                newPassword !==
+                confirmPassword
+            ) {
+
+                showResult(
+                    passwordResult,
+                    "Passwords do not match.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            verifyPinAndChangePasswordBtn.disabled =
+                true;
+
+            verifyPinAndChangePasswordBtn.textContent =
+                "Updating...";
+
+
+            try {
+
+                const {
+                    data: {
+                        session
+                    }
+                } =
+                    await supabase.auth.getSession();
+
+
+                const token =
+                    session?.access_token;
+
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase.functions.invoke(
+                        "super-service",
+                        {
+                            body: {
+
+                                action:
+                                    "verify",
+
+                                email:
+                                    currentUser.email,
+
+                                pin:
+                                    pin,
+
+                                newPassword:
+                                    newPassword
+                            },
+
+                            headers: {
+
+                                Authorization:
+                                    `Bearer ${token}`
+                            }
+                        }
+                    );
+
+
+                if (
+                    error ||
+                    (data && !data.success)
+                ) {
+
+                    showResult(
+                        passwordResult,
+                        data?.message ||
+                        error?.message ||
+                        "Invalid or expired PIN.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                showResult(
+                    passwordResult,
+                    "Password changed successfully!",
+                    "success"
+                );
+
+
+                changePasswordForm.reset();
+
+                changePasswordForm.style.display =
+                    "none";
+
+                pinStep1.style.display =
+                    "block";
+
+
+            } catch (err) {
+
+                console.error(
+                    "CHANGE PASSWORD EXCEPTION:",
+                    err
+                );
+
+                showResult(
+                    passwordResult,
+                    "Error changing your password.",
+                    "error"
+                );
+
+            } finally {
+
+                verifyPinAndChangePasswordBtn.disabled =
+                    false;
+
+                verifyPinAndChangePasswordBtn.textContent =
+                    "Change Password";
+            }
+        }
+    );
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    async function performLogout(
+        button,
+        defaultText
+    ) {
+
+        button.disabled =
+            true;
+
+        button.textContent =
+            "Logging out...";
+
+
+        const success =
+            await logoutUser();
+
+
+        if (success) {
+
+            window.location.href =
+                "../login.html";
+
+            return;
+        }
+
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            defaultText;
+
+
+        alert(
+            "Unable to logout. Please try again."
+        );
+    }
+
+
+    logoutBtn.addEventListener(
+        "click",
+        () =>
+            performLogout(
+                logoutBtn,
+                "Logout"
+            )
+    );
+
+
+    settingsLogoutBtn.addEventListener(
+        "click",
+        () =>
+            performLogout(
+                settingsLogoutBtn,
+                "Logout Account"
+            )
+    );
+
+
+    /* =====================================================
+       INITIALIZATION
+    ===================================================== */
+
+    async function startAccount() {
+
+        currentUser =
+            await getCurrentUser();
+
+
+        if (!currentUser) {
+
+            window.location.href =
+                "../login.html";
+
+            return;
+        }
+
+
+        displayUser();
+
+        updateCartCount();
+
+        await loadProfile();
+
+        updateCartCount();
+    }
+
+
+    /* =====================================================
+       GLOBAL LISTENERS
+    ===================================================== */
+
+    window.addEventListener(
+        "storage",
+        updateCartCount
+    );
+
+
+    window.addEventListener(
+        "pageshow",
+        updateCartCount
+    );
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    startAccount();
+
+</script>
+
+</body>
+</html>
+

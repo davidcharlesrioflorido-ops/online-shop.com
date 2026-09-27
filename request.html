@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="description"
+    content="Contact Business Store for questions, order concerns, payment issues, delivery concerns, and product requests."
+>
+
+<title>Customer Support | Business Store</title>
+
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="css/request.css"
+>
+
+</head>
+
+
+<body class="request-only-page">
+
+
+<!-- =====================================================
+     BACKGROUND
+====================================================== -->
+
+<div class="page-glow glow-one"></div>
+<div class="page-glow glow-two"></div>
+
+
+<!-- =====================================================
+     ANNOUNCEMENT
+====================================================== -->
+
+<div
+    class="shop-announcement"
+    data-shop-announcement
+    style="display: none;"
+></div>
+
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<header class="navbar">
+
+    <div class="nav-container">
+
+
+        <!-- LOGO -->
+
+        <a
+            href="index.html"
+            class="logo"
+            aria-label="Business Store Home"
+        >
+
+            <span class="logo-icon">
+
+                <span class="logo-fallback">
+                    ✦
+                </span>
+
+                <img
+                    src=""
+                    alt="Shop Logo"
+                    class="shop-logo"
+                    data-shop-logo
+                    style="display: none;"
+                >
+
+            </span>
+
+            <span
+                class="logo-text"
+                data-shop-name
+            >
+                Business Store
+            </span>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <nav
+            class="desktop-nav"
+            aria-label="Main navigation"
+        >
+
+            <a
+                href="index.html"
+                class="nav-link"
+            >
+                Home
+            </a>
+
+            <a
+                href="products.html"
+                class="nav-link"
+            >
+                Products
+            </a>
+
+            <a
+                href="request.html"
+                class="nav-link active"
+            >
+                Request
+            </a>
+
+        </nav>
+
+
+        <!-- NAV ACTIONS -->
+
+        <div class="nav-actions">
+
+            <!-- CART -->
+
+            <a
+                href="cart.html"
+                id="cartNav"
+                class="cart-button"
+                aria-label="Shopping Cart"
+            >
+
+                <span class="cart-icon">
+                    🛒
+                </span>
+
+                <span class="cart-text">
+                    Cart
+                </span>
+
+                <span
+                    id="cartCount"
+                    class="cart-badge"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- LOGIN -->
+
+            <a
+                href="login.html"
+                class="admin-button"
+            >
+                Login
+            </a>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            type="button"
+            class="mobile-menu-button"
+            id="mobileMenuButton"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+        >
+
+            <span></span>
+            <span></span>
+            <span></span>
+
+        </button>
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <div
+        class="mobile-nav"
+        id="mobileNav"
+    >
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="products.html">
+            Products
+        </a>
+
+        <a
+            href="request.html"
+            class="active"
+        >
+            Request
+        </a>
+
+        <!-- MOBILE CART -->
+
+        <a
+            href="cart.html"
+            id="mobileCartNav"
+        >
+            🛒 Cart
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     MAIN
+====================================================== -->
+
+<main class="request-page">
+
+    <div class="request-container">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================== -->
+
+        <section class="request-heading">
+
+            <span class="section-label">
+                CUSTOMER SUPPORT
+            </span>
+
+            <h1>
+                How can we
+                <span>help?</span>
+            </h1>
+
+            <p data-shop-description>
+                Have a question, order concern, payment issue,
+                or request? Send us a message and our team
+                will review it.
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             REQUEST LAYOUT
+        ================================================== -->
+
+        <section class="request-layout">
+
+
+            <!-- =================================================
+                 LEFT SIDE
+            ================================================== -->
+
+            <div class="request-info">
+
+
+                <!-- SUPPORT CARD -->
+
+                <div class="request-info-card">
+
+                    <div class="request-info-card-top">
+
+                        <div class="request-info-icon">
+                            ?
+                        </div>
+
+                        <div>
+
+                            <span class="info-mini-label">
+                                SUPPORT CENTER
+                            </span>
+
+                            <h2>
+                                Need Assistance?
+                            </h2>
+
+                        </div>
+
+                    </div>
+
+
+                    <p>
+                        Tell us what happened and provide
+                        your order details if your message
+                        is related to an order.
+                    </p>
+
+
+                    <!-- STEPS -->
+
+                    <div class="request-info-list">
+
+
+                        <div class="request-info-item">
+
+                            <span class="request-number">
+                                01
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Submit your concern
+                                </strong>
+
+                                <p>
+                                    Fill out the support form
+                                    with accurate information.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request-info-item">
+
+                            <span class="request-number">
+                                02
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Our team reviews it
+                                </strong>
+
+                                <p>
+                                    Your request will be checked
+                                    by the store admin.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="request-info-item">
+
+                            <span class="request-number">
+                                03
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Get an update
+                                </strong>
+
+                                <p>
+                                    We'll use your email for
+                                    updates about your request.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTACT CARD -->
+
+                <div class="request-contact">
+
+                    <div class="contact-header">
+
+                        <span>
+                            STORE CONTACT
+                        </span>
+
+                        <h3>
+                            Contact Information
+                        </h3>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <span class="contact-icon">
+                            @
+                        </span>
+
+                        <div>
+
+                            <small>
+                                Email
+                            </small>
+
+                            <span data-shop-email>
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <span class="contact-icon">
+                            ☎
+                        </span>
+
+                        <div>
+
+                            <small>
+                                Phone
+                            </small>
+
+                            <span data-shop-phone>
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <span class="contact-icon">
+                            ⌖
+                        </span>
+
+                        <div>
+
+                            <small>
+                                Address
+                            </small>
+
+                            <span data-shop-address>
+                                -
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 RIGHT SIDE FORM
+            ================================================== -->
+
+            <div class="request-card">
+
+
+                <!-- FORM HEADER -->
+
+                <div class="request-card-header">
+
+                    <div>
+
+                        <span class="request-card-label">
+                            SUPPORT REQUEST
+                        </span>
+
+                        <h2>
+                            Send a Request
+                        </h2>
+
+                        <p>
+                            Complete the form below and
+                            we'll take a look at your concern.
+                        </p>
+
+                    </div>
+
+
+                    <div class="request-live-badge">
+                        Online
+                    </div>
+
+                </div>
+
+
+                <!-- FORM -->
+
+                <form
+                    id="requestForm"
+                    class="request-form"
+                >
+
+
+                    <!-- NAME + EMAIL -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="requestName">
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="requestName"
+                                name="name"
+                                placeholder="Enter your full name"
+                                autocomplete="name"
+                                maxlength="100"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="requestEmail">
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="requestEmail"
+                                name="email"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ORDER ID + REQUEST TYPE -->
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label for="requestOrderId">
+
+                                Order ID
+
+                                <span>
+                                    Optional
+                                </span>
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="requestOrderId"
+                                name="order_id"
+                                placeholder="Example: ORD-0001"
+                                maxlength="100"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="requestType">
+                                Request Type
+                            </label>
+
+                            <select
+                                id="requestType"
+                                name="request_type"
+                                required
+                            >
+
+                                <option
+                                    value=""
+                                    selected
+                                    disabled
+                                >
+                                    Select a request type
+                                </option>
+
+                                <option value="Order Request">
+                                    🛒 Order Request
+                                </option>
+
+                                <option value="Order Concern">
+                                    ⚠️ Order Concern
+                                </option>
+
+                                <option value="Payment Concern">
+                                    💳 Payment Concern
+                                </option>
+
+                                <option value="Delivery Concern">
+                                    🚚 Delivery Concern
+                                </option>
+
+                                <option value="Product Concern">
+                                    📦 Product Concern
+                                </option>
+
+                                <option value="Cancellation Request">
+                                    🔄 Cancellation Request
+                                </option>
+
+                                <option value="Other Concern">
+                                    💬 Other Concern
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="form-group">
+
+                        <label for="requestMessage">
+                            Message / Concern
+                        </label>
+
+                        <textarea
+                            id="requestMessage"
+                            name="message"
+                            rows="6"
+                            placeholder="Tell us what you need help with..."
+                            maxlength="2000"
+                            required
+                        ></textarea>
+
+                        <small class="form-helper">
+                            Please provide enough details so
+                            we can understand your concern.
+                        </small>
+
+                    </div>
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        id="submitRequestBtn"
+                        class="request-submit-btn"
+                    >
+
+                        <span>
+                            Send Request
+                        </span>
+
+                        <span class="submit-arrow">
+                            →
+                        </span>
+
+                    </button>
+
+
+                    <!-- RESULT -->
+
+                    <div
+                        id="requestResult"
+                        class="request-result"
+                        aria-live="polite"
+                    ></div>
+
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer>
+
+    <div class="footer-container">
+
+
+        <div class="footer-brand">
+
+            <a
+                href="index.html"
+                class="logo"
+                aria-label="Business Store Home"
+            >
+
+                <span class="logo-icon">
+
+                    <span class="logo-fallback">
+                        ✦
+                    </span>
+
+                    <img
+                        src=""
+                        alt="Shop Logo"
+                        class="shop-logo"
+                        data-shop-logo
+                        style="display: none;"
+                    >
+
+                </span>
+
+                <span
+                    class="logo-text"
+                    data-shop-name
+                >
+                    Business Store
+                </span>
+
+            </a>
+
+
+            <p data-shop-description>
+                Modern shopping made simple.
+            </p>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+
+                © 2026
+
+                <span data-shop-name>
+                    Business Store
+                </span>
+
+            </span>
+
+
+            <span>
+                All Rights Reserved.
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =====================================================
+     MOBILE MENU
+====================================================== -->
+
+<script>
+
+    const mobileMenuButton =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+
+    const mobileNav =
+        document.getElementById(
+            "mobileNav"
+        );
+
+
+    if (
+        mobileMenuButton &&
+        mobileNav
+    ) {
+
+        mobileMenuButton.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    mobileNav.classList.toggle(
+                        "open"
+                    );
+
+
+                mobileMenuButton.classList.toggle(
+                    "active"
+                );
+
+
+                mobileMenuButton.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+            }
+        );
+
+
+        document
+            .querySelectorAll(
+                ".mobile-nav a"
+            )
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        mobileNav.classList.remove(
+                            "open"
+                        );
+
+
+                        mobileMenuButton.classList.remove(
+                            "active"
+                        );
+
+
+                        mobileMenuButton.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                    }
+                );
+
+            });
+
+    }
+
+</script>
+
+
+<!-- =====================================================
+     CART LOGIN PROTECTION
+====================================================== -->
+
+<script type="module">
+
+    import { getCurrentUser } from "./js/auth.js";
+
+
+    async function setupCartNavigation() {
+
+        const cartNav =
+            document.getElementById("cartNav");
+
+        const mobileCartNav =
+            document.getElementById("mobileCartNav");
+
+
+        let currentUser = null;
+
+
+        try {
+
+            currentUser =
+                await getCurrentUser();
+
+        } catch (error) {
+
+            console.error(
+                "LOGIN CHECK ERROR:",
+                error
+            );
+
+            currentUser = null;
+
+        }
+
+
+        function openCart(event) {
+
+            event.preventDefault();
+
+
+            if (!currentUser?.id) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "cart.html";
+
+        }
+
+
+        if (cartNav) {
+
+            cartNav.addEventListener(
+                "click",
+                openCart
+            );
+
+        }
+
+
+        if (mobileCartNav) {
+
+            mobileCartNav.addEventListener(
+                "click",
+                openCart
+            );
+
+        }
+
+    }
+
+
+    setupCartNavigation();
+
+</script>
+
+
+<!-- =====================================================
+     STORE
+====================================================== -->
+
+<script
+    type="module"
+    src="js/store.js"
+></script>
+
+
+<!-- =====================================================
+     SHOP SETTINGS
+====================================================== -->
+
+<script
+    type="module"
+    src="js/store-settings.js"
+></script>
+
+
+<!-- =====================================================
+     REQUEST
+====================================================== -->
+
+<script
+    type="module"
+    src="js/request.js"
+></script>
+
+
+</body>
+
+</html>

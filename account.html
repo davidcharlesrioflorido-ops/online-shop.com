@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Account | Business Store</title>
+
+    <link rel="stylesheet" href="css/account.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================
+         NAVBAR
+    ================================= -->
+
+    <header class="main-navbar">
+
+        <a href="index.html" class="nav-logo">
+
+            <span class="nav-logo-icon">
+                B
+            </span>
+
+            <span>
+                Business Store
+            </span>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="shop.html">
+                Shop
+            </a>
+
+            <a href="request.html">
+                Request
+            </a>
+
+            <a href="cart.html">
+                Cart
+
+                <span
+                    id="cartCount"
+                    class="cart-count"
+                >
+                    0
+                </span>
+
+            </a>
+
+            <a
+                href="account.html"
+                class="active"
+            >
+                My Account
+            </a>
+
+        </nav>
+
+
+        <!-- NAV ACTIONS -->
+
+        <div class="nav-actions">
+
+            <a
+                href="shop.html"
+                class="nav-shop-btn"
+            >
+                Continue Shopping
+            </a>
+
+
+            <button
+                id="logoutBtn"
+                class="nav-logout-btn"
+                type="button"
+            >
+                Logout
+            </button>
+
+        </div>
+
+
+        <!-- MOBILE MENU -->
+
+        <button
+            id="mobileMenuBtn"
+            class="mobile-menu-btn"
+            type="button"
+            aria-label="Open menu"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+
+    <!-- =================================
+         MOBILE NAV
+    ================================= -->
+
+    <div
+        id="mobileNav"
+        class="mobile-nav"
+    >
+
+        <a href="index.html">
+            Home
+        </a>
+
+
+        <a href="shop.html">
+            Shop
+        </a>
+
+
+        <a href="request.html">
+            Request
+        </a>
+
+
+        <a href="cart.html">
+
+            Cart
+
+            <span
+                id="mobileCartCount"
+                class="cart-count"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="account.html"
+            class="active"
+        >
+            My Account
+        </a>
+
+
+        <button
+            id="mobileLogoutBtn"
+            class="mobile-logout"
+            type="button"
+        >
+            Logout
+        </button>
+
+    </div>
+
+
+
+    <!-- =================================
+         MAIN
+    ================================= -->
+
+    <main class="account-container">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <span class="title-label">
+                CUSTOMER ACCOUNT
+            </span>
+
+
+            <h1>
+                My Account
+            </h1>
+
+
+            <p>
+                Manage your profile and view your orders.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================
+             ACCOUNT GRID
+        ================================= -->
+
+        <div class="account-grid">
+
+
+            <!-- SIDEBAR -->
+
+            <aside class="account-sidebar">
+
+
+                <div class="profile-mini">
+
+                    <div
+                        class="profile-avatar"
+                        id="profileAvatar"
+                    >
+                        ?
+                    </div>
+
+
+                    <div class="profile-mini-info">
+
+                        <strong id="sidebarName">
+                            Customer
+                        </strong>
+
+
+                        <span id="sidebarEmail">
+                            Loading...
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <nav class="account-nav">
+
+
+                    <button
+                        class="account-nav-item active"
+                        data-section="profileSection"
+                        type="button"
+                    >
+
+                        <span>
+                            👤
+                        </span>
+
+                        <span>
+                            Profile
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        class="account-nav-item"
+                        data-section="ordersSection"
+                        type="button"
+                    >
+
+                        <span>
+                            📦
+                        </span>
+
+                        <span>
+                            My Orders
+                        </span>
+
+                    </button>
+
+
+
+                    <button
+                        class="account-nav-item"
+                        data-section="settingsSection"
+                        type="button"
+                    >
+
+                        <span>
+                            ⚙️
+                        </span>
+
+                        <span>
+                            Account Settings
+                        </span>
+
+                    </button>
+
+
+                </nav>
+
+
+            </aside>
+
+
+
+            <!-- =================================
+                 ACCOUNT CONTENT
+            ================================= -->
+
+            <section class="account-content">
+
+
+                <!-- =================================
+                     PROFILE
+                ================================= -->
+
+                <div
+                    id="profileSection"
+                    class="account-section active"
+                >
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                ACCOUNT
+                            </span>
+
+
+                            <h2>
+                                Profile Information
+                            </h2>
+
+
+                            <p>
+                                Your personal information.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PROFILE CARD -->
+
+                    <div class="profile-card">
+
+                        <div class="profile-main">
+
+                            <div
+                                class="large-avatar"
+                                id="largeAvatar"
+                            >
+                                ?
+                            </div>
+
+
+                            <div>
+
+                                <h3 id="profileName">
+                                    Customer
+                                </h3>
+
+
+                                <p id="profileEmail">
+                                    Loading...
+                                </p>
+
+
+                                <span class="account-badge">
+                                    Customer Account
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EDIT PROFILE -->
+
+                    <div class="form-card">
+
+                        <div class="form-card-header">
+
+                            <div>
+
+                                <h3>
+                                    Edit Profile
+                                </h3>
+
+
+                                <p>
+                                    Update your customer information.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <form id="profileForm">
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="fullName">
+                                        Full Name
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="fullName"
+                                        placeholder="Your full name"
+                                        required
+                                    >
+
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <label for="phone">
+                                        Phone Number
+                                    </label>
+
+
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        placeholder="Your phone number"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="address">
+                                        Address
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="address"
+                                        placeholder="House No., Street, Barangay"
+                                    >
+
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <label for="city">
+                                        City
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="city"
+                                        placeholder="City"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="form-row">
+
+                                <div class="form-group">
+
+                                    <label for="province">
+                                        Province
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="province"
+                                        placeholder="Province"
+                                    >
+
+                                </div>
+
+
+
+                                <div class="form-group">
+
+                                    <label for="postalCode">
+                                        Postal Code
+                                    </label>
+
+
+                                    <input
+                                        type="text"
+                                        id="postalCode"
+                                        placeholder="Postal Code"
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div
+                                id="profileResult"
+                                class="account-result"
+                            ></div>
+
+
+
+                            <button
+                                type="submit"
+                                id="saveProfileBtn"
+                                class="save-btn"
+                            >
+                                Save Changes
+                            </button>
+
+
+                        </form>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =================================
+                     ORDERS
+                ================================= -->
+
+                <div
+                    id="ordersSection"
+                    class="account-section"
+                >
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                SHOPPING
+                            </span>
+
+
+                            <h2>
+                                My Orders
+                            </h2>
+
+
+                            <p>
+                                View and track your orders.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div
+                        id="ordersContainer"
+                        class="orders-container"
+                    >
+
+                        <div class="loading-box">
+                            Loading your orders...
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================
+                     SETTINGS
+                ================================= -->
+
+                <div
+                    id="settingsSection"
+                    class="account-section"
+                >
+
+
+                    <div class="section-header">
+
+                        <div>
+
+                            <span class="section-label">
+                                SECURITY
+                            </span>
+
+
+                            <h2>
+                                Account Settings
+                            </h2>
+
+
+                            <p>
+                                Manage your account.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="settings-card">
+
+
+                        <div class="setting-row">
+
+                            <div>
+
+                                <h3>
+                                    Email Address
+                                </h3>
+
+
+                                <p id="settingsEmail">
+                                    Loading...
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="setting-row">
+
+                            <div>
+
+                                <h3>
+                                    Password
+                                </h3>
+
+
+                                <p>
+                                    Your password is securely
+                                    managed by Supabase.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                id="resetPasswordBtn"
+                                class="secondary-btn"
+                                type="button"
+                            >
+                                Reset Password
+                            </button>
+
+                        </div>
+
+
+
+                        <div
+                            class="setting-row danger-row"
+                        >
+
+                            <div>
+
+                                <h3>
+                                    Sign Out
+                                </h3>
+
+
+                                <p>
+                                    Sign out of this customer account.
+                                </p>
+
+                            </div>
+
+
+                            <button
+                                id="settingsLogoutBtn"
+                                class="danger-btn"
+                                type="button"
+                            >
+                                Logout
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =================================
+         CART COUNT
+         TOTAL QUANTITY
+    ================================= -->
+
+    <script>
+
+        function updateCartCount() {
+
+            const cartCount =
+                document.getElementById("cartCount");
+
+            const mobileCartCount =
+                document.getElementById("mobileCartCount");
+
+
+            let cart = [];
+
+
+            try {
+
+                cart =
+                    JSON.parse(
+                        localStorage.getItem(
+                            "businessStoreCart"
+                        ) || "[]"
+                    );
+
+            } catch (error) {
+
+                console.error(
+                    "Unable to read cart:",
+                    error
+                );
+
+                cart = [];
+
+            }
+
+
+            /*
+             * TOTAL QUANTITY
+             *
+             * Example:
+             *
+             * Product A = 2
+             * Product B = 3
+             * Product C = 1
+             *
+             * Total = 6
+             */
+
+            const totalQuantity =
+                cart.reduce(
+                    (total, item) => {
+
+                        const quantity =
+                            Number(
+                                item.quantity || 0
+                            );
+
+                        return total + quantity;
+
+                    },
+                    0
+                );
+
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    totalQuantity;
+
+            }
+
+
+            if (mobileCartCount) {
+
+                mobileCartCount.textContent =
+                    totalQuantity;
+
+            }
+
+        }
+
+
+        /*
+         * LOAD CART COUNT
+         */
+
+        updateCartCount();
+
+
+        /*
+         * UPDATE AGAIN WHEN USER RETURNS
+         */
+
+        window.addEventListener(
+            "storage",
+            updateCartCount
+        );
+
+
+        window.addEventListener(
+            "pageshow",
+            updateCartCount
+        );
+
+    </script>
+
+
+
+    <!-- =================================
+         ACCOUNT JAVASCRIPT
+    ================================= -->
+
+    <script
+        type="module"
+        src="js/account.js"
+    ></script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,4609 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+    name="theme-color"
+    content="#070a10"
+>
+
+<meta
+    name="description"
+    content="Business Store customer order details"
+>
+
+<title>Order Details | Business Store</title>
+
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+
+<style>
+
+    /* =====================================================
+       ORDER DETAILS
+    ====================================================== */
+
+    :root {
+        --od-bg: #070a10;
+        --od-panel: rgba(15,22,34,.94);
+        --od-panel-2: rgba(10,16,26,.98);
+        --od-soft: rgba(255,255,255,.025);
+        --od-line: rgba(255,255,255,.08);
+        --od-cyan: #00f2fe;
+        --od-blue: #4facfe;
+        --od-purple: #7c3aed;
+        --od-green: #34d399;
+        --od-red: #fb7185;
+        --od-text: #e8edf5;
+        --od-white: #fff;
+        --od-muted: #94a3b8;
+        --od-dark: #64748b;
+        --od-shadow: 0 25px 70px rgba(0,0,0,.38);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--od-text);
+
+        background:
+            radial-gradient(
+                circle at 10% 8%,
+                rgba(0,242,254,.045),
+                transparent 28%
+            ),
+            radial-gradient(
+                circle at 90% 18%,
+                rgba(124,58,237,.055),
+                transparent 30%
+            ),
+            var(--od-bg);
+
+        font-family:
+            Inter,
+            system-ui,
+            -apple-system,
+            BlinkMacSystemFont,
+            "Segoe UI",
+            sans-serif;
+
+        overflow-x: hidden;
+    }
+
+    button,
+    input,
+    select,
+    textarea {
+        font: inherit;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    /* =====================================================
+       NAVBAR
+    ====================================================== */
+
+    .main-navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+
+        height: 64px;
+        min-height: 64px;
+
+        display: flex;
+        align-items: center;
+        gap: 16px;
+
+        padding: 0 clamp(14px,4vw,52px);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(7,10,16,.97),
+                rgba(11,16,26,.94)
+            );
+
+        border-bottom: 1px solid var(--od-line);
+
+        box-shadow:
+            0 14px 40px rgba(0,0,0,.24);
+
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+    }
+
+    .nav-logo {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+
+        text-decoration: none;
+        white-space: nowrap;
+
+        color: #fff;
+        font-size: .92rem;
+        font-weight: 850;
+
+        flex-shrink: 0;
+    }
+
+    .nav-logo:hover {
+        color: var(--od-cyan);
+    }
+
+    .nav-logo-icon {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+
+        display: grid;
+        place-items: center;
+
+        border: 1px solid rgba(0,242,254,.20);
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.14),
+                rgba(79,172,254,.05)
+            );
+
+        color: var(--od-cyan);
+        font-size: .80rem;
+        font-weight: 950;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        margin-left: auto;
+    }
+
+    .nav-links a {
+        position: relative;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 38px;
+        padding: 8px 10px;
+
+        border-radius: 9px;
+
+        color: var(--od-muted);
+        text-decoration: none;
+
+        font-size: .71rem;
+        font-weight: 750;
+
+        transition: .2s ease;
+    }
+
+    .nav-links a:hover {
+        color: var(--od-cyan);
+        background: rgba(0,242,254,.05);
+    }
+
+    .nav-links a[href="customer/customer-orders.html"] {
+        color: var(--od-cyan);
+        background: rgba(0,242,254,.05);
+    }
+
+    .nav-links a[href="customer/customer-orders.html"]::after {
+        content: "";
+
+        position: absolute;
+        left: 10px;
+        right: 10px;
+        bottom: 2px;
+
+        height: 2px;
+        border-radius: 999px;
+
+        background:
+            linear-gradient(
+                90deg,
+                var(--od-cyan),
+                var(--od-blue)
+            );
+    }
+
+    .cart-link {
+        display: inline-flex !important;
+        gap: 6px;
+    }
+
+    .cart-count {
+        min-width: 19px;
+        height: 19px;
+        padding: 0 5px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 999px;
+
+        background:
+            linear-gradient(
+                135deg,
+                var(--od-cyan),
+                var(--od-blue)
+            );
+
+        color: #041018;
+        font-size: .60rem;
+        font-weight: 950;
+    }
+
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .nav-shop-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 39px;
+        padding: 9px 13px;
+
+        border: 1px solid rgba(0,242,254,.18);
+        border-radius: 10px;
+
+        background: rgba(0,242,254,.05);
+
+        color: var(--od-cyan);
+        text-decoration: none;
+
+        font-size: .68rem;
+        font-weight: 850;
+
+        transition: .2s ease;
+    }
+
+    .nav-shop-btn:hover {
+        background: rgba(0,242,254,.10);
+        border-color: rgba(0,242,254,.35);
+        transform: translateY(-1px);
+    }
+
+    .mobile-menu-button {
+        display: none;
+
+        width: 40px;
+        height: 40px;
+        margin-left: auto;
+
+        border: 1px solid var(--od-line);
+        border-radius: 10px;
+
+        background: rgba(255,255,255,.035);
+        color: var(--od-text);
+
+        cursor: pointer;
+    }
+
+    .mobile-menu-button.active {
+        color: var(--od-cyan);
+        border-color: rgba(0,242,254,.22);
+    }
+
+    .mobile-nav {
+        position: fixed;
+        top: 64px;
+        left: 0;
+        right: 0;
+        z-index: 9998;
+
+        display: none;
+        flex-direction: column;
+        gap: 3px;
+
+        padding: 10px;
+
+        background: rgba(8,12,20,.98);
+        border-bottom: 1px solid var(--od-line);
+
+        box-shadow: 0 24px 50px rgba(0,0,0,.32);
+
+        backdrop-filter: blur(24px);
+    }
+
+    .mobile-nav.open {
+        display: flex;
+    }
+
+    .mobile-nav a {
+        display: flex;
+        align-items: center;
+
+        min-height: 45px;
+        padding: 10px 13px;
+
+        border-radius: 10px;
+
+        color: var(--od-muted);
+        text-decoration: none;
+
+        font-size: .79rem;
+        font-weight: 750;
+    }
+
+    .mobile-nav a:hover {
+        color: var(--od-cyan);
+        background: rgba(0,242,254,.05);
+    }
+
+    /* =====================================================
+       PAGE
+    ====================================================== */
+
+    .order-page {
+        min-height: 100vh;
+        padding: 112px 18px 65px;
+    }
+
+    .order-page-container {
+        width: min(1040px,100%);
+        margin: 0 auto;
+    }
+
+    .order-page-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        gap: 20px;
+        margin-bottom: 25px;
+    }
+
+    .eyebrow {
+        display: inline-flex;
+
+        padding: 5px 9px;
+
+        border: 1px solid rgba(0,242,254,.18);
+        border-radius: 999px;
+
+        background: rgba(0,242,254,.045);
+
+        color: var(--od-cyan);
+
+        font-size: .60rem;
+        font-weight: 900;
+        letter-spacing: 1.6px;
+    }
+
+    .order-page-header h1 {
+        margin: 10px 0 0;
+
+        font-size: clamp(2rem,5vw,3.3rem);
+        line-height: 1;
+        letter-spacing: -1.5px;
+
+        background:
+            linear-gradient(
+                90deg,
+                #fff,
+                #c7fbff,
+                var(--od-cyan)
+            );
+
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .order-page-header p {
+        margin: 10px 0 0;
+        max-width: 650px;
+
+        color: var(--od-muted);
+        font-size: .82rem;
+        line-height: 1.65;
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 42px;
+        padding: 9px 14px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 10px;
+
+        background: rgba(255,255,255,.035);
+        color: var(--od-text);
+
+        text-decoration: none;
+
+        font-size: .72rem;
+        font-weight: 800;
+        white-space: nowrap;
+    }
+
+    .back-btn:hover {
+        color: var(--od-cyan);
+        border-color: rgba(0,242,254,.20);
+        background: rgba(0,242,254,.05);
+    }
+
+    .result-message {
+        min-height: 0;
+        margin-bottom: 12px;
+
+        color: var(--od-muted);
+        font-size: .73rem;
+    }
+
+    .result-message.error {
+        color: #fda4af;
+    }
+
+    /* =====================================================
+       ORDER LIST
+    ====================================================== */
+
+    .order-list-container {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .order-list-card {
+        padding: 18px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 18px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(17,24,39,.95),
+                rgba(10,16,26,.98)
+            );
+
+        box-shadow: 0 14px 40px rgba(0,0,0,.17);
+
+        transition: .20s ease;
+    }
+
+    .order-list-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(0,242,254,.14);
+    }
+
+    .order-list-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 15px;
+    }
+
+    .order-id-small {
+        color: var(--od-dark);
+        font-size: .60rem;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+
+    .order-id-value {
+        margin-top: 5px;
+
+        color: var(--od-white);
+        font-size: .82rem;
+        font-weight: 850;
+
+        word-break: break-all;
+    }
+
+    .order-date {
+        margin-top: 4px;
+        color: var(--od-dark);
+        font-size: .66rem;
+    }
+
+    .order-status-pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 7px 10px;
+
+        border: 1px solid rgba(0,242,254,.18);
+        border-radius: 999px;
+
+        background: rgba(0,242,254,.05);
+        color: var(--od-cyan);
+
+        font-size: .61rem;
+        font-weight: 900;
+        white-space: nowrap;
+    }
+
+    .order-status-pill.completed {
+        color: #86efac;
+        border-color: rgba(52,211,153,.20);
+        background: rgba(52,211,153,.055);
+    }
+
+    .order-status-pill.rejected {
+        color: #fda4af;
+        border-color: rgba(251,113,133,.20);
+        background: rgba(251,113,133,.055);
+    }
+
+    .order-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(4,minmax(0,1fr));
+
+        gap: 9px;
+        margin-top: 15px;
+    }
+
+    .summary-box {
+        padding: 11px;
+
+        border: 1px solid rgba(255,255,255,.05);
+        border-radius: 11px;
+
+        background: rgba(255,255,255,.018);
+    }
+
+    .summary-label {
+        color: var(--od-dark);
+
+        font-size: .57rem;
+        font-weight: 850;
+
+        text-transform: uppercase;
+        letter-spacing: .8px;
+    }
+
+    .summary-value {
+        margin-top: 4px;
+
+        color: var(--od-text);
+
+        font-size: .77rem;
+        font-weight: 800;
+
+        word-break: break-word;
+    }
+
+    .summary-value.accent {
+        color: var(--od-cyan);
+    }
+
+    .order-item-preview {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+
+        margin-top: 15px;
+        padding-top: 14px;
+
+        border-top: 1px solid rgba(255,255,255,.05);
+    }
+
+    .preview-product {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        min-width: 0;
+        flex: 1;
+    }
+
+    .preview-image {
+        width: 38px;
+        height: 38px;
+
+        flex: 0 0 auto;
+
+        border-radius: 9px;
+        object-fit: cover;
+
+        background: rgba(255,255,255,.04);
+        border: 1px solid rgba(255,255,255,.07);
+    }
+
+    .preview-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        color: var(--od-text);
+
+        font-size: .69rem;
+        font-weight: 750;
+    }
+
+    .preview-more {
+        color: var(--od-dark);
+        font-size: .63rem;
+    }
+
+    .view-order-btn {
+        width: 100%;
+        margin-top: 15px;
+
+        min-height: 41px;
+
+        border: 1px solid rgba(0,242,254,.16);
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.065),
+                rgba(124,58,237,.045)
+            );
+
+        color: #dffeff;
+
+        font-size: .71rem;
+        font-weight: 850;
+
+        cursor: pointer;
+    }
+
+    .view-order-btn:hover {
+        border-color: rgba(0,242,254,.34);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.10),
+                rgba(124,58,237,.07)
+            );
+    }
+
+    /* =====================================================
+       LOADING
+    ====================================================== */
+
+    .loading-card {
+        min-height: 250px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        gap: 5px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 18px;
+
+        background: var(--od-panel);
+    }
+
+    .loading-card span {
+        color: var(--od-dark);
+        font-size: .70rem;
+    }
+
+    .loading-spinner {
+        width: 38px;
+        height: 38px;
+
+        margin-bottom: 8px;
+
+        border: 3px solid rgba(255,255,255,.07);
+        border-top-color: var(--od-cyan);
+
+        border-radius: 50%;
+
+        animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    .empty-card {
+        padding: 36px 20px;
+
+        text-align: center;
+
+        border: 1px solid var(--od-line);
+        border-radius: 18px;
+
+        background: var(--od-panel);
+    }
+
+    .empty-card h3 {
+        margin: 0 0 6px;
+    }
+
+    .empty-card p {
+        margin: 0;
+
+        color: var(--od-muted);
+        font-size: .76rem;
+    }
+
+    /* =====================================================
+       ORDER MODAL
+    ====================================================== */
+
+    .order-modal {
+        position: fixed;
+        inset: 0;
+
+        z-index: 10000;
+
+        display: none;
+    }
+
+    .order-modal.show {
+        display: block;
+    }
+
+    .order-modal-backdrop {
+        position: absolute;
+        inset: 0;
+
+        background: rgba(0,0,0,.76);
+
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+
+    .order-modal-panel {
+        position: relative;
+        z-index: 2;
+
+        width: min(900px,calc(100% - 24px));
+        max-height: calc(100vh - 30px);
+
+        margin: 15px auto;
+
+        overflow: hidden;
+
+        border: 1px solid rgba(0,242,254,.12);
+        border-radius: 20px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(15,22,34,.99),
+                rgba(8,13,22,.99)
+            );
+
+        box-shadow: var(--od-shadow);
+
+        animation: modalIn .18s ease;
+    }
+
+    @keyframes modalIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px) scale(.985);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .order-modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        padding: 16px 18px;
+
+        border-bottom: 1px solid var(--od-line);
+
+        background: rgba(255,255,255,.018);
+    }
+
+    .modal-eyebrow {
+        color: var(--od-cyan);
+
+        font-size: .57rem;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+    }
+
+    .order-modal-header h2 {
+        margin: 5px 0 0;
+
+        color: var(--od-white);
+        font-size: .98rem;
+    }
+
+    .modal-close {
+        width: 35px;
+        height: 35px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 10px;
+
+        background: rgba(255,255,255,.04);
+
+        color: var(--od-text);
+
+        cursor: pointer;
+        font-size: 1.2rem;
+    }
+
+    .modal-close:hover {
+        color: var(--od-cyan);
+        border-color: rgba(0,242,254,.22);
+    }
+
+    .order-modal-content {
+        max-height: calc(100vh - 95px);
+
+        overflow-y: auto;
+
+        padding: 18px;
+    }
+
+    /* =====================================================
+       MODAL SECTIONS
+    ====================================================== */
+
+    .modal-section {
+        margin-bottom: 13px;
+        padding: 14px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 14px;
+
+        background: rgba(255,255,255,.018);
+    }
+
+    .modal-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .modal-section-title {
+        margin-bottom: 11px;
+
+        color: var(--od-cyan);
+
+        font-size: .60rem;
+        font-weight: 900;
+        letter-spacing: 1.4px;
+
+        text-transform: uppercase;
+    }
+
+    .modal-info-grid {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+
+        gap: 9px;
+    }
+
+    .modal-info-item {
+        padding: 10px;
+
+        border: 1px solid rgba(255,255,255,.045);
+        border-radius: 10px;
+
+        background: rgba(255,255,255,.018);
+    }
+
+    .modal-info-label {
+        color: var(--od-dark);
+
+        font-size: .56rem;
+        font-weight: 850;
+
+        text-transform: uppercase;
+    }
+
+    .modal-info-value {
+        margin-top: 4px;
+
+        color: var(--od-text);
+
+        font-size: .71rem;
+        line-height: 1.5;
+
+        word-break: break-word;
+    }
+
+    /* =====================================================
+       ITEMS
+    ====================================================== */
+
+    .modal-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        padding: 10px 0;
+
+        border-bottom: 1px solid rgba(255,255,255,.045);
+    }
+
+    .modal-item:last-child {
+        border-bottom: 0;
+    }
+
+    .modal-item-image {
+        width: 48px;
+        height: 48px;
+
+        flex: 0 0 auto;
+
+        border-radius: 10px;
+        object-fit: cover;
+
+        background: rgba(255,255,255,.04);
+        border: 1px solid rgba(255,255,255,.06);
+    }
+
+    .modal-item-main {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .modal-item-name {
+        color: var(--od-white);
+
+        font-size: .73rem;
+        font-weight: 800;
+    }
+
+    .modal-item-meta {
+        margin-top: 3px;
+
+        color: var(--od-dark);
+        font-size: .62rem;
+    }
+
+    .modal-item-total {
+        color: var(--od-white);
+
+        font-size: .72rem;
+        font-weight: 850;
+
+        white-space: nowrap;
+    }
+
+    /* =====================================================
+       DELIVERY
+    ====================================================== */
+
+    .modal-delivery {
+        padding: 13px;
+
+        border: 1px solid rgba(0,242,254,.10);
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(0,242,254,.045),
+                rgba(124,58,237,.045)
+            );
+    }
+
+    .delivery-line {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        gap: 12px;
+        padding: 7px 0;
+    }
+
+    .delivery-line-label {
+        color: var(--od-dark);
+        font-size: .61rem;
+    }
+
+    .delivery-line-value {
+        color: var(--od-text);
+
+        font-size: .67rem;
+        font-weight: 750;
+
+        text-align: right;
+        word-break: break-word;
+    }
+
+    .modal-map {
+        width: 100%;
+        height: 260px;
+
+        margin-top: 10px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 12px;
+
+        background: #090d14;
+    }
+
+    .modal-map-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 35px;
+
+        margin-top: 8px;
+
+        border: 1px solid rgba(0,242,254,.15);
+        border-radius: 9px;
+
+        background: rgba(0,242,254,.05);
+
+        color: var(--od-cyan);
+
+        text-decoration: none;
+
+        font-size: .62rem;
+        font-weight: 850;
+    }
+
+    /* =====================================================
+       LALAMOVE
+    ====================================================== */
+
+    .modal-lalamove {
+        margin-top: 10px;
+        padding: 12px;
+
+        border: 1px solid rgba(124,58,237,.18);
+        border-radius: 12px;
+
+        background: rgba(124,58,237,.055);
+    }
+
+    .modal-lalamove-title {
+        margin-bottom: 9px;
+
+        color: #ddd6fe;
+
+        font-size: .70rem;
+        font-weight: 850;
+    }
+
+    .modal-lalamove-grid {
+        display: grid;
+        grid-template-columns: repeat(2,minmax(0,1fr));
+
+        gap: 8px;
+    }
+
+    .modal-lalamove-box {
+        padding: 9px;
+
+        border: 1px solid rgba(255,255,255,.04);
+        border-radius: 8px;
+
+        background: rgba(0,0,0,.10);
+    }
+
+    .modal-lalamove-box span {
+        display: block;
+
+        color: var(--od-dark);
+
+        font-size: .54rem;
+        text-transform: uppercase;
+    }
+
+    .modal-lalamove-box strong {
+        display: block;
+
+        margin-top: 3px;
+
+        color: var(--od-text);
+
+        font-size: .63rem;
+
+        word-break: break-word;
+    }
+
+    /* =====================================================
+       TRACK DELIVERY
+    ====================================================== */
+
+    .track-delivery-box {
+        margin-top: 12px;
+        padding: 14px;
+
+        border: 1px solid rgba(0,242,254,.18);
+        border-radius: 14px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.055),
+                rgba(124,58,237,.055)
+            );
+    }
+
+    .track-delivery-heading {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .track-delivery-icon {
+        width: 38px;
+        height: 38px;
+        min-width: 38px;
+
+        display: grid;
+        place-items: center;
+
+        border: 1px solid rgba(0,242,254,.20);
+        border-radius: 10px;
+
+        background: rgba(0,242,254,.07);
+
+        font-size: 18px;
+    }
+
+    .track-delivery-heading h3 {
+        margin: 0;
+
+        color: var(--od-white);
+
+        font-size: .78rem;
+        font-weight: 850;
+    }
+
+    .track-delivery-heading p {
+        margin: 4px 0 0;
+
+        color: var(--od-muted);
+
+        font-size: .63rem;
+        line-height: 1.5;
+    }
+
+    .track-delivery-status {
+        display: flex;
+        align-items: center;
+
+        gap: 7px;
+        margin-top: 10px;
+
+        color: var(--od-dark);
+        font-size: .63rem;
+    }
+
+    .track-delivery-dot {
+        width: 7px;
+        height: 7px;
+
+        border-radius: 50%;
+
+        background: var(--od-green);
+
+        box-shadow:
+            0 0 10px rgba(52,211,153,.55);
+    }
+
+    .track-delivery-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 44px;
+
+        margin-top: 11px;
+        padding: 10px 14px;
+
+        border: 1px solid rgba(0,242,254,.25);
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.11),
+                rgba(79,172,254,.07)
+            );
+
+        color: #dffeff;
+
+        text-decoration: none;
+
+        font-size: .70rem;
+        font-weight: 900;
+
+        transition: .2s ease;
+    }
+
+    .track-delivery-btn:hover {
+        transform: translateY(-1px);
+
+        border-color: rgba(0,242,254,.45);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.17),
+                rgba(79,172,254,.11)
+            );
+
+        box-shadow:
+            0 10px 28px rgba(0,242,254,.08);
+    }
+
+    .track-delivery-btn:active {
+        transform: translateY(0);
+    }
+
+    .track-delivery-url {
+        margin-top: 9px;
+        padding: 8px 10px;
+
+        border: 1px solid rgba(255,255,255,.05);
+        border-radius: 8px;
+
+        background: rgba(0,0,0,.16);
+
+        color: var(--od-dark);
+
+        font-size: .57rem;
+        line-height: 1.45;
+
+        word-break: break-all;
+    }
+
+    .track-delivery-pending {
+        margin-top: 10px;
+        padding: 10px 11px;
+
+        border: 1px dashed rgba(255,255,255,.08);
+        border-radius: 9px;
+
+        color: var(--od-dark);
+        background: rgba(255,255,255,.015);
+
+        font-size: .62rem;
+        line-height: 1.5;
+    }
+
+    /* =====================================================
+       PAYMENT
+    ====================================================== */
+
+    .modal-proof-wrap {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0,1fr)
+            190px;
+
+        gap: 12px;
+    }
+
+    .modal-proof-image-wrap {
+        min-height: 220px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 8px;
+
+        overflow: hidden;
+
+        border: 1px solid rgba(0,242,254,.12);
+        border-radius: 13px;
+
+        background: rgba(0,0,0,.25);
+
+        cursor: zoom-in;
+
+        transition: .2s ease;
+    }
+
+    .modal-proof-image-wrap:hover {
+        border-color: rgba(0,242,254,.30);
+
+        box-shadow:
+            0 0 30px rgba(0,242,254,.06);
+    }
+
+    .modal-proof-image {
+        max-width: 100%;
+        max-height: 390px;
+
+        object-fit: contain;
+
+        border-radius: 9px;
+
+        display: block;
+    }
+
+    .modal-proof-side {
+        padding: 13px;
+
+        border: 1px solid var(--od-line);
+        border-radius: 12px;
+
+        background: rgba(255,255,255,.018);
+    }
+
+    .modal-proof-status {
+        display: inline-flex;
+
+        padding: 5px 8px;
+
+        border: 1px solid rgba(52,211,153,.18);
+        border-radius: 999px;
+
+        color: #a7f3d0;
+
+        background: rgba(52,211,153,.055);
+
+        font-size: .58rem;
+        font-weight: 900;
+    }
+
+    .modal-proof-side h4 {
+        margin: 10px 0 5px;
+        font-size: .78rem;
+    }
+
+    .modal-proof-side p {
+        margin: 0;
+
+        color: var(--od-dark);
+
+        font-size: .64rem;
+        line-height: 1.5;
+    }
+
+    .modal-proof-link,
+    .modal-proof-view-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 100%;
+        min-height: 38px;
+
+        margin-top: 11px;
+
+        border: 1px solid rgba(0,242,254,.15);
+        border-radius: 8px;
+
+        background: rgba(0,242,254,.05);
+
+        color: var(--od-cyan);
+
+        text-decoration: none;
+
+        font-size: .62rem;
+        font-weight: 850;
+
+        cursor: pointer;
+
+        transition: .2s ease;
+    }
+
+    .modal-proof-view-btn {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.10),
+                rgba(124,58,237,.08)
+            );
+    }
+
+    .modal-proof-link:hover,
+    .modal-proof-view-btn:hover {
+        border-color: rgba(0,242,254,.35);
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(0,242,254,.15),
+                rgba(124,58,237,.12)
+            );
+
+        transform: translateY(-1px);
+    }
+
+    .proof-empty {
+        padding: 20px;
+
+        text-align: center;
+
+        color: var(--od-dark);
+
+        font-size: .70rem;
+
+        border: 1px dashed var(--od-line);
+        border-radius: 12px;
+    }
+
+    /* =====================================================
+       PAYMENT PROOF LIGHTBOX
+    ====================================================== */
+
+    .payment-proof-viewer {
+        position: fixed;
+        inset: 0;
+
+        z-index: 99999;
+
+        display: none;
+        align-items: center;
+        justify-content: center;
+
+        padding: 22px;
+
+        opacity: 0;
+        visibility: hidden;
+
+        transition:
+            opacity .22s ease,
+            visibility .22s ease;
+    }
+
+    .payment-proof-viewer.show {
+        display: flex;
+
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .payment-proof-backdrop {
+        position: absolute;
+        inset: 0;
+
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(0,242,254,.035),
+                transparent 35%
+            ),
+            rgba(0,0,0,.88);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+
+    .payment-proof-panel {
+        position: relative;
+        z-index: 2;
+
+        width: min(980px,96vw);
+        max-height: 94vh;
+
+        padding: 17px;
+
+        border:
+            1px solid
+            rgba(0,242,254,.20);
+
+        border-radius: 22px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(13,19,30,.98),
+                rgba(5,9,16,.99)
+            );
+
+        box-shadow:
+            0 35px 100px rgba(0,0,0,.65),
+            0 0 70px rgba(0,242,254,.045);
+
+        transform: translateY(12px) scale(.97);
+
+        transition:
+            transform .22s ease;
+    }
+
+    .payment-proof-viewer.show .payment-proof-panel {
+        transform: translateY(0) scale(1);
+    }
+
+    .payment-proof-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 15px;
+
+        padding:
+            2px 54px 14px 3px;
+    }
+
+    .payment-proof-eyebrow {
+        display: block;
+
+        margin-bottom: 4px;
+
+        color: var(--od-cyan);
+
+        font-size: .56rem;
+        font-weight: 950;
+
+        letter-spacing: 1.8px;
+    }
+
+    .payment-proof-top h3 {
+        margin: 0;
+
+        color: #fff;
+
+        font-size: .92rem;
+        font-weight: 850;
+    }
+
+    .payment-proof-top p {
+        margin: 4px 0 0;
+
+        color: var(--od-dark);
+
+        font-size: .61rem;
+    }
+
+    .payment-proof-close {
+        position: absolute;
+
+        top: 13px;
+        right: 13px;
+
+        z-index: 5;
+
+        width: 42px;
+        height: 42px;
+
+        display: grid;
+        place-items: center;
+
+        border:
+            1px solid
+            rgba(255,255,255,.12);
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,.055);
+
+        color: #fff;
+
+        font-size: 25px;
+        line-height: 1;
+
+        cursor: pointer;
+
+        transition:
+            .22s ease;
+    }
+
+    .payment-proof-close:hover {
+        color: var(--od-cyan);
+
+        border-color:
+            rgba(0,242,254,.35);
+
+        background:
+            rgba(0,242,254,.08);
+
+        transform:
+            rotate(90deg)
+            scale(1.05);
+    }
+
+    .payment-proof-image-area {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 250px;
+        max-height: calc(94vh - 125px);
+
+        padding: 12px;
+
+        overflow: auto;
+
+        border:
+            1px solid
+            rgba(255,255,255,.07);
+
+        border-radius: 16px;
+
+        background:
+            radial-gradient(
+                circle at center,
+                rgba(255,255,255,.035),
+                rgba(0,0,0,.35)
+            );
+    }
+
+    .payment-proof-viewer-image {
+        display: block;
+
+        width: auto;
+        height: auto;
+
+        max-width: 100%;
+        max-height: calc(94vh - 165px);
+
+        object-fit: contain;
+
+        border-radius: 11px;
+
+        box-shadow:
+            0 20px 50px rgba(0,0,0,.38);
+    }
+
+    .payment-proof-bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 10px;
+
+        margin-top: 12px;
+    }
+
+    .payment-proof-bottom-text {
+        color: var(--od-dark);
+        font-size: .60rem;
+    }
+
+    .payment-proof-original {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 35px;
+
+        padding: 7px 12px;
+
+        border:
+            1px solid
+            rgba(0,242,254,.18);
+
+        border-radius: 9px;
+
+        background:
+            rgba(0,242,254,.05);
+
+        color: var(--od-cyan);
+
+        text-decoration: none;
+
+        font-size: .60rem;
+        font-weight: 850;
+    }
+
+    .payment-proof-original:hover {
+        background:
+            rgba(0,242,254,.10);
+
+        border-color:
+            rgba(0,242,254,.32);
+    }
+
+    body.payment-proof-open {
+        overflow: hidden !important;
+    }
+
+    /* =====================================================
+       TOTAL
+    ====================================================== */
+
+    .modal-total-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 7px 0;
+
+        color: var(--od-muted);
+        font-size: .70rem;
+    }
+
+    .modal-total-row strong {
+        color: var(--od-text);
+    }
+
+    .modal-total-row.final {
+        margin-top: 8px;
+        padding-top: 11px;
+
+        border-top: 1px solid var(--od-line);
+
+        color: var(--od-white);
+
+        font-size: .82rem;
+        font-weight: 850;
+    }
+
+    .modal-total-row.final strong {
+        color: var(--od-cyan);
+        font-size: 1rem;
+    }
+
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+
+    .site-footer {
+        padding: 24px 15px;
+
+        border-top: 1px solid rgba(255,255,255,.06);
+
+        color: var(--od-dark);
+
+        text-align: center;
+
+        font-size: .68rem;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width:900px) {
+
+        .nav-links a {
+            padding: 8px 7px;
+        }
+
+        .nav-shop-btn {
+            padding: 8px 10px;
+        }
+
+        .modal-proof-wrap {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width:760px) {
+
+        .main-navbar {
+            height: 56px;
+            min-height: 56px;
+            padding: 0 4%;
+        }
+
+        .nav-links,
+        .nav-actions {
+            display: none;
+        }
+
+        .mobile-menu-button {
+            display: grid;
+            place-items: center;
+        }
+
+        .mobile-nav {
+            top: 56px;
+        }
+
+        .order-page {
+            padding: 88px 12px 55px;
+        }
+
+        .order-page-header {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .back-btn {
+            width: 100%;
+        }
+
+        .order-list-card {
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .order-list-top {
+            flex-direction: column;
+        }
+
+        .order-status-pill {
+            align-self: flex-start;
+        }
+
+        .order-summary-grid {
+            grid-template-columns: repeat(2,minmax(0,1fr));
+        }
+
+        .order-modal-panel {
+            width: calc(100% - 12px);
+
+            max-height: calc(100vh - 12px);
+
+            margin: 6px auto;
+
+            border-radius: 17px;
+        }
+
+        .order-modal-content {
+            max-height: calc(100vh - 80px);
+            padding: 12px;
+        }
+
+        .modal-info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-lalamove-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .modal-map {
+            height: 220px;
+        }
+
+        .payment-proof-viewer {
+            padding: 8px;
+        }
+
+        .payment-proof-panel {
+            width: 100%;
+            max-height: 96vh;
+
+            padding: 11px;
+
+            border-radius: 18px;
+        }
+
+        .payment-proof-image-area {
+            max-height: calc(96vh - 125px);
+            min-height: 220px;
+        }
+
+        .payment-proof-viewer-image {
+            max-height: calc(96vh - 160px);
+        }
+
+        .payment-proof-bottom {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .payment-proof-original {
+            width: 100%;
+        }
+    }
+
+    @media (max-width:430px) {
+
+        .order-page-header h1 {
+            font-size: 2.25rem;
+        }
+
+        .order-summary-grid {
+            gap: 7px;
+        }
+
+        .summary-box {
+            padding: 9px;
+        }
+
+        .summary-value {
+            font-size: .69rem;
+        }
+
+        .order-modal-header {
+            padding: 14px;
+        }
+
+        .order-modal-content {
+            padding: 10px;
+        }
+
+        .payment-proof-top h3 {
+            font-size: .82rem;
+        }
+
+        .payment-proof-close {
+            width: 38px;
+            height: 38px;
+
+            top: 10px;
+            right: 10px;
+        }
+    }
+
+</style>
+
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+====================================================== -->
+
+<header class="main-navbar">
+
+
+<a
+    href="customer/customer-home.html"
+    class="nav-logo"
+>
+    <span class="nav-logo-icon">B</span>
+
+    <span>Business Store</span>
+</a>
+
+<nav
+    class="nav-links"
+    aria-label="Main navigation"
+>
+
+    <a href="customer/customer-home.html">
+        Home
+    </a>
+
+    <a href="customer/customer-products.html">
+        Products
+    </a>
+
+    <a href="customer/customer-request.html">
+        Request
+    </a>
+
+    <a href="customer/customer-orders.html">
+        Orders
+    </a>
+
+    <a
+        href="customer/customer-cart.html"
+        class="cart-link"
+    >
+        Cart
+
+        <span
+            id="cartCount"
+            class="cart-count"
+        >
+            0
+        </span>
+    </a>
+
+    <a href="customer/customer-account.html">
+        My Account
+    </a>
+
+</nav>
+
+<div class="nav-actions">
+
+    <a
+        href="customer/customer-products.html"
+        class="nav-shop-btn"
+    >
+        Continue Shopping
+    </a>
+
+</div>
+
+<button
+    id="mobileMenuButton"
+    class="mobile-menu-button"
+    type="button"
+    aria-label="Open menu"
+    aria-expanded="false"
+>
+    ☰
+</button>
+
+
+</header>
+
+<!-- =====================================================
+     MOBILE NAV
+====================================================== -->
+
+<nav
+    id="mobileNav"
+    class="mobile-nav"
+>
+
+
+<a href="customer/customer-home.html">
+    Home
+</a>
+
+<a href="customer/customer-products.html">
+    Products
+</a>
+
+<a href="customer/customer-request.html">
+    Request
+</a>
+
+<a href="customer/customer-orders.html">
+    Orders
+</a>
+
+<a href="customer/customer-cart.html">
+    Cart
+</a>
+
+<a href="customer/customer-account.html">
+    My Account
+</a>
+
+
+</nav>
+
+<!-- =====================================================
+     PAGE
+====================================================== -->
+
+<main class="order-page">
+
+
+<div class="order-page-container">
+
+    <section class="order-page-header">
+
+        <div>
+
+            <div class="eyebrow">
+                MY ORDER
+            </div>
+
+            <h1>
+                Order Details
+            </h1>
+
+            <p>
+                Review your order summary and
+                open the complete details whenever
+                you need them.
+            </p>
+
+        </div>
+
+        <a
+            href="customer/customer-orders.html"
+            class="back-btn"
+        >
+            ← My Orders
+        </a>
+
+    </section>
+
+    <div
+        id="orderDetailsResult"
+        class="result-message"
+        aria-live="polite"
+    ></div>
+
+    <section
+        id="orderDetailsContainer"
+        class="order-list-container"
+        aria-live="polite"
+    >
+
+        <div class="loading-card">
+
+            <div class="loading-spinner"></div>
+
+            <strong>
+                Loading order...
+            </strong>
+
+            <span>
+                Please wait.
+            </span>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+</main>
+
+<!-- =====================================================
+     ORDER DETAILS MODAL
+====================================================== -->
+
+<div
+    id="orderModal"
+    class="order-modal"
+    aria-hidden="true"
+>
+
+
+<div
+    class="order-modal-backdrop"
+    id="orderModalBackdrop"
+></div>
+
+<div
+    class="order-modal-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalOrderTitle"
+>
+
+    <div class="order-modal-header">
+
+        <div>
+
+            <div class="modal-eyebrow">
+                ORDER DETAILS
+            </div>
+
+            <h2 id="modalOrderTitle">
+                Order
+            </h2>
+
+        </div>
+
+        <button
+            id="closeOrderModal"
+            class="modal-close"
+            type="button"
+            aria-label="Close order details"
+        >
+            ×
+        </button>
+
+    </div>
+
+    <div
+        id="modalOrderContent"
+        class="order-modal-content"
+    ></div>
+
+</div>
+
+
+</div>
+
+<!-- =====================================================
+     PAYMENT PROOF VIEWER
+====================================================== -->
+
+<div
+    id="paymentProofViewer"
+    class="payment-proof-viewer"
+    aria-hidden="true"
+>
+
+
+<div
+    class="payment-proof-backdrop"
+    id="paymentProofBackdrop"
+></div>
+
+<div
+    class="payment-proof-panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="paymentProofViewerTitle"
+>
+
+    <button
+        id="closePaymentProofBtn"
+        class="payment-proof-close"
+        type="button"
+        aria-label="Close payment proof"
+        title="Close"
+    >
+        ×
+    </button>
+
+    <div class="payment-proof-top">
+
+        <div>
+
+            <span class="payment-proof-eyebrow">
+                PAYMENT PROOF
+            </span>
+
+            <h3 id="paymentProofViewerTitle">
+                Customer Payment Screenshot
+            </h3>
+
+            <p>
+                Tap outside or press ESC to close
+            </p>
+
+        </div>
+
+    </div>
+
+    <div class="payment-proof-image-area">
+
+        <img
+            id="paymentProofViewerImage"
+            class="payment-proof-viewer-image"
+            src=""
+            alt="Customer payment proof"
+        >
+
+    </div>
+
+    <div class="payment-proof-bottom">
+
+        <span class="payment-proof-bottom-text">
+            Payment screenshot uploaded with this order.
+        </span>
+
+        <a
+            id="paymentProofOriginal"
+            class="payment-proof-original"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            ↗ Open Original
+        </a>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- =====================================================
+     FOOTER
+====================================================== -->
+
+<footer class="site-footer">
+
+
+<p>
+    © 2026 Business Store.
+    All rights reserved.
+</p>
+
+
+</footer>
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script type="module">
+
+    /* =====================================================
+       SUPABASE
+    ====================================================== */
+
+    import { supabase } from "./js/supabase.js";
+
+    import {
+        getCurrentUser
+    } from "./js/auth.js";
+
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const container =
+        document.getElementById(
+            "orderDetailsContainer"
+        );
+
+    const result =
+        document.getElementById(
+            "orderDetailsResult"
+        );
+
+    const cartCount =
+        document.getElementById(
+            "cartCount"
+        );
+
+    const modal =
+        document.getElementById(
+            "orderModal"
+        );
+
+    const modalContent =
+        document.getElementById(
+            "modalOrderContent"
+        );
+
+    const modalTitle =
+        document.getElementById(
+            "modalOrderTitle"
+        );
+
+    const closeModalButton =
+        document.getElementById(
+            "closeOrderModal"
+        );
+
+    const modalBackdrop =
+        document.getElementById(
+            "orderModalBackdrop"
+        );
+
+    const mobileMenuButton =
+        document.getElementById(
+            "mobileMenuButton"
+        );
+
+    const mobileNav =
+        document.getElementById(
+            "mobileNav"
+        );
+
+
+    /* =====================================================
+       PAYMENT PROOF VIEWER ELEMENTS
+    ====================================================== */
+
+    const paymentProofViewer =
+        document.getElementById(
+            "paymentProofViewer"
+        );
+
+    const paymentProofViewerImage =
+        document.getElementById(
+            "paymentProofViewerImage"
+        );
+
+    const paymentProofOriginal =
+        document.getElementById(
+            "paymentProofOriginal"
+        );
+
+    const closePaymentProofBtn =
+        document.getElementById(
+            "closePaymentProofBtn"
+        );
+
+    const paymentProofBackdrop =
+        document.getElementById(
+            "paymentProofBackdrop"
+        );
+
+
+    /* =====================================================
+       ORDER ID
+    ====================================================== */
+
+    const params =
+        new URLSearchParams(
+            window.location.search
+        );
+
+    const orderId =
+        params.get("id");
+
+    let currentOrder =
+        null;
+
+
+    /* =====================================================
+       HELPERS
+    ====================================================== */
+
+    function escapeHTML(value) {
+
+        return String(value ?? "")
+            .replace(/&/g,"&amp;")
+            .replace(/</g,"&lt;")
+            .replace(/>/g,"&gt;")
+            .replace(/"/g,"&quot;")
+            .replace(/'/g,"&#039;");
+
+    }
+
+
+    function normalize(value) {
+
+        return String(value ?? "")
+            .trim()
+            .toLowerCase()
+            .replace(/[-_]+/g," ")
+            .replace(/\s+/g," ");
+
+    }
+
+
+    function money(value) {
+
+        return (
+            Number(value) || 0
+        ).toLocaleString(
+            "en-PH",
+            {
+                style: "currency",
+                currency: "PHP"
+            }
+        );
+
+    }
+
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "—";
+        }
+
+        const date =
+            new Date(value);
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return "—";
+        }
+
+        return date.toLocaleString(
+            "en-PH",
+            {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+
+    function redirectToLogin() {
+
+        sessionStorage.setItem(
+            "businessStoreLoginRedirect",
+            window.location.href
+        );
+
+        window.location.href =
+            "customer%20login.html";
+
+    }
+
+
+    /* =====================================================
+       CART COUNT
+    ====================================================== */
+
+    function updateCartCount() {
+
+        try {
+
+            const raw =
+                localStorage.getItem(
+                    "businessStoreCart"
+                );
+
+            const cart =
+                raw
+                    ? JSON.parse(raw)
+                    : [];
+
+            const total =
+                Array.isArray(cart)
+                    ? cart.reduce(
+                        (
+                            sum,
+                            item
+                        ) =>
+                            sum +
+                            (
+                                Number(
+                                    item?.quantity ??
+                                    item?.qty ??
+                                    0
+                                ) || 0
+                            ),
+                        0
+                    )
+                    : 0;
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    String(total);
+
+            }
+
+        } catch {
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    "0";
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ITEMS
+    ====================================================== */
+
+    function parseItems(order) {
+
+        let items =
+            order?.items;
+
+        if (
+            typeof items === "string"
+        ) {
+
+            try {
+
+                items =
+                    JSON.parse(items);
+
+            } catch {
+
+                items = [];
+
+            }
+
+        }
+
+        return Array.isArray(items)
+            ? items
+            : [];
+
+    }
+
+
+    function itemName(item) {
+
+        return (
+            item?.product_name ||
+            item?.name ||
+            item?.title ||
+            "Product"
+        );
+
+    }
+
+
+    function itemQty(item) {
+
+        return (
+            Number(
+                item?.quantity ??
+                item?.qty ??
+                1
+            ) || 1
+        );
+
+    }
+
+
+    function itemPrice(item) {
+
+        return (
+            Number(
+                item?.price ??
+                item?.unit_price ??
+                item?.product_price ??
+                0
+            ) || 0
+        );
+
+    }
+
+
+    function itemSubtotal(item) {
+
+        const stored =
+            Number(
+                item?.subtotal ??
+                item?.total
+            );
+
+        if (
+            Number.isFinite(stored) &&
+            stored > 0
+        ) {
+
+            return stored;
+
+        }
+
+        return (
+            itemPrice(item) *
+            itemQty(item)
+        );
+
+    }
+
+
+    function itemImage(item) {
+
+        return (
+            item?.image ||
+            item?.image_url ||
+            item?.product_image ||
+            item?.photo ||
+            ""
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD ORDER ITEMS
+    ====================================================== */
+
+    async function loadOrderItems(order) {
+
+        if (!order?.id) {
+
+            return parseItems(order);
+
+        }
+
+        try {
+
+            const {
+                data,
+                error
+            } =
+                await supabase
+                    .from("order_items")
+                    .select("*")
+                    .eq(
+                        "order_id",
+                        order.id
+                    );
+
+            if (
+                !error &&
+                Array.isArray(data) &&
+                data.length > 0
+            ) {
+
+                return data;
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "order_items query failed:",
+                error
+            );
+
+        }
+
+        return parseItems(order);
+
+    }
+
+
+    /* =====================================================
+       PAYMENT PROOF URL
+    ====================================================== */
+
+    function paymentProofCandidates(value) {
+
+        let raw =
+            String(
+                value ?? ""
+            ).trim();
+
+        if (!raw) {
+            return [];
+        }
+
+        if (
+            raw.startsWith("http://") ||
+            raw.startsWith("https://") ||
+            raw.startsWith("data:")
+        ) {
+
+            return [raw];
+
+        }
+
+        raw =
+            raw.replace(
+                /^\/+/,
+                ""
+            );
+
+        const bucketPrefix =
+            "payment-proofs/";
+
+        if (
+            raw
+                .toLowerCase()
+                .startsWith(
+                    bucketPrefix
+                )
+        ) {
+
+            raw =
+                raw.slice(
+                    bucketPrefix.length
+                );
+
+        }
+
+        const candidates = [];
+
+        candidates.push(raw);
+
+        if (
+            !raw
+                .toLowerCase()
+                .startsWith(
+                    "payments/"
+                )
+        ) {
+
+            candidates.push(
+                `payments/${raw}`
+            );
+
+        }
+
+        return [
+            ...new Set(
+                candidates.filter(Boolean)
+            )
+        ];
+
+    }
+
+
+    async function getPaymentProofUrl(order) {
+
+        const raw =
+            order?.payment_proof;
+
+        if (!raw) {
+            return "";
+        }
+
+        const candidates =
+            paymentProofCandidates(raw);
+
+        for (
+            const path of candidates
+        ) {
+
+            if (
+                path.startsWith("http://") ||
+                path.startsWith("https://")
+            ) {
+
+                return path;
+
+            }
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                    await supabase
+                        .storage
+                        .from(
+                            "payment-proofs"
+                        )
+                        .createSignedUrl(
+                            path,
+                            3600
+                        );
+
+                if (
+                    !error &&
+                    data?.signedUrl
+                ) {
+
+                    return data.signedUrl;
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Signed payment proof error:",
+                    error
+                );
+
+            }
+
+            try {
+
+                const {
+                    data
+                } =
+                    supabase
+                        .storage
+                        .from(
+                            "payment-proofs"
+                        )
+                        .getPublicUrl(
+                            path
+                        );
+
+                if (
+                    data?.publicUrl
+                ) {
+
+                    return data.publicUrl;
+
+                }
+
+            } catch (error) {
+
+                console.warn(
+                    "Public payment proof error:",
+                    error
+                );
+
+            }
+
+        }
+
+        return "";
+
+    }
+
+
+    /* =====================================================
+       PAYMENT PROOF VIEWER
+    ====================================================== */
+
+    function openPaymentProofViewer(url) {
+
+        if (
+            !paymentProofViewer ||
+            !paymentProofViewerImage ||
+            !url
+        ) {
+
+            return;
+
+        }
+
+        paymentProofViewerImage.src =
+            url;
+
+        paymentProofViewerImage.alt =
+            "Customer payment proof";
+
+        if (paymentProofOriginal) {
+
+            paymentProofOriginal.href =
+                url;
+
+        }
+
+        paymentProofViewer.classList.add(
+            "show"
+        );
+
+        paymentProofViewer.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.classList.add(
+            "payment-proof-open"
+        );
+
+    }
+
+
+    function closePaymentProofViewer() {
+
+        if (!paymentProofViewer) {
+            return;
+        }
+
+        paymentProofViewer.classList.remove(
+            "show"
+        );
+
+        paymentProofViewer.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        if (paymentProofViewerImage) {
+
+            paymentProofViewerImage.src =
+                "";
+
+        }
+
+        if (paymentProofOriginal) {
+
+            paymentProofOriginal.href =
+                "#";
+
+        }
+
+        document.body.classList.remove(
+            "payment-proof-open"
+        );
+
+    }
+
+
+    /* =====================================================
+       DELIVERY COORDINATES
+    ====================================================== */
+
+    function getCoordinates(order) {
+
+        const lat =
+            Number(
+                order?.delivery_latitude ??
+                order?.latitude
+            );
+
+        const lng =
+            Number(
+                order?.delivery_longitude ??
+                order?.longitude
+            );
+
+        if (
+            !Number.isFinite(lat) ||
+            !Number.isFinite(lng) ||
+            lat < -90 ||
+            lat > 90 ||
+            lng < -180 ||
+            lng > 180
+        ) {
+
+            return null;
+
+        }
+
+        return {
+            lat,
+            lng
+        };
+
+    }
+
+
+    function getMapData(order) {
+
+        const point =
+            getCoordinates(order);
+
+        const address =
+            order?.customer_address ||
+            order?.delivery_address ||
+            order?.address ||
+            "";
+
+        const google =
+            point
+
+                ? `https://www.google.com/maps/search/?api=1&query=${
+                    encodeURIComponent(
+                        `${point.lat},${point.lng}`
+                    )
+                }`
+
+                : `https://www.google.com/maps/search/?api=1&query=${
+                    encodeURIComponent(address)
+                }`;
+
+        if (!point) {
+
+            return {
+                google,
+                embed: ""
+            };
+
+        }
+
+        const offset =
+            .005;
+
+        const bbox =
+            [
+                point.lng - offset,
+                point.lat - offset,
+                point.lng + offset,
+                point.lat + offset
+            ]
+            .map(
+                value =>
+                    encodeURIComponent(value)
+            )
+            .join("%2C");
+
+        const embed =
+            `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${encodeURIComponent(point.lat)}%2C${encodeURIComponent(point.lng)}`;
+
+        return {
+            google,
+            embed
+        };
+
+    }
+
+
+    /* =====================================================
+       STATUS CLASS
+    ====================================================== */
+
+    function statusClass(status) {
+
+        const value =
+            normalize(status);
+
+        if (
+            value.includes("reject")
+        ) {
+
+            return "rejected";
+
+        }
+
+        if (
+            value.includes("complete") ||
+            value === "delivered"
+        ) {
+
+            return "completed";
+
+        }
+
+        return "";
+
+    }
+
+
+    /* =====================================================
+       TRACK DELIVERY
+    ====================================================== */
+
+    function getTrackingUrl(order) {
+
+        const value =
+            String(
+                order?.lalamove_tracking_url ??
+                ""
+            ).trim();
+
+        return value;
+
+    }
+
+
+    function renderTrackingSection(order) {
+
+        const trackingUrl =
+            getTrackingUrl(order);
+
+        if (trackingUrl) {
+
+            return `
+
+                <div class="track-delivery-box">
+
+                    <div class="track-delivery-heading">
+
+                        <div class="track-delivery-icon">
+                            🚚
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Track Your Delivery
+                            </h3>
+
+                            <p>
+                                Your delivery tracking link
+                                has been provided by the store.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="track-delivery-status">
+
+                        <span
+                            class="track-delivery-dot"
+                        ></span>
+
+                        Tracking link available
+
+                    </div>
+
+                    <a
+                        href="${escapeHTML(trackingUrl)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="track-delivery-btn"
+                    >
+                        🚚 Track Delivery →
+                    </a>
+
+                    <div class="track-delivery-url">
+                        ${escapeHTML(trackingUrl)}
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+        return `
+
+            <div class="track-delivery-box">
+
+                <div class="track-delivery-heading">
+
+                    <div class="track-delivery-icon">
+                        🚚
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            Track Your Delivery
+                        </h3>
+
+                        <p>
+                            Your delivery tracker will
+                            appear here once the store
+                            provides the tracking link.
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="track-delivery-pending">
+
+                    Tracking link is not available yet.
+                    Please check your order again later.
+
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       SUMMARY
+    ====================================================== */
+
+    function renderSummary(order) {
+
+        const items =
+            order.items || [];
+
+        const firstItem =
+            items[0];
+
+        const provider =
+            order.delivery_provider ||
+            (
+                Number(order.delivery_fee) > 0
+                    ? "Delivery"
+                    : "Pickup"
+            );
+
+        const quantity =
+            items.reduce(
+                (
+                    total,
+                    item
+                ) =>
+                    total +
+                    itemQty(item),
+                0
+            );
+
+        return `
+
+            <article class="order-list-card">
+
+                <div class="order-list-top">
+
+                    <div>
+
+                        <div class="order-id-small">
+                            ORDER ID
+                        </div>
+
+                        <div class="order-id-value">
+                            #${escapeHTML(order.id)}
+                        </div>
+
+                        <div class="order-date">
+                            ${escapeHTML(
+                                formatDate(
+                                    order.created_at
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                    <span
+                        class="
+                            order-status-pill
+                            ${statusClass(order.status)}
+                        "
+                    >
+                        ${escapeHTML(
+                            order.status ||
+                            "Pending"
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="order-summary-grid">
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Items
+                        </div>
+
+                        <div class="summary-value">
+                            ${quantity}
+                        </div>
+
+                    </div>
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Payment
+                        </div>
+
+                        <div class="summary-value">
+                            ${escapeHTML(
+                                order.payment_status ||
+                                "Pending"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Delivery
+                        </div>
+
+                        <div class="summary-value">
+                            ${escapeHTML(provider)}
+                        </div>
+
+                    </div>
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Total
+                        </div>
+
+                        <div class="summary-value accent">
+                            ${money(order.total)}
+                        </div>
+
+                    </div>
+
+                </div>
+
+                ${
+                    firstItem
+                        ? `
+
+                            <div class="order-item-preview">
+
+                                <div class="preview-product">
+
+                                    ${
+                                        itemImage(firstItem)
+                                            ? `
+
+                                                <img
+                                                    src="${escapeHTML(
+                                                        itemImage(firstItem)
+                                                    )}"
+                                                    class="preview-image"
+                                                    alt=""
+                                                >
+
+                                            `
+                                            : `
+
+                                                <div
+                                                    class="preview-image"
+                                                ></div>
+
+                                            `
+                                    }
+
+                                    <div class="preview-name">
+                                        ${escapeHTML(
+                                            itemName(firstItem)
+                                        )}
+                                    </div>
+
+                                </div>
+
+                                ${
+                                    items.length > 1
+                                        ? `
+
+                                            <div class="preview-more">
+                                                +${items.length - 1}
+                                                more
+                                            </div>
+
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `
+                        : ""
+                }
+
+                <button
+                    id="viewOrderBtn"
+                    class="view-order-btn"
+                    type="button"
+                >
+                    View Full Order Details →
+                </button>
+
+            </article>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       MODAL
+    ====================================================== */
+
+    function renderModal(order) {
+
+        const items =
+            order.items || [];
+
+        const address =
+            order.customer_address ||
+            order.delivery_address ||
+            order.address ||
+            "Not provided";
+
+        const provider =
+            order.delivery_provider ||
+            (
+                Number(order.delivery_fee) > 0
+                    ? "Delivery"
+                    : "Pickup"
+            );
+
+        const deliveryFee =
+            Number(order.delivery_fee) || 0;
+
+        const subtotal =
+            Number(order.subtotal) ||
+            items.reduce(
+                (
+                    total,
+                    item
+                ) =>
+                    total +
+                    itemSubtotal(item),
+                0
+            );
+
+        const total =
+            Number(order.total) ||
+            subtotal + deliveryFee;
+
+        const point =
+            getCoordinates(order);
+
+        const map =
+            getMapData(order);
+
+        const isLalamove =
+            normalize(provider)
+                .includes("lalamove");
+
+        const proofUrl =
+            order.payment_proof_url ||
+            "";
+
+        if (modalTitle) {
+
+            modalTitle.textContent =
+                `#${String(order.id).slice(0,16)}`;
+
+        }
+
+        if (!modalContent) {
+            return;
+        }
+
+        modalContent.innerHTML = `
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Customer
+                </div>
+
+                <div class="modal-info-grid">
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Name
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                order.customer_name ||
+                                "—"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Email
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                order.customer_email ||
+                                "—"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Phone
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                order.customer_phone ||
+                                "—"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Order Date
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                formatDate(
+                                    order.created_at
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Ordered Items
+                </div>
+
+                ${
+                    items.length
+                        ? items
+                            .map(
+                                item =>
+                                    `
+
+                                        <div class="modal-item">
+
+                                            ${
+                                                itemImage(item)
+                                                    ? `
+
+                                                        <img
+                                                            src="${escapeHTML(
+                                                                itemImage(item)
+                                                            )}"
+                                                            class="modal-item-image"
+                                                            alt=""
+                                                        >
+
+                                                    `
+                                                    : `
+
+                                                        <div
+                                                            class="modal-item-image"
+                                                        ></div>
+
+                                                    `
+                                            }
+
+                                            <div class="modal-item-main">
+
+                                                <div class="modal-item-name">
+                                                    ${escapeHTML(
+                                                        itemName(item)
+                                                    )}
+                                                </div>
+
+                                                <div class="modal-item-meta">
+
+                                                    ×
+                                                    ${itemQty(item)}
+
+                                                    ·
+
+                                                    ${money(
+                                                        itemPrice(item)
+                                                    )}
+                                                    each
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-item-total">
+                                                ${money(
+                                                    itemSubtotal(item)
+                                                )}
+                                            </div>
+
+                                        </div>
+
+                                    `
+                            )
+                            .join("")
+                        : `
+
+                            <div class="modal-info-value">
+                                No item information available.
+                            </div>
+
+                        `
+                }
+
+            </section>
+
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Delivery Location
+                </div>
+
+                <div class="modal-delivery">
+
+                    <div class="delivery-line">
+
+                        <span class="delivery-line-label">
+                            Provider
+                        </span>
+
+                        <span class="delivery-line-value">
+                            ${escapeHTML(provider)}
+                        </span>
+
+                    </div>
+
+                    <div class="delivery-line">
+
+                        <span class="delivery-line-label">
+                            Address
+                        </span>
+
+                        <span class="delivery-line-value">
+                            ${escapeHTML(address)}
+                        </span>
+
+                    </div>
+
+                    <div class="delivery-line">
+
+                        <span class="delivery-line-label">
+                            Delivery Fee
+                        </span>
+
+                        <span class="delivery-line-value">
+
+                            ${
+                                deliveryFee > 0
+                                    ? money(deliveryFee)
+                                    : "FREE"
+                            }
+
+                        </span>
+
+                    </div>
+
+                    ${
+                        point
+                            ? `
+
+                                <div class="delivery-line">
+
+                                    <span class="delivery-line-label">
+                                        Coordinates
+                                    </span>
+
+                                    <span class="delivery-line-value">
+                                        ${point.lat},
+                                        ${point.lng}
+                                    </span>
+
+                                </div>
+
+                            `
+                            : ""
+                    }
+
+                    <a
+                        href="${escapeHTML(map.google)}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="modal-map-btn"
+                    >
+                        📍 Open Google Maps
+                    </a>
+
+                    ${
+                        map.embed
+                            ? `
+
+                                <iframe
+                                    class="modal-map"
+                                    src="${escapeHTML(map.embed)}"
+                                    loading="lazy"
+                                    title="Delivery Location"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                ></iframe>
+
+                            `
+                            : ""
+                    }
+
+                    ${
+                        isLalamove
+                            ? `
+
+                                <div class="modal-lalamove">
+
+                                    <div class="modal-lalamove-title">
+                                        🚚 Lalamove Details
+                                    </div>
+
+                                    <div class="modal-lalamove-grid">
+
+                                        <div class="modal-lalamove-box">
+
+                                            <span>
+                                                Provider
+                                            </span>
+
+                                            <strong>
+                                                Lalamove
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="modal-lalamove-box">
+
+                                            <span>
+                                                Delivery Fee
+                                            </span>
+
+                                            <strong>
+                                                ${money(deliveryFee)}
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="modal-lalamove-box">
+
+                                            <span>
+                                                Quotation ID
+                                            </span>
+
+                                            <strong>
+                                                ${
+                                                    escapeHTML(
+                                                        order.lalamove_quotation_id ||
+                                                        order.lalamove_quote_id ||
+                                                        "Not available"
+                                                    )
+                                                }
+                                            </strong>
+
+                                        </div>
+
+                                        <div class="modal-lalamove-box">
+
+                                            <span>
+                                                Quote Expiry
+                                            </span>
+
+                                            <strong>
+                                                ${
+                                                    order.lalamove_quote_expires_at
+                                                        ? formatDate(
+                                                            order.lalamove_quote_expires_at
+                                                        )
+                                                        : "Not available"
+                                                }
+                                            </strong>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            `
+                            : ""
+                    }
+
+                    ${renderTrackingSection(order)}
+
+                </div>
+
+            </section>
+
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Payment
+                </div>
+
+                <div class="modal-info-grid">
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Method
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                order.payment_method ||
+                                "GCash"
+                            )}
+                        </div>
+
+                    </div>
+
+                    <div class="modal-info-item">
+
+                        <div class="modal-info-label">
+                            Status
+                        </div>
+
+                        <div class="modal-info-value">
+                            ${escapeHTML(
+                                order.payment_status ||
+                                "Pending"
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PAYMENT PROOF
+            ================================================== -->
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Payment Proof
+                </div>
+
+                ${
+                    proofUrl
+                        ? `
+
+                            <div class="modal-proof-wrap">
+
+                                <div
+                                    class="modal-proof-image-wrap"
+                                    data-payment-proof="${escapeHTML(
+                                        proofUrl
+                                    )}"
+                                    role="button"
+                                    tabindex="0"
+                                    aria-label="View payment proof"
+                                >
+
+                                    <img
+                                        src="${escapeHTML(proofUrl)}"
+                                        class="modal-proof-image"
+                                        alt="Payment Proof"
+                                    >
+
+                                </div>
+
+                                <div class="modal-proof-side">
+
+                                    <div class="modal-proof-status">
+                                        ${escapeHTML(
+                                            order.payment_status ||
+                                            "Pending"
+                                        )}
+                                    </div>
+
+                                    <h4>
+                                        ${escapeHTML(
+                                            order.payment_method ||
+                                            "GCash"
+                                        )}
+                                    </h4>
+
+                                    <p>
+                                        Payment screenshot
+                                        uploaded with this order.
+                                    </p>
+
+                                    <button
+                                        type="button"
+                                        class="modal-proof-view-btn"
+                                        data-payment-proof="${escapeHTML(
+                                            proofUrl
+                                        )}"
+                                    >
+                                        ⛶ View Payment Proof
+                                    </button>
+
+                                    <a
+                                        href="${escapeHTML(proofUrl)}"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        class="modal-proof-link"
+                                    >
+                                        ↗ Open Original
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        `
+                        : `
+
+                            <div class="proof-empty">
+
+                                No payment proof was found
+                                for this order.
+
+                            </div>
+
+                        `
+                }
+
+            </section>
+
+
+            <section class="modal-section">
+
+                <div class="modal-section-title">
+                    Order Summary
+                </div>
+
+                <div class="modal-total-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+                        ${money(subtotal)}
+                    </strong>
+
+                </div>
+
+                <div class="modal-total-row">
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <strong>
+                        ${
+                            deliveryFee > 0
+                                ? money(deliveryFee)
+                                : "FREE"
+                        }
+                    </strong>
+
+                </div>
+
+                <div class="modal-total-row final">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong>
+                        ${money(total)}
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            ${
+                order.notes
+                    ? `
+
+                        <section class="modal-section">
+
+                            <div class="modal-section-title">
+                                Customer Notes
+                            </div>
+
+                            <div class="modal-info-value">
+                                ${escapeHTML(order.notes)}
+                            </div>
+
+                        </section>
+
+                    `
+                    : ""
+            }
+
+        `;
+
+        /* =====================================================
+           PAYMENT PROOF BUTTONS
+        ====================================================== */
+
+        modalContent
+            .querySelectorAll(
+                "[data-payment-proof]"
+            )
+            .forEach(
+                element => {
+
+                    const url =
+                        element.getAttribute(
+                            "data-payment-proof"
+                        );
+
+                    if (!url) {
+                        return;
+                    }
+
+                    element.addEventListener(
+                        "click",
+                        () => {
+
+                            openPaymentProofViewer(
+                                url
+                            );
+
+                        }
+                    );
+
+                    element.addEventListener(
+                        "keydown",
+                        event => {
+
+                            if (
+                                event.key === "Enter" ||
+                                event.key === " "
+                            ) {
+
+                                event.preventDefault();
+
+                                openPaymentProofViewer(
+                                    url
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       OPEN ORDER MODAL
+    ====================================================== */
+
+    function openModal() {
+
+        if (
+            !modal ||
+            !currentOrder
+        ) {
+
+            return;
+
+        }
+
+        renderModal(
+            currentOrder
+        );
+
+        modal.classList.add(
+            "show"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        document.body.style.overflow =
+            "hidden";
+
+    }
+
+
+    /* =====================================================
+       CLOSE ORDER MODAL
+    ====================================================== */
+
+    function closeModal() {
+
+        if (!modal) {
+            return;
+        }
+
+        closePaymentProofViewer();
+
+        modal.classList.remove(
+            "show"
+        );
+
+        modal.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        document.body.style.overflow =
+            "";
+
+    }
+
+
+    /* =====================================================
+       LOAD ORDER
+    ====================================================== */
+
+    async function loadOrder() {
+
+        const currentUser =
+            await getCurrentUser();
+
+        if (!currentUser) {
+
+            redirectToLogin();
+
+            return null;
+
+        }
+
+        if (!orderId) {
+
+            throw new Error(
+                "Order ID is missing."
+            );
+
+        }
+
+        const {
+            data: order,
+            error
+        } =
+            await supabase
+                .from("orders")
+                .select("*")
+                .eq(
+                    "id",
+                    orderId
+                )
+                .eq(
+                    "user_id",
+                    currentUser.id
+                )
+                .maybeSingle();
+
+        if (error) {
+
+            throw new Error(
+                error.message
+            );
+
+        }
+
+        if (!order) {
+
+            throw new Error(
+                "Order not found or you do not have permission to view it."
+            );
+
+        }
+
+        console.log(
+            "Lalamove tracking URL:",
+            order.lalamove_tracking_url
+        );
+
+        const items =
+            await loadOrderItems(
+                order
+            );
+
+        const paymentProofUrl =
+            await getPaymentProofUrl(
+                order
+            );
+
+        return {
+
+            ...order,
+
+            items,
+
+            payment_proof_url:
+                paymentProofUrl
+
+        };
+
+    }
+
+
+    /* =====================================================
+       RENDER PAGE
+    ====================================================== */
+
+    function renderPage(order) {
+
+        currentOrder =
+            order;
+
+        if (!container) {
+            return;
+        }
+
+        container.innerHTML =
+            renderSummary(
+                order
+            );
+
+        const button =
+            document.getElementById(
+                "viewOrderBtn"
+            );
+
+        if (button) {
+
+            button.addEventListener(
+                "click",
+                openModal
+            );
+
+        }
+
+        container.setAttribute(
+            "aria-busy",
+            "false"
+        );
+
+    }
+
+
+    /* =====================================================
+       ERROR
+    ====================================================== */
+
+    function renderError(message) {
+
+        if (!container) {
+            return;
+        }
+
+        container.innerHTML = `
+
+            <div class="empty-card">
+
+                <div
+                    style="
+                        font-size:2rem;
+                        margin-bottom:10px;
+                    "
+                >
+                    ⚠
+                </div>
+
+                <h3>
+                    Unable to Load Order
+                </h3>
+
+                <p>
+                    ${escapeHTML(message)}
+                </p>
+
+                <a
+                    href="customer/customer-orders.html"
+                    class="back-btn"
+                    style="
+                        margin-top:15px;
+                        display:inline-flex;
+                    "
+                >
+                    ← Back to My Orders
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* =====================================================
+       MOBILE MENU
+    ====================================================== */
+
+    function setupMobileMenu() {
+
+        if (
+            !mobileMenuButton ||
+            !mobileNav
+        ) {
+
+            return;
+
+        }
+
+        mobileMenuButton.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    mobileNav.classList.toggle(
+                        "open"
+                    );
+
+                mobileMenuButton.classList.toggle(
+                    "active",
+                    isOpen
+                );
+
+                mobileMenuButton.setAttribute(
+                    "aria-expanded",
+                    String(isOpen)
+                );
+
+            }
+        );
+
+        mobileNav
+            .querySelectorAll("a")
+            .forEach(
+                link => {
+
+                    link.addEventListener(
+                        "click",
+                        () => {
+
+                            mobileNav.classList.remove(
+                                "open"
+                            );
+
+                            mobileMenuButton.classList.remove(
+                                "active"
+                            );
+
+                            mobileMenuButton.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       ORDER MODAL EVENTS
+    ====================================================== */
+
+    if (closeModalButton) {
+
+        closeModalButton.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+    if (modalBackdrop) {
+
+        modalBackdrop.addEventListener(
+            "click",
+            closeModal
+        );
+
+    }
+
+
+    /* =====================================================
+       PAYMENT PROOF EVENTS
+    ====================================================== */
+
+    if (closePaymentProofBtn) {
+
+        closePaymentProofBtn.addEventListener(
+            "click",
+            closePaymentProofViewer
+        );
+
+    }
+
+    if (paymentProofBackdrop) {
+
+        paymentProofBackdrop.addEventListener(
+            "click",
+            closePaymentProofViewer
+        );
+
+    }
+
+
+    if (paymentProofOriginal) {
+
+        paymentProofOriginal.addEventListener(
+            "click",
+            event => {
+
+                const href =
+                    paymentProofOriginal.getAttribute(
+                        "href"
+                    );
+
+                if (
+                    !href ||
+                    href === "#"
+                ) {
+
+                    event.preventDefault();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       KEYBOARD EVENTS
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                if (
+                    paymentProofViewer?.classList.contains(
+                        "show"
+                    )
+                ) {
+
+                    closePaymentProofViewer();
+
+                    return;
+
+                }
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       INIT
+    ====================================================== */
+
+    async function initialize() {
+
+        updateCartCount();
+
+        setupMobileMenu();
+
+        try {
+
+            if (result) {
+
+                result.textContent =
+                    "Loading order...";
+
+                result.classList.remove(
+                    "error"
+                );
+
+            }
+
+            const order =
+                await loadOrder();
+
+            if (!order) {
+                return;
+            }
+
+            renderPage(
+                order
+            );
+
+            if (result) {
+
+                result.textContent =
+                    "";
+
+            }
+
+            console.log(
+                "ORDER DETAILS SYSTEM READY"
+            );
+
+            console.log(
+                "Order:",
+                order.id
+            );
+
+            console.log(
+                "Saved tracker:",
+                order.lalamove_tracking_url ||
+                "NONE"
+            );
+
+        } catch (error) {
+
+            console.error(
+                "Order details error:",
+                error
+            );
+
+            if (result) {
+
+                result.textContent =
+                    "Unable to load this order.";
+
+                result.classList.add(
+                    "error"
+                );
+
+            }
+
+            renderError(
+                error?.message ||
+                "Something went wrong while loading the order."
+            );
+
+        }
+
+    }
+
+    initialize();
+
+</script>
+
+</body>
+
+</html>

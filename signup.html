@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Business Store - Customer Sign Up</title>
+
+    <link rel="stylesheet" href="./css/login.css">
+</head>
+
+<body>
+
+<main class="auth-page">
+
+    <div class="auth-card">
+
+        <!-- BRAND -->
+        <div class="brand">
+
+            <div class="brand-icon">
+                ✦
+            </div>
+
+            <h1>Business Store</h1>
+
+            <p>
+                Create your customer account.
+            </p>
+
+        </div>
+
+
+        <!-- CUSTOMER SIGN UP FORM -->
+        <form id="signupForm">
+
+            <!-- FULL NAME -->
+            <div class="input-group">
+
+                <label for="fullName">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="fullName"
+                    name="fullName"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+
+            </div>
+
+
+            <!-- EMAIL -->
+            <div class="input-group">
+
+                <label for="email">
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    autocomplete="email"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PHONE -->
+            <div class="input-group">
+
+                <label for="phone">
+                    Phone Number
+                </label>
+
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Enter your phone number"
+                    autocomplete="tel"
+                    required
+                >
+
+            </div>
+
+
+            <!-- PASSWORD -->
+            <div class="input-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <!-- CONFIRM PASSWORD -->
+            <div class="input-group">
+
+                <label for="confirmPassword">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    placeholder="Confirm your password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    required
+                >
+
+            </div>
+
+
+            <!-- CUSTOMER NOTICE -->
+            <div class="signup-notice">
+                <span>✓</span>
+                <p>
+                    Customer accounts are activated automatically after registration.
+                </p>
+            </div>
+
+
+            <!-- BUTTON -->
+            <button
+                type="submit"
+                id="signupBtn"
+            >
+                Create Customer Account
+            </button>
+
+
+            <!-- RESULT -->
+            <div
+                id="signupResult"
+                class="result"
+                aria-live="polite"
+            ></div>
+
+        </form>
+
+
+        <!-- LOGIN -->
+        <div class="login-area">
+
+            <span>
+                Already have an account?
+            </span>
+
+            <a href="./login.html">
+                Login
+            </a>
+
+        </div>
+
+
+        <!-- BACK -->
+        <a
+            href="./index.html"
+            class="back-link"
+        >
+            ← Back to Store
+        </a>
+
+    </div>
+
+</main>
+
+
+<!-- CUSTOMER SIGN UP JS -->
+<script
+    type="module"
+    src="./js/signup.js"
+></script>
+
+</body>
+</html>

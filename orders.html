@@ -1,0 +1,546 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>My Orders | Business Store</title>
+
+    <!-- MAIN DESIGN -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <!-- ORDERS DESIGN -->
+    <link
+        rel="stylesheet"
+        href="css/orders.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           BACK TO ACCOUNT
+        ===================================================== */
+
+        .orders-back-row {
+            margin-bottom: 28px;
+        }
+
+        .back-account-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+
+            min-height: 42px;
+            padding: 10px 17px;
+
+            border: 1px solid rgba(0, 242, 254, 0.20);
+            border-radius: 10px;
+
+            background: rgba(255, 255, 255, 0.03);
+            color: #e5e7eb;
+
+            text-decoration: none;
+
+            font-size: 0.78rem;
+            font-weight: 800;
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+        .back-account-btn:hover {
+            background: rgba(0, 242, 254, 0.07);
+            border-color: rgba(0, 242, 254, 0.35);
+            color: #00f2fe;
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 6px 22px rgba(0, 242, 254, 0.10);
+        }
+
+        .back-account-btn:active {
+            transform: translateY(0);
+        }
+
+        .back-account-arrow {
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        @media (max-width: 600px) {
+
+            .orders-back-row {
+                margin-bottom: 22px;
+            }
+
+            .back-account-btn {
+                width: 100%;
+                min-height: 44px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACKGROUND EFFECTS
+    ====================================================== -->
+
+    <div class="page-glow glow-one"></div>
+
+    <div class="page-glow glow-two"></div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+
+            <!-- LOGO -->
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+
+                <span class="logo-icon">
+                    ✦
+                </span>
+
+                <span class="logo-text">
+                    Business Store
+                </span>
+
+            </a>
+
+
+            <!-- DESKTOP NAVIGATION -->
+
+            <nav class="desktop-nav">
+
+                <a
+                    href="index.html"
+                    class="nav-link"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="products.html"
+                    class="nav-link"
+                >
+                    Products
+                </a>
+
+                <a
+                    href="request.html"
+                    class="nav-link"
+                >
+                    Request
+                </a>
+
+                <a
+                    href="orders.html"
+                    class="nav-link active"
+                >
+                    Orders
+                </a>
+
+            </nav>
+
+
+            <!-- NAV ACTIONS -->
+
+            <div class="nav-actions">
+
+
+                <!-- CART -->
+
+                <a
+                    href="cart.html"
+                    class="cart-button"
+                >
+
+                    <span class="cart-icon">
+                        🛒
+                    </span>
+
+                    <span class="cart-text">
+                        Cart
+                    </span>
+
+                    <span
+                        id="cartCount"
+                        class="cart-badge"
+                    >
+                        0
+                    </span>
+
+                </a>
+
+
+                <!-- ADMIN -->
+
+                <a
+                    href="admin.html"
+                    class="admin-button"
+                >
+                    Admin
+                </a>
+
+            </div>
+
+
+            <!-- MOBILE MENU BUTTON -->
+
+            <button
+                type="button"
+                class="mobile-menu-button"
+                id="mobileMenuButton"
+                aria-label="Open navigation menu"
+            >
+
+                <span></span>
+                <span></span>
+                <span></span>
+
+            </button>
+
+        </div>
+
+
+        <!-- =================================================
+             MOBILE NAVIGATION
+        ================================================== -->
+
+        <div
+            class="mobile-nav"
+            id="mobileNav"
+        >
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="products.html">
+                Products
+            </a>
+
+            <a href="request.html">
+                Request
+            </a>
+
+            <a
+                href="orders.html"
+                class="active"
+            >
+                Orders
+            </a>
+
+            <a href="cart.html">
+                🛒 Cart
+            </a>
+
+            <a href="admin.html">
+                Admin Login
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN ORDERS CONTENT
+    ====================================================== -->
+
+    <main class="orders-page">
+
+        <div class="orders-container">
+
+
+            <!-- =================================================
+                 BACK TO ACCOUNT
+            ================================================== -->
+
+            <div class="orders-back-row">
+
+                <a
+                    href="account.html"
+                    class="back-account-btn"
+                >
+
+                    <span class="back-account-arrow">
+                        ←
+                    </span>
+
+                    <span>
+                        Back to Account
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 ORDERS HEADER
+            ================================================== -->
+
+            <section class="orders-heading">
+
+                <span class="section-label">
+                    ORDER HISTORY
+                </span>
+
+
+                <h1>
+                    My Orders
+                </h1>
+
+
+                <p>
+                    View your orders, payment status,
+                    and order progress.
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 SEARCH ORDER
+            ================================================== -->
+
+            <section class="orders-search-card">
+
+
+                <div class="orders-search-info">
+
+                    <h2>
+                        Find Your Order
+                    </h2>
+
+                    <p>
+                        Enter the email address you used
+                        when placing your order.
+                    </p>
+
+                </div>
+
+
+                <form
+                    id="orderSearchForm"
+                    class="order-search-form"
+                >
+
+
+                    <div class="search-input-wrapper">
+
+                        <input
+                            type="email"
+                            id="orderEmail"
+                            placeholder="Enter your email address"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        id="searchOrdersBtn"
+                    >
+                        View Orders
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <!-- =================================================
+                 RESULT MESSAGE
+            ================================================== -->
+
+            <div
+                id="ordersResult"
+                class="orders-result"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- =================================================
+                 ORDERS LIST
+            ================================================== -->
+
+            <section
+                id="ordersList"
+                class="orders-list"
+            >
+
+                <div class="orders-empty">
+
+                    <div class="orders-empty-icon">
+                        🧾
+                    </div>
+
+
+                    <h2>
+                        No Orders Loaded
+                    </h2>
+
+
+                    <p>
+                        Enter your email above to view
+                        your orders.
+                    </p>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <div class="footer-container">
+
+            <div class="footer-bottom">
+
+                <span>
+                    © 2026 Business Store
+                </span>
+
+                <span>
+                    All Rights Reserved.
+                </span>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <script>
+
+        const mobileMenuButton =
+            document.getElementById(
+                "mobileMenuButton"
+            );
+
+
+        const mobileNav =
+            document.getElementById(
+                "mobileNav"
+            );
+
+
+        if (
+            mobileMenuButton &&
+            mobileNav
+        ) {
+
+            mobileMenuButton.addEventListener(
+                "click",
+                () => {
+
+                    mobileNav.classList.toggle(
+                        "open"
+                    );
+
+
+                    mobileMenuButton.classList.toggle(
+                        "active"
+                    );
+
+                }
+            );
+
+
+            document
+                .querySelectorAll(
+                    ".mobile-nav a"
+                )
+                .forEach(link => {
+
+                    link.addEventListener(
+                        "click",
+                        () => {
+
+                            mobileNav.classList.remove(
+                                "open"
+                            );
+
+
+                            mobileMenuButton.classList.remove(
+                                "active"
+                            );
+
+                        }
+                    );
+
+                });
+
+        }
+
+    </script>
+
+
+    <!-- =====================================================
+         ORDERS JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="js/orders.js"
+    ></script>
+
+
+</body>
+
+</html>
+
+
+**Result:** may `← Back to Account` sa ibabaw ng **My Orders**, at kapag pinindot → `account.html`.
+
+Hindi ko ginalaw yung existing navbar, orders search, Firebase/Supabase logic, o `orders.js`.

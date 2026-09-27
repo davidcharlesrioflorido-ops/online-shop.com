@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Customer Requests | Admin</title>
+
+    <script   
+    type="module"   
+    src="./js/admin-guard.js"  
+></script>
+
+    <link
+        rel="stylesheet"
+        href="css/admin-requests.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           ADMIN RESPONSE
+        ====================================================== */
+
+        .admin-response-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top:
+                1px solid rgba(255,255,255,0.08);
+        }
+
+        .admin-response-box {
+            margin-top: 12px;
+        }
+
+        .admin-response-box textarea {
+            width: 100%;
+            min-height: 130px;
+            resize: vertical;
+            padding: 15px 16px;
+            border:
+                1px solid rgba(0,242,254,0.18);
+            border-radius: 14px;
+            background:
+                rgba(255,255,255,0.025);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            outline: none;
+            transition:
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+            box-sizing: border-box;
+        }
+
+        .admin-response-box textarea::placeholder {
+            color: #64748b;
+        }
+
+        .admin-response-box textarea:focus {
+            border-color:
+                rgba(0,242,254,0.55);
+
+            background:
+                rgba(0,242,254,0.025);
+
+            box-shadow:
+                0 0 0 3px rgba(0,242,254,0.06),
+                0 0 25px rgba(0,242,254,0.08);
+        }
+
+        .response-helper {
+            margin-top: 8px;
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .status-update-row {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        .status-update-row select {
+            min-width: 180px;
+        }
+
+        .send-response-btn {
+            min-height: 48px;
+            padding: 0 22px;
+            border:
+                1px solid rgba(0,242,254,0.35);
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,0.12),
+                    rgba(79,172,254,0.08)
+                );
+
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .send-response-btn:hover {
+            transform: translateY(-2px);
+
+            border-color:
+                rgba(0,242,254,0.7);
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,242,254,0.12);
+        }
+
+        .send-response-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .current-admin-reply {
+            margin-top: 14px;
+            padding: 15px;
+            border-radius: 12px;
+
+            background:
+                rgba(168,85,247,0.045);
+
+            border:
+                1px solid rgba(168,85,247,0.14);
+        }
+
+        .current-admin-reply-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #a855f7;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .current-admin-reply-text {
+            color: #e5e7eb;
+            font-size: 14px;
+            line-height: 1.65;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .current-admin-reply-date {
+            display: block;
+            margin-top: 9px;
+            color: #64748b;
+            font-size: 11px;
+        }
+
+
+        /* =====================================================
+           ADMIN NAV NOTIFICATION BADGES
+        ====================================================== */
+
+        .admin-nav a {
+            position: relative;
+        }
+
+        .admin-nav a .nav-label {
+            flex: 1;
+        }
+
+        .notification-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 20px;
+            height: 20px;
+
+            padding: 0 6px;
+            margin-left: auto;
+
+            border-radius: 999px;
+
+            background: #ff3b30;
+            color: #ffffff;
+
+            font-size: 10px;
+            font-weight: 800;
+            line-height: 1;
+
+            box-shadow:
+                0 0 0 2px rgba(255,255,255,0.03),
+                0 0 14px rgba(255,59,48,0.45);
+
+            flex-shrink: 0;
+
+            animation:
+                notificationPulse
+                1.8s
+                ease-in-out
+                infinite;
+        }
+
+        .notification-badge[hidden] {
+            display: none !important;
+        }
+
+        @keyframes notificationPulse {
+
+            0%,
+            100% {
+
+                transform: scale(1);
+
+                box-shadow:
+                    0 0 0 2px rgba(255,255,255,0.03),
+                    0 0 14px rgba(255,59,48,0.45);
+            }
+
+            50% {
+
+                transform: scale(1.08);
+
+                box-shadow:
+                    0 0 0 3px rgba(255,59,48,0.08),
+                    0 0 22px rgba(255,59,48,0.70);
+            }
+        }
+
+
+        /* =====================================================
+           REQUESTER PROFILE - LIST
+        ====================================================== */
+
+        .requester-profile-mini {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            margin:
+                0 0 16px;
+
+            padding:
+                10px 12px;
+
+            border:
+                1px solid rgba(0,242,254,0.10);
+
+            border-radius: 14px;
+
+            background:
+                rgba(0,242,254,0.025);
+
+            box-sizing: border-box;
+        }
+
+        .requester-profile-avatar {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            flex: 0 0 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,0.20),
+                    rgba(124,58,237,0.25)
+                );
+
+            border:
+                1px solid rgba(0,242,254,0.30);
+
+            color: #ffffff;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            box-shadow:
+                0 0 20px rgba(0,242,254,0.08);
+
+            flex-shrink: 0;
+        }
+
+        .requester-profile-avatar img {
+            width: 100%;
+            height: 100%;
+            display: block;
+
+            object-fit: cover;
+            object-position: center;
+
+            border-radius: 50%;
+        }
+
+        .requester-profile-details {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .requester-profile-details strong {
+            display: block;
+
+            color: #f5f7fb;
+
+            font-size: 13px;
+            font-weight: 800;
+
+            word-break: break-word;
+        }
+
+        .requester-profile-details span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #7f8aa0;
+
+            font-size: 11px;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           REQUESTER PROFILE - MODAL
+        ====================================================== */
+
+        .requester-profile-modal {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            margin-bottom: 22px;
+            padding: 16px;
+
+            border:
+                1px solid rgba(0,242,254,0.15);
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,0.055),
+                    rgba(124,58,237,0.045)
+                );
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,0.15);
+
+            box-sizing: border-box;
+        }
+
+        .requester-profile-modal-avatar {
+            width: 68px;
+            height: 68px;
+            min-width: 68px;
+            flex: 0 0 68px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+
+            border:
+                2px solid rgba(0,242,254,0.30);
+
+            box-shadow:
+                0 0 30px rgba(0,242,254,0.14);
+
+            color: #ffffff;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .requester-profile-modal-avatar img {
+            width: 100%;
+            height: 100%;
+            display: block;
+
+            object-fit: cover;
+            object-position: center;
+
+            border-radius: 50%;
+        }
+
+        .requester-profile-modal-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .requester-profile-modal-label {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #00f2fe;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .requester-profile-modal-info h3 {
+            margin: 0 0 4px;
+
+            color: #f5f7fb;
+
+            font-size: 20px;
+            font-weight: 800;
+
+            word-break: break-word;
+        }
+
+        .requester-profile-modal-info p {
+            margin: 0;
+
+            color: #8791a5;
+
+            font-size: 13px;
+
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           PROFILE IMAGE CLICK
+        ====================================================== */
+
+        .requester-profile-modal-avatar.has-image {
+            cursor: pointer;
+        }
+
+        .requester-profile-modal-avatar.has-image:hover {
+            transform: scale(1.03);
+
+            box-shadow:
+                0 0 0 3px rgba(0,242,254,0.08),
+                0 0 35px rgba(0,242,254,0.18);
+        }
+
+
+        /* =====================================================
+           PROFILE PHOTO PREVIEW
+        ====================================================== */
+
+        #requestProfileImagePreviewBackdrop {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 999999;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,0.88);
+
+            backdrop-filter:
+                blur(10px);
+
+            -webkit-backdrop-filter:
+                blur(10px);
+
+            opacity: 0;
+            visibility: hidden;
+
+            pointer-events: none;
+
+            transition:
+                opacity 0.22s ease,
+                visibility 0.22s ease;
+        }
+
+        #requestProfileImagePreviewBackdrop.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        #requestProfileImagePreviewCard {
+            position: relative;
+
+            width:
+                min(
+                    650px,
+                    calc(100vw - 40px)
+                );
+
+            max-width: 650px;
+
+            max-height:
+                calc(100dvh - 40px);
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 12px;
+
+            padding:
+                58px 20px 20px;
+
+            background: #101010;
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,0.65),
+                0 0 40px rgba(0,242,254,0.08);
+
+            overflow: hidden;
+
+            transform: scale(0.94);
+
+            transition:
+                transform 0.22s ease;
+        }
+
+        #requestProfileImagePreviewBackdrop.active
+        #requestProfileImagePreviewCard {
+            transform: scale(1);
+        }
+
+        #requestProfileImagePreview {
+            display: block;
+
+            max-width:
+                min(
+                    600px,
+                    calc(100vw - 80px)
+                );
+
+            max-height:
+                calc(100dvh - 150px);
+
+            width: auto;
+            height: auto;
+
+            object-fit: contain;
+
+            border-radius: 14px;
+
+            background: #080808;
+
+            border:
+                1px solid rgba(0,242,254,0.18);
+
+            box-shadow:
+                0 20px 60px rgba(0,0,0,0.55);
+        }
+
+        #requestProfileImagePreviewClose {
+            position: absolute;
+
+            top: 12px;
+            right: 12px;
+
+            width: 42px;
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0;
+
+            border:
+                1px solid rgba(255,255,255,0.18);
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,0,0,0.75);
+
+            color: #ffffff;
+
+            font-size: 28px;
+            line-height: 1;
+
+            cursor: pointer;
+        }
+
+        #requestProfileImagePreviewClose:hover {
+            background:
+                rgba(255,255,255,0.14);
+        }
+
+        #requestProfileImagePreviewName {
+            width: 100%;
+
+            padding:
+                0 10px;
+
+            color: #ffffff;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            text-align: center;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           GENERAL
+        ====================================================== */
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        button:not(:disabled) {
+            cursor: pointer;
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+
+            .status-update-row {
+                flex-direction: column;
+            }
+
+            .status-update-row select,
+            .send-response-btn {
+                width: 100%;
+            }
+
+            .notification-badge {
+                min-width: 19px;
+                height: 19px;
+
+                padding:
+                    0 5px;
+
+                font-size: 9px;
+            }
+
+            .requester-profile-modal {
+                gap: 12px;
+                padding: 13px;
+            }
+
+            .requester-profile-modal-avatar {
+                width: 56px;
+                height: 56px;
+                min-width: 56px;
+                flex-basis: 56px;
+            }
+
+            .requester-profile-modal-info h3 {
+                font-size: 17px;
+            }
+
+            .requester-profile-modal-info p {
+                font-size: 12px;
+            }
+
+            #requestProfileImagePreviewBackdrop {
+                padding: 10px;
+            }
+
+            #requestProfileImagePreviewCard {
+                width:
+                    calc(100vw - 20px);
+
+                max-height:
+                    calc(100dvh - 20px);
+
+                padding:
+                    56px 12px 14px;
+
+                border-radius: 18px;
+            }
+
+            #requestProfileImagePreview {
+                max-width:
+                    calc(100vw - 44px);
+
+                max-height:
+                    calc(100dvh - 105px);
+            }
+
+            #requestProfileImagePreviewClose {
+                top: 9px;
+                right: 9px;
+
+                width: 40px;
+                height: 40px;
+
+                font-size: 26px;
+            }
+
+            #requestProfileImagePreviewName {
+                font-size: 14px;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .requester-profile-modal-avatar {
+                width: 50px;
+                height: 50px;
+                min-width: 50px;
+                flex-basis: 50px;
+            }
+
+            .requester-profile-modal-info h3 {
+                font-size: 15px;
+            }
+
+            .requester-profile-modal-info p {
+                font-size: 11px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         MOBILE MENU BUTTON
+    ====================================================== -->
+
+    <button
+        type="button"
+        class="mobile-menu-button"
+        id="mobileMenuBtn"
+        aria-label="Open navigation menu"
+        aria-expanded="false"
+    >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+    </button>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside
+        class="admin-sidebar"
+        id="adminSidebar"
+    >
+
+        <a
+            href="admin.html"
+            class="admin-logo"
+        >
+
+            <span class="admin-logo-icon">
+                ⚡
+            </span>
+
+            <span class="admin-logo-text">
+                REQUEST MANAGEMENT
+            </span>
+
+        </a>
+
+
+        <nav class="admin-nav">
+
+
+            <!-- DASHBOARD -->
+
+            <a href="admin.html">
+
+                <span>▣</span>
+
+                <span class="nav-label">
+                    Dashboard
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-dashboard-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- PRODUCTS -->
+
+            <a href="admin-products.html">
+
+                <span>◈</span>
+
+                <span class="nav-label">
+                    Products
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-product-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- ORDERS -->
+
+            <a href="admin-orders.html">
+
+                <span>▤</span>
+
+                <span class="nav-label">
+                    Orders
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-order-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- CUSTOMER REQUESTS -->
+
+            <a
+                href="admin-requests.html"
+                class="active"
+            >
+
+                <span>✉</span>
+
+                <span class="nav-label">
+                    Customer Requests
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-request-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- USERS -->
+
+            <a href="admin-users.html">
+
+                <span>👥</span>
+
+                <span class="nav-label">
+                    Users
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-user-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- ADMIN REGISTRATIONS -->
+
+            <a href="admin-registrations.html">
+
+                <span>👤</span>
+
+                <span class="nav-label">
+                    Admin Registrations
+                </span>
+
+                <span
+                    class="notification-badge"
+                    data-admin-registration-count
+                    hidden
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- SETTINGS -->
+
+            <a href="admin-settings.html">
+
+                <span>⚙</span>
+
+                <span class="nav-label">
+                    Shop Settings
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <a
+                href="index.html"
+                class="view-store-btn"
+            >
+
+                <span>↗</span>
+
+                View Store
+
+            </a>
+
+
+            <button
+                type="button"
+                id="logoutBtn"
+                class="logout-btn"
+            >
+
+                <span>↪</span>
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         SIDEBAR OVERLAY
+    ====================================================== -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+    ></div>
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="admin-main">
+
+
+        <!-- =================================================
+             TOP BAR
+        ================================================== -->
+
+        <header class="admin-topbar">
+
+            <div>
+
+                <span class="page-label">
+                    CUSTOMER SUPPORT
+                </span>
+
+                <h1>
+                    Customer Requests
+                </h1>
+
+                <p>
+                    Manage customer concerns and support requests.
+                </p>
+
+            </div>
+
+
+            <div class="topbar-actions">
+
+                <button
+                    type="button"
+                    id="refreshBtn"
+                    class="refresh-btn"
+                >
+
+                    <span>
+                        ↻
+                    </span>
+
+                    Refresh
+
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="request-stats">
+
+
+            <!-- TOTAL -->
+
+            <div
+                class="stat-card active"
+                data-filter="all"
+                tabindex="0"
+                role="button"
+                aria-label="Show all requests"
+            >
+
+                <div class="stat-icon">
+                    ✉
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Requests
+                    </span>
+
+                    <strong id="totalRequests">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- NEW -->
+
+            <div
+                class="stat-card"
+                data-filter="New"
+                tabindex="0"
+                role="button"
+                aria-label="Show new requests"
+            >
+
+                <div class="stat-icon">
+                    !
+                </div>
+
+                <div>
+
+                    <span>
+                        New
+                    </span>
+
+                    <strong id="newRequests">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- IN PROGRESS -->
+
+            <div
+                class="stat-card"
+                data-filter="In Progress"
+                tabindex="0"
+                role="button"
+                aria-label="Show in progress requests"
+            >
+
+                <div class="stat-icon">
+                    ◷
+                </div>
+
+                <div>
+
+                    <span>
+                        In Progress
+                    </span>
+
+                    <strong id="progressRequests">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESOLVED -->
+
+            <div
+                class="stat-card"
+                data-filter="Resolved"
+                tabindex="0"
+                role="button"
+                aria-label="Show resolved requests"
+            >
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Resolved
+                    </span>
+
+                    <strong id="resolvedRequests">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- REJECTED -->
+
+            <div
+                class="stat-card"
+                data-filter="Rejected"
+                tabindex="0"
+                role="button"
+                aria-label="Show rejected requests"
+            >
+
+                <div class="stat-icon">
+                    ×
+                </div>
+
+                <div>
+
+                    <span>
+                        Rejected
+                    </span>
+
+                    <strong id="rejectedRequests">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REQUEST MANAGEMENT
+        ================================================== -->
+
+        <section class="request-panel">
+
+
+            <div class="panel-header">
+
+                <div>
+
+                    <span class="panel-label">
+                        SUPPORT CENTER
+                    </span>
+
+                    <h2>
+                        All Customer Requests
+                    </h2>
+
+                </div>
+
+
+                <div class="panel-count">
+
+                    <span id="visibleRequestCount">
+                        0
+                    </span>
+
+                    requests
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH + FILTER -->
+
+            <div class="request-toolbar">
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        ⌕
+                    </span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search name, email, order ID, or message..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="filter-box">
+
+                    <label for="statusFilter">
+                        Status
+                    </label>
+
+                    <select id="statusFilter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="New">
+                            New
+                        </option>
+
+                        <option value="In Progress">
+                            In Progress
+                        </option>
+
+                        <option value="Resolved">
+                            Resolved
+                        </option>
+
+                        <option value="Rejected">
+                            Rejected
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div
+                id="adminResult"
+                class="admin-result"
+                aria-live="polite"
+            ></div>
+
+
+            <!-- REQUEST LIST -->
+
+            <div
+                id="requestsList"
+                class="requests-list"
+            >
+
+                <div class="loading-state">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Loading customer requests...
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyState"
+                class="empty-state"
+                style="display: none;"
+            >
+
+                <div class="empty-icon">
+                    ✉
+                </div>
+
+                <h3>
+                    No Requests Found
+                </h3>
+
+                <p>
+                    There are no customer requests matching
+                    your current search or filter.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         REQUEST DETAILS MODAL
+    ====================================================== -->
+
+    <div
+        class="modal-overlay"
+        id="requestModal"
+    >
+
+        <div class="request-modal">
+
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <div>
+
+                    <span class="modal-label">
+                        REQUEST DETAILS
+                    </span>
+
+                    <h2>
+                        Customer Request
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="closeModalBtn"
+                    class="close-modal-btn"
+                    aria-label="Close request details"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- MODAL CONTENT -->
+
+            <div class="modal-content">
+
+
+                <!-- =================================================
+                     REQUESTER PROFILE
+                ================================================== -->
+
+                <div
+                    class="requester-profile-modal"
+                    id="requesterProfileModal"
+                >
+
+                    <div
+                        class="requester-profile-modal-avatar"
+                        id="requesterProfileModalAvatar"
+                        title="Click to view profile picture"
+                    >
+
+                        <span
+                            id="requesterProfileModalLetter"
+                        >
+                            ?
+                        </span>
+
+                        <img
+                            id="requesterProfileModalImage"
+                            src=""
+                            alt="Customer profile picture"
+                            style="display:none;"
+                        >
+
+                    </div>
+
+
+                    <div class="requester-profile-modal-info">
+
+                        <span class="requester-profile-modal-label">
+                            REQUESTER PROFILE
+                        </span>
+
+                        <h3
+                            id="requesterProfileModalName"
+                        >
+                            —
+                        </h3>
+
+                        <p
+                            id="requesterProfileModalEmail"
+                        >
+                            —
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOMER -->
+
+                <div class="detail-section">
+
+                    <span class="detail-label">
+                        CUSTOMER
+                    </span>
+
+
+                    <div class="detail-grid">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Full Name
+                            </span>
+
+                            <strong id="modalName">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Email
+                            </span>
+
+                            <strong id="modalEmail">
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUEST -->
+
+                <div class="detail-section">
+
+                    <span class="detail-label">
+                        REQUEST INFORMATION
+                    </span>
+
+
+                    <div class="detail-grid">
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Request Type
+                            </span>
+
+                            <strong id="modalRequestType">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Order ID
+                            </span>
+
+                            <strong id="modalOrderId">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Date Submitted
+                            </span>
+
+                            <strong id="modalDate">
+                                -
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail-item">
+
+                            <span>
+                                Current Status
+                            </span>
+
+                            <strong
+                                id="modalStatus"
+                                class="status-badge"
+                            >
+                                -
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CUSTOMER MESSAGE -->
+
+                <div class="detail-section">
+
+                    <span class="detail-label">
+                        CUSTOMER MESSAGE
+                    </span>
+
+                    <div
+                        id="modalMessage"
+                        class="customer-message"
+                    >
+                        -
+                    </div>
+
+                </div>
+
+
+                <!-- =================================================
+                     ADMIN RESPONSE
+                ================================================== -->
+
+                <div
+                    class="detail-section admin-response-section"
+                >
+
+                    <span class="detail-label">
+                        ADMIN RESPONSE
+                    </span>
+
+
+                    <div class="admin-response-box">
+
+                        <textarea
+                            id="modalAdminReply"
+                            placeholder="Write your response to the customer..."
+                            maxlength="5000"
+                        ></textarea>
+
+
+                        <div class="response-helper">
+
+                            This message will be visible
+                            to the customer together with
+                            the updated request status.
+
+                        </div>
+
+
+                        <div
+                            id="currentAdminReply"
+                            class="current-admin-reply"
+                            style="display: none;"
+                        >
+
+                            <span class="current-admin-reply-label">
+                                Previous Response
+                            </span>
+
+
+                            <div
+                                id="currentAdminReplyText"
+                                class="current-admin-reply-text"
+                            ></div>
+
+
+                            <span
+                                id="currentAdminReplyDate"
+                                class="current-admin-reply-date"
+                            ></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS UPDATE -->
+
+                <div class="detail-section">
+
+                    <span class="detail-label">
+                        UPDATE REQUEST
+                    </span>
+
+
+                    <div class="status-update-row">
+
+
+                        <select id="modalStatusSelect">
+
+                            <option value="New">
+                                New
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="Resolved">
+                                Resolved
+                            </option>
+
+                            <option value="Rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            id="updateStatusBtn"
+                            class="send-response-btn"
+                        >
+                            Send Response
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- MODAL FOOTER -->
+
+            <div class="modal-footer">
+
+
+                <button
+                    type="button"
+                    id="deleteRequestBtn"
+                    class="delete-request-btn"
+                >
+                    Delete Request
+                </button>
+
+
+                <button
+                    type="button"
+                    id="closeModalBtnBottom"
+                    class="cancel-btn"
+                >
+                    Close
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         PROFILE IMAGE PREVIEW
+    ====================================================== -->
+
+    <div
+        id="requestProfileImagePreviewBackdrop"
+        aria-hidden="true"
+    >
+
+        <div
+            id="requestProfileImagePreviewCard"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="requestProfileImagePreviewName"
+        >
+
+            <button
+                type="button"
+                id="requestProfileImagePreviewClose"
+                aria-label="Close profile picture"
+            >
+                ×
+            </button>
+
+
+            <img
+                id="requestProfileImagePreview"
+                src=""
+                alt="Customer profile picture"
+            >
+
+
+            <div id="requestProfileImagePreviewName">
+                Customer
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         ADMIN NOTIFICATIONS
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="js/admin-notifications.js?v=4"
+    ></script>
+
+
+    <!-- =====================================================
+         MAIN JAVASCRIPT
+    ====================================================== -->
+
+    <script
+        type="module"
+        src="js/admin-requests.js?v=4"
+    ></script>
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <script>
+
+        const mobileMenuBtn =
+            document.getElementById(
+                "mobileMenuBtn"
+            );
+
+        const adminSidebar =
+            document.getElementById(
+                "adminSidebar"
+            );
+
+        const sidebarOverlay =
+            document.getElementById(
+                "sidebarOverlay"
+            );
+
+
+        function openAdminSidebar() {
+
+            adminSidebar?.classList.add(
+                "open"
+            );
+
+            sidebarOverlay?.classList.add(
+                "open"
+            );
+
+            mobileMenuBtn?.classList.add(
+                "active"
+            );
+
+            mobileMenuBtn?.setAttribute(
+                "aria-expanded",
+                "true"
+            );
+
+            document.body.classList.add(
+                "sidebar-open"
+            );
+
+        }
+
+
+        function closeAdminSidebar() {
+
+            adminSidebar?.classList.remove(
+                "open"
+            );
+
+            sidebarOverlay?.classList.remove(
+                "open"
+            );
+
+            mobileMenuBtn?.classList.remove(
+                "active"
+            );
+
+            mobileMenuBtn?.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            document.body.classList.remove(
+                "sidebar-open"
+            );
+
+        }
+
+
+        mobileMenuBtn?.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    adminSidebar?.classList.contains(
+                        "open"
+                    )
+                ) {
+
+                    closeAdminSidebar();
+
+                } else {
+
+                    openAdminSidebar();
+
+                }
+
+            }
+        );
+
+
+        sidebarOverlay?.addEventListener(
+            "click",
+            closeAdminSidebar
+        );
+
+
+        adminSidebar
+            ?.querySelectorAll("a")
+            .forEach(
+                link => {
+
+                    link.addEventListener(
+                        "click",
+                        closeAdminSidebar
+                    );
+
+                }
+            );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    closeAdminSidebar();
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+    <!-- =====================================================
+         REQUESTER PROFILE SYSTEM
+    ====================================================== -->
+
+    <script type="module">
+
+        import {
+            supabase
+        } from "./js/supabase.js";
+
+
+        /* =====================================================
+           ELEMENTS
+        ====================================================== */
+
+        const requestsList =
+            document.getElementById(
+                "requestsList"
+            );
+
+
+        const modalEmail =
+            document.getElementById(
+                "modalEmail"
+            );
+
+
+        const modalName =
+            document.getElementById(
+                "modalName"
+            );
+
+
+        const profileModalAvatar =
+            document.getElementById(
+                "requesterProfileModalAvatar"
+            );
+
+
+        const profileModalLetter =
+            document.getElementById(
+                "requesterProfileModalLetter"
+            );
+
+
+        const profileModalImage =
+            document.getElementById(
+                "requesterProfileModalImage"
+            );
+
+
+        const profileModalName =
+            document.getElementById(
+                "requesterProfileModalName"
+            );
+
+
+        const profileModalEmail =
+            document.getElementById(
+                "requesterProfileModalEmail"
+            );
+
+
+        const profilePreviewBackdrop =
+            document.getElementById(
+                "requestProfileImagePreviewBackdrop"
+            );
+
+
+        const profilePreviewCard =
+            document.getElementById(
+                "requestProfileImagePreviewCard"
+            );
+
+
+        const profilePreviewImage =
+            document.getElementById(
+                "requestProfileImagePreview"
+            );
+
+
+        const profilePreviewName =
+            document.getElementById(
+                "requestProfileImagePreviewName"
+            );
+
+
+        const profilePreviewClose =
+            document.getElementById(
+                "requestProfileImagePreviewClose"
+            );
+
+
+        /* =====================================================
+           HELPERS
+        ====================================================== */
+
+        function escapeHTML(value) {
+
+            return String(
+                value ?? ""
+            )
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+
+        }
+
+
+        function normalizeEmail(value) {
+
+            return String(
+                value ?? ""
+            )
+                .trim()
+                .toLowerCase();
+
+        }
+
+
+        function getInitial(name, email) {
+
+            const cleanName =
+                String(
+                    name ?? ""
+                ).trim();
+
+
+            if (cleanName) {
+
+                return cleanName
+                    .charAt(0)
+                    .toUpperCase();
+
+            }
+
+
+            const cleanEmail =
+                String(
+                    email ?? ""
+                ).trim();
+
+
+            if (cleanEmail) {
+
+                return cleanEmail
+                    .charAt(0)
+                    .toUpperCase();
+
+            }
+
+
+            return "?";
+
+        }
+
+
+        /* =====================================================
+           FIND IMAGE FIELD
+        ====================================================== */
+
+        function getProfileImageValue(profile) {
+
+            if (!profile) {
+                return "";
+            }
+
+
+            const possibleFields = [
+
+                "avatar_url",
+                "avatar",
+                "profile_image_url",
+                "profile_image",
+                "profile_photo_url",
+                "profile_photo",
+                "profile_picture_url",
+                "profile_picture",
+                "image_url",
+                "image",
+                "photo_url",
+                "photo",
+                "picture_url",
+                "picture",
+                "user_avatar",
+                "user_photo"
+
+            ];
+
+
+            for (
+                const field
+                of possibleFields
+            ) {
+
+                const value =
+                    profile[field];
+
+
+                if (
+                    typeof value === "string" &&
+                    value.trim() !== ""
+                ) {
+
+                    return value.trim();
+
+                }
+
+            }
+
+
+            return "";
+
+        }
+
+
+        /* =====================================================
+           PROFILE NAME
+        ====================================================== */
+
+        function getProfileName(
+            profile,
+            fallbackName,
+            fallbackEmail
+        ) {
+
+            if (profile) {
+
+                const possibleNames = [
+
+                    profile.full_name,
+                    profile.name,
+                    profile.display_name,
+                    profile.username,
+                    profile.first_name &&
+                    profile.last_name
+                        ? `${profile.first_name} ${profile.last_name}`
+                        : "",
+                    profile.first_name
+
+                ];
+
+
+                for (
+                    const name
+                    of possibleNames
+                ) {
+
+                    if (
+                        typeof name === "string" &&
+                        name.trim() !== ""
+                    ) {
+
+                        return name.trim();
+
+                    }
+
+                }
+
+            }
+
+
+            if (
+                fallbackName &&
+                String(fallbackName).trim()
+            ) {
+
+                return String(
+                    fallbackName
+                ).trim();
+
+            }
+
+
+            if (
+                fallbackEmail &&
+                String(fallbackEmail).trim()
+            ) {
+
+                return String(
+                    fallbackEmail
+                ).split("@")[0];
+
+            }
+
+
+            return "Customer";
+
+        }
+
+
+        /* =====================================================
+           PROFILE EMAIL
+        ====================================================== */
+
+        function getProfileEmail(
+            profile,
+            fallbackEmail
+        ) {
+
+            if (profile) {
+
+                const possibleEmails = [
+
+                    profile.email,
+                    profile.user_email,
+                    profile.customer_email
+
+                ];
+
+
+                for (
+                    const email
+                    of possibleEmails
+                ) {
+
+                    if (
+                        typeof email === "string" &&
+                        email.trim() !== ""
+                    ) {
+
+                        return email.trim();
+
+                    }
+
+                }
+
+            }
+
+
+            return String(
+                fallbackEmail ?? ""
+            ).trim();
+
+        }
+
+
+        /* =====================================================
+           PROFILE RECORD LOADER
+        ====================================================== */
+
+        async function findProfileByEmail(
+            email
+        ) {
+
+            const normalizedEmail =
+                normalizeEmail(
+                    email
+                );
+
+
+            if (!normalizedEmail) {
+
+                return null;
+
+            }
+
+
+            const tableNames = [
+
+                "profiles",
+                "customer_profiles",
+                "user_profiles",
+                "customers"
+
+            ];
+
+
+            for (
+                const tableName
+                of tableNames
+            ) {
+
+                try {
+
+                    const {
+                        data,
+                        error
+                    } = await supabase
+                        .from(tableName)
+                        .select("*")
+                        .limit(500);
+
+
+                    if (error) {
+
+                        console.warn(
+                            `Profile lookup skipped for ${tableName}:`,
+                            error.message
+                        );
+
+                        continue;
+
+                    }
+
+
+                    const rows =
+                        Array.isArray(data)
+                            ? data
+                            : [];
+
+
+                    const match =
+                        rows.find(
+                            row => {
+
+                                const possibleEmails = [
+
+                                    row.email,
+                                    row.user_email,
+                                    row.customer_email
+
+                                ]
+                                    .filter(
+                                        Boolean
+                                    )
+                                    .map(
+                                        value =>
+                                            normalizeEmail(
+                                                value
+                                            )
+                                    );
+
+
+                                return possibleEmails.includes(
+                                    normalizedEmail
+                                );
+
+                            }
+                        );
+
+
+                    if (match) {
+
+                        return match;
+
+                    }
+
+                } catch (error) {
+
+                    console.warn(
+                        `Profile lookup error for ${tableName}:`,
+                        error
+                    );
+
+                }
+
+            }
+
+
+            return null;
+
+        }
+
+
+        /* =====================================================
+           STORAGE PATH → URL
+        ====================================================== */
+
+        function buildImageCandidates(
+            rawValue
+        ) {
+
+            const value =
+                String(
+                    rawValue ?? ""
+                ).trim();
+
+
+            if (!value) {
+
+                return [];
+
+            }
+
+
+            if (
+                value.startsWith(
+                    "http://"
+                ) ||
+                value.startsWith(
+                    "https://"
+                ) ||
+                value.startsWith(
+                    "data:image/"
+                ) ||
+                value.startsWith(
+                    "blob:"
+                )
+            ) {
+
+                return [value];
+
+            }
+
+
+            const cleanPath =
+                value.replace(
+                    /^\/+/,
+                    ""
+                );
+
+
+            const candidates = [];
+
+
+            const buckets = [
+
+                "avatars",
+                "profile-images",
+                "profile-photos",
+                "profiles",
+                "customer-profiles"
+
+            ];
+
+
+            /*
+             * Direct URL through common public buckets.
+             */
+
+            buckets.forEach(
+                bucketName => {
+
+                    try {
+
+                        const {
+                            data
+                        } =
+                            supabase
+                                .storage
+                                .from(
+                                    bucketName
+                                )
+                                .getPublicUrl(
+                                    cleanPath
+                                );
+
+
+                        if (
+                            data?.publicUrl
+                        ) {
+
+                            candidates.push(
+                                data.publicUrl
+                            );
+
+                        }
+
+                    } catch (error) {
+
+                        console.warn(
+                            "Storage URL error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /*
+             * The original value is also attempted.
+             */
+
+            candidates.push(
+                value
+            );
+
+
+            return [
+                ...new Set(
+                    candidates
+                )
+            ];
+
+        }
+
+
+        /* =====================================================
+           APPLY PROFILE TO MODAL
+        ====================================================== */
+
+        async function loadRequesterModalProfile() {
+
+            const email =
+                modalEmail
+                    ?.textContent
+                    ?.trim();
+
+
+            const name =
+                modalName
+                    ?.textContent
+                    ?.trim();
+
+
+            if (
+                !email ||
+                email === "-"
+            ) {
+
+                profileModalName.textContent =
+                    name || "Customer";
+
+                profileModalEmail.textContent =
+                    email || "—";
+
+                profileModalLetter.textContent =
+                    getInitial(
+                        name,
+                        email
+                    );
+
+                return;
+
+            }
+
+
+            profileModalName.textContent =
+                name || "Customer";
+
+
+            profileModalEmail.textContent =
+                email;
+
+
+            profileModalLetter.textContent =
+                getInitial(
+                    name,
+                    email
+                );
+
+
+            profileModalImage.style.display =
+                "none";
+
+
+            profileModalImage.src =
+                "";
+
+
+            profileModalAvatar.classList.remove(
+                "has-image"
+            );
+
+
+            const profile =
+                await findProfileByEmail(
+                    email
+                );
+
+
+            if (!profile) {
+
+                return;
+
+            }
+
+
+            const profileName =
+                getProfileName(
+                    profile,
+                    name,
+                    email
+                );
+
+
+            const profileEmail =
+                getProfileEmail(
+                    profile,
+                    email
+                );
+
+
+            const imageValue =
+                getProfileImageValue(
+                    profile
+                );
+
+
+            profileModalName.textContent =
+                profileName;
+
+
+            profileModalEmail.textContent =
+                profileEmail;
+
+
+            profileModalLetter.textContent =
+                getInitial(
+                    profileName,
+                    profileEmail
+                );
+
+
+            if (!imageValue) {
+
+                return;
+
+            }
+
+
+            const candidates =
+                buildImageCandidates(
+                    imageValue
+                );
+
+
+            if (
+                candidates.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            let currentIndex = 0;
+
+
+            const tryNextImage =
+                () => {
+
+                    if (
+                        currentIndex >=
+                        candidates.length
+                    ) {
+
+                        profileModalImage.style.display =
+                            "none";
+
+                        profileModalAvatar.classList.remove(
+                            "has-image"
+                        );
+
+                        return;
+
+                    }
+
+
+                    const candidate =
+                        candidates[
+                            currentIndex
+                        ];
+
+
+                    currentIndex++;
+
+
+                    profileModalImage.onload =
+                        () => {
+
+                            profileModalImage.style.display =
+                                "block";
+
+                            profileModalAvatar.classList.add(
+                                "has-image"
+                            );
+
+                        };
+
+
+                    profileModalImage.onerror =
+                        () => {
+
+                            profileModalImage.style.display =
+                                "none";
+
+                            profileModalAvatar.classList.remove(
+                                "has-image"
+                            );
+
+                            tryNextImage();
+
+                        };
+
+
+                    profileModalImage.src =
+                        candidate;
+
+                };
+
+
+            tryNextImage();
+
+        }
+
+
+        /* =====================================================
+           EXTRACT EMAIL FROM REQUEST CARD
+        ====================================================== */
+
+        function extractEmailFromElement(
+            element
+        ) {
+
+            if (!element) {
+
+                return "";
+
+            }
+
+
+            const directEmail =
+                element.querySelector(
+                    "[data-email]"
+                )
+                    ?.getAttribute(
+                        "data-email"
+                    );
+
+
+            if (directEmail) {
+
+                return directEmail;
+
+            }
+
+
+            const text =
+                element.textContent || "";
+
+
+            const match =
+                text.match(
+                    /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i
+                );
+
+
+            return match
+                ? match[0]
+                : "";
+
+        }
+
+
+        /* =====================================================
+           DECORATE REQUEST CARD
+        ====================================================== */
+
+        async function decorateRequestCard(
+            card
+        ) {
+
+            if (!card) {
+                return;
+            }
+
+
+            const email =
+                extractEmailFromElement(
+                    card
+                );
+
+
+            if (!email) {
+
+                return;
+
+            }
+
+
+            /*
+             * Avoid creating multiple profile boxes.
+             */
+
+            let profileBox =
+                card.querySelector(
+                    ".requester-profile-mini"
+                );
+
+
+            if (!profileBox) {
+
+                profileBox =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                profileBox.className =
+                    "requester-profile-mini";
+
+
+                profileBox.innerHTML = `
+
+                    <div
+                        class="requester-profile-avatar"
+                        data-requester-mini-avatar
+                    >
+
+                        <span
+                            data-requester-mini-letter
+                        >
+                            ?
+                        </span>
+
+                        <img
+                            src=""
+                            alt="Customer profile picture"
+                            style="display:none;"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="requester-profile-details"
+                    >
+
+                        <strong
+                            data-requester-mini-name
+                        >
+                            Customer
+                        </strong>
+
+                        <span
+                            data-requester-mini-email
+                        >
+                            ${escapeHTML(email)}
+                        </span>
+
+                    </div>
+
+                `;
+
+
+                /*
+                 * Put profile at the beginning
+                 * without destroying existing card HTML.
+                 */
+
+                card.prepend(
+                    profileBox
+                );
+
+            }
+
+
+            const miniAvatar =
+                profileBox.querySelector(
+                    "[data-requester-mini-avatar]"
+                );
+
+
+            const miniLetter =
+                profileBox.querySelector(
+                    "[data-requester-mini-letter]"
+                );
+
+
+            const miniImage =
+                profileBox.querySelector(
+                    "img"
+                );
+
+
+            const miniName =
+                profileBox.querySelector(
+                    "[data-requester-mini-name]"
+                );
+
+
+            const miniEmail =
+                profileBox.querySelector(
+                    "[data-requester-mini-email]"
+                );
+
+
+            miniLetter.textContent =
+                getInitial(
+                    "",
+                    email
+                );
+
+
+            if (miniEmail) {
+
+                miniEmail.textContent =
+                    email;
+
+            }
+
+
+            const profile =
+                await findProfileByEmail(
+                    email
+                );
+
+
+            if (!profile) {
+
+                return;
+
+            }
+
+
+            const name =
+                getProfileName(
+                    profile,
+                    "",
+                    email
+                );
+
+
+            const profileEmail =
+                getProfileEmail(
+                    profile,
+                    email
+                );
+
+
+            const imageValue =
+                getProfileImageValue(
+                    profile
+                );
+
+
+            if (miniName) {
+
+                miniName.textContent =
+                    name;
+
+            }
+
+
+            if (miniEmail) {
+
+                miniEmail.textContent =
+                    profileEmail;
+
+            }
+
+
+            if (miniLetter) {
+
+                miniLetter.textContent =
+                    getInitial(
+                        name,
+                        profileEmail
+                    );
+
+            }
+
+
+            if (!imageValue) {
+
+                return;
+
+            }
+
+
+            const candidates =
+                buildImageCandidates(
+                    imageValue
+                );
+
+
+            let index = 0;
+
+
+            const tryNext =
+                () => {
+
+                    if (
+                        index >=
+                        candidates.length
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const candidate =
+                        candidates[
+                            index
+                        ];
+
+
+                    index++;
+
+
+                    miniImage.onload =
+                        () => {
+
+                            miniImage.style.display =
+                                "block";
+
+                            miniLetter.style.display =
+                                "none";
+
+                            miniAvatar.classList.add(
+                                "has-image"
+                            );
+
+                        };
+
+
+                    miniImage.onerror =
+                        () => {
+
+                            miniImage.style.display =
+                                "none";
+
+                            miniLetter.style.display =
+                                "flex";
+
+                            miniAvatar.classList.remove(
+                                "has-image"
+                            );
+
+                            tryNext();
+
+                        };
+
+
+                    miniImage.src =
+                        candidate;
+
+                };
+
+
+            tryNext();
+
+        }
+
+
+        /* =====================================================
+           DECORATE ALL VISIBLE REQUESTS
+        ====================================================== */
+
+        async function decorateAllRequests() {
+
+            if (!requestsList) {
+                return;
+            }
+
+
+            const cards = [
+                ...requestsList.children
+            ];
+
+
+            for (
+                const card
+                of cards
+            ) {
+
+                if (
+                    card.classList.contains(
+                        "loading-state"
+                    )
+                ) {
+
+                    continue;
+
+                }
+
+
+                if (
+                    card.classList.contains(
+                        "empty-state"
+                    )
+                ) {
+
+                    continue;
+
+                }
+
+
+                await decorateRequestCard(
+                    card
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           WATCH REQUEST LIST
+        ====================================================== */
+
+        let observerTimer = null;
+
+
+        const requestObserver =
+            new MutationObserver(
+                () => {
+
+                    clearTimeout(
+                        observerTimer
+                    );
+
+
+                    observerTimer =
+                        setTimeout(
+                            () => {
+
+                                decorateAllRequests();
+
+                            },
+                            250
+                        );
+
+                }
+            );
+
+
+        if (requestsList) {
+
+            requestObserver.observe(
+                requestsList,
+                {
+                    childList: true,
+                    subtree: true
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           WATCH MODAL EMAIL / NAME
+        ====================================================== */
+
+        const modalObserver =
+            new MutationObserver(
+                () => {
+
+                    clearTimeout(
+                        window.requestProfileModalTimer
+                    );
+
+
+                    window.requestProfileModalTimer =
+                        setTimeout(
+                            () => {
+
+                                loadRequesterModalProfile();
+
+                            },
+                            100
+                        );
+
+                }
+            );
+
+
+        if (modalEmail) {
+
+            modalObserver.observe(
+                modalEmail,
+                {
+                    childList: true,
+                    subtree: true,
+                    characterData: true
+                }
+            );
+
+        }
+
+
+        if (modalName) {
+
+            modalObserver.observe(
+                modalName,
+                {
+                    childList: true,
+                    subtree: true,
+                    characterData: true
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           MODAL OPEN WATCHER
+        ====================================================== */
+
+        const requestModal =
+            document.getElementById(
+                "requestModal"
+            );
+
+
+        if (requestModal) {
+
+            const requestModalObserver =
+                new MutationObserver(
+                    () => {
+
+                        const isVisible =
+                            getComputedStyle(
+                                requestModal
+                            ).display !== "none";
+
+
+                        if (isVisible) {
+
+                            setTimeout(
+                                () => {
+
+                                    loadRequesterModalProfile();
+
+                                },
+                                120
+                            );
+
+                        }
+
+                    }
+                );
+
+
+            requestModalObserver.observe(
+                requestModal,
+                {
+                    attributes: true,
+                    attributeFilter: [
+                        "class",
+                        "style"
+                    ]
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           PROFILE PHOTO PREVIEW
+        ====================================================== */
+
+        function openProfilePreview() {
+
+            const imageUrl =
+                profileModalImage?.src;
+
+
+            if (
+                !imageUrl ||
+                imageUrl ===
+                window.location.href
+            ) {
+
+                return;
+
+            }
+
+
+            profilePreviewImage.src =
+                imageUrl;
+
+
+            profilePreviewName.textContent =
+                profileModalName?.textContent?.trim() ||
+                "Customer";
+
+
+            profilePreviewBackdrop.classList.add(
+                "active"
+            );
+
+
+            profilePreviewBackdrop.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            document.body.style.overflow =
+                "hidden";
+
+        }
+
+
+        function closeProfilePreview() {
+
+            profilePreviewBackdrop.classList.remove(
+                "active"
+            );
+
+
+            profilePreviewBackdrop.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            document.body.style.overflow =
+                "";
+
+
+            setTimeout(
+                () => {
+
+                    if (
+                        !profilePreviewBackdrop.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        profilePreviewImage.src =
+                            "";
+
+                    }
+
+                },
+                220
+            );
+
+        }
+
+
+        profileModalAvatar?.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    profileModalAvatar.classList.contains(
+                        "has-image"
+                    )
+                ) {
+
+                    openProfilePreview();
+
+                }
+
+            }
+        );
+
+
+        profilePreviewClose?.addEventListener(
+            "click",
+            closeProfilePreview
+        );
+
+
+        profilePreviewBackdrop?.addEventListener(
+            "click",
+            event => {
+
+                if (
+                    event.target ===
+                    profilePreviewBackdrop
+                ) {
+
+                    closeProfilePreview();
+
+                }
+
+            }
+        );
+
+
+        profilePreviewCard?.addEventListener(
+            "click",
+            event => {
+
+                event.stopPropagation();
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key === "Escape"
+                ) {
+
+                    if (
+                        profilePreviewBackdrop?.classList.contains(
+                            "active"
+                        )
+                    ) {
+
+                        closeProfilePreview();
+
+                    }
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+           INITIAL LOAD
+        ====================================================== */
+
+        setTimeout(
+            () => {
+
+                decorateAllRequests();
+                loadRequesterModalProfile();
+
+            },
+            800
+        );
+
+
+        /* =====================================================
+           REFRESH
+        ====================================================== */
+
+        const refreshBtn =
+            document.getElementById(
+                "refreshBtn"
+            );
+
+
+        refreshBtn?.addEventListener(
+            "click",
+            () => {
+
+                setTimeout(
+                    () => {
+
+                        decorateAllRequests();
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           REALTIME REFRESH
+        ====================================================== */
+
+        const profileRequestChannel =
+            supabase
+                .channel(
+                    "admin-request-profiles"
+                )
+                .on(
+                    "postgres_changes",
+                    {
+                        event: "*",
+                        schema: "public",
+                        table: "requests"
+                    },
+                    () => {
+
+                        setTimeout(
+                            () => {
+
+                                decorateAllRequests();
+
+                            },
+                            500
+                        );
+
+                    }
+                )
+                .subscribe();
+
+
+        /* =====================================================
+           CLEANUP
+        ====================================================== */
+
+        window.addEventListener(
+            "beforeunload",
+            () => {
+
+                requestObserver.disconnect();
+
+                modalObserver.disconnect();
+
+                supabase.removeChannel(
+                    profileRequestChannel
+                );
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,3366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Admin Orders | Business Store</title>
+
+<script
+    type="module"
+    src="./js/admin-guard.js"
+></script>
+
+<link
+    rel="stylesheet"
+    href="css/style.css"
+>
+
+<link
+    rel="stylesheet"
+    href="css/admin-orders.css"
+>
+
+<style>
+
+/* =========================================================
+   NAVIGATION NOTIFICATION BADGES
+========================================================= */
+
+.admin-nav a {
+    position: relative;
+}
+
+.notification-badge {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    margin-left: auto;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 999px;
+    background: #ff304f;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    box-shadow:
+        0 0 0 2px rgba(255, 48, 79, 0.08),
+        0 5px 15px rgba(255, 48, 79, 0.30);
+    animation: notificationPulse 2s infinite;
+    flex-shrink: 0;
+}
+
+.notification-badge[hidden] {
+    display: none !important;
+}
+
+.notification-badge.has-notification {
+    display: inline-flex !important;
+}
+
+@keyframes notificationPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+
+}
+
+
+/* =========================================================
+   CHAT NAVIGATION
+========================================================= */
+
+.admin-chat-nav-link {
+    position: relative;
+}
+
+.admin-chat-nav-link .nav-chat-icon {
+    width: 24px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.admin-chat-nav-link .chat-notification-badge {
+    margin-left: auto;
+}
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.logout-btn {
+    width: 100%;
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    padding: 12px 15px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.035);
+    color: #8d97aa;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.logout-btn span {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: rgba(255, 48, 79, 0.08);
+    color: #ff5c70;
+    font-size: 16px;
+    font-weight: 800;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.logout-btn:hover {
+    background: rgba(255, 48, 79, 0.08);
+    border-color: rgba(255, 48, 79, 0.24);
+    color: #ffffff;
+    transform: translateY(-1px);
+    box-shadow:
+        0 8px 24px rgba(255, 48, 79, 0.10);
+}
+
+.logout-btn:hover span {
+    background: rgba(255, 48, 79, 0.16);
+    color: #ff304f;
+    transform: translateX(2px);
+}
+
+.logout-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+.logout-btn:focus-visible {
+    outline: 2px solid #ff304f;
+    outline-offset: 3px;
+}
+
+.logout-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   CUSTOMER PROFILE
+========================================================= */
+
+.customer-profile-box {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 242, 254, 0.14);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.025);
+    box-sizing: border-box;
+}
+
+.customer-profile-avatar {
+    width: 62px;
+    height: 62px;
+    min-width: 62px;
+    flex: 0 0 62px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 242, 254, 0.18),
+            rgba(124, 58, 237, 0.22)
+        );
+    border: 2px solid rgba(0, 242, 254, 0.35);
+    box-shadow:
+        0 0 25px rgba(0, 242, 254, 0.12);
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.customer-profile-avatar:hover {
+    transform: scale(1.05);
+    box-shadow:
+        0 0 0 3px rgba(0, 242, 254, 0.12),
+        0 0 35px rgba(0, 242, 254, 0.22);
+}
+
+.customer-profile-avatar:active {
+    transform: scale(0.97);
+}
+
+.customer-profile-avatar:focus-visible {
+    outline: 2px solid #00f2fe;
+    outline-offset: 3px;
+}
+
+.customer-profile-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 50%;
+}
+
+.customer-profile-avatar.has-image img {
+    display: block !important;
+}
+
+.customer-profile-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 22px;
+    font-weight: 800;
+    color: #f5f7fb;
+    text-transform: uppercase;
+}
+
+.customer-profile-avatar.has-image .customer-profile-letter {
+    display: none;
+}
+
+.customer-profile-details {
+    min-width: 0;
+    flex: 1;
+}
+
+.customer-profile-details .customer-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #8d97aa;
+}
+
+.customer-profile-details h3 {
+    margin: 0 0 5px;
+    font-size: 20px;
+    font-weight: 800;
+    color: #f5f7fb;
+    word-break: break-word;
+}
+
+.customer-profile-details p {
+    margin: 0;
+    color: #8d97aa;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.customer-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 9px;
+    padding: 5px 10px;
+    border-radius: 999px;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.15);
+    color: #00f2fe;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CUSTOMER TABLE
+========================================================= */
+
+.customer-table-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.customer-table-avatar {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    flex: 0 0 34px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        linear-gradient(
+            135deg,
+            #00f2fe,
+            #7c3aed
+        );
+    border: 1px solid rgba(0, 242, 254, 0.35);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.customer-table-avatar:hover {
+    transform: scale(1.06);
+    box-shadow:
+        0 0 0 3px rgba(0, 242, 254, 0.10),
+        0 0 20px rgba(0, 242, 254, 0.18);
+}
+
+.customer-table-avatar:active {
+    transform: scale(0.95);
+}
+
+.customer-table-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 50%;
+}
+
+.customer-table-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.customer-table-info strong {
+    color: #f5f7fb;
+    font-size: 13px;
+    word-break: break-word;
+}
+
+.customer-table-info span {
+    color: #8d97aa;
+    font-size: 11px;
+    margin-top: 2px;
+    word-break: break-word;
+}
+
+
+/* =========================================================
+   CUSTOMER NOTES & ORDER ITEMS TABLE
+========================================================= */
+
+.customer-notes-box {
+    margin-top: 15px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.customer-notes-box span {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8d97aa;
+    margin-bottom: 6px;
+}
+
+.customer-notes-box p {
+    margin: 0;
+    color: #f5f7fb;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.order-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.order-items-table th,
+.order-items-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    color: #f5f7fb;
+    font-size: 13px;
+}
+
+.order-items-table th {
+    color: #8d97aa;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.order-item-img {
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* =========================================================
+   PAYMENT PROOF
+========================================================= */
+
+.payment-proof-container {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid rgba(0, 242, 254, 0.12);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.025);
+    box-sizing: border-box;
+}
+
+.payment-proof-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.payment-proof-header h3 {
+    margin: 0;
+    color: #f5f7fb;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.payment-proof-preview {
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.payment-proof-preview img {
+    display: block;
+    max-width: 100%;
+    max-height: 500px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 242, 254, 0.15);
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+.payment-proof-message {
+    color: #8d97aa;
+    font-size: 13px;
+    text-align: center;
+}
+
+
+/* =========================================================
+   LALAMOVE
+========================================================= */
+
+.lalamove-tracking-container {
+    margin-top: 20px;
+    padding: 18px;
+    border: 1px solid rgba(124, 58, 237, 0.22);
+    border-radius: 16px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 58, 237, 0.055),
+            rgba(0, 242, 254, 0.025)
+        );
+    box-sizing: border-box;
+}
+
+.lalamove-tracking-header {
+    margin-bottom: 14px;
+}
+
+.lalamove-tracking-header h3 {
+    margin: 0 0 6px;
+    color: #f5f7fb;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.lalamove-tracking-header p {
+    margin: 0;
+    color: #8d97aa;
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+.lalamove-tracking-form {
+    display: flex;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.lalamove-tracking-input {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    padding: 0 13px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: 10px;
+    outline: none;
+    background: rgba(0, 0, 0, 0.25);
+    color: #f5f7fb;
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.lalamove-tracking-input::placeholder {
+    color: #687386;
+}
+
+.lalamove-tracking-input:focus {
+    border-color: rgba(0, 242, 254, 0.45);
+    box-shadow:
+        0 0 0 3px rgba(0, 242, 254, 0.08);
+}
+
+.lalamove-tracking-save {
+    min-width: 125px;
+    height: 46px;
+    padding: 0 16px;
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    border-radius: 10px;
+    background: rgba(0, 242, 254, 0.08);
+    color: #00f2fe;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.lalamove-tracking-result {
+    min-height: 18px;
+    margin-top: 9px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.lalamove-tracking-result.success {
+    color: #43e97b;
+}
+
+.lalamove-tracking-result.error {
+    color: #ff5c70;
+}
+
+.lalamove-tracking-open {
+    display: none;
+    width: 100%;
+    min-height: 42px;
+    margin-top: 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-sizing: border-box;
+    border: 1px solid rgba(124, 58, 237, 0.30);
+    border-radius: 10px;
+    background: rgba(124, 58, 237, 0.10);
+    color: #c4a7ff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.lalamove-tracking-open.visible {
+    display: flex;
+}
+
+
+/* =========================================================
+   GENERAL
+========================================================= */
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+button:not(:disabled) {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.orders-stats {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.orders-stats .order-stat-card {
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+.orders-stats .order-stat-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 242, 254, 0.28);
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.22),
+        0 0 25px rgba(0, 242, 254, 0.08);
+}
+
+.orders-stats .order-stat-card:focus-visible {
+    outline: 2px solid #00f2fe;
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   DELIVERY
+========================================================= */
+
+.admin-delivery-info {
+    margin-top: 18px;
+    padding: 16px;
+    border:
+        1px solid rgba(0, 242, 254, 0.12);
+    border-radius: 16px;
+    background:
+        rgba(0, 242, 254, 0.025);
+    box-sizing: border-box;
+}
+
+.admin-delivery-info-title {
+    margin-bottom: 14px;
+    color: #f5f7fb;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.admin-delivery-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.admin-delivery-item {
+    padding: 12px;
+    border-radius: 12px;
+    background:
+        rgba(255, 255, 255, 0.025);
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.admin-delivery-item.full {
+    grid-column: 1 / -1;
+}
+
+.admin-delivery-item span {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8d97aa;
+}
+
+.admin-delivery-item strong {
+    display: block;
+    color: #f5f7fb;
+    font-size: 13px;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.admin-delivery-fee {
+    color: #00f2fe !important;
+}
+
+
+/* =========================================================
+   PROFILE PHOTO
+========================================================= */
+
+body.photo-preview-open {
+    overflow: hidden !important;
+    height: 100%;
+    touch-action: none;
+}
+
+#profilePhotoBackdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    margin: 0 !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: rgba(0, 0, 0, 0.88) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 999999 !important;
+    overflow: auto !important;
+    overscroll-behavior: contain;
+    isolation: isolate;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease;
+}
+
+#profilePhotoBackdrop.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#profilePhotoBackdrop[hidden] {
+    display: none !important;
+}
+
+#profilePhotoPreview {
+    position: relative !important;
+    width: min(
+        650px,
+        calc(100vw - 40px)
+    ) !important;
+    max-width: 650px !important;
+    max-height: calc(100dvh - 40px) !important;
+    margin: 0 auto !important;
+    padding: 58px 20px 20px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    background: #101010 !important;
+    border:
+        1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 20px !important;
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.65),
+        0 0 40px rgba(0, 242, 254, 0.08) !important;
+    overflow: hidden !important;
+    transform: scale(0.94);
+    transition:
+        transform 0.22s ease;
+    flex-shrink: 0 !important;
+}
+
+#profilePhotoBackdrop.active #profilePhotoPreview {
+    transform: scale(1);
+}
+
+#profilePhotoPreview[hidden] {
+    display: none !important;
+}
+
+#profilePhotoPreviewImage {
+    display: block !important;
+    width: auto !important;
+    height: auto !important;
+    max-width:
+        min(
+            600px,
+            calc(100vw - 80px)
+        ) !important;
+    max-height:
+        calc(100dvh - 150px) !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    margin: 0 auto !important;
+    border-radius: 14px !important;
+    background: #080808 !important;
+    border:
+        1px solid rgba(0, 242, 254, 0.18) !important;
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.55) !important;
+}
+
+#profilePhotoClose {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border:
+        1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.75) !important;
+    color: #ffffff !important;
+    font-size: 28px !important;
+    line-height: 1 !important;
+    cursor: pointer !important;
+    z-index: 20 !important;
+}
+
+#profilePhotoPreviewName {
+    width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-align: center !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .orders-stats {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .customer-profile-box {
+        gap: 13px;
+        padding: 14px;
+    }
+
+    .customer-profile-avatar {
+        width: 54px;
+        height: 54px;
+        min-width: 54px;
+        flex-basis: 54px;
+    }
+
+    .customer-profile-details h3 {
+        font-size: 17px;
+    }
+
+    .customer-profile-details p {
+        font-size: 12px;
+    }
+
+    .customer-table-avatar {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        flex-basis: 32px;
+    }
+
+    .orders-stats {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .admin-delivery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-delivery-item.full {
+        grid-column: auto;
+    }
+
+    .lalamove-tracking-form {
+        flex-direction: column;
+    }
+
+    .lalamove-tracking-save {
+        width: 100%;
+    }
+
+    #profilePhotoBackdrop {
+        padding: 10px !important;
+    }
+
+    #profilePhotoPreview {
+        width: calc(100vw - 20px) !important;
+        max-width: 560px !important;
+        max-height: calc(100dvh - 20px) !important;
+        padding: 56px 12px 14px !important;
+    }
+
+    #profilePhotoPreviewImage {
+        max-width: calc(100vw - 44px) !important;
+        max-height: calc(100dvh - 105px) !important;
+    }
+
+}
+
+@media (max-width: 480px) {
+
+    .orders-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .customer-profile-avatar {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        flex-basis: 48px;
+    }
+
+    .customer-table-avatar {
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        flex-basis: 30px;
+    }
+
+}
+
+
+/* =========================================================
+   USERS NAV BUTTON
+========================================================= */
+
+.admin-users-nav-link {
+    position: relative;
+}
+
+.admin-users-nav-link .nav-users-icon {
+    width: 24px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.admin-users-nav-link .users-notification-badge {
+    margin-left: auto;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="page-glow glow-one"></div>
+<div class="page-glow glow-two"></div>
+
+
+<!-- =========================================================
+     ADMIN SIDEBAR
+========================================================= -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+    <a
+        href="admin.html"
+        class="admin-logo"
+    >
+
+        <div class="admin-logo-icon">
+            ⚡
+        </div>
+
+        <div class="admin-logo-text">
+            BUSINESS STORE
+        </div>
+
+    </a>
+
+
+    <nav class="admin-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a href="admin.html">
+
+            <span>▦</span>
+
+            <span>
+                Dashboard
+            </span>
+
+            <span
+                class="notification-badge"
+                data-dashboard-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- PRODUCTS -->
+
+        <a href="admin-products.html">
+
+            <span>▣</span>
+
+            <span>
+                Products
+            </span>
+
+            <span
+                class="notification-badge"
+                data-product-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- ORDERS -->
+
+        <a
+            href="admin-orders.html"
+            class="active"
+        >
+
+            <span>◫</span>
+
+            <span>
+                Orders
+            </span>
+
+            <span
+                class="notification-badge"
+                data-order-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- REQUESTS -->
+
+        <a href="admin-requests.html">
+
+            <span>✉</span>
+
+            <span>
+                Requests
+            </span>
+
+            <span
+                class="notification-badge"
+                data-request-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- ADMIN REGISTRATIONS -->
+
+        <a href="admin-registrations.html">
+
+            <span>👤</span>
+
+            <span>
+                Admin Registrations
+            </span>
+
+            <span
+                class="notification-badge"
+                data-admin-registration-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- USERS -->
+
+        <a
+            href="admin-users.html"
+            class="admin-users-nav-link"
+        >
+
+            <span class="nav-users-icon">
+                👥
+            </span>
+
+            <span>
+                Users
+            </span>
+
+            <span
+                class="notification-badge users-notification-badge"
+                data-user-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- CHAT -->
+
+        <a
+            href="admin-chat.html"
+            class="admin-chat-nav-link"
+            id="adminChatNavLink"
+            aria-label="Open Admin Chat"
+        >
+
+            <span class="nav-chat-icon">
+                💬
+            </span>
+
+            <span>
+                Chat
+            </span>
+
+            <span
+                class="notification-badge chat-notification-badge"
+                id="adminChatNotificationBadge"
+                hidden
+                aria-label="Unread chat messages"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a href="admin-settings.html">
+
+            <span>⚙</span>
+
+            <span>
+                Settings
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <a
+            href="index.html"
+            class="view-store-btn"
+        >
+
+            <span>↗</span>
+
+            View Store
+
+        </a>
+
+
+        <button
+            type="button"
+            class="logout-btn"
+            id="logoutBtn"
+        >
+
+            <span>⇥</span>
+
+            <span>
+                Logout
+            </span>
+
+        </button>
+
+    </div>
+
+</aside>
+
+
+<!-- =========================================================
+     SIDEBAR OVERLAY
+========================================================= -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+<!-- =========================================================
+     MOBILE MENU
+========================================================= -->
+
+<button
+    type="button"
+    class="mobile-menu-button"
+    id="mobileMenuButton"
+    aria-label="Open Menu"
+    aria-expanded="false"
+>
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+</button>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="admin-orders-page">
+
+    <div class="admin-orders-container">
+
+
+        <!-- HEADER -->
+
+        <section class="orders-heading">
+
+            <div>
+
+                <div class="admin-status">
+
+                    <span class="status-dot"></span>
+
+                    Order Management
+
+                </div>
+
+
+                <h1>
+
+                    Customer
+                    <span>Orders</span>
+
+                </h1>
+
+
+                <p>
+
+                    View orders, verify payments,
+                    and manage order status.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- STATS -->
+
+        <section class="orders-stats">
+
+
+            <div
+                class="order-stat-card"
+                data-stat-filter="all"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="stat-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <span>
+                        Total Orders
+                    </span>
+
+                    <strong id="totalOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="order-stat-card"
+                data-stat-filter="payment"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="stat-icon">
+                    💳
+                </div>
+
+                <div>
+
+                    <span>
+                        Payment Verification
+                    </span>
+
+                    <strong id="pendingPayments">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="order-stat-card"
+                data-stat-filter="processing"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="stat-icon">
+                    📦
+                </div>
+
+                <div>
+
+                    <span>
+                        Processing
+                    </span>
+
+                    <strong id="processingOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="order-stat-card"
+                data-stat-filter="completed"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="stat-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        Completed
+                    </span>
+
+                    <strong id="completedOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="order-stat-card"
+                data-stat-filter="to-ship"
+                id="toShipCard"
+                role="button"
+                tabindex="0"
+            >
+
+                <div class="stat-icon">
+                    🚚
+                </div>
+
+                <div>
+
+                    <span>
+                        To Ship
+                    </span>
+
+                    <strong id="toShipOrders">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SEARCH -->
+
+        <section class="orders-toolbar">
+
+            <div class="orders-search">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="orderSearch"
+                    placeholder="Search customer, email, or order ID..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+
+            <div class="orders-filter">
+
+                <select id="orderStatusFilter">
+
+                    <option value="all">
+                        All Status
+                    </option>
+
+                    <option value="Pending">
+                        Pending
+                    </option>
+
+                    <option value="In Progress">
+                        In Progress
+                    </option>
+
+                    <option value="To Deliver">
+                        To Deliver
+                    </option>
+
+                    <option value="Completed">
+                        Completed
+                    </option>
+
+                    <option value="Rejected">
+                        Rejected
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- ORDERS TABLE & LIST -->
+
+        <section class="orders-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ORDER RECORDS
+                    </span>
+
+                    <h2>
+                        All Orders
+                    </h2>
+
+                </div>
+
+
+                <span
+                    class="order-count"
+                    id="orderCount"
+                >
+                    0 orders
+                </span>
+
+            </div>
+
+
+            <!-- DESKTOP -->
+
+            <div class="orders-table-wrapper">
+
+                <table class="orders-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>Order</th>
+                            <th>Customer</th>
+                            <th>Total</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="ordersTableBody">
+
+                        <tr>
+
+                            <td colspan="7">
+
+                                <div class="orders-loading">
+
+                                    <div class="loading-spinner"></div>
+
+                                    <p>
+                                        Loading orders...
+                                    </p>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- MOBILE -->
+
+            <div
+                class="mobile-orders-list"
+                id="mobileOrdersList"
+            >
+
+                <div class="orders-loading">
+
+                    <div class="loading-spinner"></div>
+
+                    <p>
+                        Loading orders...
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ORDER MODAL (UPDATED WITH NOTES, ITEMS & TRACKER)
+        ================================================== -->
+
+        <div
+            class="order-modal"
+            id="orderModal"
+            hidden
+        >
+
+            <div
+                class="order-modal-overlay"
+                id="orderModalOverlay"
+            ></div>
+
+
+            <div class="order-modal-card">
+
+
+                <div class="order-modal-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            ORDER DETAILS
+                        </span>
+
+                        <h2 id="modalOrderTitle">
+                            Order Details
+                        </h2>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="modal-close-btn"
+                        id="closeOrderModal"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <!-- CUSTOMER PROFILE & NOTES -->
+
+                <div class="modal-section">
+
+                    <h3>
+                        Customer Profile
+                    </h3>
+
+
+                    <div class="customer-profile-box">
+
+                        <div
+                            class="customer-profile-avatar"
+                            id="modalCustomerAvatar"
+                            role="button"
+                            tabindex="0"
+                        >
+
+                            <span
+                                class="customer-profile-letter"
+                                id="modalCustomerLetter"
+                            >
+                                ?
+                            </span>
+
+                            <img
+                                id="modalCustomerAvatarImage"
+                                src=""
+                                alt="Customer profile picture"
+                            >
+
+                        </div>
+
+
+                        <div class="customer-profile-details">
+
+                            <span class="customer-label">
+                                Customer
+                            </span>
+
+                            <h3 id="modalCustomerProfileName">
+                                —
+                            </h3>
+
+                            <p id="modalCustomerProfileEmail">
+                                —
+                            </p>
+
+                            <span class="customer-profile-badge">
+                                ● Verified Customer
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="customer-info-grid">
+
+                        <div class="info-item">
+
+                            <span>Name</span>
+
+                            <strong id="modalCustomerName">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Email</span>
+
+                            <strong id="modalCustomerEmail">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Phone</span>
+
+                            <strong id="modalCustomerPhone">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>Address</span>
+
+                            <strong id="modalCustomerAddress">
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                 
+
+                </div>
+
+
+                <!-- ORDER ITEMS TABLE -->
+
+                <div class="modal-section">
+
+                    <h3>
+                        Order Items
+                    </h3>
+
+                    <div
+                        class="modal-order-items"
+                        id="modalOrderItems"
+                    >
+                        <table class="order-items-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>Picture</th>
+                                    <th>Product Name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                    <th>Subtotal</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="modalOrderItemsBody">
+
+                                <tr>
+
+                                    <td colspan="5" style="text-align: center;">Loading items...</td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT & PROOF -->
+
+                <div class="modal-section">
+
+                    <h3>
+                        Payment Information
+                    </h3>
+
+
+                    <div class="payment-info-grid">
+
+                        <div class="info-item">
+
+                            <span>
+                                Payment Method
+                            </span>
+
+                            <strong id="modalPaymentMethod">
+                                —
+                            </strong>
+
+                        </div>
+
+
+                        <div class="info-item">
+
+                            <span>
+                                Payment Status
+                            </span>
+
+                            <strong
+                                id="modalPaymentStatus"
+                                class="payment-status"
+                            >
+                                —
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <!-- EXISTING PAYMENT PROOF -->
+
+                    <div
+                        class="payment-proof-container"
+                        id="paymentProofContainer"
+                    >
+
+                        <div class="payment-proof-header">
+
+                            <h3>
+                                💳 Existing Payment Proof
+                            </h3>
+
+                        </div>
+
+
+                        <div
+                            id="paymentProofPreview"
+                            class="payment-proof-preview"
+                        >
+
+                            <img
+                                id="paymentProofImage"
+                                src=""
+                                alt="Payment Proof Image"
+                                style="display:none;"
+                            >
+
+
+                            <div
+                                id="paymentProofMessage"
+                                class="payment-proof-message"
+                            >
+                                No payment proof uploaded.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EXISTING LALAMOVE TRACKER -->
+
+                    <div
+                        class="lalamove-tracking-container"
+                        id="lalamoveTrackingContainer"
+                    >
+
+                        <div class="lalamove-tracking-header">
+
+                            <h3>
+                                🚚 Existing Lalamove Tracker
+                            </h3>
+
+                            <p>
+                                View or update the Lalamove tracking link for this order.
+                                The customer will use this link to track delivery progress.
+                            </p>
+
+                        </div>
+
+
+                        <div class="lalamove-tracking-form">
+
+                            <input
+                                type="url"
+                                id="lalamoveTrackingUrl"
+                                class="lalamove-tracking-input"
+                                placeholder="https://track.lalamove.com/..."
+                                autocomplete="off"
+                                inputmode="url"
+                            >
+
+
+                            <button
+                                type="button"
+                                class="lalamove-tracking-save"
+                                id="saveLalamoveTrackingBtn"
+                            >
+                                🚚 Save Tracker
+                            </button>
+
+                        </div>
+
+
+                        <div
+                            id="lalamoveTrackingResult"
+                            class="lalamove-tracking-result"
+                            aria-live="polite"
+                        ></div>
+
+
+                        <a
+                            id="openLalamoveTrackingBtn"
+                            class="lalamove-tracking-open"
+                            href="#"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            🚚 Open Existing Lalamove Tracker
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="modal-section">
+
+                    <div class="order-total-row">
+
+                        <span>
+                            Order Total
+                        </span>
+
+                        <strong id="modalOrderTotal">
+                            ₱0.00
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="modal-section">
+
+                    <h3>
+                        Update Order
+                    </h3>
+
+
+                    <div class="status-update-row">
+
+                        <select id="modalOrderStatus">
+
+                            <option value="Pending">
+                                Pending
+                            </option>
+
+                            <option value="In Progress">
+                                In Progress
+                            </option>
+
+                            <option value="To Deliver">
+                                To Deliver
+                            </option>
+
+                            <option value="Completed">
+                                Completed
+                            </option>
+
+                            <option value="Rejected">
+                                Rejected
+                            </option>
+
+                        </select>
+
+
+                        <button
+                            type="button"
+                            class="primary-admin-btn"
+                            id="updateOrderStatusBtn"
+                        >
+                            Update Status
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PAYMENT ACTIONS -->
+
+                <div class="payment-actions">
+
+                    <button
+                        type="button"
+                        class="confirm-payment-btn"
+                        id="confirmPaymentBtn"
+                    >
+                        ✓ Approve Payment
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="reject-payment-btn"
+                        id="rejectPaymentBtn"
+                    >
+                        × Reject Payment
+                    </button>
+
+                </div>
+
+
+                <!-- DELETE -->
+
+                <div class="delete-order-section">
+
+                    <button
+                        type="button"
+                        class="delete-order-btn"
+                        id="deleteOrderBtn"
+                    >
+                        🗑 Delete Order
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="admin-result"
+                    id="adminResult"
+                    aria-live="polite"
+                ></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- =========================================================
+     PROFILE PHOTO MODAL
+========================================================= -->
+
+<div
+    id="profilePhotoBackdrop"
+    hidden
+    aria-hidden="true"
+>
+
+    <div
+        id="profilePhotoPreview"
+        role="dialog"
+        aria-modal="true"
+        hidden
+    >
+
+        <button
+            type="button"
+            id="profilePhotoClose"
+            aria-label="Close profile picture"
+        >
+            ×
+        </button>
+
+
+        <img
+            id="profilePhotoPreviewImage"
+            src=""
+            alt="Customer profile picture"
+        >
+
+
+        <div id="profilePhotoPreviewName">
+            Customer
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="admin-footer">
+
+    <p>
+        © 2026 Business Store
+    </p>
+
+    <span>
+        All Rights Reserved.
+    </span>
+
+</footer>
+
+
+<!-- =========================================================
+     SCRIPTS
+========================================================= -->
+
+<script>
+
+const mobileMenuButton =
+    document.getElementById(
+        "mobileMenuButton"
+    );
+
+const adminSidebar =
+    document.getElementById(
+        "adminSidebar"
+    );
+
+const sidebarOverlay =
+    document.getElementById(
+        "sidebarOverlay"
+    );
+
+
+function openSidebar() {
+
+    adminSidebar?.classList.add("open");
+
+    sidebarOverlay?.classList.add("open");
+
+    mobileMenuButton?.classList.add("active");
+
+    mobileMenuButton?.setAttribute(
+        "aria-expanded",
+        "true"
+    );
+
+    document.body.classList.add(
+        "sidebar-open"
+    );
+
+}
+
+
+function closeSidebar() {
+
+    adminSidebar?.classList.remove("open");
+
+    sidebarOverlay?.classList.remove("open");
+
+    mobileMenuButton?.classList.remove("active");
+
+    mobileMenuButton?.setAttribute(
+        "aria-expanded",
+        "false"
+    );
+
+    document.body.classList.remove(
+        "sidebar-open"
+    );
+
+}
+
+
+mobileMenuButton?.addEventListener(
+    "click",
+    () => {
+
+        if (
+            adminSidebar?.classList.contains(
+                "open"
+            )
+        ) {
+
+            closeSidebar();
+
+        } else {
+
+            openSidebar();
+
+        }
+
+    }
+);
+
+
+sidebarOverlay?.addEventListener(
+    "click",
+    closeSidebar
+);
+
+
+adminSidebar
+    ?.querySelectorAll("a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    });
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeSidebar();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script>
+
+const modalCustomerAvatar =
+    document.getElementById(
+        "modalCustomerAvatar"
+    );
+
+const modalCustomerAvatarImage =
+    document.getElementById(
+        "modalCustomerAvatarImage"
+    );
+
+const modalCustomerProfileName =
+    document.getElementById(
+        "modalCustomerProfileName"
+    );
+
+const profilePhotoBackdrop =
+    document.getElementById(
+        "profilePhotoBackdrop"
+    );
+
+const profilePhotoPreview =
+    document.getElementById(
+        "profilePhotoPreview"
+    );
+
+const profilePhotoPreviewImage =
+    document.getElementById(
+        "profilePhotoPreviewImage"
+    );
+
+const profilePhotoPreviewName =
+    document.getElementById(
+        "profilePhotoPreviewName"
+    );
+
+const profilePhotoClose =
+    document.getElementById(
+        "profilePhotoClose"
+    );
+
+
+function openCustomerProfilePhoto() {
+
+    if (
+        !modalCustomerAvatarImage ||
+        !profilePhotoBackdrop ||
+        !profilePhotoPreview ||
+        !profilePhotoPreviewImage
+    ) {
+
+        return;
+
+    }
+
+
+    const imageUrl =
+        modalCustomerAvatarImage.getAttribute(
+            "src"
+        );
+
+
+    if (
+        !imageUrl ||
+        !imageUrl.trim()
+    ) {
+
+        return;
+
+    }
+
+
+    profilePhotoPreviewImage.src =
+        imageUrl;
+
+
+    const customerName =
+        modalCustomerProfileName
+            ?.textContent
+            ?.trim();
+
+
+    if (
+        profilePhotoPreviewName
+    ) {
+
+        profilePhotoPreviewName.textContent =
+            customerName ||
+            "Customer";
+
+    }
+
+
+    profilePhotoBackdrop.hidden =
+        false;
+
+    profilePhotoPreview.hidden =
+        false;
+
+
+    profilePhotoBackdrop.setAttribute(
+        "aria-hidden",
+        "false"
+    );
+
+
+    requestAnimationFrame(() => {
+
+        profilePhotoBackdrop.classList.add(
+            "active"
+        );
+
+    });
+
+
+    document.body.classList.add(
+        "photo-preview-open"
+    );
+
+}
+
+
+function closeCustomerProfilePhoto() {
+
+    if (
+        !profilePhotoBackdrop
+    ) {
+
+        return;
+
+    }
+
+
+    profilePhotoBackdrop.classList.remove(
+        "active"
+    );
+
+
+    document.body.classList.remove(
+        "photo-preview-open"
+    );
+
+
+    setTimeout(() => {
+
+        if (
+            !profilePhotoBackdrop.classList.contains(
+                "active"
+            )
+        ) {
+
+            profilePhotoBackdrop.hidden =
+                true;
+
+            profilePhotoPreview.hidden =
+                true;
+
+            profilePhotoPreviewImage.src =
+                "";
+
+        }
+
+    }, 220);
+
+}
+
+
+modalCustomerAvatar?.addEventListener(
+    "click",
+    event => {
+
+        event.preventDefault();
+
+        openCustomerProfilePhoto();
+
+    }
+);
+
+
+modalCustomerAvatar?.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openCustomerProfilePhoto();
+
+        }
+
+    }
+);
+
+
+profilePhotoClose?.addEventListener(
+    "click",
+    closeCustomerProfilePhoto
+);
+
+
+profilePhotoBackdrop?.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target ===
+            profilePhotoBackdrop
+        ) {
+
+            closeCustomerProfilePhoto();
+
+        }
+
+    }
+);
+
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Escape" &&
+            profilePhotoBackdrop &&
+            !profilePhotoBackdrop.hidden
+        ) {
+
+            closeCustomerProfilePhoto();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script
+    type="module"
+    src="js/admin-orders.js?v=43"
+></script>
+
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+const adminChatNavLink =
+    document.getElementById(
+        "adminChatNavLink"
+    );
+
+const adminChatNotificationBadge =
+    document.getElementById(
+        "adminChatNotificationBadge"
+    );
+
+
+function setAdminChatNotification(count) {
+
+    if (!adminChatNotificationBadge) {
+        return;
+    }
+
+    const safeCount =
+        Number.isFinite(Number(count))
+            ? Math.max(0, Number(count))
+            : 0;
+
+    adminChatNotificationBadge.textContent =
+        safeCount > 99
+            ? "99+"
+            : String(safeCount);
+
+    if (safeCount > 0) {
+
+        adminChatNotificationBadge.hidden = false;
+
+        adminChatNotificationBadge.classList.add(
+            "has-notification"
+        );
+
+        adminChatNotificationBadge.setAttribute(
+            "aria-label",
+            `${safeCount} unread chat ${safeCount === 1 ? "message" : "messages"}`
+        );
+
+        adminChatNavLink?.setAttribute(
+            "aria-label",
+            `Chat, ${safeCount} unread ${safeCount === 1 ? "message" : "messages"}`
+        );
+
+    } else {
+
+        adminChatNotificationBadge.hidden = true;
+
+        adminChatNotificationBadge.classList.remove(
+            "has-notification"
+        );
+
+        adminChatNotificationBadge.removeAttribute(
+            "aria-label"
+        );
+
+        adminChatNavLink?.setAttribute(
+            "aria-label",
+            "Open Admin Chat"
+        );
+
+    }
+
+}
+
+
+async function loadAdminChatNotification() {
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("chat_conversations")
+            .select("unread_for_admin");
+
+        if (error) {
+            console.error(
+                "[Chat Notification] Query failed:",
+                error
+            );
+
+            setAdminChatNotification(0);
+            return;
+        }
+
+        const unreadCount =
+            (data || []).reduce(
+                (total, conversation) =>
+                    total +
+                    Math.max(
+                        0,
+                        Number(
+                            conversation?.unread_for_admin ||
+                            0
+                        )
+                    ),
+                0
+            );
+
+        setAdminChatNotification(
+            unreadCount
+        );
+
+    } catch (error) {
+
+        console.error(
+            "[Chat Notification] Unexpected error:",
+            error
+        );
+
+        setAdminChatNotification(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   REALTIME CHAT NOTIFICATION
+========================================================= */
+
+const adminChatNotificationChannel =
+    supabase
+        .channel(
+            "admin-chat-navbar-notification-v1"
+        )
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "chat_conversations"
+            },
+            () => {
+
+                loadAdminChatNotification();
+
+            }
+        )
+        .subscribe(
+            status => {
+
+                console.log(
+                    "[Chat Notification] Realtime:",
+                    status
+                );
+
+            }
+        );
+
+
+/* =========================================================
+   INITIAL LOAD + REFRESH
+========================================================= */
+
+loadAdminChatNotification();
+
+const adminChatNotificationTimer =
+    setInterval(
+        loadAdminChatNotification,
+        30000
+    );
+
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            loadAdminChatNotification();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "focus",
+    loadAdminChatNotification
+);
+
+
+adminChatNavLink?.addEventListener(
+    "click",
+    () => {
+
+        sessionStorage.setItem(
+            "adminChatOpened",
+            "true"
+        );
+
+    }
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        clearInterval(
+            adminChatNotificationTimer
+        );
+
+        try {
+            supabase.removeChannel(
+                adminChatNotificationChannel
+            );
+        } catch (error) {
+            console.warn(
+                "[Chat Notification] Channel cleanup failed:",
+                error
+            );
+        }
+
+    }
+);
+
+</script>
+
+
+<!-- =========================================================
+     ADMIN NOTIFICATIONS
+========================================================= -->
+
+<script
+    type="module"
+    src="js/admin-notifications.js?v=4"
+></script>
+
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+const userBadge =
+    document.querySelector(
+        "[data-user-count]"
+    );
+
+
+const ACTIVE_WINDOW_MINUTES = 30;
+
+
+function setUserBadge(count) {
+
+    if (!userBadge) {
+        return;
+    }
+
+
+    const safeCount =
+        Number.isFinite(
+            Number(count)
+        )
+            ? Number(count)
+            : 0;
+
+
+    userBadge.textContent =
+        String(safeCount);
+
+
+    if (safeCount > 0) {
+
+        userBadge.hidden =
+            false;
+
+        userBadge.classList.add(
+            "has-notification"
+        );
+
+        userBadge.setAttribute(
+            "aria-label",
+            `${safeCount} active customer${safeCount === 1 ? "" : "s"}`
+        );
+
+    } else {
+
+        userBadge.hidden =
+            true;
+
+        userBadge.classList.remove(
+            "has-notification"
+        );
+
+        userBadge.removeAttribute(
+            "aria-label"
+        );
+
+    }
+
+}
+
+
+function getActiveSinceISO() {
+
+    const now =
+        Date.now();
+
+    const activeSince =
+        now -
+        (
+            ACTIVE_WINDOW_MINUTES *
+            60 *
+            1000
+        );
+
+    return new Date(
+        activeSince
+    ).toISOString();
+
+}
+
+
+async function loadUserNotification() {
+
+    if (!userBadge) {
+        return;
+    }
+
+
+    try {
+
+        const activeSince =
+            getActiveSinceISO();
+
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("profiles")
+            .select("id")
+            .neq(
+                "role",
+                "admin"
+            )
+            .gte(
+                "last_login",
+                activeSince
+            );
+
+
+        if (error) {
+
+            console.error(
+                "[Users Notification] Query failed:",
+                error
+            );
+
+            setUserBadge(0);
+
+            return;
+
+        }
+
+
+        const activeUsers =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        setUserBadge(
+            activeUsers.length
+        );
+
+
+        console.log(
+            "[Users Notification]",
+            {
+                activeWindowMinutes:
+                    ACTIVE_WINDOW_MINUTES,
+
+                activeSince,
+
+                activeCustomers:
+                    activeUsers.length
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "[Users Notification] Unexpected error:",
+            error
+        );
+
+        setUserBadge(0);
+
+    }
+
+}
+
+
+const usersNavigationLink =
+    document.querySelector(
+        ".admin-users-nav-link"
+    );
+
+
+usersNavigationLink?.addEventListener(
+    "click",
+    () => {
+
+        loadUserNotification();
+
+    }
+);
+
+
+const usersNotificationChannel =
+    supabase
+        .channel(
+            "admin-users-notification-v4"
+        )
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "profiles"
+            },
+            payload => {
+
+                console.log(
+                    "[Users Notification] Profile changed:",
+                    payload?.eventType
+                );
+
+                loadUserNotification();
+
+            }
+        )
+        .subscribe(
+            status => {
+
+                console.log(
+                    "[Users Notification] Realtime:",
+                    status
+                );
+
+            }
+        );
+
+
+loadUserNotification();
+
+
+const usersRefreshTimer =
+    setInterval(
+        loadUserNotification,
+        30000
+    );
+
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            loadUserNotification();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "focus",
+    loadUserNotification
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        clearInterval(
+            usersRefreshTimer
+        );
+
+
+        try {
+
+            supabase.removeChannel(
+                usersNotificationChannel
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "[Users Notification] Channel cleanup failed:",
+                error
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+const toShipCard =
+    document.getElementById(
+        "toShipCard"
+    );
+
+
+const toShipOrders =
+    document.getElementById(
+        "toShipOrders"
+    );
+
+
+const orderStatusFilter =
+    document.getElementById(
+        "orderStatusFilter"
+    );
+
+
+function normalizeStatus(value) {
+
+    return String(
+        value ?? ""
+    )
+        .trim()
+        .toLowerCase()
+        .replace(
+            /[_-]+/g,
+            " "
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+
+}
+
+
+function isToShipStatus(value) {
+
+    const status =
+        normalizeStatus(
+            value
+        );
+
+
+    return (
+        status === "to deliver" ||
+        status === "to delivery" ||
+        status === "to ship" ||
+        status === "toship"
+    );
+
+}
+
+
+function setToShipCount(count) {
+
+    if (!toShipOrders) {
+        return;
+    }
+
+
+    const safeCount =
+        Number.isFinite(
+            Number(count)
+        )
+            ? Number(count)
+            : 0;
+
+
+    toShipOrders.textContent =
+        String(
+            safeCount
+        );
+
+}
+
+
+async function loadToShipCount() {
+
+    if (!toShipOrders) {
+        return;
+    }
+
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("orders")
+            .select("id,status");
+
+
+        if (error) {
+
+            console.error(
+                "To Ship query failed:",
+                error
+            );
+
+            setToShipCount(0);
+
+            return;
+
+        }
+
+
+        const orders =
+            Array.isArray(data)
+                ? data
+                : [];
+
+
+        const count =
+            orders.filter(
+                order =>
+                    isToShipStatus(
+                        order?.status
+                    )
+            ).length;
+
+
+        setToShipCount(
+            count
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Unexpected To Ship error:",
+            error
+        );
+
+        setToShipCount(0);
+
+    }
+
+}
+
+
+function openToShipOrders() {
+
+    if (!orderStatusFilter) {
+        return;
+
+    }
+
+
+    orderStatusFilter.value =
+        "To Deliver";
+
+
+    orderStatusFilter.dispatchEvent(
+        new Event(
+            "change",
+            {
+                bubbles: true
+            }
+        )
+    );
+
+
+    document
+        .querySelector(
+            ".orders-section"
+        )
+        ?.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+}
+
+
+toShipCard?.addEventListener(
+    "click",
+    openToShipOrders
+);
+
+
+toShipCard?.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" ||
+            event.key === " "
+        ) {
+
+            event.preventDefault();
+
+            openToShipOrders();
+
+        }
+
+    }
+);
+
+
+const toShipChannel =
+    supabase
+        .channel(
+            "admin-to-ship-counter-v4"
+        )
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "orders"
+            },
+            () => {
+
+                loadToShipCount();
+
+            }
+        )
+        .subscribe();
+
+
+loadToShipCount();
+
+
+const toShipRefreshTimer =
+    setInterval(
+        loadToShipCount,
+        5000
+    );
+
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            loadToShipCount();
+
+        }
+
+    }
+);
+
+
+window.addEventListener(
+    "focus",
+    loadToShipCount
+);
+
+
+window.addEventListener(
+    "beforeunload",
+    () => {
+
+        clearInterval(
+            toShipRefreshTimer
+        );
+
+
+        try {
+
+            supabase.removeChannel(
+                toShipChannel
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "To Ship channel cleanup failed:",
+                error
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

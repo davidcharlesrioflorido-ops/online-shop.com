@@ -1,0 +1,7192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#070a10"
+    >
+
+    <title>Admin Chat | Business Store</title>
+
+    <script
+    type="module"
+    src="./js/admin-guard.js"
+> </script>
+
+    <link
+        rel="stylesheet"
+     href="css/admin.css"
+    >
+
+    <style>
+
+        /* =========================================================
+           BUSINESS STORE
+           ADMIN CHAT
+           DARK PREMIUM / NEON GLASS
+           ========================================================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            width: 100%;
+            min-height: 100%;
+            background: #070a10;
+        }
+
+        body {
+            color: #f5f7fa;
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            overflow: hidden;
+        }
+
+        button,
+        input,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* =========================================================
+           PAGE
+           ========================================================= */
+
+        .admin-chat-page {
+            width: 100%;
+            height: 100vh;
+            min-height: 100vh;
+
+            padding: 20px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =========================================================
+           PAGE HEADER
+           ========================================================= */
+
+        .chat-page-header {
+            flex: 0 0 auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 15px;
+            margin-bottom: 16px;
+        }
+
+        .chat-page-left {
+            min-width: 0;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+        }
+
+        .back-dashboard-button {
+            width: 42px;
+            height: 42px;
+            flex: 0 0 42px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.035);
+
+            color: #aeb7c5;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease,
+                color .2s ease,
+                transform .15s ease;
+        }
+
+        .back-dashboard-button:hover {
+            color: #00f2fe;
+
+            border-color:
+                rgba(0,242,254,.30);
+
+            background:
+                rgba(0,242,254,.055);
+        }
+
+        .back-dashboard-button:active {
+            transform: scale(.94);
+        }
+
+        .chat-page-title {
+            min-width: 0;
+
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+        }
+
+        .chat-page-title-icon {
+            width: 46px;
+            height: 46px;
+            flex: 0 0 46px;
+
+            border-radius: 14px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,.16),
+                    rgba(124,58,237,.18)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #00f2fe;
+
+            font-size: 21px;
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,.18);
+        }
+
+        .chat-title-text {
+            min-width: 0;
+        }
+
+        .chat-page-title h1 {
+            margin: 0;
+
+            color: #fff;
+
+            font-size: 22px;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .chat-page-title p {
+            margin: 4px 0 0;
+
+            color: #7e8999;
+
+            font-size: 12px;
+        }
+
+        /* =========================================================
+           ADMIN CONNECTION STATUS
+           ========================================================= */
+
+        .chat-status {
+            flex: 0 0 auto;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 8px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            color: #aeb7c5;
+
+            font-size: 12px;
+        }
+
+        .chat-status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #f5cf6b;
+        }
+
+        .chat-status.online {
+            color: #35e889;
+
+            border-color:
+                rgba(53,232,137,.22);
+
+            background:
+                rgba(53,232,137,.055);
+        }
+
+        .chat-status.online .chat-status-dot {
+            background: #35e889;
+
+            box-shadow:
+                0 0 12px rgba(53,232,137,.7);
+        }
+
+        .chat-status.offline {
+            color: #ff6b6b;
+
+            border-color:
+                rgba(255,107,107,.22);
+
+            background:
+                rgba(255,107,107,.055);
+        }
+
+        .chat-status.offline .chat-status-dot {
+            background: #ff6b6b;
+
+            box-shadow:
+                0 0 12px rgba(255,107,107,.65);
+        }
+
+        .chat-status.connecting {
+            color: #f5cf6b;
+
+            border-color:
+                rgba(245,207,107,.22);
+
+            background:
+                rgba(245,207,107,.055);
+        }
+
+        .chat-status.connecting .chat-status-dot {
+            background: #f5cf6b;
+
+            box-shadow:
+                0 0 12px rgba(245,207,107,.65);
+        }
+
+        /* =========================================================
+           MAIN CHAT CONTAINER
+           ========================================================= */
+
+        .admin-chat-container {
+            flex: 1;
+            min-height: 0;
+
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                350px minmax(0,1fr);
+
+            overflow: hidden;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(14,18,27,.97),
+                    rgba(8,11,17,.97)
+                );
+
+            box-shadow:
+                0 25px 80px rgba(0,0,0,.38),
+                inset 0 1px 0 rgba(255,255,255,.025);
+        }
+
+        /* =========================================================
+           CONVERSATIONS PANEL
+           ========================================================= */
+
+        .conversations-panel {
+            min-width: 0;
+            min-height: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            border-right:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(5,8,13,.72);
+        }
+
+        .conversations-header {
+            flex: 0 0 auto;
+
+            padding: 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.065);
+        }
+
+        .conversations-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-bottom: 13px;
+        }
+
+        .conversations-title-left {
+            min-width: 0;
+
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .conversations-header h2 {
+            margin: 0;
+
+            color: #f5f7fa;
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .conversation-count {
+            min-width: 23px;
+            height: 23px;
+
+            padding: 0 7px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 999px;
+
+            background:
+                rgba(0,242,254,.10);
+
+            border:
+                1px solid rgba(0,242,254,.18);
+
+            color: #00f2fe;
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .dashboard-link {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 7px 9px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            color: #8f9aac;
+
+            font-size: 10px;
+            font-weight: 700;
+
+            text-decoration: none;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease,
+                color .2s ease;
+        }
+
+        .dashboard-link:hover {
+            color: #00f2fe;
+
+            border-color:
+                rgba(0,242,254,.25);
+
+            background:
+                rgba(0,242,254,.05);
+        }
+
+        /* =========================================================
+           SEARCH
+           ========================================================= */
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box-icon {
+            position: absolute;
+
+            left: 13px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #687386;
+
+            font-size: 13px;
+
+            pointer-events: none;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 41px;
+
+            border:
+                1px solid rgba(255,255,255,.075);
+
+            border-radius: 12px;
+
+            outline: none;
+
+            padding:
+                0 13px 0 37px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #fff;
+
+            transition:
+                border-color .2s ease,
+                background .2s ease;
+        }
+
+        .search-box input::placeholder {
+            color: #596477;
+        }
+
+        .search-box input:focus {
+            border-color:
+                rgba(0,242,254,.38);
+
+            background:
+                rgba(255,255,255,.045);
+        }
+
+        /* =========================================================
+           FILTERS
+           ========================================================= */
+
+        .conversation-filters {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4,minmax(0,1fr));
+
+            gap: 5px;
+
+            margin-top: 10px;
+        }
+
+        .filter-button {
+            min-width: 0;
+            height: 31px;
+
+            padding: 0 6px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #697487;
+
+            cursor: pointer;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .filter-button:hover {
+            color: #cbd3dd;
+
+            background:
+                rgba(255,255,255,.045);
+        }
+
+        .filter-button.active {
+            color: #00f2fe;
+
+            border-color:
+                rgba(0,242,254,.24);
+
+            background:
+                rgba(0,242,254,.07);
+        }
+
+        /* =========================================================
+           CONVERSATION LIST
+           ========================================================= */
+
+        .conversation-list {
+            flex: 1;
+            min-height: 0;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .conversation-list::-webkit-scrollbar,
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .conversation-list::-webkit-scrollbar-track,
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .conversation-list::-webkit-scrollbar-thumb,
+        .chat-messages::-webkit-scrollbar-thumb {
+            background:
+                rgba(255,255,255,.09);
+
+            border-radius: 999px;
+        }
+
+        .conversation-item {
+            position: relative;
+
+            display: flex;
+            align-items: flex-start;
+
+            gap: 11px;
+
+            padding: 14px 15px;
+
+            cursor: pointer;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.045);
+
+            transition:
+                background .18s ease,
+                border-color .18s ease;
+        }
+
+        .conversation-item:hover {
+            background:
+                rgba(255,255,255,.035);
+        }
+
+        .conversation-item.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(0,242,254,.105),
+                    rgba(124,58,237,.06)
+                );
+
+            border-left:
+                3px solid #00f2fe;
+
+            padding-left: 12px;
+        }
+
+        /* =========================================================
+           AVATAR
+           ========================================================= */
+
+        .customer-avatar-wrap {
+            position: relative;
+
+            width: 49px;
+            height: 49px;
+
+            flex: 0 0 49px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+        }
+
+        .customer-avatar {
+            position: relative;
+
+            width: 45px;
+            height: 45px;
+
+            flex: 0 0 45px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+
+            color: #fff;
+
+            font-size: 14px;
+            font-weight: 900;
+
+            overflow: visible;
+
+            border:
+                2px solid #596477;
+
+            box-shadow:
+                0 7px 20px rgba(0,0,0,.22);
+
+            transition:
+                border-color .25s ease,
+                box-shadow .25s ease;
+        }
+
+        .customer-avatar img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 50%;
+        }
+
+        /* =========================================================
+           ONLINE RING
+           ========================================================= */
+
+        .customer-avatar.status-online {
+            border:
+                2px solid #35e889;
+
+            box-shadow:
+                0 0 0 2px rgba(53,232,137,.18),
+                0 0 17px rgba(53,232,137,.52),
+                0 7px 20px rgba(0,0,0,.22);
+        }
+
+        .customer-avatar.status-online::after {
+            content: "";
+
+            position: absolute;
+
+            inset: -4px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(53,232,137,.42);
+
+            pointer-events: none;
+
+            animation:
+                onlinePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes onlinePulse {
+
+            0%,
+            100% {
+                opacity: .65;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: .12;
+                transform: scale(1.08);
+            }
+        }
+
+        /* =========================================================
+           OFFLINE RING
+           ========================================================= */
+
+        .customer-avatar.status-offline {
+            border:
+                2px solid #596477;
+
+            box-shadow:
+                0 0 0 2px rgba(89,100,119,.10),
+                0 0 10px rgba(89,100,119,.12),
+                0 7px 20px rgba(0,0,0,.22);
+        }
+
+        .customer-avatar.status-unknown {
+            border:
+                2px solid #596477;
+
+            box-shadow:
+                0 0 0 2px rgba(89,100,119,.08),
+                0 7px 20px rgba(0,0,0,.22);
+        }
+
+        .avatar-online {
+            display: none !important;
+        }
+
+        .customer-presence-label {
+            display: inline-flex;
+            align-items: center;
+
+            gap: 4px;
+
+            margin-top: 3px;
+
+            font-size: 8px;
+            font-weight: 700;
+        }
+
+        .customer-presence-label.online {
+            color: #35e889;
+        }
+
+        .customer-presence-label.offline {
+            color: #596477;
+        }
+
+        .customer-presence-label .presence-dot {
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+
+            flex: 0 0 5px;
+        }
+
+        .customer-presence-label.online .presence-dot {
+            background: #35e889;
+
+            box-shadow:
+                0 0 7px rgba(53,232,137,.65);
+        }
+
+        .customer-presence-label.offline .presence-dot {
+            background: #596477;
+        }
+
+        /* =========================================================
+           CONVERSATION INFO
+           ========================================================= */
+
+        .conversation-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .conversation-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 7px;
+        }
+
+        .customer-name {
+            min-width: 0;
+
+            color: #edf1f6;
+
+            font-size: 13px;
+            font-weight: 750;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-time {
+            flex: 0 0 auto;
+
+            color: #596477;
+
+            font-size: 9px;
+
+            white-space: nowrap;
+        }
+
+        .conversation-email {
+            margin-top: 3px;
+
+            color: #596477;
+
+            font-size: 9px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .conversation-preview-row {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            margin-top: 5px;
+        }
+
+        .conversation-preview {
+            min-width: 0;
+            flex: 1;
+
+            color: #778296;
+
+            font-size: 11px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .unread-badge {
+            min-width: 20px;
+            height: 20px;
+
+            padding: 0 6px;
+
+            flex: 0 0 auto;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 999px;
+
+            background: #00f2fe;
+
+            color: #031014;
+
+            font-size: 9px;
+            font-weight: 950;
+        }
+
+        .no-chat-label {
+            color: #4f5a6c;
+
+            font-size: 10px;
+
+            font-style: italic;
+        }
+
+        .empty-conversations {
+            padding: 60px 20px;
+
+            text-align: center;
+
+            color: #626d80;
+        }
+
+        .empty-conversations-icon {
+            width: 55px;
+            height: 55px;
+
+            margin:
+                0 auto 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 17px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #3d4655;
+
+            font-size: 22px;
+        }
+
+        .empty-conversations strong {
+            display: block;
+
+            color: #8a95a6;
+
+            font-size: 13px;
+
+            margin-bottom: 5px;
+        }
+
+        .empty-conversations span {
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           CHAT PANEL
+           ========================================================= */
+
+        .chat-panel {
+            min-width: 0;
+            min-height: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            position: relative;
+        }
+
+        /* =========================================================
+           CHAT HEADER
+           ========================================================= */
+
+        .chat-header {
+            flex: 0 0 auto;
+
+            min-height: 72px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 11px;
+
+            padding:
+                12px 18px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.065);
+
+            background:
+                rgba(10,14,21,.78);
+
+            backdrop-filter:
+                blur(16px);
+        }
+
+        .chat-header-avatar-wrap {
+            position: relative;
+
+            width: 50px;
+            height: 50px;
+
+            flex: 0 0 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+        }
+
+        .chat-header-avatar {
+            position: relative;
+
+            width: 44px;
+            height: 44px;
+
+            flex: 0 0 44px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+
+            color: #fff;
+
+            font-size: 14px;
+            font-weight: 900;
+
+            overflow: visible;
+
+            border:
+                2px solid #596477;
+        }
+
+        .chat-header-avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            border-radius: 50%;
+        }
+
+        .chat-header-avatar.status-online {
+            border:
+                2px solid #35e889;
+
+            box-shadow:
+                0 0 0 2px rgba(53,232,137,.18),
+                0 0 18px rgba(53,232,137,.55),
+                0 8px 24px rgba(0,0,0,.25);
+        }
+
+        .chat-header-avatar.status-online::after {
+            content: "";
+
+            position: absolute;
+
+            inset: -4px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid rgba(53,232,137,.45);
+
+            pointer-events: none;
+
+            animation:
+                onlinePulse 2s ease-in-out infinite;
+        }
+
+        .chat-header-avatar.status-offline,
+        .chat-header-avatar.status-unknown {
+            border:
+                2px solid #596477;
+
+            box-shadow:
+                0 0 0 2px rgba(89,100,119,.10),
+                0 8px 24px rgba(0,0,0,.25);
+        }
+
+        .chat-customer-presence {
+            display: flex;
+            align-items: center;
+
+            gap: 5px;
+
+            margin-top: 4px;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .chat-customer-presence .presence-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            flex: 0 0 6px;
+        }
+
+        .chat-customer-presence.online {
+            color: #35e889;
+        }
+
+        .chat-customer-presence.online .presence-dot {
+            background: #35e889;
+
+            box-shadow:
+                0 0 8px rgba(53,232,137,.7);
+        }
+
+        .chat-customer-presence.offline {
+            color: #596477;
+        }
+
+        .chat-customer-presence.offline .presence-dot {
+            background: #596477;
+        }
+
+        .chat-header-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .chat-header-info h3 {
+            margin: 0;
+
+            color: #f4f7fb;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-header-info p {
+            margin: 4px 0 0;
+
+            color: #687386;
+
+            font-size: 10px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-header-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+        }
+
+        .chat-icon-button {
+            width: 37px;
+            height: 37px;
+
+            flex: 0 0 37px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255,255,255,.075);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #9ba6b7;
+
+            cursor: pointer;
+
+            transition:
+                background .2s ease,
+                border-color .2s ease,
+                color .2s ease,
+                transform .15s ease;
+        }
+
+        .chat-icon-button:hover {
+            color: #00f2fe;
+
+            border-color:
+                rgba(0,242,254,.28);
+
+            background:
+                rgba(0,242,254,.055);
+        }
+
+        .chat-icon-button.delete-chat-button:hover {
+            color: #ff6b6b;
+
+            border-color:
+                rgba(255,107,107,.30);
+
+            background:
+                rgba(255,107,107,.06);
+        }
+
+        .chat-icon-button:active {
+            transform:
+                scale(.95);
+        }
+
+        /* =========================================================
+           MESSAGES
+           ========================================================= */
+
+        .chat-messages {
+            flex: 1;
+
+            min-height: 0;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            padding: 22px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 11px;
+
+            background:
+                radial-gradient(
+                    circle at 80% 15%,
+                    rgba(0,242,254,.035),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 20% 80%,
+                    rgba(124,58,237,.035),
+                    transparent 28%
+                );
+        }
+
+        .chat-welcome {
+            margin: auto;
+
+            max-width: 350px;
+
+            padding:
+                30px 20px;
+
+            text-align: center;
+
+            color: #687386;
+        }
+
+        .chat-welcome-icon {
+            width: 72px;
+            height: 72px;
+
+            margin:
+                0 auto 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,.07),
+                    rgba(124,58,237,.07)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            color: #00f2fe;
+
+            font-size: 26px;
+        }
+
+        .chat-welcome h3 {
+            margin:
+                0 0 7px;
+
+            color: #cbd2dc;
+
+            font-size: 16px;
+        }
+
+        .chat-welcome p {
+            margin: 0;
+
+            color: #687386;
+
+            font-size: 12px;
+
+            line-height: 1.65;
+        }
+
+        .admin-message-row {
+            width: 100%;
+
+            display: flex;
+
+            animation:
+                messageIn .18s ease;
+        }
+
+        @keyframes messageIn {
+
+            from {
+                opacity: 0;
+                transform:
+                    translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform:
+                    translateY(0);
+            }
+        }
+
+        .admin-message-row.customer {
+            justify-content: flex-start;
+        }
+
+        .admin-message-row.admin {
+            justify-content: flex-end;
+        }
+
+        .admin-message-content {
+            position: relative;
+
+            width: fit-content;
+
+            max-width:
+                min(72%,620px);
+
+            min-width: 0;
+        }
+
+        .admin-bubble {
+            position: relative;
+
+            padding:
+                10px 13px;
+
+            border-radius: 17px;
+
+            font-size: 13px;
+
+            line-height: 1.52;
+
+            overflow-wrap: anywhere;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+        }
+
+        .admin-message-row.customer .admin-bubble {
+            background:
+                rgba(255,255,255,.055);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            border-bottom-left-radius: 5px;
+
+            color: #e7ebf1;
+        }
+
+        .admin-message-row.admin .admin-bubble {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,242,254,.17),
+                    rgba(124,58,237,.22)
+                );
+
+            border:
+                1px solid rgba(0,242,254,.13);
+
+            border-bottom-right-radius: 5px;
+
+            color: #fff;
+        }
+
+        .admin-message-time {
+            margin-top: 4px;
+
+            color: #596477;
+
+            font-size: 9px;
+        }
+
+        .admin-message-row.admin .admin-message-time {
+            text-align: right;
+        }
+
+        .chat-attachment {
+            display: block;
+
+            width:
+                min(320px,100%);
+
+            max-width: 100%;
+
+            max-height: 390px;
+
+            height: auto;
+
+            object-fit: contain;
+
+            margin-top: 7px;
+
+            border-radius: 14px;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            background:
+                rgba(0,0,0,.20);
+
+            cursor: zoom-in;
+        }
+
+        .attachment-file {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            margin-top: 7px;
+
+            padding:
+                10px 12px;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.045);
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            color: #aeb7c5;
+
+            font-size: 11px;
+        }
+
+        .attachment-file-icon {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(0,242,254,.08);
+
+            color: #00f2fe;
+        }
+
+        .message-delete-button {
+            position: absolute;
+
+            right: -8px;
+            top: -9px;
+
+            width: 26px;
+            height: 26px;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            border:
+                1px solid rgba(255,255,255,.10);
+
+            border-radius: 50%;
+
+            background:
+                rgba(16,19,27,.96);
+
+            color: #ff728d;
+
+            cursor: pointer;
+
+            z-index: 5;
+
+            font-size: 11px;
+        }
+
+        .admin-message-row:hover
+        .message-delete-button {
+            display: inline-flex;
+        }
+
+        .message-delete-button:hover {
+            background:
+                rgba(255,67,100,.12);
+
+            border-color:
+                rgba(255,67,100,.25);
+
+            color: #ff4d6d;
+        }
+
+        /* =========================================================
+           LOADING
+           ========================================================= */
+
+        .chat-loading {
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 8px;
+
+            color: #778296;
+
+            font-size: 11px;
+
+            padding: 12px;
+        }
+
+        .chat-loading.show {
+            display: flex;
+        }
+
+        .loading-spinner {
+            width: 15px;
+            height: 15px;
+
+            border:
+                2px solid rgba(255,255,255,.10);
+
+            border-top-color:
+                #00f2fe;
+
+            border-radius: 50%;
+
+            animation:
+                spin .75s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform:
+                    rotate(360deg);
+            }
+        }
+
+        /* =========================================================
+           COMPOSER
+           ========================================================= */
+
+        .chat-composer {
+            flex: 0 0 auto;
+
+            padding:
+                12px 16px 15px;
+
+            border-top:
+                1px solid rgba(255,255,255,.065);
+
+            background:
+                rgba(7,10,16,.88);
+
+            backdrop-filter:
+                blur(16px);
+        }
+
+        .attachment-preview {
+            display: none;
+
+            position: relative;
+
+            width: fit-content;
+
+            margin-bottom: 9px;
+        }
+
+        .attachment-preview.show {
+            display: block;
+        }
+
+        .attachment-preview img {
+            width: 74px;
+            height: 74px;
+
+            display: block;
+
+            border-radius: 13px;
+
+            object-fit: cover;
+
+            border:
+                1px solid rgba(255,255,255,.10);
+        }
+
+        .attachment-preview-name {
+            max-width: 170px;
+
+            margin-top: 5px;
+
+            color: #707b8e;
+
+            font-size: 9px;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .remove-preview {
+            position: absolute;
+
+            right: -8px;
+            top: -8px;
+
+            width: 23px;
+            height: 23px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            border-radius: 50%;
+
+            background:
+                #ff4d6d;
+
+            color: #fff;
+
+            cursor: pointer;
+
+            font-size: 14px;
+        }
+
+        .composer-row {
+            width: 100%;
+
+            display: flex;
+            align-items: flex-end;
+
+            gap: 8px;
+        }
+
+        .attachment-label {
+            width: 42px;
+            height: 42px;
+
+            flex: 0 0 42px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #8e99aa;
+
+            cursor: pointer;
+        }
+
+        .attachment-label:hover {
+            color: #00f2fe;
+
+            border-color:
+                rgba(0,242,254,.30);
+
+            background:
+                rgba(0,242,254,.045);
+        }
+
+        .message-input-wrap {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .message-input {
+            width: 100%;
+
+            min-height: 42px;
+            max-height: 125px;
+
+            resize: vertical;
+
+            padding:
+                11px 13px;
+
+            border-radius: 12px;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #fff;
+
+            font-family: inherit;
+
+            font-size: 13px;
+        }
+
+        .message-input::placeholder {
+            color: #596477;
+        }
+
+        .message-input:focus {
+            border-color:
+                rgba(0,242,254,.35);
+
+            background:
+                rgba(255,255,255,.045);
+        }
+
+        .message-input:disabled {
+            cursor: not-allowed;
+
+            opacity: .55;
+        }
+
+        .send-button {
+            width: 44px;
+            height: 44px;
+
+            flex: 0 0 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+
+            border-radius: 12px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00f2fe,
+                    #7c3aed
+                );
+
+            color: #fff;
+
+            cursor: pointer;
+        }
+
+        .send-button:hover:not(:disabled) {
+            transform:
+                translateY(-1px);
+        }
+
+        .send-button:disabled {
+            opacity: .35;
+
+            cursor: not-allowed;
+        }
+
+        .send-button.sending {
+            pointer-events: none;
+        }
+
+        .send-button.sending .send-icon {
+            display: none;
+        }
+
+        .send-button.sending .send-spinner {
+            display: block;
+        }
+
+        .send-spinner {
+            display: none;
+
+            width: 16px;
+            height: 16px;
+
+            border:
+                2px solid rgba(255,255,255,.30);
+
+            border-top-color:
+                #fff;
+
+            border-radius: 50%;
+
+            animation:
+                spin .7s linear infinite;
+        }
+
+        .chat-error {
+            display: none;
+
+            margin-top: 8px;
+
+            padding:
+                8px 11px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,70,100,.08);
+
+            border:
+                1px solid rgba(255,70,100,.15);
+
+            color: #ff839a;
+
+            font-size: 10px;
+        }
+
+        .chat-error.show {
+            display: block;
+        }
+
+        /* =========================================================
+           IMAGE VIEWER
+           ========================================================= */
+
+        .admin-image-viewer {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 99999;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+            background:
+                rgba(0,0,0,.92);
+
+            backdrop-filter:
+                blur(15px);
+        }
+
+        .admin-image-viewer.show {
+            display: flex;
+        }
+
+        .admin-image-viewer img {
+            max-width: 94vw;
+            max-height: 88vh;
+
+            object-fit: contain;
+
+            border-radius: 16px;
+        }
+
+        .admin-image-close {
+            position: fixed;
+
+            right: 20px;
+            top: 20px;
+
+            width: 44px;
+            height: 44px;
+
+            border:
+                1px solid rgba(255,255,255,.12);
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.10);
+
+            color: #fff;
+
+            cursor: pointer;
+
+            font-size: 23px;
+        }
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        .mobile-chat-backdrop {
+            display: none;
+        }
+
+        @media (max-width:900px) {
+
+            .admin-chat-page {
+                padding: 13px;
+            }
+
+            .admin-chat-container {
+                grid-template-columns:
+                    290px minmax(0,1fr);
+
+                border-radius: 18px;
+            }
+
+            .admin-message-content {
+                max-width: 78%;
+            }
+        }
+
+        @media (max-width:680px) {
+
+            body {
+                overflow: hidden;
+            }
+
+            .admin-chat-page {
+                padding: 0;
+
+                height: 100dvh;
+                min-height: 100dvh;
+            }
+
+            .chat-page-header {
+                height: 58px;
+
+                margin: 0;
+
+                padding:
+                    8px 11px;
+
+                background:
+                    rgba(7,10,16,.96);
+
+                border-bottom:
+                    1px solid rgba(255,255,255,.07);
+            }
+
+            .chat-page-left {
+                gap: 7px;
+            }
+
+            .back-dashboard-button {
+                width: 35px;
+                height: 35px;
+
+                flex-basis: 35px;
+
+                border-radius: 10px;
+            }
+
+            .chat-page-title {
+                gap: 9px;
+            }
+
+            .chat-page-title-icon {
+                width: 37px;
+                height: 37px;
+
+                flex-basis: 37px;
+
+                border-radius: 11px;
+
+                font-size: 16px;
+            }
+
+            .chat-page-title h1 {
+                font-size: 16px;
+            }
+
+            .chat-page-title p {
+                display: none;
+            }
+
+            .chat-status {
+                padding:
+                    6px 9px;
+
+                font-size: 9px;
+            }
+
+            .admin-chat-container {
+                position: relative;
+
+                height:
+                    calc(100dvh - 58px);
+
+                min-height: 0;
+
+                display: block;
+
+                border: 0;
+
+                border-radius: 0;
+
+                box-shadow: none;
+            }
+
+            .conversations-panel {
+                position: absolute;
+
+                inset:
+                    0 auto 0 0;
+
+                width:
+                    min(88vw,350px);
+
+                z-index: 100;
+
+                transform:
+                    translateX(-105%);
+
+                transition:
+                    transform .25s ease;
+
+                border-right:
+                    1px solid rgba(255,255,255,.09);
+
+                box-shadow:
+                    15px 0 60px rgba(0,0,0,.45);
+            }
+
+            .conversations-panel.mobile-open {
+                transform:
+                    translateX(0);
+            }
+
+            .mobile-chat-backdrop {
+                position: absolute;
+
+                inset: 0;
+
+                z-index: 90;
+
+                display: block;
+
+                background:
+                    rgba(0,0,0,.55);
+
+                backdrop-filter:
+                    blur(3px);
+
+                opacity: 0;
+
+                pointer-events: none;
+
+                transition:
+                    opacity .25s ease;
+            }
+
+            .mobile-chat-backdrop.show {
+                opacity: 1;
+
+                pointer-events: auto;
+            }
+
+            .chat-panel {
+                width: 100%;
+                height: 100%;
+            }
+
+            .chat-header {
+                min-height: 62px;
+                height: 62px;
+
+                padding:
+                    9px 10px;
+            }
+
+            .chat-header-avatar-wrap {
+                width: 44px;
+                height: 44px;
+
+                flex-basis: 44px;
+            }
+
+            .chat-header-avatar {
+                width: 38px;
+                height: 38px;
+
+                flex-basis: 38px;
+
+                font-size: 12px;
+            }
+
+            .chat-header-info h3 {
+                font-size: 13px;
+            }
+
+            .chat-header-info p {
+                font-size: 9px;
+            }
+
+            .chat-customer-presence {
+                font-size: 8px;
+            }
+
+            .chat-icon-button {
+                width: 35px;
+                height: 35px;
+
+                flex-basis: 35px;
+            }
+
+            .chat-messages {
+                padding:
+                    15px 10px;
+
+                gap: 9px;
+            }
+
+            .admin-message-content {
+                max-width: 84%;
+            }
+
+            .admin-bubble {
+                padding:
+                    9px 11px;
+
+                font-size: 12px;
+
+                border-radius: 15px;
+            }
+
+            .chat-attachment {
+                width:
+                    min(245px,100%);
+
+                max-width: 245px;
+
+                max-height: 310px;
+
+                border-radius: 12px;
+            }
+
+            .message-delete-button {
+                display: inline-flex;
+
+                width: 24px;
+                height: 24px;
+
+                right: -6px;
+                top: -7px;
+            }
+
+            .chat-composer {
+                padding:
+                    8px 9px 10px;
+            }
+
+            .composer-row {
+                gap: 6px;
+            }
+
+            .attachment-label {
+                width: 39px;
+                height: 39px;
+
+                flex-basis: 39px;
+            }
+
+            .message-input {
+                min-height: 39px;
+                max-height: 105px;
+
+                padding:
+                    10px 11px;
+
+                font-size: 12px;
+            }
+
+            .send-button {
+                width: 40px;
+                height: 40px;
+
+                flex-basis: 40px;
+            }
+
+            .attachment-preview img {
+                width: 65px;
+                height: 65px;
+            }
+
+            .admin-image-viewer {
+                padding: 15px;
+            }
+
+            .admin-image-viewer img {
+                max-width: 96vw;
+                max-height: 82vh;
+            }
+
+            .admin-image-close {
+                top: 12px;
+                right: 12px;
+
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width:380px) {
+
+            .chat-status {
+                display: none;
+            }
+
+            .admin-message-content {
+                max-width: 88%;
+            }
+
+            .chat-page-title h1 {
+                font-size: 15px;
+            }
+
+            .conversations-panel {
+                width: 92vw;
+            }
+
+            .conversation-filters {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            #deleteConversationButton {
+                display: inline-flex;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<main class="admin-chat-page">
+
+    <!-- =========================================================
+         PAGE HEADER
+         ========================================================= -->
+
+    <header class="chat-page-header">
+
+        <div class="chat-page-left">
+
+            <button
+                type="button"
+                class="back-dashboard-button"
+                id="backToDashboardButton"
+                title="Back to Dashboard"
+                aria-label="Back to Dashboard"
+            >
+                ←
+            </button>
+
+            <div class="chat-page-title">
+
+                <div class="chat-page-title-icon">
+                    💬
+                </div>
+
+                <div class="chat-title-text">
+
+                    <h1>
+                        Customer Chat
+                    </h1>
+
+                    <p>
+                        Manage customer conversations in real time
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="chat-status connecting">
+
+            <span
+                class="chat-status-dot"
+                id="connectionStatusDot"
+            ></span>
+
+            <span id="connectionStatus">
+                Connecting...
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         CHAT SYSTEM
+         ========================================================= -->
+
+    <section class="admin-chat-container">
+
+        <div
+            class="mobile-chat-backdrop"
+            id="mobileChatBackdrop"
+        ></div>
+
+
+        <!-- =====================================================
+             CUSTOMER LIST
+             ===================================================== -->
+
+        <aside
+            class="conversations-panel"
+            id="conversationsPanel"
+        >
+
+            <div class="conversations-header">
+
+                <div class="conversations-title-row">
+
+                    <div class="conversations-title-left">
+
+                        <h2>
+                            Customers
+                        </h2>
+
+                        <span
+                            class="conversation-count"
+                            id="conversationCount"
+                        >
+                            0
+                        </span>
+
+                    </div>
+
+                    <a
+                        href="admin.html"
+                        class="dashboard-link"
+                    >
+                        ← Dashboard
+                    </a>
+
+                </div>
+
+
+                <div class="search-box">
+
+                    <span class="search-box-icon">
+                        🔎
+                    </span>
+
+                    <input
+                        type="search"
+                        id="conversationSearch"
+                        placeholder="Search customer..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="conversation-filters">
+
+                    <button
+                        type="button"
+                        class="filter-button active"
+                        data-filter="all"
+                    >
+                        All
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-filter="unread"
+                    >
+                        Unread
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-filter="active"
+                    >
+                        Active
+                    </button>
+
+                    <button
+                        type="button"
+                        class="filter-button"
+                        data-filter="no-reply"
+                    >
+                        No Reply
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="conversation-list"
+                id="conversationList"
+            >
+
+                <div
+                    class="chat-loading"
+                    id="conversationLoading"
+                >
+
+                    <span class="loading-spinner"></span>
+
+                    Loading customers...
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- =====================================================
+             CHAT
+             ===================================================== -->
+
+        <section class="chat-panel">
+
+            <header class="chat-header">
+
+                <button
+                    type="button"
+                    class="chat-icon-button"
+                    id="mobileConversationsButton"
+                    title="View customers"
+                    aria-label="View customers"
+                >
+                    ☰
+                </button>
+
+
+                <div
+                    class="chat-header-avatar-wrap"
+                    id="chatHeaderAvatarWrap"
+                >
+
+                    <div
+                        class="chat-header-avatar status-unknown"
+                        id="chatHeaderAvatar"
+                    >
+                        👤
+                    </div>
+
+                </div>
+
+
+                <div class="chat-header-info">
+
+                    <h3 id="chatCustomerName">
+                        Select a customer
+                    </h3>
+
+                    <p id="chatCustomerEmail">
+                        Choose a customer from the list
+                    </p>
+
+                    <div
+                        class="chat-customer-presence offline"
+                        id="chatCustomerPresence"
+                    >
+
+                        <span class="presence-dot"></span>
+
+                        <span id="chatCustomerPresenceText">
+                            Offline
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chat-header-actions">
+
+                    <!-- DELETE ENTIRE CONVERSATION -->
+
+                    <button
+                        type="button"
+                        class="chat-icon-button delete-chat-button"
+                        id="deleteConversationButton"
+                        title="Delete entire conversation"
+                        aria-label="Delete entire conversation"
+                        disabled
+                    >
+                        🗑
+                    </button>
+
+                    <!-- REFRESH -->
+
+                    <button
+                        type="button"
+                        class="chat-icon-button"
+                        id="refreshChatButton"
+                        title="Refresh"
+                        aria-label="Refresh chat"
+                    >
+                        ↻
+                    </button>
+
+                </div>
+
+            </header>
+
+
+            <div
+                class="chat-messages"
+                id="adminMessagesContainer"
+                aria-live="polite"
+            >
+
+                <div
+                    class="chat-welcome"
+                    id="adminChatWelcome"
+                >
+
+                    <div class="chat-welcome-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        Customer Messages
+                    </h3>
+
+                    <p>
+                        Select a customer from the list
+                        to start chatting.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="chat-loading"
+                id="adminChatLoading"
+            >
+
+                <span class="loading-spinner"></span>
+
+                Loading messages...
+
+            </div>
+
+
+            <div class="chat-composer">
+
+                <div
+                    class="attachment-preview"
+                    id="adminAttachmentPreview"
+                >
+
+                    <img
+                        id="adminPreviewImage"
+                        src=""
+                        alt="Selected image"
+                    >
+
+                    <div
+                        class="attachment-preview-name"
+                        id="adminPreviewName"
+                    ></div>
+
+                    <button
+                        type="button"
+                        class="remove-preview"
+                        id="adminRemoveAttachment"
+                        aria-label="Remove attachment"
+                        title="Remove image"
+                    >
+                        ×
+                    </button>
+
+                </div>
+
+
+                <div class="composer-row">
+
+                    <label
+                        class="attachment-label"
+                        for="adminAttachmentInput"
+                        title="Attach image"
+                    >
+                        📎
+                    </label>
+
+                    <input
+                        type="file"
+                        id="adminAttachmentInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+
+                    <div class="message-input-wrap">
+
+                        <textarea
+                            id="adminMessageInput"
+                            class="message-input"
+                            placeholder="Select a customer first..."
+                            rows="1"
+                            disabled
+                            spellcheck="true"
+                            autocomplete="off"
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="send-button"
+                        id="adminSendButton"
+                        disabled
+                        title="Send message"
+                        aria-label="Send message"
+                    >
+
+                        <span class="send-icon">
+                            ➤
+                        </span>
+
+                        <span class="send-spinner"></span>
+
+                    </button>
+
+                </div>
+
+
+                <div
+                    class="chat-error"
+                    id="adminChatError"
+                ></div>
+
+            </div>
+
+        </section>
+
+    </section>
+
+</main>
+
+
+<!-- =============================================================
+     IMAGE VIEWER
+     ============================================================= -->
+
+<div
+    class="admin-image-viewer"
+    id="adminImageViewer"
+>
+
+    <button
+        type="button"
+        class="admin-image-close"
+        id="adminImageClose"
+        aria-label="Close image"
+        title="Close"
+    >
+        ×
+    </button>
+
+    <img
+        id="adminViewerImage"
+        src=""
+        alt="Full image"
+    >
+
+</div>
+
+
+<!-- =============================================================
+     BROWSER CONNECTION STATUS
+     ============================================================= -->
+
+<script>
+
+(() => {
+
+    const status =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+    const wrapper =
+        status?.closest(
+            ".chat-status"
+        );
+
+    function setBrowserStatus(online) {
+
+        if (!status || !wrapper) {
+            return;
+        }
+
+        wrapper.classList.remove(
+            "online",
+            "offline",
+            "connecting"
+        );
+
+        status.textContent =
+            online
+                ? "Online"
+                : "Offline";
+
+        wrapper.classList.add(
+            online
+                ? "online"
+                : "offline"
+        );
+    }
+
+    window.addEventListener(
+        "online",
+        () => {
+            setBrowserStatus(true);
+        }
+    );
+
+    window.addEventListener(
+        "offline",
+        () => {
+            setBrowserStatus(false);
+        }
+    );
+
+    if (!navigator.onLine) {
+        setBrowserStatus(false);
+    }
+
+})();
+
+</script>
+
+
+<!-- =============================================================
+     ADMIN CHAT MODULE
+     ============================================================= -->
+
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+
+/* =========================================================
+   CONFIG
+   ========================================================= */
+
+const CHAT_BUCKET =
+    "chat-attachments";
+
+const MAX_FILE_SIZE =
+    5 * 1024 * 1024;
+
+const ALLOWED_IMAGE_TYPES = [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+];
+
+const ACTIVE_WINDOW_MINUTES =
+    30;
+
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentAdmin = null;
+
+let customers = [];
+
+let conversations = [];
+
+let selectedCustomer = null;
+
+let selectedConversation = null;
+
+let selectedFile = null;
+
+let previewObjectURL = null;
+
+let conversationChannel = null;
+
+let messageChannel = null;
+
+let activityRefreshTimer = null;
+let profileRealtimeChannel = null;
+
+let isSending = false;
+
+let customerPresence =
+    new Set();
+
+/*
+   IMPORTANT:
+
+   This prevents a stale realtime UPDATE/INSERT
+   from bringing a deleted conversation back.
+*/
+const deletedConversationIds =
+    new Set();
+
+
+/* =========================================================
+   DOM
+   ========================================================= */
+
+const conversationList =
+    document.getElementById(
+        "conversationList"
+    );
+
+const conversationLoading =
+    document.getElementById(
+        "conversationLoading"
+    );
+
+const conversationSearch =
+    document.getElementById(
+        "conversationSearch"
+    );
+
+const conversationCount =
+    document.getElementById(
+        "conversationCount"
+    );
+
+const chatCustomerName =
+    document.getElementById(
+        "chatCustomerName"
+    );
+
+const chatCustomerEmail =
+    document.getElementById(
+        "chatCustomerEmail"
+    );
+
+const chatCustomerPresence =
+    document.getElementById(
+        "chatCustomerPresence"
+    );
+
+const chatCustomerPresenceText =
+    document.getElementById(
+        "chatCustomerPresenceText"
+    );
+
+const chatHeaderAvatar =
+    document.getElementById(
+        "chatHeaderAvatar"
+    );
+
+const adminMessagesContainer =
+    document.getElementById(
+        "adminMessagesContainer"
+    );
+
+const adminChatWelcome =
+    document.getElementById(
+        "adminChatWelcome"
+    );
+
+const adminChatLoading =
+    document.getElementById(
+        "adminChatLoading"
+    );
+
+const adminMessageInput =
+    document.getElementById(
+        "adminMessageInput"
+    );
+
+const adminSendButton =
+    document.getElementById(
+        "adminSendButton"
+    );
+
+const adminAttachmentInput =
+    document.getElementById(
+        "adminAttachmentInput"
+    );
+
+const adminAttachmentPreview =
+    document.getElementById(
+        "adminAttachmentPreview"
+    );
+
+const adminPreviewImage =
+    document.getElementById(
+        "adminPreviewImage"
+    );
+
+const adminPreviewName =
+    document.getElementById(
+        "adminPreviewName"
+    );
+
+const adminRemoveAttachment =
+    document.getElementById(
+        "adminRemoveAttachment"
+    );
+
+const adminChatError =
+    document.getElementById(
+        "adminChatError"
+    );
+
+const refreshChatButton =
+    document.getElementById(
+        "refreshChatButton"
+    );
+
+const deleteConversationButton =
+    document.getElementById(
+        "deleteConversationButton"
+    );
+
+const adminImageViewer =
+    document.getElementById(
+        "adminImageViewer"
+    );
+
+const adminViewerImage =
+    document.getElementById(
+        "adminViewerImage"
+    );
+
+const adminImageClose =
+    document.getElementById(
+        "adminImageClose"
+    );
+
+const conversationsPanel =
+    document.getElementById(
+        "conversationsPanel"
+    );
+
+const mobileChatBackdrop =
+    document.getElementById(
+        "mobileChatBackdrop"
+    );
+
+const mobileConversationsButton =
+    document.getElementById(
+        "mobileConversationsButton"
+    );
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+
+async function init() {
+
+    setupEvents();
+
+    setConnectionStatus(
+        "connecting"
+    );
+
+    try {
+
+        await checkAdminSession();
+
+        await loadCustomersAndConversations();
+
+        await refreshCustomerActivity();
+
+        setupProfileRealtime();
+
+        startActivityRefresh();
+
+        setupConversationRealtime();
+
+        renderCustomerList(
+            conversationSearch?.value || ""
+        );
+
+        setConnectionStatus(
+            "online"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "ADMIN CHAT INIT ERROR:",
+            error
+        );
+
+        setConnectionStatus(
+            "offline"
+        );
+
+        showError(
+            friendlyError(error)
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ADMIN SESSION
+   ========================================================= */
+
+async function checkAdminSession() {
+
+    const {
+        data,
+        error
+    } = await supabase.auth.getUser();
+
+    if (error) {
+        throw error;
+    }
+
+    const user =
+        data?.user;
+
+    if (!user) {
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+    currentAdmin = user;
+
+    /*
+       Verify admin role.
+    */
+
+    const {
+        data: profile,
+        error: profileError
+    } = await supabase
+        .from("profiles")
+        .select(
+            "id,email,role,status"
+        )
+        .eq(
+            "id",
+            user.id
+        )
+        .maybeSingle();
+
+    if (profileError) {
+        throw profileError;
+    }
+
+    if (
+        !profile ||
+        profile.role !== "admin" ||
+        profile.status !== "approved"
+    ) {
+
+        alert(
+            "You are not authorized to access Admin Chat."
+        );
+
+        window.location.href =
+            "index.html";
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   LOAD CUSTOMERS + CONVERSATIONS
+   ========================================================= */
+
+async function loadCustomersAndConversations() {
+
+    showConversationLoading(true);
+
+    try {
+
+        /*
+           Customers are taken from profiles.
+
+           We only use customer accounts here.
+        */
+
+        const {
+            data: customerRows,
+            error: customerError
+        } = await supabase
+            .from("profiles")
+            .select(
+                "id,email,full_name,role,status,avatar_url,last_login"
+            )
+            .eq(
+                "role",
+                "customer"
+            )
+            .order(
+                "full_name",
+                {
+                    ascending: true
+                }
+            );
+
+        if (customerError) {
+            throw customerError;
+        }
+
+        customers =
+            customerRows || [];
+
+
+        /*
+           Load conversations.
+
+           IMPORTANT:
+           There is NO admin_id because your table
+           does not have admin_id.
+        */
+
+        const {
+            data: conversationRows,
+            error: conversationError
+        } = await supabase
+            .from("chat_conversations")
+            .select("*")
+            .order(
+                "last_message_at",
+                {
+                    ascending: false
+                }
+            );
+
+        if (conversationError) {
+            throw conversationError;
+        }
+
+
+        conversations =
+            (conversationRows || [])
+                .filter(
+                    conversation =>
+                        !deletedConversationIds.has(
+                            conversation.id
+                        )
+                )
+                .map(
+                    conversation =>
+                        normalizeConversation(
+                            conversation
+                        )
+                );
+
+
+        /*
+           Merge profile data.
+        */
+
+        conversations =
+            conversations.map(
+                conversation => {
+
+                    const customer =
+                        customers.find(
+                            item =>
+                                item.id ===
+                                conversation.customer_id
+                        );
+
+                    return {
+                        ...conversation,
+                        customer:
+                            customer || null
+                    };
+
+                }
+            );
+
+    } finally {
+
+        showConversationLoading(false);
+
+    }
+
+}
+
+
+/* =========================================================
+   NORMALIZE CONVERSATION
+   ========================================================= */
+
+function normalizeConversation(
+    conversation
+) {
+
+    const customer =
+        customers.find(
+            item =>
+                item.id ===
+                conversation.customer_id
+        ) || null;
+
+    return {
+        ...conversation,
+        customer
+    };
+
+}
+
+
+/* =========================================================
+   RENDER CUSTOMER LIST
+   ========================================================= */
+
+function renderCustomerList(
+    searchTerm = ""
+) {
+
+    if (!conversationList) {
+        return;
+    }
+
+    const activeFilter =
+        document.querySelector(
+            ".filter-button.active"
+        )?.dataset.filter ||
+        "all";
+
+    const search =
+        String(searchTerm)
+            .trim()
+            .toLowerCase();
+
+
+    /*
+       Show ALL customers.
+
+       A customer without a conversation
+       is still visible.
+
+       This is important because we no longer
+       automatically recreate a deleted conversation.
+    */
+
+    let list =
+        customers.map(
+            customer => {
+
+                const conversation =
+                    conversations.find(
+                        item =>
+                            item.customer_id ===
+                            customer.id
+                    );
+
+                return {
+                    customer,
+                    conversation
+                };
+
+            }
+        );
+
+
+    /*
+       SEARCH
+    */
+
+    if (search) {
+
+        list =
+            list.filter(
+                item => {
+
+                    const customer =
+                        item.customer;
+
+                    const conversation =
+                        item.conversation;
+
+                    const text = [
+                        customer?.full_name,
+                        customer?.email,
+                        conversation?.last_message
+                    ]
+                        .filter(Boolean)
+                        .join(" ")
+                        .toLowerCase();
+
+                    return text.includes(
+                        search
+                    );
+
+                }
+            );
+
+    }
+
+
+    /*
+       FILTER
+    */
+
+    if (activeFilter === "unread") {
+
+        list =
+            list.filter(
+                item =>
+                    Number(
+                        item.conversation
+                            ?.unread_for_admin || 0
+                    ) > 0
+            );
+
+    }
+
+    if (activeFilter === "active") {
+
+        list =
+            list.filter(
+                item =>
+                    item.conversation &&
+                    item.conversation.status ===
+                        "open"
+            );
+
+    }
+
+    if (activeFilter === "no-reply") {
+
+        list =
+            list.filter(
+                item =>
+                    item.conversation &&
+                    item.conversation.last_sender_type ===
+                        "admin"
+            );
+
+    }
+
+
+    /*
+       Sort:
+       1. customers with conversation
+       2. latest conversation
+       3. customer name
+    */
+
+    list.sort(
+        (a,b) => {
+
+            const aTime =
+                a.conversation?.last_message_at
+                    ? new Date(
+                        a.conversation.last_message_at
+                    ).getTime()
+                    : 0;
+
+            const bTime =
+                b.conversation?.last_message_at
+                    ? new Date(
+                        b.conversation.last_message_at
+                    ).getTime()
+                    : 0;
+
+            if (aTime !== bTime) {
+                return bTime - aTime;
+            }
+
+            return String(
+                a.customer?.full_name || ""
+            ).localeCompare(
+                String(
+                    b.customer?.full_name || ""
+                )
+            );
+
+        }
+    );
+
+
+    conversationCount.textContent =
+        customers.length;
+
+
+    if (!list.length) {
+
+        conversationList.innerHTML = `
+            <div class="empty-conversations">
+                <div class="empty-conversations-icon">
+                    💬
+                </div>
+
+                <strong>
+                    No customers found
+                </strong>
+
+                <span>
+                    Try another search or filter.
+                </span>
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    conversationList.innerHTML =
+        list
+            .map(
+                item =>
+                    renderCustomerItem(
+                        item.customer,
+                        item.conversation
+                    )
+            )
+            .join("");
+
+
+    /*
+       Re-apply active selection.
+    */
+
+    if (selectedCustomer) {
+
+        const active =
+            conversationList.querySelector(
+                `[data-customer-id="${selectedCustomer.id}"]`
+            );
+
+        active?.classList.add(
+            "active"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CUSTOMER LIST ITEM
+   ========================================================= */
+
+function renderCustomerItem(
+    customer,
+    conversation
+) {
+
+    const customerId =
+        customer.id;
+
+    const name =
+        customer.full_name ||
+        customer.email ||
+        "Customer";
+
+    const email =
+        customer.email ||
+        "";
+
+    const initials =
+        getInitials(name);
+
+    const online =
+        isCustomerActive(customer);
+
+    const presenceClass =
+        online
+            ? "online"
+            : "offline";
+
+    const presenceText =
+        online
+            ? "Online"
+            : "Offline";
+
+    const avatar =
+        customer.avatar_url
+            ? `
+                <img
+                    src="${escapeAttribute(
+                        customer.avatar_url
+                    )}"
+                    alt=""
+                >
+            `
+            : escapeHTML(
+                initials
+            );
+
+    const lastMessage =
+        conversation?.last_message
+            ? escapeHTML(
+                conversation.last_message
+            )
+            : `<span class="no-chat-label">
+                    No conversation yet
+               </span>`;
+
+    const unread =
+        Number(
+            conversation?.unread_for_admin || 0
+        );
+
+    const time =
+        conversation?.last_message_at
+            ? formatConversationTime(
+                conversation.last_message_at
+            )
+            : "";
+
+    return `
+        <div
+            class="conversation-item"
+            data-customer-id="${escapeAttribute(
+                customerId
+            )}"
+            data-conversation-id="${
+                conversation?.id || ""
+            }"
+        >
+
+            <div class="customer-avatar-wrap">
+
+                <div
+                    class="customer-avatar status-${presenceClass}"
+                    title="${presenceText}"
+                    data-online="${online}"
+                >
+                    ${avatar}
+                </div>
+
+            </div>
+
+
+            <div class="conversation-info">
+
+                <div class="conversation-top">
+
+                    <div class="customer-name">
+                        ${escapeHTML(name)}
+                    </div>
+
+                    <div class="conversation-time">
+                        ${escapeHTML(time)}
+                    </div>
+
+                </div>
+
+
+                <div class="conversation-email">
+                    ${escapeHTML(email)}
+                </div>
+
+
+                <div
+                    class="
+                        customer-presence-label
+                        ${presenceClass}
+                    "
+                >
+
+                    <span class="presence-dot"></span>
+
+                    <span>
+                        ${presenceText}
+                    </span>
+
+                </div>
+
+
+                <div class="conversation-preview-row">
+
+                    <div class="conversation-preview">
+                        ${lastMessage}
+                    </div>
+
+                    ${
+                        unread > 0
+                            ? `
+                                <span class="unread-badge">
+                                    ${unread > 99 ? "99+" : unread}
+                                </span>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   OPEN CUSTOMER
+   ========================================================= */
+
+async function openCustomerChat(
+    customerId
+) {
+
+    clearError();
+
+    const customer =
+        customers.find(
+            item =>
+                item.id === customerId
+        );
+
+    if (!customer) {
+        return;
+    }
+
+    selectedCustomer =
+        customer;
+
+
+    /*
+       IMPORTANT FIX:
+
+       DO NOT CREATE A CONVERSATION JUST
+       BECAUSE THE ADMIN CLICKED A CUSTOMER.
+
+       This is one of the reasons a deleted
+       conversation can appear to come back.
+
+       Conversation is now created ONLY
+       when a message is actually sent.
+    */
+
+    selectedConversation =
+        conversations.find(
+            conversation =>
+                conversation.customer_id ===
+                customer.id
+        ) || null;
+
+
+    await removeMessageRealtime();
+
+
+    updateSelectedCustomerUI();
+
+    enableComposer();
+
+
+    if (selectedConversation) {
+
+        await loadMessages(
+            selectedConversation.id
+        );
+
+        await markConversationAsRead(
+            selectedConversation.id
+        );
+
+        setupMessageRealtime(
+            selectedConversation.id
+        );
+
+    } else {
+
+        showWelcomeForCustomer();
+
+    }
+
+
+    renderCustomerList(
+        conversationSearch?.value || ""
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE HEADER
+   ========================================================= */
+
+function updateSelectedCustomerUI() {
+
+    if (!selectedCustomer) {
+
+        chatCustomerName.textContent =
+            "Select a customer";
+
+        chatCustomerEmail.textContent =
+            "Choose a customer from the list";
+
+        setHeaderPresence(
+            false
+        );
+
+        chatHeaderAvatar.className =
+            "chat-header-avatar status-unknown";
+
+        chatHeaderAvatar.innerHTML =
+            "👤";
+
+        deleteConversationButton.disabled =
+            true;
+
+        return;
+
+    }
+
+
+    const name =
+        selectedCustomer.full_name ||
+        selectedCustomer.email ||
+        "Customer";
+
+    chatCustomerName.textContent =
+        name;
+
+    chatCustomerEmail.textContent =
+        selectedCustomer.email ||
+        "";
+
+
+    const online =
+        isCustomerActive(selectedCustomer);
+
+    setHeaderPresence(
+        online
+    );
+
+
+    const avatar =
+        selectedCustomer.avatar_url
+            ? `
+                <img
+                    src="${escapeAttribute(
+                        selectedCustomer.avatar_url
+                    )}"
+                    alt=""
+                >
+            `
+            : escapeHTML(
+                getInitials(name)
+            );
+
+    chatHeaderAvatar.innerHTML =
+        avatar;
+
+    chatHeaderAvatar.className =
+        `chat-header-avatar status-${
+            online
+                ? "online"
+                : "offline"
+        }`;
+
+
+    deleteConversationButton.disabled =
+        !selectedConversation;
+
+}
+
+
+/* =========================================================
+   HEADER ONLINE/OFFLINE
+   ========================================================= */
+
+function setHeaderPresence(
+    online
+) {
+
+    chatCustomerPresence.classList.remove(
+        "online",
+        "offline"
+    );
+
+    chatCustomerPresence.classList.add(
+        online
+            ? "online"
+            : "offline"
+    );
+
+    chatCustomerPresenceText.textContent =
+        online
+            ? "Online"
+            : "Offline";
+
+}
+
+
+/* =========================================================
+   WELCOME FOR CUSTOMER WITHOUT CONVERSATION
+   ========================================================= */
+
+function showWelcomeForCustomer() {
+
+    adminMessagesContainer.innerHTML = `
+        <div
+            class="chat-welcome"
+            id="adminChatWelcome"
+        >
+
+            <div class="chat-welcome-icon">
+                💬
+            </div>
+
+            <h3>
+                No conversation yet
+            </h3>
+
+            <p>
+                This customer has no active
+                conversation. Send a message
+                below to start a new chat.
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* =========================================================
+   LOAD MESSAGES
+   ========================================================= */
+
+async function loadMessages(
+    conversationId
+) {
+
+    showMessageLoading(true);
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("chat_messages")
+            .select("*")
+            .eq(
+                "conversation_id",
+                conversationId
+            )
+            .order(
+                "created_at",
+                {
+                    ascending: true
+                }
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        renderMessages(
+            data || []
+        );
+
+    } finally {
+
+        showMessageLoading(false);
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER MESSAGES
+   ========================================================= */
+
+function renderMessages(
+    messages
+) {
+
+    if (!messages.length) {
+
+        showWelcomeForCustomer();
+
+        return;
+
+    }
+
+    adminMessagesContainer.innerHTML = "";
+
+    messages.forEach(
+        message => {
+
+            adminMessagesContainer.appendChild(
+                createMessageElement(
+                    message
+                )
+            );
+
+        }
+    );
+
+    scrollMessagesToBottom();
+
+}
+
+
+/* =========================================================
+   CREATE MESSAGE ELEMENT
+   ========================================================= */
+
+function getPublicAttachmentURL(path) {
+
+    if (!path) {
+        return "";
+    }
+
+    try {
+        const {
+            data
+        } = supabase.storage
+            .from(CHAT_BUCKET)
+            .getPublicUrl(path);
+
+        return data?.publicUrl || "";
+
+    } catch (error) {
+
+        console.warn(
+            "GET ATTACHMENT URL ERROR:",
+            error
+        );
+
+        return "";
+
+    }
+
+}
+
+
+function isUsableAttachmentURL(url) {
+
+    if (!url) {
+        return false;
+    }
+
+    return (
+        /^https?:\/\//i.test(url) ||
+        url.startsWith("data:") ||
+        url.startsWith("blob:")
+    );
+
+}
+
+
+function createMessageElement(
+    message
+) {
+
+    const isAdmin =
+        message.sender_type === "admin";
+
+    const row =
+        document.createElement("div");
+
+    row.className =
+        `admin-message-row ${
+            isAdmin
+                ? "admin"
+                : "customer"
+        }`;
+
+    if (message.id) {
+        row.dataset.messageId =
+            message.id;
+    }
+
+    const content =
+        document.createElement("div");
+
+    content.className =
+        "admin-message-content";
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "admin-bubble";
+
+    if (message.message) {
+
+        const text =
+            document.createElement("div");
+
+        text.textContent =
+            message.message;
+
+        bubble.appendChild(
+            text
+        );
+
+    }
+
+    /*
+       Attachment / image
+    */
+
+    const attachmentURL =
+        message.attachment_url ||
+        getPublicAttachmentURL(
+            message.attachment_path
+        );
+
+    const attachmentType =
+        String(
+            message.attachment_type ||
+            ""
+        ).toLowerCase();
+
+    const attachmentName =
+        message.attachment_name ||
+        "";
+
+    const looksLikeImage =
+        attachmentType.startsWith(
+            "image/"
+        ) ||
+        /\.(jpe?g|png|webp|gif|bmp|avif)(?:[?#].*)?$/i.test(
+            attachmentName ||
+            attachmentURL ||
+            ""
+        );
+
+    if (attachmentURL) {
+
+        if (looksLikeImage) {
+
+            const attachmentWrapper =
+                document.createElement("div");
+
+            attachmentWrapper.className =
+                "attachment-wrapper";
+
+            attachmentWrapper.style.position =
+                "relative";
+
+            const image =
+                document.createElement("img");
+
+            image.className =
+                "chat-attachment";
+
+            image.src =
+                attachmentURL;
+
+            image.alt =
+                attachmentName ||
+                "Customer sent image";
+
+            image.loading =
+                "lazy";
+
+            image.decoding =
+                "async";
+
+            image.addEventListener(
+                "click",
+                () => {
+                    openImageViewer(
+                        image.src
+                    );
+                }
+            );
+
+            image.addEventListener(
+                "error",
+                async () => {
+
+                    if (
+                        !message.attachment_path ||
+                        image.dataset.retried === "true"
+                    ) {
+                        return;
+                    }
+
+                    image.dataset.retried =
+                        "true";
+
+                    try {
+
+                        const {
+                            data: signedData,
+                            error: signedError
+                        } = await supabase.storage
+                            .from(CHAT_BUCKET)
+                            .createSignedUrl(
+                                message.attachment_path,
+                                60 * 60
+                            );
+
+                        if (
+                            signedError ||
+                            !signedData?.signedUrl
+                        ) {
+                            throw signedError ||
+                                new Error(
+                                    "Unable to create signed image URL."
+                                );
+                        }
+
+                        image.src =
+                            signedData.signedUrl;
+
+                    } catch (error) {
+
+                        console.warn(
+                            "CHAT IMAGE LOAD ERROR:",
+                            error
+                        );
+
+                        image.alt =
+                            "Image unavailable";
+
+                    }
+
+                },
+                { once: true }
+            );
+
+            attachmentWrapper.appendChild(
+                image
+            );
+
+            bubble.appendChild(
+                attachmentWrapper
+            );
+
+        } else {
+
+            const file =
+                document.createElement("div");
+
+            file.className =
+                "attachment-file";
+
+            file.innerHTML = `
+                <span class="attachment-file-icon">
+                    📎
+                </span>
+
+                <span>
+                    ${escapeHTML(
+                        attachmentName ||
+                        "Attachment"
+                    )}
+                </span>
+            `;
+
+            bubble.appendChild(
+                file
+            );
+
+        }
+
+    }
+
+    /*
+       Delete entire individual message.
+       Works for BOTH customer and admin messages.
+    */
+
+    if (
+        message.id
+    ) {
+
+        const deleteButton =
+            document.createElement("button");
+
+        deleteButton.type =
+            "button";
+
+        deleteButton.className =
+            "message-delete-button";
+
+        deleteButton.title =
+            "Delete message";
+
+        deleteButton.setAttribute(
+            "aria-label",
+            "Delete message"
+        );
+
+        deleteButton.textContent =
+            "×";
+
+        deleteButton.addEventListener(
+            "click",
+            async event => {
+
+                event.stopPropagation();
+
+                await deleteMessage(
+                    message
+                );
+
+            }
+        );
+
+        content.appendChild(
+            deleteButton
+        );
+
+    }
+
+    content.appendChild(
+        bubble
+    );
+
+    const time =
+        document.createElement("div");
+
+    time.className =
+        "admin-message-time";
+
+    time.textContent =
+        formatMessageTime(
+            message.created_at
+        );
+
+    content.appendChild(
+        time
+    );
+
+    row.appendChild(
+        content
+    );
+
+    return row;
+
+}
+
+/* =========================================================
+   SEND ADMIN MESSAGE
+   ========================================================= */
+
+async function sendAdminMessage() {
+
+    if (isSending) {
+        return;
+    }
+
+    if (!selectedCustomer) {
+
+        showError(
+            "Please select a customer first."
+        );
+
+        return;
+
+    }
+
+
+    const message =
+        adminMessageInput.value.trim();
+
+
+    if (
+        !message &&
+        !selectedFile
+    ) {
+
+        return;
+
+    }
+
+
+    isSending = true;
+
+    setSendLoading(true);
+
+    clearError();
+
+
+    try {
+
+        /*
+           Create conversation ONLY NOW.
+
+           This prevents deleted conversations
+           from being recreated merely by clicking
+           the customer.
+        */
+
+        if (!selectedConversation) {
+
+            selectedConversation =
+                await createConversation(
+                    selectedCustomer.id
+                );
+
+            if (!selectedConversation) {
+                throw new Error(
+                    "Unable to create conversation."
+                );
+            }
+
+            updateSelectedCustomerUI();
+
+            await loadMessages(
+                selectedConversation.id
+            );
+
+            setupMessageRealtime(
+                selectedConversation.id
+            );
+
+        }
+
+
+        let attachment =
+            null;
+
+
+        /*
+           Upload image first if selected.
+        */
+
+        if (selectedFile) {
+
+            attachment =
+                await uploadAttachment(
+                    selectedFile,
+                    selectedConversation.id
+                );
+
+        }
+
+
+        const payload = {
+
+            conversation_id:
+                selectedConversation.id,
+
+            sender_id:
+                currentAdmin.id,
+
+            sender_type:
+                "admin",
+
+            message:
+                message || null,
+
+            attachment_url:
+                attachment?.url || null,
+
+            attachment_path:
+                attachment?.path || null,
+
+            attachment_name:
+                attachment?.name || null,
+
+            attachment_type:
+                attachment?.type || null
+
+        };
+
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("chat_messages")
+            .insert(
+                payload
+            )
+            .select("*")
+            .single();
+
+        if (error) {
+            throw error;
+        }
+
+
+        /*
+           Realtime will usually render this,
+           but we render it locally too if needed.
+        */
+
+        if (
+            data &&
+            !document.querySelector(
+                `[data-message-id="${data.id}"]`
+            )
+        ) {
+
+            adminMessagesContainer.appendChild(
+                createMessageElement(
+                    data
+                )
+            );
+
+        }
+
+
+        adminMessageInput.value =
+            "";
+
+        clearSelectedFile();
+
+
+        await updateConversationAfterMessage(
+            selectedConversation.id,
+            data
+        );
+
+
+        await refreshConversationPreview(
+            selectedConversation.id
+        );
+
+
+        scrollMessagesToBottom();
+
+
+    } catch (error) {
+
+        console.error(
+            "SEND MESSAGE ERROR:",
+            error
+        );
+
+        showError(
+            friendlyError(error)
+        );
+
+    } finally {
+
+        isSending = false;
+
+        setSendLoading(false);
+
+    }
+
+}
+
+
+/* =========================================================
+   CREATE CONVERSATION
+   ========================================================= */
+
+async function createConversation(
+    customerId
+) {
+
+    /*
+       First check local state.
+    */
+
+    const local =
+        conversations.find(
+            conversation =>
+                conversation.customer_id ===
+                customerId
+        );
+
+    if (local) {
+
+        deletedConversationIds.delete(
+            local.id
+        );
+
+        return local;
+
+    }
+
+
+    /*
+       Check DB one more time.
+    */
+
+    const {
+        data: existing,
+        error: existingError
+    } = await supabase
+        .from("chat_conversations")
+        .select("*")
+        .eq(
+            "customer_id",
+            customerId
+        )
+        .maybeSingle();
+
+    if (existingError) {
+        throw existingError;
+    }
+
+    if (existing) {
+
+        deletedConversationIds.delete(
+            existing.id
+        );
+
+        const normalized =
+            normalizeConversation(
+                existing
+            );
+
+        addConversationLocally(
+            normalized
+        );
+
+        return normalized;
+
+    }
+
+
+    const now =
+        new Date().toISOString();
+
+
+    const {
+        data,
+        error
+    } = await supabase
+        .from("chat_conversations")
+        .insert({
+
+            customer_id:
+                customerId,
+
+            status:
+                "open",
+
+            last_message:
+                null,
+
+            last_message_at:
+                now,
+
+            last_sender_type:
+                null,
+
+            unread_for_customer:
+                0,
+
+            unread_for_admin:
+                0,
+
+            created_at:
+                now,
+
+            updated_at:
+                now
+
+        })
+        .select("*")
+        .single();
+
+    if (error) {
+
+        /*
+           Race condition:
+
+           Customer may have created the
+           conversation at exactly the same time.
+        */
+
+        const {
+            data: raceConversation
+        } = await supabase
+            .from("chat_conversations")
+            .select("*")
+            .eq(
+                "customer_id",
+                customerId
+            )
+            .maybeSingle();
+
+        if (raceConversation) {
+
+            deletedConversationIds.delete(
+                raceConversation.id
+            );
+
+            const normalized =
+                normalizeConversation(
+                    raceConversation
+                );
+
+            addConversationLocally(
+                normalized
+            );
+
+            return normalized;
+
+        }
+
+        throw error;
+
+    }
+
+
+    deletedConversationIds.delete(
+        data.id
+    );
+
+    const normalized =
+        normalizeConversation(
+            data
+        );
+
+    addConversationLocally(
+        normalized
+    );
+
+    return normalized;
+
+}
+
+
+/* =========================================================
+   ADD CONVERSATION LOCALLY
+   ========================================================= */
+
+function addConversationLocally(
+    conversation
+) {
+
+    if (
+        deletedConversationIds.has(
+            conversation.id
+        )
+    ) {
+        return;
+    }
+
+
+    const normalized =
+        normalizeConversation(
+            conversation
+        );
+
+    const index =
+        conversations.findIndex(
+            item =>
+                item.id ===
+                normalized.id
+        );
+
+    if (index >= 0) {
+
+        conversations[index] =
+            normalized;
+
+    } else {
+
+        conversations.push(
+            normalized
+        );
+
+    }
+
+    renderCustomerList(
+        conversationSearch?.value || ""
+    );
+
+}
+
+
+/* =========================================================
+   DELETE ENTIRE CONVERSATION
+   ========================================================= */
+
+async function deleteConversation() {
+
+    if (
+        !selectedConversation ||
+        !selectedConversation.id
+    ) {
+
+        showError(
+            "There is no conversation to delete."
+        );
+
+        return;
+
+    }
+
+    const customerName =
+        selectedCustomer?.full_name ||
+        selectedCustomer?.email ||
+        "this customer";
+
+    const confirmed =
+        confirm(
+            `Delete the entire conversation with ${customerName}?\n\nThis will permanently remove the conversation and all of its messages.`
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    const conversationId =
+        selectedConversation.id;
+
+    try {
+
+        deleteConversationButton.disabled =
+            true;
+
+        clearError();
+
+        /*
+           Get attachment paths before deleting messages.
+           Storage cleanup is best-effort after DB deletion.
+        */
+
+        const {
+            data: messagesToDelete,
+            error: messageReadError
+        } = await supabase
+            .from("chat_messages")
+            .select("id,attachment_path")
+            .eq(
+                "conversation_id",
+                conversationId
+            );
+
+        if (messageReadError) {
+            throw messageReadError;
+        }
+
+        const attachmentPaths =
+            (messagesToDelete || [])
+                .map(message =>
+                    message?.attachment_path
+                )
+                .filter(Boolean);
+
+        /*
+           Delete child messages first.
+
+           IMPORTANT: no .select() is chained to DELETE.
+           Supabase RLS can allow DELETE while blocking SELECT,
+           which makes delete().select() look like it failed.
+        */
+
+        const {
+            error: messageDeleteError
+        } = await supabase
+            .from("chat_messages")
+            .delete()
+            .eq(
+                "conversation_id",
+                conversationId
+            );
+
+        if (messageDeleteError) {
+            throw messageDeleteError;
+        }
+
+        /* Delete the parent conversation. */
+
+        const {
+            error: conversationDeleteError
+        } = await supabase
+            .from("chat_conversations")
+            .delete()
+            .eq(
+                "id",
+                conversationId
+            );
+
+        if (conversationDeleteError) {
+            throw conversationDeleteError;
+        }
+
+        /*
+           Remove uploaded attachments from Storage too.
+           This is intentionally best-effort so a Storage RLS
+           problem does not undo an already successful DB delete.
+        */
+
+        if (attachmentPaths.length) {
+
+            try {
+
+                const {
+                    error: storageDeleteError
+                } = await supabase.storage
+                    .from(CHAT_BUCKET)
+                    .remove(
+                        attachmentPaths
+                    );
+
+                if (storageDeleteError) {
+                    console.warn(
+                        "CHAT ATTACHMENT CLEANUP ERROR:",
+                        storageDeleteError
+                    );
+                }
+
+            } catch (storageError) {
+
+                console.warn(
+                    "CHAT ATTACHMENT CLEANUP ERROR:",
+                    storageError
+                );
+
+            }
+
+        }
+
+        /*
+           Tombstone first so stale realtime events cannot
+           recreate the deleted conversation in the UI.
+        */
+
+        deletedConversationIds.add(
+            conversationId
+        );
+
+        conversations =
+            conversations.filter(
+                conversation =>
+                    conversation.id !==
+                    conversationId
+            );
+
+        await removeMessageRealtime();
+
+        selectedConversation =
+            null;
+
+        updateSelectedCustomerUI();
+        showWelcomeForCustomer();
+
+        renderCustomerList(
+            conversationSearch?.value || ""
+        );
+
+        showSuccess(
+            `Conversation deleted successfully. ${messagesToDelete?.length || 0} message(s) removed.`
+        );
+
+    } catch (error) {
+
+        console.error(
+            "DELETE CONVERSATION ERROR:",
+            error
+        );
+
+        showError(
+            friendlyError(error)
+        );
+
+    } finally {
+
+        deleteConversationButton.disabled =
+            !selectedConversation;
+
+    }
+
+}
+
+/* =========================================================
+   UPDATE CONVERSATION AFTER MESSAGE
+   ========================================================= */
+
+async function updateConversationAfterMessage(
+    conversationId,
+    message
+) {
+
+    const now =
+        new Date().toISOString();
+
+
+    const {
+        error
+    } = await supabase
+        .from("chat_conversations")
+        .update({
+
+            last_message:
+                message?.message ||
+                (
+                    message?.attachment_name
+                        ? "📎 " +
+                          message.attachment_name
+                        : null
+                ),
+
+            last_message_at:
+                message?.created_at ||
+                now,
+
+            last_sender_type:
+                "admin",
+
+            status:
+                "open",
+
+            updated_at:
+                now
+
+        })
+        .eq(
+            "id",
+            conversationId
+        );
+
+    if (error) {
+        console.warn(
+            "Conversation preview update:",
+            error
+        );
+    }
+
+}
+
+
+/* =========================================================
+   REFRESH CONVERSATION PREVIEW
+   ========================================================= */
+
+async function refreshConversationPreview(
+    conversationId
+) {
+
+    const {
+        data: latestMessage
+    } = await supabase
+        .from("chat_messages")
+        .select("*")
+        .eq(
+            "conversation_id",
+            conversationId
+        )
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        )
+        .limit(1)
+        .maybeSingle();
+
+
+    const localConversation =
+        conversations.find(
+            item =>
+                item.id ===
+                conversationId
+        );
+
+
+    let lastMessage =
+        null;
+
+    let lastMessageAt =
+        localConversation?.created_at ||
+        new Date().toISOString();
+
+    let lastSenderType =
+        null;
+
+
+    if (latestMessage) {
+
+        lastMessage =
+            latestMessage.message ||
+            (
+                latestMessage.attachment_name
+                    ? "📎 " +
+                      latestMessage.attachment_name
+                    : null
+            );
+
+        lastMessageAt =
+            latestMessage.created_at ||
+            lastMessageAt;
+
+        lastSenderType =
+            latestMessage.sender_type ||
+            null;
+
+    }
+
+
+    const {
+        data: updated,
+        error
+    } = await supabase
+        .from("chat_conversations")
+        .update({
+
+            last_message:
+                lastMessage,
+
+            last_message_at:
+                lastMessageAt,
+
+            last_sender_type:
+                lastSenderType,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+        .eq(
+            "id",
+            conversationId
+        )
+        .select("*")
+        .maybeSingle();
+
+
+    if (error) {
+
+        console.warn(
+            "REFRESH PREVIEW ERROR:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    if (updated) {
+
+        addConversationLocally(
+            updated
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MARK AS READ
+   ========================================================= */
+
+async function markConversationAsRead(
+    conversationId
+) {
+
+    const {
+        error
+    } = await supabase
+        .from("chat_conversations")
+        .update({
+
+            unread_for_admin:
+                0,
+
+            updated_at:
+                new Date().toISOString()
+
+        })
+        .eq(
+            "id",
+            conversationId
+        );
+
+    if (error) {
+
+        console.warn(
+            "MARK READ ERROR:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    const local =
+        conversations.find(
+            conversation =>
+                conversation.id ===
+                conversationId
+        );
+
+    if (local) {
+
+        local.unread_for_admin =
+            0;
+
+    }
+
+    renderCustomerList(
+        conversationSearch?.value || ""
+    );
+
+}
+
+
+/* =========================================================
+   MESSAGE REALTIME
+   ========================================================= */
+
+function setupMessageRealtime(
+    conversationId
+) {
+
+    removeMessageRealtime();
+
+
+    messageChannel =
+        supabase
+            .channel(
+                `admin-chat-messages-${conversationId}-${Date.now()}`
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event:
+                        "INSERT",
+                    schema:
+                        "public",
+                    table:
+                        "chat_messages",
+                    filter:
+                        `conversation_id=eq.${conversationId}`
+                },
+                payload => {
+
+                    if (
+                        !payload.new
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                       Avoid duplicate admin message
+                       if it was already rendered locally.
+                    */
+
+                    if (
+                        document.querySelector(
+                            `[data-message-id="${payload.new.id}"]`
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                       Only render messages belonging
+                       to the currently selected conversation.
+                    */
+
+                    if (
+                        selectedConversation?.id !==
+                        conversationId
+                    ) {
+                        return;
+                    }
+
+
+                    adminMessagesContainer.appendChild(
+                        createMessageElement(
+                            payload.new
+                        )
+                    );
+
+
+                    scrollMessagesToBottom();
+
+
+                    /*
+                       Customer sent a message.
+                    */
+
+                    if (
+                        payload.new.sender_type ===
+                        "customer"
+                    ) {
+
+                        markConversationAsRead(
+                            conversationId
+                        );
+
+                    }
+
+                }
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event:
+                        "DELETE",
+                    schema:
+                        "public",
+                    table:
+                        "chat_messages",
+                    filter:
+                        `conversation_id=eq.${conversationId}`
+                },
+                payload => {
+
+                    const id =
+                        payload.old?.id;
+
+                    if (!id) {
+                        return;
+                    }
+
+                    const element =
+                        document.querySelector(
+                            `[data-message-id="${id}"]`
+                        );
+
+                    element?.remove();
+
+                }
+            )
+            .subscribe(
+                status => {
+
+                    console.log(
+                        "Admin message channel:",
+                        status
+                    );
+
+                }
+            );
+
+}
+
+
+/* =========================================================
+   REMOVE MESSAGE REALTIME
+   ========================================================= */
+
+async function removeMessageRealtime() {
+
+    if (!messageChannel) {
+        return;
+    }
+
+    try {
+
+        await supabase.removeChannel(
+            messageChannel
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "REMOVE MESSAGE CHANNEL:",
+            error
+        );
+
+    }
+
+    messageChannel =
+        null;
+
+}
+
+
+/* =========================================================
+   DELETE INDIVIDUAL MESSAGE
+   ========================================================= */
+
+async function deleteMessage(
+    message
+) {
+
+    if (!message?.id) {
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            "Permanently delete this message?\n\nThis removes the message from the database and permanently removes its attached image/file from Storage."
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    try {
+
+        /*
+           Permanently remove the attached file first.
+           If Storage refuses the delete, keep the database message
+           untouched so the message and its attachment stay consistent.
+        */
+        if (message.attachment_path) {
+
+            const {
+                error: storageError
+            } = await supabase.storage
+                .from(CHAT_BUCKET)
+                .remove([
+                    message.attachment_path
+                ]);
+
+            if (storageError) {
+                throw new Error(
+                    `The message could not be permanently deleted because its attachment could not be removed from Storage. ${storageError.message || ""}`
+                );
+            }
+
+        }
+
+        /*
+           Now permanently remove the COMPLETE message row.
+           This removes the text, image reference, and the whole
+           message container from the chat.
+        */
+        const {
+            error
+        } = await supabase
+            .from("chat_messages")
+            .delete()
+            .eq(
+                "id",
+                message.id
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        const element =
+            document.querySelector(
+                `[data-message-id="${message.id}"]`
+            );
+
+        element?.remove();
+
+        if (
+            selectedConversation?.id
+        ) {
+
+            await refreshConversationPreview(
+                selectedConversation.id
+            );
+
+        }
+
+        showSuccess(
+            "Message deleted successfully."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "DELETE MESSAGE ERROR:",
+            error
+        );
+
+        showError(
+            friendlyError(error)
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   CONVERSATION REALTIME
+   ========================================================= */
+
+function setupConversationRealtime() {
+
+    if (conversationChannel) {
+
+        supabase.removeChannel(
+            conversationChannel
+        );
+
+    }
+
+
+    conversationChannel =
+        supabase
+            .channel(
+                `admin-chat-conversations-${Date.now()}`
+            )
+
+
+            /* =================================================
+               INSERT
+               ================================================= */
+
+            .on(
+                "postgres_changes",
+                {
+                    event:
+                        "INSERT",
+                    schema:
+                        "public",
+                    table:
+                        "chat_conversations"
+                },
+                payload => {
+
+                    const newConversation =
+                        payload.new;
+
+                    if (
+                        !newConversation?.id
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                       Ignore stale event for deleted conversation.
+                    */
+
+                    if (
+                        deletedConversationIds.has(
+                            newConversation.id
+                        )
+                    ) {
+                        return;
+                    }
+
+
+                    const normalized =
+                        normalizeConversation(
+                            newConversation
+                        );
+
+
+                    addConversationLocally(
+                        normalized
+                    );
+
+
+                    /*
+                       If this customer is currently selected
+                       and there was no conversation before,
+                       automatically open the newly-created one.
+                    */
+
+                    if (
+                        selectedCustomer?.id ===
+                        newConversation.customer_id &&
+                        !selectedConversation
+                    ) {
+
+                        selectedConversation =
+                            normalized;
+
+                        updateSelectedCustomerUI();
+
+                        loadMessages(
+                            normalized.id
+                        );
+
+                        setupMessageRealtime(
+                            normalized.id
+                        );
+
+                    }
+
+                }
+            )
+
+
+            /* =================================================
+               UPDATE
+               ================================================= */
+
+            .on(
+                "postgres_changes",
+                {
+                    event:
+                        "UPDATE",
+                    schema:
+                        "public",
+                    table:
+                        "chat_conversations"
+                },
+                payload => {
+
+                    const updated =
+                        payload.new;
+
+                    if (
+                        !updated?.id
+                    ) {
+                        return;
+                    }
+
+
+                    /*
+                       CRITICAL FIX:
+
+                       Never allow an UPDATE belonging
+                       to a deleted conversation to recreate it.
+                    */
+
+                    if (
+                        deletedConversationIds.has(
+                            updated.id
+                        )
+                    ) {
+
+                        console.log(
+                            "Ignored stale UPDATE for deleted conversation:",
+                            updated.id
+                        );
+
+                        return;
+
+                    }
+
+
+                    addConversationLocally(
+                        updated
+                    );
+
+
+                    /*
+                       Keep selected conversation synchronized.
+                    */
+
+                    if (
+                        selectedConversation?.id ===
+                        updated.id
+                    ) {
+
+                        selectedConversation =
+                            normalizeConversation(
+                                updated
+                            );
+
+                        updateSelectedCustomerUI();
+
+                    }
+
+                }
+            )
+
+
+            /* =================================================
+               DELETE
+               ================================================= */
+
+            .on(
+                "postgres_changes",
+                {
+                    event:
+                        "DELETE",
+                    schema:
+                        "public",
+                    table:
+                        "chat_conversations"
+                },
+                payload => {
+
+                    /*
+                       Supabase normally provides the primary key
+                       in payload.old for DELETE.
+                    */
+
+                    const deletedId =
+                        payload.old?.id;
+
+
+                    if (!deletedId) {
+
+                        console.warn(
+                            "Conversation DELETE received without old.id:",
+                            payload
+                        );
+
+                        return;
+
+                    }
+
+
+                    console.log(
+                        "Conversation deleted:",
+                        deletedId
+                    );
+
+
+                    /*
+                       Tombstone.
+                    */
+
+                    deletedConversationIds.add(
+                        deletedId
+                    );
+
+
+                    /*
+                       Remove from local state.
+                    */
+
+                    conversations =
+                        conversations.filter(
+                            conversation =>
+                                conversation.id !==
+                                deletedId
+                        );
+
+
+                    /*
+                       If currently selected, clear it.
+                    */
+
+                    if (
+                        selectedConversation?.id ===
+                        deletedId
+                    ) {
+
+                        selectedConversation =
+                            null;
+
+                        removeMessageRealtime();
+
+                        showWelcomeForCustomer();
+
+                        updateSelectedCustomerUI();
+
+                    }
+
+
+                    /*
+                       Re-render customer list.
+                    */
+
+                    renderCustomerList(
+                        conversationSearch?.value || ""
+                    );
+
+                }
+            )
+
+
+            .subscribe(
+                status => {
+
+                    console.log(
+                        "Admin conversation channel:",
+                        status
+                    );
+
+                    if (
+                        status === "SUBSCRIBED"
+                    ) {
+
+                        setConnectionStatus(
+                            "online"
+                        );
+
+                    }
+
+                }
+            );
+
+}
+
+
+/* =========================================================
+   CUSTOMER ONLINE / OFFLINE
+   Based on admin-users.html:
+   last_login within the last 30 minutes = Online
+   ========================================================= */
+
+function isCustomerActive(user) {
+
+    if (!user?.last_login) {
+        return false;
+    }
+
+    const lastSeen =
+        new Date(
+            user.last_login
+        ).getTime();
+
+    if (Number.isNaN(lastSeen)) {
+        return false;
+    }
+
+    const difference =
+        Date.now() - lastSeen;
+
+    const windowMs =
+        ACTIVE_WINDOW_MINUTES *
+        60 *
+        1000;
+
+    return (
+        difference >= 0 &&
+        difference <= windowMs
+    );
+
+}
+
+
+async function refreshCustomerActivity() {
+
+    try {
+
+        const {
+            data: customerRows,
+            error
+        } = await supabase
+            .from("profiles")
+            .select(
+                "id,email,full_name,role,status,avatar_url,last_login"
+            )
+            .eq(
+                "role",
+                "customer"
+            )
+            .order(
+                "full_name",
+                {
+                    ascending: true
+                }
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        customers =
+            customerRows || [];
+
+        /* Keep conversation customer references fresh. */
+        conversations =
+            conversations.map(
+                conversation => ({
+                    ...conversation,
+                    customer:
+                        customers.find(
+                            customer =>
+                                customer.id ===
+                                conversation.customer_id
+                        ) || null
+                })
+            );
+
+        /* Rebuild the local status set using the exact
+           same 30-minute last_login rule. */
+        customerPresence =
+            new Set(
+                customers
+                    .filter(isCustomerActive)
+                    .map(customer => String(customer.id))
+            );
+
+        if (selectedCustomer?.id) {
+            selectedCustomer =
+                customers.find(
+                    customer =>
+                        customer.id ===
+                        selectedCustomer.id
+                ) || selectedCustomer;
+        }
+
+        updateSelectedCustomerUI();
+
+        renderCustomerList(
+            conversationSearch?.value || ""
+        );
+
+    } catch (error) {
+
+        console.warn(
+            "CUSTOMER ACTIVITY REFRESH ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+function startActivityRefresh() {
+
+    if (activityRefreshTimer) {
+        clearInterval(
+            activityRefreshTimer
+        );
+    }
+
+    activityRefreshTimer =
+        setInterval(
+            refreshCustomerActivity,
+            30 * 1000
+        );
+
+    window.addEventListener(
+        "focus",
+        refreshCustomerActivity
+    );
+
+    window.addEventListener(
+        "pageshow",
+        refreshCustomerActivity
+    );
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+            if (!document.hidden) {
+                refreshCustomerActivity();
+            }
+        }
+    );
+
+}
+
+
+function setupProfileRealtime() {
+
+    if (profileRealtimeChannel) {
+        supabase.removeChannel(
+            profileRealtimeChannel
+        );
+    }
+
+    profileRealtimeChannel =
+        supabase
+            .channel(
+                `admin-chat-profiles-${Date.now()}`
+            )
+            .on(
+                "postgres_changes",
+                {
+                    event: "UPDATE",
+                    schema: "public",
+                    table: "profiles"
+                },
+                payload => {
+
+                    if (
+                        payload.new?.role !==
+                        "customer"
+                    ) {
+                        return;
+                    }
+
+                    const index =
+                        customers.findIndex(
+                            customer =>
+                                customer.id ===
+                                payload.new.id
+                        );
+
+                    if (index === -1) {
+                        refreshCustomerActivity();
+                        return;
+                    }
+
+                    customers[index] = {
+                        ...customers[index],
+                        ...payload.new
+                    };
+
+                    customerPresence =
+                        new Set(
+                            customers
+                                .filter(isCustomerActive)
+                                .map(customer => String(customer.id))
+                        );
+
+                    if (
+                        selectedCustomer?.id ===
+                        payload.new.id
+                    ) {
+                        selectedCustomer =
+                            customers[index];
+                    }
+
+                    updateSelectedCustomerUI();
+
+                    renderCustomerList(
+                        conversationSearch?.value || ""
+                    );
+
+                }
+            )
+            .subscribe(
+                status => {
+                    console.log(
+                        "Admin profile activity channel:",
+                        status
+                    );
+                }
+            );
+
+}
+
+
+/* =========================================================
+   FILE UPLOAD
+   ========================================================= */
+
+async function uploadAttachment(
+    file,
+    conversationId
+) {
+
+    if (!file) {
+        return null;
+    }
+
+
+    if (
+        !ALLOWED_IMAGE_TYPES.includes(
+            file.type
+        )
+    ) {
+
+        throw new Error(
+            "Only JPG, PNG, and WEBP images are allowed."
+        );
+
+    }
+
+
+    if (
+        file.size >
+        MAX_FILE_SIZE
+    ) {
+
+        throw new Error(
+            "Image must be 5MB or smaller."
+        );
+
+    }
+
+
+    const extension =
+        getFileExtension(
+            file.name
+        );
+
+
+    const randomPart =
+        crypto.randomUUID();
+
+
+    const path =
+        `admin/${conversationId}/${randomPart}.${extension}`;
+
+
+    const {
+        error
+    } = await supabase.storage
+        .from(
+            CHAT_BUCKET
+        )
+        .upload(
+            path,
+            file,
+            {
+                cacheControl:
+                    "3600",
+
+                upsert:
+                    false,
+
+                contentType:
+                    file.type
+            }
+        );
+
+
+    if (error) {
+        throw error;
+    }
+
+
+    const {
+        data
+    } = supabase.storage
+        .from(
+            CHAT_BUCKET
+        )
+        .getPublicUrl(
+            path
+        );
+
+
+    return {
+
+        url:
+            data?.publicUrl ||
+            "",
+
+        path,
+
+        name:
+            file.name,
+
+        type:
+            file.type
+
+    };
+
+}
+
+
+/* =========================================================
+   ATTACHMENT INPUT
+   ========================================================= */
+
+function handleAttachment(
+    event
+) {
+
+    const file =
+        event.target.files?.[0];
+
+    if (!file) {
+        return;
+    }
+
+
+    if (
+        !ALLOWED_IMAGE_TYPES.includes(
+            file.type
+        )
+    ) {
+
+        showError(
+            "Only JPG, PNG, and WEBP images are allowed."
+        );
+
+        event.target.value =
+            "";
+
+        return;
+
+    }
+
+
+    if (
+        file.size >
+        MAX_FILE_SIZE
+    ) {
+
+        showError(
+            "Image must be 5MB or smaller."
+        );
+
+        event.target.value =
+            "";
+
+        return;
+
+    }
+
+
+    selectedFile =
+        file;
+
+
+    if (previewObjectURL) {
+
+        URL.revokeObjectURL(
+            previewObjectURL
+        );
+
+    }
+
+
+    previewObjectURL =
+        URL.createObjectURL(
+            file
+        );
+
+
+    adminPreviewImage.src =
+        previewObjectURL;
+
+    adminPreviewName.textContent =
+        file.name;
+
+    adminAttachmentPreview.classList.add(
+        "show"
+    );
+
+
+    clearError();
+
+}
+
+
+/* =========================================================
+   CLEAR FILE
+   ========================================================= */
+
+function clearSelectedFile() {
+
+    selectedFile =
+        null;
+
+
+    if (previewObjectURL) {
+
+        URL.revokeObjectURL(
+            previewObjectURL
+        );
+
+        previewObjectURL =
+            null;
+
+    }
+
+
+    adminPreviewImage.src =
+        "";
+
+    adminPreviewName.textContent =
+        "";
+
+    adminAttachmentPreview.classList.remove(
+        "show"
+    );
+
+
+    if (adminAttachmentInput) {
+
+        adminAttachmentInput.value =
+            "";
+
+    }
+
+}
+
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+
+function setupEvents() {
+
+    /*
+       Customer list click
+    */
+
+    conversationList?.addEventListener(
+        "click",
+        event => {
+
+            const item =
+                event.target.closest(
+                    ".conversation-item"
+                );
+
+            if (!item) {
+                return;
+            }
+
+
+            const customerId =
+                item.dataset.customerId;
+
+            openCustomerChat(
+                customerId
+            );
+
+
+            closeMobileCustomers();
+
+        }
+    );
+
+
+    /*
+       Search
+    */
+
+    conversationSearch?.addEventListener(
+        "input",
+        () => {
+
+            renderCustomerList(
+                conversationSearch.value
+            );
+
+        }
+    );
+
+
+    /*
+       Filter buttons
+    */
+
+    document
+        .querySelectorAll(
+            ".filter-button"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        document
+                            .querySelectorAll(
+                                ".filter-button"
+                            )
+                            .forEach(
+                                item =>
+                                    item.classList.remove(
+                                        "active"
+                                    )
+                            );
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        renderCustomerList(
+                            conversationSearch?.value ||
+                            ""
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    /*
+       Send
+    */
+
+    adminSendButton?.addEventListener(
+        "click",
+        sendAdminMessage
+    );
+
+
+    /*
+       Enter to send
+    */
+
+    adminMessageInput?.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendAdminMessage();
+
+            }
+
+        }
+    );
+
+
+    /*
+       Attachment
+    */
+
+    adminAttachmentInput?.addEventListener(
+        "change",
+        handleAttachment
+    );
+
+
+    adminRemoveAttachment?.addEventListener(
+        "click",
+        clearSelectedFile
+    );
+
+
+    /*
+       Refresh
+    */
+
+    refreshChatButton?.addEventListener(
+        "click",
+        async () => {
+
+            try {
+
+                clearError();
+
+                await loadCustomersAndConversations();
+
+                renderCustomerList(
+                    conversationSearch?.value ||
+                    ""
+                );
+
+
+                if (
+                    selectedConversation
+                ) {
+
+                    await loadMessages(
+                        selectedConversation.id
+                    );
+
+                }
+
+                updateSelectedCustomerUI();
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+
+                showError(
+                    friendlyError(error)
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       DELETE ENTIRE CONVERSATION
+    */
+
+    deleteConversationButton?.addEventListener(
+        "click",
+        deleteConversation
+    );
+
+
+    /*
+       Mobile
+    */
+
+    mobileConversationsButton?.addEventListener(
+        "click",
+        openMobileCustomers
+    );
+
+
+    mobileChatBackdrop?.addEventListener(
+        "click",
+        closeMobileCustomers
+    );
+
+
+    /*
+       Image viewer
+    */
+
+    adminImageClose?.addEventListener(
+        "click",
+        closeImageViewer
+    );
+
+
+    adminImageViewer?.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                adminImageViewer
+            ) {
+
+                closeImageViewer();
+
+            }
+
+        }
+    );
+
+
+    /*
+       Back dashboard
+    */
+
+    document
+        .getElementById(
+            "backToDashboardButton"
+        )
+        ?.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    "admin.html";
+
+            }
+        );
+
+
+    /*
+       Escape
+    */
+
+    document.addEventListener(
+        "keydown",
+        event => {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeImageViewer();
+
+                closeMobileCustomers();
+
+            }
+
+        }
+    );
+
+
+    /*
+       Global functions.
+
+       This also supports old HTML buttons
+       that use onclick="deleteConversation()".
+    */
+
+    window.deleteConversation =
+        deleteConversation;
+
+    window.deleteAdminConversation =
+        deleteConversation;
+
+}
+
+
+/* =========================================================
+   MOBILE CUSTOMER DRAWER
+   ========================================================= */
+
+function openMobileCustomers() {
+
+    conversationsPanel?.classList.add(
+        "mobile-open"
+    );
+
+    mobileChatBackdrop?.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeMobileCustomers() {
+
+    conversationsPanel?.classList.remove(
+        "mobile-open"
+    );
+
+    mobileChatBackdrop?.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   ENABLE COMPOSER
+   ========================================================= */
+
+function enableComposer() {
+
+    adminMessageInput.disabled =
+        false;
+
+    adminSendButton.disabled =
+        false;
+
+    adminMessageInput.placeholder =
+        "Type a message...";
+
+}
+
+
+/* =========================================================
+   DISABLE COMPOSER
+   ========================================================= */
+
+function disableComposer() {
+
+    adminMessageInput.disabled =
+        true;
+
+    adminSendButton.disabled =
+        true;
+
+    adminMessageInput.placeholder =
+        "Select a customer first...";
+
+}
+
+
+/* =========================================================
+   SEND LOADING
+   ========================================================= */
+
+function setSendLoading(
+    loading
+) {
+
+    if (!adminSendButton) {
+        return;
+    }
+
+    adminSendButton.classList.toggle(
+        "sending",
+        loading
+    );
+
+    adminSendButton.disabled =
+        loading ||
+        !selectedCustomer;
+
+}
+
+
+/* =========================================================
+   MESSAGE LOADING
+   ========================================================= */
+
+function showMessageLoading(
+    show
+) {
+
+    adminChatLoading?.classList.toggle(
+        "show",
+        show
+    );
+
+}
+
+
+/* =========================================================
+   CONVERSATION LOADING
+   ========================================================= */
+
+function showConversationLoading(
+    show
+) {
+
+    conversationLoading?.classList.toggle(
+        "show",
+        show
+    );
+
+}
+
+
+/* =========================================================
+   SCROLL
+   ========================================================= */
+
+function scrollMessagesToBottom() {
+
+    requestAnimationFrame(
+        () => {
+
+            adminMessagesContainer.scrollTop =
+                adminMessagesContainer.scrollHeight;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE VIEWER
+   ========================================================= */
+
+function openImageViewer(
+    url
+) {
+
+    if (
+        !url ||
+        !adminImageViewer ||
+        !adminViewerImage
+    ) {
+        return;
+    }
+
+    adminViewerImage.src =
+        url;
+
+    adminImageViewer.classList.add(
+        "show"
+    );
+
+}
+
+
+function closeImageViewer() {
+
+    adminImageViewer?.classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   CONNECTION STATUS
+   ========================================================= */
+
+function setConnectionStatus(
+    status
+) {
+
+    const wrapper =
+        document.querySelector(
+            ".chat-status"
+        );
+
+    const text =
+        document.getElementById(
+            "connectionStatus"
+        );
+
+
+    if (!wrapper || !text) {
+        return;
+    }
+
+
+    wrapper.classList.remove(
+        "online",
+        "offline",
+        "connecting"
+    );
+
+
+    if (
+        status ===
+        "online"
+    ) {
+
+        wrapper.classList.add(
+            "online"
+        );
+
+        text.textContent =
+            "Online";
+
+        return;
+
+    }
+
+
+    if (
+        status ===
+        "offline"
+    ) {
+
+        wrapper.classList.add(
+            "offline"
+        );
+
+        text.textContent =
+            "Offline";
+
+        return;
+
+    }
+
+
+    wrapper.classList.add(
+        "connecting"
+    );
+
+    text.textContent =
+        "Connecting...";
+
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+function showError(
+    message
+) {
+
+    if (!adminChatError) {
+        return;
+    }
+
+    adminChatError.textContent =
+        message || "Something went wrong.";
+
+    adminChatError.classList.add(
+        "show"
+    );
+
+}
+
+
+function showSuccess(
+    message
+) {
+
+    if (!adminChatError) {
+        return;
+    }
+
+    adminChatError.textContent =
+        message;
+
+    adminChatError.style.background =
+        "rgba(53,232,137,.08)";
+
+    adminChatError.style.borderColor =
+        "rgba(53,232,137,.18)";
+
+    adminChatError.style.color =
+        "#35e889";
+
+    adminChatError.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        () => {
+
+            clearError();
+
+        },
+        2500
+    );
+
+}
+
+
+function clearError() {
+
+    if (!adminChatError) {
+        return;
+    }
+
+    adminChatError.textContent =
+        "";
+
+    adminChatError.classList.remove(
+        "show"
+    );
+
+    adminChatError.style.background =
+        "";
+
+    adminChatError.style.borderColor =
+        "";
+
+    adminChatError.style.color =
+        "";
+
+}
+
+
+/* =========================================================
+   FRIENDLY ERROR
+   ========================================================= */
+
+function friendlyError(
+    error
+) {
+
+    const message =
+        error?.message ||
+        String(error || "Unknown error");
+
+
+    if (
+        message.includes(
+            "row-level security"
+        )
+    ) {
+
+        return (
+            "Supabase RLS blocked this action. " +
+            "Check the chat_conversations/chat_messages policies."
+        );
+
+    }
+
+
+    if (
+        message.includes(
+            "JWT"
+        )
+    ) {
+
+        return (
+            "Your admin session expired. " +
+            "Please login again."
+        );
+
+    }
+
+
+    if (
+        message.includes(
+            "Failed to fetch"
+        )
+    ) {
+
+        return (
+            "Network connection failed. " +
+            "Please check your internet connection."
+        );
+
+    }
+
+
+    return message;
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+   ========================================================= */
+
+function formatMessageTime(
+    value
+) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "";
+    }
+
+    return date.toLocaleString(
+        "en-PH",
+        {
+            month:
+                "short",
+
+            day:
+                "numeric",
+
+            hour:
+                "numeric",
+
+            minute:
+                "2-digit"
+        }
+    );
+
+}
+
+
+function formatConversationTime(
+    value
+) {
+
+    if (!value) {
+        return "";
+    }
+
+    const date =
+        new Date(value);
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+        return "";
+    }
+
+    const now =
+        new Date();
+
+    const diff =
+        now.getTime() -
+        date.getTime();
+
+
+    if (
+        diff <
+        60 * 1000
+    ) {
+
+        return "now";
+
+    }
+
+
+    if (
+        diff <
+        60 * 60 * 1000
+    ) {
+
+        return (
+            Math.floor(
+                diff /
+                (60 * 1000)
+            ) +
+            "m"
+        );
+
+    }
+
+
+    if (
+        diff <
+        24 * 60 * 60 * 1000
+    ) {
+
+        return (
+            Math.floor(
+                diff /
+                (60 * 60 * 1000)
+            ) +
+            "h"
+        );
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-PH",
+        {
+            month:
+                "short",
+
+            day:
+                "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INITIALS
+   ========================================================= */
+
+function getInitials(
+    value
+) {
+
+    const text =
+        String(
+            value || "Customer"
+        ).trim();
+
+    if (!text) {
+        return "C";
+    }
+
+
+    const parts =
+        text
+            .split(/\s+/)
+            .filter(Boolean);
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .slice(0,2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0] +
+        parts[parts.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =========================================================
+   FILE EXTENSION
+   ========================================================= */
+
+function getFileExtension(
+    filename
+) {
+
+    const parts =
+        String(
+            filename || ""
+        ).split(".");
+
+    return (
+        parts.length > 1
+            ? parts.pop()
+            : "jpg"
+    )
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9]/g,
+            ""
+        ) || "jpg";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+   ========================================================= */
+
+function escapeAttribute(
+    value
+) {
+
+    return escapeHTML(
+        value
+    );
+
+}
+
+
+/* =========================================================
+   BEFORE UNLOAD CLEANUP
+   ========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    async () => {
+
+        try {
+
+            if (messageChannel) {
+
+                await supabase.removeChannel(
+                    messageChannel
+                );
+
+            }
+
+            if (conversationChannel) {
+
+                await supabase.removeChannel(
+                    conversationChannel
+                );
+
+            }
+
+            if (presenceChannel) {
+
+                await supabase.removeChannel(
+                    presenceChannel
+                );
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Chat cleanup:",
+                error
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

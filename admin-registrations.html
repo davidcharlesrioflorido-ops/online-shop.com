@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Registrations | Business Store</title>
+
+    <script  
+    type="module"  
+    src="./js/admin-guard.js" 
+></script>
+
+    <!-- =====================================================
+         MAIN ADMIN STYLE
+    ====================================================== -->
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+    <!-- =====================================================
+         ADMIN PRODUCTS BASE DESIGN
+    ====================================================== -->
+    <link
+        rel="stylesheet"
+        href="css/admin-products.css"
+    >
+
+    <!-- =====================================================
+         ADMIN REGISTRATIONS STYLE
+    ====================================================== -->
+    <link
+        rel="stylesheet"
+        href="css/admin-registrations.css?v=5"
+    >
+
+    <!-- =====================================================
+         NOTIFICATION BADGE STYLE
+    ====================================================== -->
+    <style>
+
+        /* =====================================================
+           ADMIN NAV
+        ====================================================== */
+
+        .sidebar-nav a {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        /* =====================================================
+           NAV ICON
+        ====================================================== */
+
+        .sidebar-nav a .nav-icon {
+
+            width: 34px;
+            height: 34px;
+            min-width: 34px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: rgba(255, 255, 255, 0.025);
+
+            border: 1px solid transparent;
+
+            color: #94a3b8;
+
+            font-size: 15px;
+
+            transition:
+                background 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .sidebar-nav a:hover .nav-icon {
+
+            color: #00f2fe;
+
+            background:
+                rgba(0, 242, 254, 0.07);
+
+            border-color:
+                rgba(0, 242, 254, 0.20);
+        }
+
+
+        .sidebar-nav a.active .nav-icon {
+
+            color: #00f2fe;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0, 242, 254, 0.12),
+                    rgba(79, 172, 254, 0.06)
+                );
+
+            border-color:
+                rgba(0, 242, 254, 0.20);
+
+            box-shadow:
+                0 0 22px rgba(0, 242, 254, 0.10);
+        }
+
+
+        /* =====================================================
+           NOTIFICATION BADGE
+        ====================================================== */
+
+        .sidebar-nav a .admin-notification-badge {
+
+            width: auto;
+            min-width: 20px;
+            height: 20px;
+
+            margin-left: auto;
+
+            padding: 0 6px;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            flex: 0 0 auto;
+
+            border-radius: 999px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff5364,
+                    #ff3045
+                );
+
+            border:
+                1px solid rgba(255, 255, 255, 0.18);
+
+            color: #ffffff;
+
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 9px;
+            font-weight: 900;
+
+            line-height: 1;
+
+            letter-spacing: 0;
+
+            box-shadow:
+                0 0 0 2px rgba(255, 47, 67, 0.05),
+                0 0 13px rgba(255, 47, 67, 0.42);
+
+            text-shadow:
+                0 1px 2px rgba(0, 0, 0, 0.35);
+
+            transform: scale(1);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        /* =====================================================
+           HIDDEN BADGE
+        ====================================================== */
+
+        .sidebar-nav a .admin-notification-badge[hidden] {
+            display: none !important;
+        }
+
+
+        /* =====================================================
+           ACTIVE NOTIFICATION
+        ====================================================== */
+
+        .sidebar-nav a .admin-notification-badge.has-notification {
+
+            animation:
+                adminNotificationPulse
+                2s ease-in-out infinite;
+        }
+
+
+        /* =====================================================
+           HOVER
+        ====================================================== */
+
+        .sidebar-nav a:hover .admin-notification-badge {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff5b6b,
+                    #ff3045
+                );
+
+            border-color:
+                rgba(255, 255, 255, 0.24);
+
+            color: #ffffff;
+
+            transform: scale(1.05);
+
+            box-shadow:
+                0 0 0 2px rgba(255, 47, 67, 0.07),
+                0 0 18px rgba(255, 47, 67, 0.58);
+        }
+
+
+        /* =====================================================
+           ACTIVE PAGE + NOTIFICATION
+        ====================================================== */
+
+        .sidebar-nav a.active .admin-notification-badge {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ff5364,
+                    #ff3045
+                );
+
+            border-color:
+                rgba(255, 255, 255, 0.22);
+
+            color: #ffffff;
+
+            box-shadow:
+                0 0 0 2px rgba(255, 47, 67, 0.07),
+                0 0 18px rgba(255, 47, 67, 0.55);
+        }
+
+
+        /* =====================================================
+           NOTIFICATION ANIMATION
+        ====================================================== */
+
+        @keyframes adminNotificationPulse {
+
+            0%,
+            100% {
+
+                transform: scale(1);
+
+                box-shadow:
+                    0 0 0 2px rgba(255, 47, 67, 0.05),
+                    0 0 12px rgba(255, 47, 67, 0.40);
+            }
+
+            50% {
+
+                transform: scale(1.08);
+
+                box-shadow:
+                    0 0 0 3px rgba(255, 47, 67, 0.08),
+                    0 0 21px rgba(255, 47, 67, 0.68);
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ====================================================== */
+
+        @media (max-width: 600px) {
+
+            .sidebar-nav a .admin-notification-badge {
+
+                min-width: 19px;
+                height: 19px;
+
+                padding: 0 5px;
+
+                font-size: 8px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     MOBILE MENU
+========================================================= -->
+
+<button
+    class="mobile-menu-btn"
+    id="mobileMenuBtn"
+    type="button"
+    aria-label="Open menu"
+>
+    ☰
+</button>
+
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+
+    <!-- =====================================================
+         BRAND
+    ====================================================== -->
+
+    <div class="sidebar-brand">
+
+        <div class="brand-logo">
+            BS
+        </div>
+
+        <div class="brand-text">
+
+            <strong>
+                BUSINESS
+            </strong>
+
+            <span>
+                STORE ADMIN
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         NAVIGATION
+    ====================================================== -->
+
+    <nav class="sidebar-nav">
+
+
+        <!-- =================================================
+             DASHBOARD
+        ================================================== -->
+
+        <a href="./admin.html">
+
+            <span class="nav-icon">
+                ⌂
+            </span>
+
+            <span>
+                Dashboard
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-dashboard-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             PRODUCTS
+        ================================================== -->
+
+        <a href="./admin-products.html">
+
+            <span class="nav-icon">
+                ▣
+            </span>
+
+            <span>
+                Products
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-product-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             ORDERS
+        ================================================== -->
+
+        <a href="./admin-orders.html">
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span>
+                Orders
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-order-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             CUSTOMER REQUESTS
+        ================================================== -->
+
+        <a href="./admin-requests.html">
+
+            <span class="nav-icon">
+                ✉
+            </span>
+
+            <span>
+                Requests
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-request-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             USERS
+        ================================================== -->
+
+        <a href="./admin-users.html">
+
+            <span class="nav-icon">
+                👥
+            </span>
+
+            <span>
+                Users
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-user-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             ADMIN REGISTRATIONS
+        ================================================== -->
+
+        <a
+            href="./admin-registrations.html"
+            class="active admin-registration-nav"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span>
+                Admin Registrations
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                id="adminRegistrationBadge"
+                data-admin-registration-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             ADMIN CHAT
+        ================================================== -->
+
+        <a href="./admin-chat.html" id="adminChatNavLink">
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span>
+                Chat
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                id="adminChatNotificationBadge"
+                hidden
+                aria-label="Unread chat messages"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- =================================================
+             SETTINGS
+        ================================================== -->
+
+        <a href="./admin-settings.html">
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span>
+                Settings
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         SIDEBAR BOTTOM
+    ====================================================== -->
+
+    <div class="sidebar-bottom">
+
+
+        <!-- VIEW STORE -->
+
+        <a
+            href="./customer/customer-home.html"
+            class="view-store-btn"
+        >
+
+            <span>
+                ↗
+            </span>
+
+            View Store
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <button
+            type="button"
+            class="logout-btn"
+            id="logoutBtn"
+        >
+
+            <span>
+                ⇥
+            </span>
+
+            Logout
+
+        </button>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="admin-main">
+
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <header class="admin-page-header">
+
+        <div>
+
+            <span class="page-eyebrow">
+                ADMIN CONTROL
+            </span>
+
+            <h1>
+                Admin Registrations
+            </h1>
+
+            <p>
+                Review and manage administrator account requests.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="refresh-btn"
+            id="refreshBtn"
+        >
+
+            ↻
+
+            <span>
+                Refresh
+            </span>
+
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         REGISTRATION STATS
+    ====================================================== -->
+
+    <section class="registration-stats">
+
+
+        <!-- TOTAL -->
+
+        <button
+            type="button"
+            class="registration-stat active"
+            data-filter="all"
+        >
+
+            <span class="stat-icon">
+                ◉
+            </span>
+
+            <div>
+
+                <small>
+                    Total
+                </small>
+
+                <strong id="totalRegistrations">
+                    0
+                </strong>
+
+            </div>
+
+        </button>
+
+
+        <!-- PENDING -->
+
+        <button
+            type="button"
+            class="registration-stat pending"
+            data-filter="pending"
+        >
+
+            <span class="stat-icon">
+                ◷
+            </span>
+
+            <div>
+
+                <small>
+                    Pending
+                </small>
+
+                <strong id="pendingRegistrations">
+                    0
+                </strong>
+
+            </div>
+
+        </button>
+
+
+        <!-- APPROVED -->
+
+        <button
+            type="button"
+            class="registration-stat approved"
+            data-filter="approved"
+        >
+
+            <span class="stat-icon">
+                ✓
+            </span>
+
+            <div>
+
+                <small>
+                    Approved
+                </small>
+
+                <strong id="approvedRegistrations">
+                    0
+                </strong>
+
+            </div>
+
+        </button>
+
+
+        <!-- REJECTED -->
+
+        <button
+            type="button"
+            class="registration-stat rejected"
+            data-filter="rejected"
+        >
+
+            <span class="stat-icon">
+                ×
+            </span>
+
+            <div>
+
+                <small>
+                    Rejected
+                </small>
+
+                <strong id="rejectedRegistrations">
+                    0
+                </strong>
+
+            </div>
+
+        </button>
+
+    </section>
+
+
+    <!-- =====================================================
+         TOOLBAR
+    ====================================================== -->
+
+    <section class="registration-toolbar">
+
+
+        <!-- SEARCH -->
+
+        <div class="registration-search">
+
+            <span>
+                ⌕
+            </span>
+
+            <input
+                type="search"
+                id="searchInput"
+                placeholder="Search name or email..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <!-- STATUS FILTER -->
+
+        <select id="statusFilter">
+
+            <option value="all">
+                All Status
+            </option>
+
+            <option value="pending">
+                Pending
+            </option>
+
+            <option value="approved">
+                Approved
+            </option>
+
+            <option value="rejected">
+                Rejected
+            </option>
+
+        </select>
+
+
+        <!-- COUNT -->
+
+        <div class="registration-count">
+
+            <strong id="visibleRegistrationCount">
+                0
+            </strong>
+
+            <span>
+                shown
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         RESULT MESSAGE
+    ====================================================== -->
+
+    <div
+        id="adminResult"
+        class="admin-result"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =====================================================
+         REGISTRATION LIST
+    ====================================================== -->
+
+    <section class="registrations-section">
+
+        <div
+            id="registrationsList"
+            class="registrations-list"
+        ></div>
+
+
+        <!-- EMPTY STATE -->
+
+        <div
+            id="emptyState"
+            class="registration-empty"
+            hidden
+        >
+
+            <div class="empty-icon">
+                ✓
+            </div>
+
+            <h3>
+                No registrations found
+            </h3>
+
+            <p>
+                There are no administrator registrations
+                matching your current filter.
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =========================================================
+     REGISTRATION MODAL
+========================================================= -->
+
+<div
+    class="registration-modal"
+    id="registrationModal"
+    hidden
+>
+
+
+    <div class="registration-modal-backdrop"></div>
+
+
+    <div
+        class="registration-modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+    >
+
+
+        <!-- CLOSE -->
+
+        <button
+            type="button"
+            class="modal-close"
+            id="closeModalBtn"
+            aria-label="Close"
+        >
+            ×
+        </button>
+
+
+        <span class="page-eyebrow">
+            ADMIN ACCOUNT
+        </span>
+
+
+        <h2 id="modalTitle">
+            Registration Details
+        </h2>
+
+
+        <!-- PROFILE -->
+
+        <div class="modal-profile">
+
+            <div
+                class="modal-avatar"
+                id="modalAvatar"
+            >
+                A
+            </div>
+
+
+            <div>
+
+                <h3 id="modalName">
+                    —
+                </h3>
+
+                <p id="modalEmail">
+                    —
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="modal-details">
+
+
+            <div class="detail-item">
+
+                <span>
+                    Name
+                </span>
+
+                <strong id="modalNameDetail">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Email
+                </span>
+
+                <strong id="modalEmailDetail">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Registered
+                </span>
+
+                <strong id="modalDate">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span>
+                    Current Status
+                </span>
+
+                <strong id="modalStatus">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div
+            class="modal-actions"
+            id="modalActions"
+        >
+
+            <button
+                type="button"
+                class="approve-btn"
+                id="approveBtn"
+            >
+
+                ✓
+
+                Approve
+
+            </button>
+
+
+            <button
+                type="button"
+                class="reject-btn"
+                id="rejectBtn"
+            >
+
+                ×
+
+                Reject
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     ADMIN NOTIFICATION JS
+     MUST LOAD FIRST
+========================================================= -->
+
+<script
+    type="module"
+    src="./js/admin-notifications.js?v=5"
+></script>
+
+
+<!-- =========================================================
+     ADMIN REGISTRATIONS JS
+========================================================= -->
+
+<script
+    type="module"
+    src="./js/admin-registrations.js?v=4"
+></script>
+
+
+<!-- =========================================================
+     ADMIN CHAT NOTIFICATION
+     Counts unread customer messages for the admin.
+========================================================= -->
+
+<script type="module">
+
+    import { supabase } from "./js/supabase.js";
+
+    const chatBadge =
+        document.getElementById("adminChatNotificationBadge");
+
+    function setChatBadge(count) {
+
+        if (!chatBadge) return;
+
+        const total = Math.max(0, Number(count) || 0);
+
+        if (total > 0) {
+
+            chatBadge.textContent =
+                total > 99 ? "99+" : String(total);
+
+            chatBadge.hidden = false;
+
+            chatBadge.classList.add(
+                "has-notification"
+            );
+
+            chatBadge.setAttribute(
+                "aria-label",
+                `${total} unread chat message${total === 1 ? "" : "s"}`
+            );
+
+        } else {
+
+            chatBadge.textContent = "0";
+
+            chatBadge.hidden = true;
+
+            chatBadge.classList.remove(
+                "has-notification"
+            );
+
+            chatBadge.setAttribute(
+                "aria-label",
+                "No unread chat messages"
+            );
+        }
+    }
+
+
+    async function updateChatBadge() {
+
+        if (!chatBadge) return;
+
+        try {
+
+            const {
+                data,
+                error
+            } = await supabase
+                .from("chat_conversations")
+                .select("unread_for_admin");
+
+            if (error) throw error;
+
+            const unreadCount =
+                (data || []).reduce(
+                    (total, conversation) => {
+
+                        return total +
+                            Math.max(
+                                0,
+                                Number(
+                                    conversation?.unread_for_admin || 0
+                                )
+                            );
+
+                    },
+                    0
+                );
+
+            setChatBadge(unreadCount);
+
+        }
+        catch (error) {
+
+            console.warn(
+                "[ADMIN CHAT] Unable to load unread count:",
+                error
+            );
+
+            setChatBadge(0);
+        }
+    }
+
+
+    /*
+     * Initial count
+     */
+    updateChatBadge();
+
+
+    /*
+     * Realtime:
+     * update the badge whenever a conversation changes.
+     */
+    const chatNotificationChannel =
+        supabase
+            .channel("admin-registrations-chat-notifications")
+            .on(
+                "postgres_changes",
+                {
+                    event: "*",
+                    schema: "public",
+                    table: "chat_conversations"
+                },
+                () => {
+                    updateChatBadge();
+                }
+            )
+            .subscribe();
+
+
+    /*
+     * Fallback refresh.
+     * Keeps the badge accurate even if realtime reconnects.
+     */
+    const chatBadgeInterval =
+        setInterval(
+            updateChatBadge,
+            15000
+        );
+
+
+    window.addEventListener(
+        "focus",
+        updateChatBadge
+    );
+
+    window.addEventListener(
+        "pageshow",
+        updateChatBadge
+    );
+
+    document.addEventListener(
+        "visibilitychange",
+        () => {
+
+            if (
+                document.visibilityState ===
+                "visible"
+            ) {
+                updateChatBadge();
+            }
+
+        }
+    );
+
+</script>
+
+
+<!-- =========================================================
+     ADMIN ACCESS
+========================================================= -->
+
+<script type="module">
+
+    import {
+        supabase
+    } from "./js/supabase.js";
+
+
+    /* =====================================================
+       CHECK ADMIN ACCESS
+    ====================================================== */
+
+    async function checkAdminAccess() {
+
+        try {
+
+            const {
+                data: sessionData,
+                error: sessionError
+            } = await supabase.auth.getSession();
+
+
+            if (
+                sessionError ||
+                !sessionData?.session
+            ) {
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+            }
+
+
+            const user =
+                sessionData.session.user;
+
+
+            const {
+                data: profile,
+                error: profileError
+            } = await supabase
+                .from("profiles")
+                .select(`
+                    id,
+                    name,
+                    email,
+                    role,
+                    status
+                `)
+                .eq("id", user.id)
+                .maybeSingle();
+
+
+            if (profileError) {
+
+                console.error(
+                    "ADMIN REGISTRATION PROFILE ERROR:",
+                    profileError
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+            }
+
+
+            if (!profile) {
+
+                console.error(
+                    "ADMIN PROFILE NOT FOUND"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+            }
+
+
+            const role =
+                String(profile.role || "")
+                    .trim()
+                    .toLowerCase();
+
+
+            const status =
+                String(profile.status || "")
+                    .trim()
+                    .toLowerCase();
+
+
+            /* =================================================
+               MUST BE ADMIN
+            ================================================== */
+
+            if (role !== "admin") {
+
+                console.error(
+                    "ACCESS DENIED: NOT ADMIN"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+            }
+
+
+            /* =================================================
+               MUST BE APPROVED
+            ================================================== */
+
+            if (status !== "approved") {
+
+                console.error(
+                    "ACCESS DENIED: ADMIN NOT APPROVED"
+                );
+
+                await supabase.auth.signOut();
+
+                window.location.replace(
+                    "./login.html"
+                );
+
+                return;
+            }
+
+
+            document.body.classList.add(
+                "admin-authorized"
+            );
+
+
+            console.log(
+                "ADMIN REGISTRATIONS AUTHORIZED"
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                "ADMIN ACCESS ERROR:",
+                error
+            );
+
+            try {
+
+                await supabase.auth.signOut();
+
+            }
+            catch {}
+
+            window.location.replace(
+                "./login.html"
+            );
+        }
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ====================================================== */
+
+    const logoutBtn =
+        document.getElementById(
+            "logoutBtn"
+        );
+
+
+    if (logoutBtn) {
+
+        logoutBtn.addEventListener(
+            "click",
+            async () => {
+
+                logoutBtn.disabled = true;
+
+                logoutBtn.innerHTML =
+                    "<span>⇥</span> Logging out...";
+
+
+                try {
+
+                    const {
+                        error
+                    } = await supabase.auth.signOut();
+
+
+                    if (error) {
+
+                        console.error(
+                            "LOGOUT ERROR:",
+                            error
+                        );
+
+                    }
+
+
+                    const localKeys = [
+
+                        "userId",
+                        "userName",
+                        "userEmail",
+                        "userPhone",
+                        "userRole",
+
+                        "adminUserId",
+                        "adminName",
+                        "adminEmail",
+                        "adminAccessToken",
+                        "adminRefreshToken"
+
+                    ];
+
+
+                    localKeys.forEach(
+                        key => {
+
+                            localStorage.removeItem(
+                                key
+                            );
+
+                        }
+                    );
+
+
+                    window.location.replace(
+                        "./login.html"
+                    );
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "LOGOUT ERROR:",
+                        error
+                    );
+
+                    window.location.replace(
+                        "./login.html"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       START ACCESS CHECK
+    ====================================================== */
+
+    checkAdminAccess();
+
+</script>
+
+
+<!-- =========================================================
+     MOBILE SIDEBAR
+========================================================= -->
+
+<script>
+
+    const mobileMenuBtn =
+        document.getElementById(
+            "mobileMenuBtn"
+        );
+
+
+    const adminSidebar =
+        document.getElementById(
+            "adminSidebar"
+        );
+
+
+    const sidebarOverlay =
+        document.getElementById(
+            "sidebarOverlay"
+        );
+
+
+    function openSidebar() {
+
+        if (adminSidebar) {
+
+            adminSidebar.classList.add(
+                "open"
+            );
+
+        }
+
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.add(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    function closeSidebar() {
+
+        if (adminSidebar) {
+
+            adminSidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+
+        if (sidebarOverlay) {
+
+            sidebarOverlay.classList.remove(
+                "show"
+            );
+
+        }
+
+    }
+
+
+    if (mobileMenuBtn) {
+
+        mobileMenuBtn.addEventListener(
+            "click",
+            openSidebar
+        );
+
+    }
+
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.addEventListener(
+            "click",
+            closeSidebar
+        );
+
+    }
+
+
+    if (adminSidebar) {
+
+        adminSidebar
+            .querySelectorAll("a")
+            .forEach(link => {
+
+                link.addEventListener(
+                    "click",
+                    closeSidebar
+                );
+
+            });
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,4666 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Shop Settings | Admin</title>
+
+<script    
+    type="module"    
+    src="./js/admin-guard.js"   
+></script>
+
+<link
+    rel="stylesheet"
+    href="css/admin-settings.css"
+>
+
+<!-- =====================================================
+     ADMIN NOTIFICATION BADGE STYLE
+====================================================== -->
+
+<style>
+
+.admin-nav a {
+    position: relative;
+}
+
+.admin-nav a .admin-notification-badge {
+
+    width: auto !important;
+    height: 21px !important;
+    min-width: 21px !important;
+
+    padding: 0 6px !important;
+    margin-left: auto !important;
+
+    display: inline-flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    flex: 0 0 auto !important;
+
+    border-radius: 999px !important;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff4d4f,
+            #ff2d55
+        ) !important;
+
+    color: #ffffff !important;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.14) !important;
+
+    font-size: 10px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(255,255,255,0.025),
+
+        0 0 14px
+        rgba(255,59,48,0.42) !important;
+
+    animation:
+        adminNotificationPulse
+        1.8s ease-in-out infinite !important;
+}
+
+.admin-notification-badge[hidden] {
+    display: none !important;
+}
+
+.admin-notification-badge.has-notification {
+
+    animation:
+        adminNotificationPulse
+        1.8s ease-in-out infinite !important;
+}
+
+@keyframes adminNotificationPulse {
+
+    0%,
+    100% {
+
+        transform: scale(1);
+
+        box-shadow:
+            0 0 0 2px
+            rgba(255,255,255,0.025),
+
+            0 0 14px
+            rgba(255,59,48,0.42);
+    }
+
+    50% {
+
+        transform: scale(1.08);
+
+        box-shadow:
+            0 0 0 3px
+            rgba(255,59,48,0.08),
+
+            0 0 23px
+            rgba(255,59,48,0.72);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .admin-nav a .admin-notification-badge {
+
+        min-width: 19px !important;
+        height: 19px !important;
+
+        padding:
+            0 5px !important;
+
+        font-size: 9px !important;
+    }
+}
+
+
+/* =====================================================
+   PROMOTIONAL VIDEOS
+====================================================== */
+
+.promotional-video-list {
+
+    display: grid;
+
+    gap: 24px;
+
+    margin-top: 10px;
+}
+
+.promotional-video-card {
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    background:
+        rgba(255,255,255,0.025);
+
+    border-radius: 18px;
+
+    padding: 22px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.promotional-video-card:hover {
+
+    transform: translateY(-2px);
+
+    border-color:
+        rgba(0,242,254,0.25);
+
+    box-shadow:
+        0 18px 45px
+        rgba(0,0,0,0.22);
+}
+
+.promo-card-top {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+}
+
+.promo-number {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,242,254,0.14),
+            rgba(124,58,237,0.18)
+        );
+
+    border:
+        1px solid
+        rgba(0,242,254,0.18);
+
+    font-weight: 900;
+
+    color: #ffffff;
+}
+
+.promo-status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 12px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    text-transform: uppercase;
+}
+
+.promo-status.active {
+
+    color: #8affd5;
+
+    background:
+        rgba(34,197,94,0.10);
+
+    border:
+        1px solid
+        rgba(34,197,94,0.22);
+}
+
+.promo-status.inactive {
+
+    color: #ffb4b4;
+
+    background:
+        rgba(255,77,79,0.10);
+
+    border:
+        1px solid
+        rgba(255,77,79,0.22);
+}
+
+.promo-video-preview {
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    background: #020408;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    margin-bottom: 20px;
+
+    position: relative;
+}
+
+.promo-video-preview video {
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    background: #020408;
+}
+
+.promo-empty-video {
+
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    color:
+        rgba(255,255,255,0.48);
+
+    text-align: center;
+}
+
+.promo-empty-video strong {
+
+    color:
+        rgba(255,255,255,0.75);
+
+    font-size: 15px;
+}
+
+.promo-empty-video span {
+
+    font-size: 12px;
+}
+
+.promo-fields {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+}
+
+.promo-field.full {
+
+    grid-column: 1 / -1;
+}
+
+.promo-field label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 700;
+
+    font-size: 13px;
+}
+
+.promo-field input,
+.promo-field textarea {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.10);
+
+    background:
+        rgba(0,0,0,0.20);
+
+    color: #ffffff;
+
+    border-radius: 12px;
+
+    padding: 12px 14px;
+
+    outline: none;
+
+    font: inherit;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.promo-field textarea {
+
+    min-height: 100px;
+
+    resize: vertical;
+}
+
+.promo-field input:focus,
+.promo-field textarea:focus {
+
+    border-color:
+        rgba(0,242,254,0.45);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,242,254,0.07);
+}
+
+.promo-file-row {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.promo-file-input {
+
+    flex: 1;
+
+    min-width: 220px;
+}
+
+.promo-file-input label {
+
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+.promo-file-input input {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    color:
+        rgba(255,255,255,0.78);
+
+    font-size: 13px;
+}
+
+.promo-actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.07);
+}
+
+.promo-action-btn {
+
+    border: none;
+
+    border-radius: 11px;
+
+    padding: 11px 16px;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.promo-action-btn:hover {
+
+    transform:
+        translateY(-1px);
+}
+
+.promo-action-btn:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.promo-save-btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            #00f2fe,
+            #7c3aed
+        );
+
+    color: #ffffff;
+}
+
+.promo-replace-btn {
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color: #ffffff;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+.promo-delete-btn {
+
+    background:
+        rgba(255,77,79,0.10);
+
+    color: #ff9c9c;
+
+    border:
+        1px solid
+        rgba(255,77,79,0.20);
+}
+
+.promo-add-section {
+
+    margin-top: 22px;
+
+    display: flex;
+
+    justify-content: center;
+}
+
+.promo-add-btn {
+
+    width: 100%;
+
+    max-width: 420px;
+
+    border:
+        1px dashed
+        rgba(0,242,254,0.30);
+
+    background:
+        rgba(0,242,254,0.04);
+
+    color: #ffffff;
+
+    padding: 15px 20px;
+
+    border-radius: 14px;
+
+    font: inherit;
+
+    font-weight: 900;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.promo-add-btn:hover {
+
+    background:
+        rgba(0,242,254,0.08);
+
+    border-color:
+        rgba(0,242,254,0.55);
+}
+
+.promo-add-btn:disabled {
+
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+.promo-help {
+
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.promo-loading {
+
+    text-align: center;
+
+    padding: 30px;
+
+    color:
+        rgba(255,255,255,0.60);
+}
+
+.promo-empty {
+
+    text-align: center;
+
+    padding: 35px 20px;
+
+    border:
+        1px dashed
+        rgba(255,255,255,0.10);
+
+    border-radius: 16px;
+
+    color:
+        rgba(255,255,255,0.50);
+}
+
+.promo-empty strong {
+
+    display: block;
+
+    color:
+        rgba(255,255,255,0.80);
+
+    margin-bottom: 6px;
+}
+
+.promo-checkbox-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 15px;
+}
+
+.promo-checkbox-row input {
+
+    width: 18px;
+    height: 18px;
+
+    accent-color: #00f2fe;
+}
+
+.promo-checkbox-row label {
+
+    margin: 0;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   GCASH QR CODE
+====================================================== */
+
+.gcash-qr-settings {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(220px, 280px)
+        minmax(0, 1fr);
+
+    gap: 28px;
+
+    align-items: start;
+
+    margin-top: 24px;
+
+    padding-top: 24px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,0.07);
+}
+
+.gcash-qr-preview-wrapper {
+
+    width: 100%;
+
+    max-width: 280px;
+}
+
+.gcash-qr-preview {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    border-radius: 18px;
+
+    border:
+        1px solid
+        rgba(0,242,254,0.18);
+
+    background:
+        rgba(255,255,255,0.025);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    overflow: hidden;
+
+    position: relative;
+
+    box-shadow:
+        0 16px 40px
+        rgba(0,0,0,0.20);
+}
+
+.gcash-qr-preview img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+
+    padding: 12px;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+}
+
+.gcash-qr-empty {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    text-align: center;
+
+    padding: 25px;
+
+    color:
+        rgba(255,255,255,0.45);
+}
+
+.gcash-qr-empty strong {
+
+    color:
+        rgba(255,255,255,0.78);
+
+    font-size: 15px;
+}
+
+.gcash-qr-empty span {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+.gcash-qr-upload {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+}
+
+.gcash-qr-upload label {
+
+    display: block;
+
+    font-weight: 800;
+
+    font-size: 14px;
+}
+
+.gcash-qr-upload input[type="file"] {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    color:
+        rgba(255,255,255,0.78);
+
+    font-size: 13px;
+}
+
+.gcash-qr-upload small {
+
+    color:
+        rgba(255,255,255,0.48);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.gcash-qr-actions {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-top: 4px;
+}
+
+.gcash-qr-remove-btn {
+
+    border:
+        1px solid
+        rgba(255,77,79,0.20);
+
+    background:
+        rgba(255,77,79,0.10);
+
+    color: #ff9c9c;
+
+    border-radius: 11px;
+
+    padding: 11px 16px;
+
+    cursor: pointer;
+
+    font: inherit;
+
+    font-weight: 800;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+.gcash-qr-remove-btn:hover {
+
+    transform:
+        translateY(-1px);
+
+    background:
+        rgba(255,77,79,0.15);
+}
+
+.gcash-qr-remove-btn:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
+.gcash-qr-note {
+
+    margin-top: 2px;
+
+    padding: 12px 14px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(0,242,254,0.04);
+
+    border:
+        1px solid
+        rgba(0,242,254,0.10);
+
+    color:
+        rgba(255,255,255,0.58);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   HOME BANNER
+====================================================== */
+
+.home-banner-note {
+
+    margin-top: 14px;
+
+    padding: 13px 15px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(124,58,237,0.07);
+
+    border:
+        1px solid
+        rgba(124,58,237,0.18);
+
+    color:
+        rgba(255,255,255,0.58);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 768px) {
+
+    .promo-fields {
+
+        grid-template-columns: 1fr;
+    }
+
+    .promo-field.full {
+
+        grid-column: auto;
+    }
+
+    .promotional-video-card {
+
+        padding: 16px;
+    }
+
+    .promo-card-top {
+
+        align-items: flex-start;
+    }
+
+    .promo-actions {
+
+        flex-direction: column;
+    }
+
+    .promo-action-btn {
+
+        width: 100%;
+    }
+
+    .gcash-qr-settings {
+
+        grid-template-columns: 1fr;
+
+        gap: 20px;
+    }
+
+    .gcash-qr-preview-wrapper {
+
+        max-width: 260px;
+
+        margin: 0 auto;
+    }
+
+    .gcash-qr-actions {
+
+        flex-direction: column;
+    }
+
+    .gcash-qr-remove-btn {
+
+        width: 100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     ADMIN SIDEBAR
+====================================================== -->
+
+<aside
+    class="admin-sidebar"
+    id="adminSidebar"
+>
+
+    <a
+        href="admin.html"
+        class="admin-logo"
+    >
+
+        <div class="admin-logo-icon">
+            ⚡
+        </div>
+
+        <div class="admin-logo-text">
+            BUSINESS STORE
+        </div>
+
+    </a>
+
+
+    <nav class="admin-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a href="admin.html">
+
+            <span>
+                ▦
+            </span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-dashboard-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- PRODUCTS -->
+
+        <a href="admin-products.html">
+
+            <span>
+                ▣
+            </span>
+
+            <span class="nav-label">
+                Products
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-product-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- ORDERS -->
+
+        <a href="admin-orders.html">
+
+            <span>
+                ◫
+            </span>
+
+            <span class="nav-label">
+                Orders
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-order-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- REQUESTS -->
+
+        <a href="admin-requests.html">
+
+            <span>
+                ✉
+            </span>
+
+            <span class="nav-label">
+                Requests
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-request-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- ADMIN REGISTRATIONS -->
+
+        <a href="admin-registrations.html">
+
+            <span>
+                👤
+            </span>
+
+            <span class="nav-label">
+                Admin Registrations
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                data-admin-registration-count
+                hidden
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- CHAT -->
+
+        <a
+            href="./admin-chat.html"
+            id="adminChatNavLink"
+        >
+
+            <span>
+                💬
+            </span>
+
+            <span class="nav-label">
+                Chat
+            </span>
+
+            <span
+                class="admin-notification-badge"
+                id="adminChatNotificationBadge"
+                hidden
+                aria-label="Unread chat messages"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="admin-settings.html"
+            class="active"
+        >
+
+            <span>
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+
+        <a
+            href="index.html"
+            class="view-store-btn"
+        >
+
+            <span>
+                ↗
+            </span>
+
+            View Store
+
+        </a>
+
+
+        <button
+            type="button"
+            class="logout-btn"
+            id="logoutBtn"
+        >
+
+            <span>
+                ⇥
+            </span>
+
+            Logout
+
+        </button>
+
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     SIDEBAR OVERLAY
+====================================================== -->
+
+<div
+    class="sidebar-overlay"
+    id="sidebarOverlay"
+></div>
+
+
+<!-- =====================================================
+     MOBILE MENU BUTTON
+====================================================== -->
+
+<button
+    type="button"
+    class="mobile-menu-button"
+    id="mobileMenuButton"
+    aria-label="Open Menu"
+    aria-expanded="false"
+>
+
+    <span></span>
+    <span></span>
+    <span></span>
+
+</button>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+====================================================== -->
+
+<main class="settings-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <span class="page-label">
+            SHOP MANAGEMENT
+        </span>
+
+        <h1>
+            Shop Settings
+        </h1>
+
+        <p>
+            Manage the information, branding, payment,
+            delivery, promotional videos, and customer
+            notices displayed throughout your online store.
+        </p>
+
+    </section>
+
+
+    <!-- RESULT MESSAGE -->
+
+    <div
+        id="settingsResult"
+        class="settings-result"
+        role="alert"
+        aria-live="polite"
+    ></div>
+
+
+    <!-- =================================================
+         SHOP INFORMATION
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    STORE PROFILE
+                </span>
+
+                <h2>
+                    Shop Information
+                </h2>
+
+                <p>
+                    These details are used throughout
+                    the customer website.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-grid">
+
+
+            <div class="setting-group full-width">
+
+                <label for="shopName">
+                    Shop Name
+                </label>
+
+                <input
+                    type="text"
+                    id="shopName"
+                    placeholder="Enter your shop name"
+                    maxlength="100"
+                    autocomplete="organization"
+                >
+
+            </div>
+
+
+            <div class="setting-group full-width">
+
+                <label for="shopDescription">
+                    Shop Description
+                </label>
+
+                <textarea
+                    id="shopDescription"
+                    rows="5"
+                    maxlength="500"
+                    placeholder="Write a short description about your shop..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="setting-group">
+
+                <label for="shopEmail">
+                    Shop Email
+                </label>
+
+                <input
+                    type="email"
+                    id="shopEmail"
+                    placeholder="shop@email.com"
+                    maxlength="150"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="setting-group">
+
+                <label for="shopPhone">
+                    Shop Phone
+                </label>
+
+                <input
+                    type="text"
+                    id="shopPhone"
+                    placeholder="09XXXXXXXXX"
+                    maxlength="30"
+                    autocomplete="tel"
+                >
+
+            </div>
+
+
+            <div class="setting-group full-width">
+
+                <label for="shopAddress">
+                    Shop Address
+                </label>
+
+                <textarea
+                    id="shopAddress"
+                    rows="3"
+                    maxlength="250"
+                    placeholder="Enter your shop address"
+                    autocomplete="street-address"
+                ></textarea>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SHOP LOGO
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    BRANDING
+                </span>
+
+                <h2>
+                    Shop Logo
+                </h2>
+
+                <p>
+                    Upload the logo that will appear
+                    on your customer website.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="image-settings">
+
+
+            <div class="image-preview-box">
+
+                <div
+                    class="image-preview logo-preview"
+                    id="logoPreview"
+                >
+
+                    <span>
+                        No Logo
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="image-upload-content">
+
+                <label for="shopLogo">
+                    Shop Logo
+                </label>
+
+                <input
+                    type="file"
+                    id="shopLogo"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <small>
+                    JPG, PNG, or WebP.
+                    Maximum file size: 5MB.
+                </small>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="removeLogoBtn"
+                >
+                    Remove Logo
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SHOP BANNER - PRODUCTS PAGE
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    STORE BANNER
+                </span>
+
+                <h2>
+                    Shop Banner
+                </h2>
+
+                <p>
+                    Set the main banner image displayed
+                    on the customer Products page.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="image-settings banner-settings">
+
+
+            <div class="image-preview-box banner-preview-box">
+
+                <div
+                    class="image-preview banner-preview"
+                    id="bannerPreview"
+                >
+
+                    <span>
+                        No Banner
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="image-upload-content">
+
+                <label for="shopBanner">
+                    Shop Banner
+                </label>
+
+                <input
+                    type="file"
+                    id="shopBanner"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <small>
+                    JPG, PNG, or WebP.
+                    Maximum file size: 5MB.
+                </small>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="removeBannerBtn"
+                >
+                    Remove Banner
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         HOME PAGE BANNER - SEPARATE FROM SHOP BANNER
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    HOME PAGE BANNER
+                </span>
+
+                <h2>
+                    Home Page Banner
+                </h2>
+
+                <p>
+                    Upload a separate banner image specifically
+                    for your customer homepage. This banner is
+                    independent from the Products page banner.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="image-settings banner-settings">
+
+
+            <!-- HOME BANNER PREVIEW -->
+
+            <div class="image-preview-box banner-preview-box">
+
+                <div
+                    class="image-preview banner-preview"
+                    id="homeBannerPreview"
+                >
+
+                    <span>
+                        No Home Banner
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- HOME BANNER UPLOAD -->
+
+            <div class="image-upload-content">
+
+                <label for="homeBanner">
+                    Home Page Banner
+                </label>
+
+                <input
+                    type="file"
+                    id="homeBanner"
+                    accept="image/png,image/jpeg,image/webp"
+                >
+
+                <small>
+                    JPG, PNG, or WebP.
+                    Maximum file size: 5MB.
+                </small>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    id="removeHomeBannerBtn"
+                >
+                    Remove Home Banner
+                </button>
+
+                <div class="home-banner-note">
+
+                    💡 This banner is saved separately as
+                    <strong>home_banner_url</strong> and is
+                    intended for the customer homepage.
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PROMOTIONAL VIDEOS
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    PROMOTIONS
+                </span>
+
+                <h2>
+                    Promotional Videos
+                </h2>
+
+                <p>
+                    Manage up to 3 promotional videos
+                    displayed on your customer homepage.
+                    The center video will be featured
+                    in the carousel.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="promotionalVideosList"
+            class="promotional-video-list"
+        >
+
+            <div class="promo-loading">
+                Loading promotional videos...
+            </div>
+
+        </div>
+
+
+        <div class="promo-add-section">
+
+            <button
+                type="button"
+                class="promo-add-btn"
+                id="addPromotionalVideoBtn"
+            >
+                + Add Promotional Video
+            </button>
+
+        </div>
+
+
+        <p class="promo-help">
+
+            Maximum:
+            <strong>3 promotional videos</strong>.
+
+            Recommended format:
+            MP4, WebM, or MOV.
+
+            Maximum file size:
+            <strong>100MB per video</strong>.
+
+        </p>
+
+    </section>
+
+
+    <!-- =================================================
+         PAYMENT SETTINGS
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    PAYMENTS
+                </span>
+
+                <h2>
+                    GCash Payment
+                </h2>
+
+                <p>
+                    Manage the GCash information,
+                    QR code, and instructions shown
+                    during checkout.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-grid">
+
+
+            <!-- GCASH ACCOUNT NAME -->
+
+            <div class="setting-group">
+
+                <label for="gcashName">
+                    GCash Account Name
+                </label>
+
+                <input
+                    type="text"
+                    id="gcashName"
+                    placeholder="Account name"
+                    maxlength="100"
+                >
+
+            </div>
+
+
+            <!-- GCASH NUMBER -->
+
+            <div class="setting-group">
+
+                <label for="gcashNumber">
+                    GCash Number
+                </label>
+
+                <input
+                    type="text"
+                    id="gcashNumber"
+                    placeholder="09XXXXXXXXX"
+                    maxlength="30"
+                >
+
+            </div>
+
+
+            <!-- =================================================
+                 GCASH QR CODE
+            ================================================== -->
+
+            <div class="setting-group full-width">
+
+                <div class="gcash-qr-settings">
+
+
+                    <!-- QR PREVIEW -->
+
+                    <div class="gcash-qr-preview-wrapper">
+
+                        <div
+                            class="gcash-qr-preview"
+                            id="gcashQrPreview"
+                        >
+
+                            <div class="gcash-qr-empty">
+
+                                <strong>
+                                    No GCash QR
+                                </strong>
+
+                                <span>
+                                    Upload your GCash QR code
+                                    to show it here.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QR UPLOAD -->
+
+                    <div class="gcash-qr-upload">
+
+                        <label for="gcashQr">
+
+                            GCash QR Code
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="gcashQr"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+
+
+                        <small>
+
+                            Upload your GCash QR code.
+
+                            JPG, PNG, or WebP only.
+
+                            Maximum file size: 5MB.
+
+                        </small>
+
+
+                        <div class="gcash-qr-actions">
+
+                            <button
+                                type="button"
+                                class="gcash-qr-remove-btn"
+                                id="removeGcashQrBtn"
+                            >
+
+                                Remove GCash QR
+
+                            </button>
+
+                        </div>
+
+
+                        <div class="gcash-qr-note">
+
+                            💡 Customers will be able to see
+                            this QR code during GCash checkout
+                            after you save your shop settings.
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT INSTRUCTIONS -->
+
+            <div class="setting-group full-width">
+
+                <label for="paymentInstructions">
+                    Payment Instructions
+                </label>
+
+                <textarea
+                    id="paymentInstructions"
+                    rows="6"
+                    maxlength="1000"
+                    placeholder="Write one instruction per line..."
+                ></textarea>
+
+                <small>
+                    Tip: Put each instruction on a new line.
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         DELIVERY SETTINGS
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    DELIVERY
+                </span>
+
+                <h2>
+                    Delivery Settings
+                </h2>
+
+                <p>
+                    Configure the delivery fee, minimum
+                    order, and delivery information.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-grid">
+
+
+            <div class="setting-group">
+
+                <label for="deliveryFee">
+                    Delivery Fee
+                </label>
+
+                <div class="input-with-prefix">
+
+                    <span>
+                        ₱
+                    </span>
+
+                    <input
+                        type="number"
+                        id="deliveryFee"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-group">
+
+                <label for="minimumOrder">
+                    Minimum Order
+                </label>
+
+                <div class="input-with-prefix">
+
+                    <span>
+                        ₱
+                    </span>
+
+                    <input
+                        type="number"
+                        id="minimumOrder"
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="setting-group full-width">
+
+                <label for="deliveryInformation">
+                    Delivery Information
+                </label>
+
+                <textarea
+                    id="deliveryInformation"
+                    rows="5"
+                    maxlength="1000"
+                    placeholder="Example: Orders are delivered within 1–3 business days."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SHOP ANNOUNCEMENT
+    ================================================== -->
+
+    <section class="settings-card">
+
+        <div class="card-header">
+
+            <div>
+
+                <span class="section-label">
+                    CUSTOMER NOTICE
+                </span>
+
+                <h2>
+                    Shop Announcement
+                </h2>
+
+                <p>
+                    Add a message that can appear at the
+                    top of your customer website.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="settings-grid">
+
+
+            <div class="setting-group full-width">
+
+                <label for="shopAnnouncement">
+                    Announcement
+                </label>
+
+                <textarea
+                    id="shopAnnouncement"
+                    rows="4"
+                    maxlength="500"
+                    placeholder="Example: New products are now available!"
+                ></textarea>
+
+            </div>
+
+
+            <div class="setting-group full-width">
+
+                <label class="checkbox-label">
+
+                    <input
+                        type="checkbox"
+                        id="announcementEnabled"
+                    >
+
+                    <span>
+                        Show announcement on customer store
+                    </span>
+
+                </label>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         SAVE SETTINGS
+    ================================================== -->
+
+    <section class="save-section">
+
+        <div>
+
+            <span class="section-label">
+                SAVE CHANGES
+            </span>
+
+            <h2>
+                Update Your Shop
+            </h2>
+
+            <p>
+                Save your changes to apply the updated
+                information to the customer website.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="save-btn"
+            id="saveSettingsBtn"
+        >
+            Save Shop Settings
+        </button>
+
+    </section>
+
+
+    <!-- =================================================
+         ADMIN LOGOUT
+    ================================================== -->
+
+    <section class="danger-card">
+
+        <div>
+
+            <span class="section-label">
+                ADMIN ACCOUNT
+            </span>
+
+            <h2>
+                Sign Out
+            </h2>
+
+            <p>
+                Sign out from the administrator account.
+            </p>
+
+        </div>
+
+
+        <button
+            type="button"
+            class="danger-btn"
+            id="settingsLogoutBtn"
+        >
+            Logout
+        </button>
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     MOBILE SIDEBAR SCRIPT
+====================================================== -->
+
+<script>
+
+const mobileMenuButton =
+    document.getElementById(
+        "mobileMenuButton"
+    );
+
+const adminSidebar =
+    document.getElementById(
+        "adminSidebar"
+    );
+
+const sidebarOverlay =
+    document.getElementById(
+        "sidebarOverlay"
+    );
+
+
+function openSidebar() {
+
+    if (adminSidebar) {
+
+        adminSidebar.classList.add(
+            "open"
+        );
+
+    }
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.classList.add(
+            "open"
+        );
+
+    }
+
+    if (mobileMenuButton) {
+
+        mobileMenuButton.classList.add(
+            "active"
+        );
+
+        mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+    }
+
+    document.body.classList.add(
+        "sidebar-open"
+    );
+
+}
+
+
+function closeSidebar() {
+
+    if (adminSidebar) {
+
+        adminSidebar.classList.remove(
+            "open"
+        );
+
+    }
+
+    if (sidebarOverlay) {
+
+        sidebarOverlay.classList.remove(
+            "open"
+        );
+
+    }
+
+    if (mobileMenuButton) {
+
+        mobileMenuButton.classList.remove(
+            "active"
+        );
+
+        mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+    document.body.classList.remove(
+        "sidebar-open"
+    );
+
+}
+
+
+if (mobileMenuButton) {
+
+    mobileMenuButton.addEventListener(
+        "click",
+        () => {
+
+            if (
+                adminSidebar &&
+                adminSidebar.classList.contains(
+                    "open"
+                )
+            ) {
+
+                closeSidebar();
+
+            } else {
+
+                openSidebar();
+
+            }
+
+        }
+    );
+
+}
+
+
+if (sidebarOverlay) {
+
+    sidebarOverlay.addEventListener(
+        "click",
+        closeSidebar
+    );
+
+}
+
+
+if (adminSidebar) {
+
+    adminSidebar
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    closeSidebar
+                );
+
+            }
+        );
+
+}
+
+</script>
+
+
+<!-- =====================================================
+     ADMIN CHAT NOTIFICATION
+====================================================== -->
+
+<script type="module">
+
+import { supabase } from "./js/supabase.js";
+
+const chatBadge =
+    document.getElementById("adminChatNotificationBadge");
+
+function setChatBadge(count) {
+
+    if (!chatBadge) return;
+
+    const total = Math.max(0, Number(count) || 0);
+
+    if (total > 0) {
+
+        chatBadge.textContent =
+            total > 99 ? "99+" : String(total);
+
+        chatBadge.hidden = false;
+
+        chatBadge.classList.add("has-notification");
+
+        chatBadge.setAttribute(
+            "aria-label",
+            `${total} unread chat message${total === 1 ? "" : "s"}`
+        );
+
+    } else {
+
+        chatBadge.textContent = "0";
+
+        chatBadge.hidden = true;
+
+        chatBadge.classList.remove("has-notification");
+
+        chatBadge.setAttribute(
+            "aria-label",
+            "No unread chat messages"
+        );
+
+    }
+}
+
+
+async function updateChatBadge() {
+
+    if (!chatBadge) return;
+
+    try {
+
+        const {
+            data,
+            error
+        } = await supabase
+            .from("chat_conversations")
+            .select("unread_for_admin");
+
+        if (error) throw error;
+
+        const unreadCount =
+            (data || []).reduce(
+                (total, conversation) => {
+
+                    return total + Math.max(
+                        0,
+                        Number(
+                            conversation?.unread_for_admin || 0
+                        )
+                    );
+
+                },
+                0
+            );
+
+        setChatBadge(unreadCount);
+
+    } catch (error) {
+
+        console.warn(
+            "[ADMIN CHAT] Unable to load unread count:",
+            error
+        );
+
+        setChatBadge(0);
+
+    }
+}
+
+
+updateChatBadge();
+
+
+const chatNotificationChannel =
+    supabase
+        .channel("admin-settings-chat-notifications")
+        .on(
+            "postgres_changes",
+            {
+                event: "*",
+                schema: "public",
+                table: "chat_conversations"
+            },
+            () => {
+                updateChatBadge();
+            }
+        )
+        .subscribe();
+
+
+setInterval(
+    updateChatBadge,
+    15000
+);
+
+
+window.addEventListener(
+    "focus",
+    updateChatBadge
+);
+
+window.addEventListener(
+    "pageshow",
+    updateChatBadge
+);
+
+document.addEventListener(
+    "visibilitychange",
+    () => {
+
+        if (
+            document.visibilityState === "visible"
+        ) {
+            updateChatBadge();
+        }
+
+    }
+);
+
+</script>
+
+
+<!-- =====================================================
+     ADMIN NOTIFICATIONS
+====================================================== -->
+
+<script
+    type="module"
+    src="js/admin-notifications.js?v=4"
+></script>
+
+
+<!-- =====================================================
+     SHOP SETTINGS JAVASCRIPT
+====================================================== -->
+
+<script
+    type="module"
+    src="js/admin-settings.js?v=5"
+></script>
+
+
+<!-- =====================================================
+     PROMOTIONAL VIDEOS SYSTEM
+====================================================== -->
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+const BUCKET_NAME =
+    "promotional-videos";
+
+
+const MAX_VIDEOS =
+    3;
+
+
+const MAX_VIDEO_SIZE =
+    100 * 1024 * 1024;
+
+
+const ALLOWED_VIDEO_TYPES = [
+
+    "video/mp4",
+
+    "video/webm",
+
+    "video/quicktime"
+
+];
+
+
+const promotionalVideosList =
+    document.getElementById(
+        "promotionalVideosList"
+    );
+
+
+const addPromotionalVideoBtn =
+    document.getElementById(
+        "addPromotionalVideoBtn"
+    );
+
+
+const settingsResult =
+    document.getElementById(
+        "settingsResult"
+    );
+
+
+let promotionalVideos = [];
+
+
+/* =====================================================
+   MESSAGE
+====================================================== */
+
+function showPromoMessage(
+    message,
+    type = "success"
+) {
+
+    if (!settingsResult) {
+        return;
+    }
+
+    settingsResult.textContent =
+        message;
+
+    settingsResult.className =
+        "settings-result " +
+        type;
+
+    settingsResult.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    setTimeout(
+        () => {
+
+            if (settingsResult) {
+
+                settingsResult.textContent =
+                    "";
+
+                settingsResult.className =
+                    "settings-result";
+
+            }
+
+        },
+        4500
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+====================================================== */
+
+function escapeHtml(value) {
+
+    return String(
+        value ?? ""
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   GET EXTENSION
+====================================================== */
+
+function getVideoExtension(file) {
+
+    const name =
+        file?.name ||
+        "";
+
+    const parts =
+        name.split(".");
+
+    if (parts.length > 1) {
+
+        return parts
+            .pop()
+            .toLowerCase();
+
+    }
+
+    if (
+        file?.type ===
+        "video/webm"
+    ) {
+
+        return "webm";
+
+    }
+
+    if (
+        file?.type ===
+        "video/quicktime"
+    ) {
+
+        return "mov";
+
+    }
+
+    return "mp4";
+
+}
+
+
+/* =====================================================
+   GET STORAGE PATH
+====================================================== */
+
+function getStoragePathFromUrl(
+    videoUrl
+) {
+
+    if (!videoUrl) {
+        return null;
+    }
+
+    try {
+
+        const marker =
+            "/storage/v1/object/public/" +
+            BUCKET_NAME +
+            "/";
+
+        const index =
+            videoUrl.indexOf(
+                marker
+            );
+
+        if (index === -1) {
+            return null;
+        }
+
+        return decodeURIComponent(
+            videoUrl.substring(
+                index +
+                marker.length
+            )
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Could not read storage path:",
+            error
+        );
+
+        return null;
+
+    }
+
+}
+
+
+/* =====================================================
+   CHECK ADMIN SESSION
+====================================================== */
+
+async function verifyAdminSession() {
+
+    const {
+        data,
+        error
+    } =
+        await supabase.auth.getSession();
+
+    if (error) {
+        throw error;
+    }
+
+    const session =
+        data?.session;
+
+    if (!session) {
+
+        throw new Error(
+            "Admin session expired. Please login again."
+        );
+
+    }
+
+    const {
+        data: profile,
+        error: profileError
+    } =
+        await supabase
+
+            .from("profiles")
+
+            .select(
+                "id, role, status"
+            )
+
+            .eq(
+                "id",
+                session.user.id
+            )
+
+            .maybeSingle();
+
+    if (profileError) {
+        throw profileError;
+    }
+
+    if (!profile) {
+
+        throw new Error(
+            "Admin profile was not found."
+        );
+
+    }
+
+    const role =
+        String(
+            profile.role || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    const status =
+        String(
+            profile.status || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    if (role !== "admin") {
+
+        throw new Error(
+            "You are not authorized to manage promotional videos."
+        );
+
+    }
+
+    if (status !== "approved") {
+
+        throw new Error(
+            "Your admin account is not approved."
+        );
+
+    }
+
+    return session;
+
+}
+
+
+/* =====================================================
+   LOAD VIDEOS
+====================================================== */
+
+async function loadPromotionalVideos() {
+
+    if (!promotionalVideosList) {
+        return;
+    }
+
+    promotionalVideosList.innerHTML = `
+        <div class="promo-loading">
+            Loading promotional videos...
+        </div>
+    `;
+
+    const {
+        data,
+        error
+    } = await supabase
+
+        .from(
+            "promotional_videos"
+        )
+
+        .select(`
+            id,
+            title,
+            description,
+            video_url,
+            button_text,
+            button_link,
+            display_order,
+            is_active,
+            created_at,
+            updated_at
+        `)
+
+        .order(
+            "display_order",
+            {
+                ascending: true
+            }
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+
+    if (error) {
+
+        console.error(
+            "LOAD PROMOTIONAL VIDEOS ERROR:",
+            error
+        );
+
+        promotionalVideosList.innerHTML = `
+            <div class="promo-empty">
+
+                <strong>
+                    Unable to load promotional videos.
+                </strong>
+
+                <span>
+                    ${escapeHtml(
+                        error.message
+                    )}
+                </span>
+
+            </div>
+        `;
+
+        updateAddButton();
+
+        return;
+
+    }
+
+    promotionalVideos =
+        (data || []).slice(
+            0,
+            MAX_VIDEOS
+        );
+
+    renderPromotionalVideos();
+
+    updateAddButton();
+
+}
+
+
+/* =====================================================
+   UPDATE ADD BUTTON
+====================================================== */
+
+function updateAddButton() {
+
+    if (!addPromotionalVideoBtn) {
+        return;
+    }
+
+    const count =
+        promotionalVideos.length;
+
+    if (count >= MAX_VIDEOS) {
+
+        addPromotionalVideoBtn.disabled =
+            true;
+
+        addPromotionalVideoBtn.textContent =
+            "✓ Maximum 3 Videos Added";
+
+    } else {
+
+        addPromotionalVideoBtn.disabled =
+            false;
+
+        addPromotionalVideoBtn.textContent =
+            "+ Add Promotional Video";
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER
+====================================================== */
+
+function renderPromotionalVideos() {
+
+    if (!promotionalVideos.length) {
+
+        promotionalVideosList.innerHTML = `
+            <div class="promo-empty">
+
+                <strong>
+                    No promotional videos yet.
+                </strong>
+
+                <span>
+                    Click "Add Promotional Video"
+                    to create your first video.
+                </span>
+
+            </div>
+        `;
+
+        return;
+
+    }
+
+    promotionalVideosList.innerHTML =
+        promotionalVideos
+            .map(
+                (
+                    video,
+                    index
+                ) => {
+
+                    return createVideoCard(
+                        video,
+                        index
+                    );
+
+                }
+            )
+            .join("");
+
+    attachVideoEvents();
+
+}
+
+
+/* =====================================================
+   CREATE CARD
+====================================================== */
+
+function createVideoCard(
+    video,
+    index
+) {
+
+    const isActive =
+        Boolean(
+            video.is_active
+        );
+
+    const videoUrl =
+        video.video_url ||
+        "";
+
+    const title =
+        video.title ||
+        "";
+
+    const description =
+        video.description ||
+        "";
+
+    const buttonText =
+        video.button_text ||
+        "SHOP NOW";
+
+    const buttonLink =
+        video.button_link ||
+        "../products.html";
+
+    const displayOrder =
+        Number.isFinite(
+            Number(
+                video.display_order
+            )
+        )
+            ? Number(
+                video.display_order
+            )
+            : index;
+
+    return `
+
+        <article
+            class="promotional-video-card"
+            data-video-id="${escapeHtml(video.id)}"
+        >
+
+            <div class="promo-card-top">
+
+                <div class="promo-number">
+                    ${index + 1}
+                </div>
+
+                <span
+                    class="
+                        promo-status
+                        ${
+                            isActive
+                                ? "active"
+                                : "inactive"
+                        }
+                    "
+                >
+
+                    ${
+                        isActive
+                            ? "● Active"
+                            : "● Hidden"
+                    }
+
+                </span>
+
+            </div>
+
+
+            <div class="promo-video-preview">
+
+                ${
+                    videoUrl
+
+                        ? `
+
+                            <video
+                                src="${escapeHtml(videoUrl)}"
+                                controls
+                                preload="metadata"
+                                playsinline
+                            ></video>
+
+                        `
+
+                        : `
+
+                            <div class="promo-empty-video">
+
+                                <strong>
+                                    No Video Uploaded
+                                </strong>
+
+                                <span>
+                                    Choose a video below.
+                                </span>
+
+                            </div>
+
+                        `
+                }
+
+            </div>
+
+
+            <div class="promo-fields">
+
+
+                <div class="promo-field">
+
+                    <label>
+                        Video Title
+                    </label>
+
+                    <input
+                        type="text"
+                        data-field="title"
+                        maxlength="150"
+                        value="${escapeHtml(title)}"
+                        placeholder="New Products Are Here!"
+                    >
+
+                </div>
+
+
+                <div class="promo-field">
+
+                    <label>
+                        Display Order
+                    </label>
+
+                    <input
+                        type="number"
+                        data-field="display_order"
+                        min="0"
+                        max="2"
+                        step="1"
+                        value="${displayOrder}"
+                    >
+
+                </div>
+
+
+                <div class="promo-field full">
+
+                    <label>
+                        Description
+                    </label>
+
+                    <textarea
+                        data-field="description"
+                        maxlength="500"
+                        placeholder="Tell customers about this promotion..."
+                    >${escapeHtml(description)}</textarea>
+
+                </div>
+
+
+                <div class="promo-field">
+
+                    <label>
+                        Button Text
+                    </label>
+
+                    <input
+                        type="text"
+                        data-field="button_text"
+                        maxlength="50"
+                        value="${escapeHtml(buttonText)}"
+                        placeholder="SHOP NOW"
+                    >
+
+                </div>
+
+
+                <div class="promo-field">
+
+                    <label>
+                        Button Link
+                    </label>
+
+                    <input
+                        type="text"
+                        data-field="button_link"
+                        maxlength="300"
+                        value="${escapeHtml(buttonLink)}"
+                        placeholder="../products.html"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="promo-checkbox-row">
+
+                <input
+                    type="checkbox"
+                    id="promoActive-${escapeHtml(video.id)}"
+                    data-field="is_active"
+                    ${
+                        isActive
+                            ? "checked"
+                            : ""
+                    }
+                >
+
+                <label
+                    for="promoActive-${escapeHtml(video.id)}"
+                >
+                    Show this video on the homepage
+                </label>
+
+            </div>
+
+
+            <div class="promo-file-row">
+
+                <div class="promo-file-input">
+
+                    <label>
+                        Video File
+                    </label>
+
+                    <input
+                        type="file"
+                        data-video-file
+                        accept="video/mp4,video/webm,video/quicktime"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="promo-actions">
+
+                <button
+                    type="button"
+                    class="
+                        promo-action-btn
+                        promo-save-btn
+                    "
+                    data-action="save"
+                >
+                    Save Changes
+                </button>
+
+
+                <button
+                    type="button"
+                    class="
+                        promo-action-btn
+                        promo-replace-btn
+                    "
+                    data-action="replace"
+                >
+                    Replace Video
+                </button>
+
+
+                <button
+                    type="button"
+                    class="
+                        promo-action-btn
+                        promo-delete-btn
+                    "
+                    data-action="delete"
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   ATTACH EVENTS
+====================================================== */
+
+function attachVideoEvents() {
+
+    promotionalVideosList
+        .querySelectorAll(
+            '[data-action="save"]'
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const card =
+                            button.closest(
+                                ".promotional-video-card"
+                            );
+
+                        saveVideoChanges(
+                            card,
+                            button
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    promotionalVideosList
+        .querySelectorAll(
+            '[data-action="replace"]'
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const card =
+                            button.closest(
+                                ".promotional-video-card"
+                            );
+
+                        replaceVideo(
+                            card,
+                            button
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    promotionalVideosList
+        .querySelectorAll(
+            '[data-action="delete"]'
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const card =
+                            button.closest(
+                                ".promotional-video-card"
+                            );
+
+                        deleteVideo(
+                            card,
+                            button
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+    promotionalVideosList
+        .querySelectorAll(
+            "[data-video-file]"
+        )
+        .forEach(
+            input => {
+
+                input.addEventListener(
+                    "change",
+                    () => {
+
+                        const file =
+                            input.files?.[0];
+
+                        if (!file) {
+                            return;
+                        }
+
+                        const card =
+                            input.closest(
+                                ".promotional-video-card"
+                            );
+
+                        const preview =
+                            card?.querySelector(
+                                ".promo-video-preview"
+                            );
+
+                        if (!preview) {
+                            return;
+                        }
+
+                        const objectUrl =
+                            URL.createObjectURL(
+                                file
+                            );
+
+                        preview.innerHTML = `
+
+                            <video
+                                src="${objectUrl}"
+                                controls
+                                muted
+                                playsinline
+                                preload="metadata"
+                            ></video>
+
+                        `;
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   GET CARD VALUES
+====================================================== */
+
+function getCardValues(card) {
+
+    const title =
+        card.querySelector(
+            '[data-field="title"]'
+        )?.value.trim() || "";
+
+    const description =
+        card.querySelector(
+            '[data-field="description"]'
+        )?.value.trim() || "";
+
+    const buttonText =
+        card.querySelector(
+            '[data-field="button_text"]'
+        )?.value.trim() ||
+        "SHOP NOW";
+
+    const buttonLink =
+        card.querySelector(
+            '[data-field="button_link"]'
+        )?.value.trim() ||
+        "../products.html";
+
+    let displayOrder =
+        Number(
+            card.querySelector(
+                '[data-field="display_order"]'
+            )?.value
+        );
+
+    if (!Number.isFinite(displayOrder)) {
+
+        displayOrder = 0;
+
+    }
+
+    displayOrder =
+        Math.max(
+            0,
+            Math.min(
+                2,
+                Math.round(
+                    displayOrder
+                )
+            )
+        );
+
+    const isActive =
+        Boolean(
+            card.querySelector(
+                '[data-field="is_active"]'
+            )?.checked
+        );
+
+    return {
+
+        title,
+
+        description,
+
+        button_text:
+            buttonText,
+
+        button_link:
+            buttonLink,
+
+        display_order:
+            displayOrder,
+
+        is_active:
+            isActive
+
+    };
+
+}
+
+
+/* =====================================================
+   SAVE CHANGES
+====================================================== */
+
+async function saveVideoChanges(
+    card,
+    button
+) {
+
+    const videoId =
+        card?.dataset.videoId;
+
+    if (!videoId) {
+        return;
+    }
+
+    button.disabled = true;
+
+    button.textContent =
+        "Saving...";
+
+    try {
+
+        await verifyAdminSession();
+
+        const values =
+            getCardValues(
+                card
+            );
+
+        const {
+            error
+        } = await supabase
+
+            .from(
+                "promotional_videos"
+            )
+
+            .update({
+
+                title:
+                    values.title,
+
+                description:
+                    values.description,
+
+                button_text:
+                    values.button_text,
+
+                button_link:
+                    values.button_link,
+
+                display_order:
+                    values.display_order,
+
+                is_active:
+                    values.is_active,
+
+                updated_at:
+                    new Date().toISOString()
+
+            })
+
+            .eq(
+                "id",
+                videoId
+            );
+
+        if (error) {
+            throw error;
+        }
+
+        showPromoMessage(
+            "Promotional video settings saved.",
+            "success"
+        );
+
+        await loadPromotionalVideos();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "SAVE PROMOTIONAL VIDEO ERROR:",
+            error
+        );
+
+        showPromoMessage(
+            "Failed to save video settings: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Save Changes";
+
+    }
+
+}
+
+
+/* =====================================================
+   REPLACE VIDEO
+====================================================== */
+
+async function replaceVideo(
+    card,
+    button
+) {
+
+    const videoId =
+        card?.dataset.videoId;
+
+    const fileInput =
+        card?.querySelector(
+            "[data-video-file]"
+        );
+
+    const file =
+        fileInput?.files?.[0];
+
+    if (!file) {
+
+        showPromoMessage(
+            "Please choose a video file first.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (
+        !ALLOWED_VIDEO_TYPES.includes(
+            file.type
+        )
+    ) {
+
+        showPromoMessage(
+            "Only MP4, WebM, or MOV videos are allowed.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    if (
+        file.size >
+        MAX_VIDEO_SIZE
+    ) {
+
+        showPromoMessage(
+            "Video is too large. Maximum size is 100MB.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Uploading...";
+
+    let newFilePath =
+        null;
+
+    try {
+
+        await verifyAdminSession();
+
+        const existingVideo =
+            promotionalVideos.find(
+                item =>
+                    item.id ===
+                    videoId
+            );
+
+        if (!existingVideo) {
+
+            throw new Error(
+                "Promotional video record not found."
+            );
+
+        }
+
+        const extension =
+            getVideoExtension(
+                file
+            );
+
+        newFilePath =
+            `videos/${crypto.randomUUID()}.${extension}`;
+
+
+        const {
+            error: uploadError
+        } = await supabase.storage
+
+            .from(
+                BUCKET_NAME
+            )
+
+            .upload(
+                newFilePath,
+                file,
+                {
+
+                    cacheControl:
+                        "3600",
+
+                    contentType:
+                        file.type,
+
+                    upsert:
+                        false
+
+                }
+            );
+
+        if (uploadError) {
+            throw uploadError;
+        }
+
+
+        const {
+            data:
+            publicUrlData
+        } =
+            supabase.storage
+
+                .from(
+                    BUCKET_NAME
+                )
+
+                .getPublicUrl(
+                    newFilePath
+                );
+
+
+        const newVideoUrl =
+            publicUrlData?.publicUrl;
+
+        if (!newVideoUrl) {
+
+            throw new Error(
+                "Could not create public video URL."
+            );
+
+        }
+
+
+        const {
+            error:
+            updateError
+        } =
+            await supabase
+
+                .from(
+                    "promotional_videos"
+                )
+
+                .update({
+
+                    video_url:
+                        newVideoUrl,
+
+                    updated_at:
+                        new Date().toISOString()
+
+                })
+
+                .eq(
+                    "id",
+                    videoId
+                );
+
+        if (updateError) {
+
+            await supabase.storage
+
+                .from(
+                    BUCKET_NAME
+                )
+
+                .remove([
+                    newFilePath
+                ]);
+
+            newFilePath =
+                null;
+
+            throw updateError;
+
+        }
+
+
+        const oldPath =
+            getStoragePathFromUrl(
+                existingVideo.video_url
+            );
+
+        if (
+            oldPath &&
+            oldPath !== newFilePath
+        ) {
+
+            const {
+                error:
+                oldDeleteError
+            } =
+                await supabase.storage
+
+                    .from(
+                        BUCKET_NAME
+                    )
+
+                    .remove([
+                        oldPath
+                    ]);
+
+            if (oldDeleteError) {
+
+                console.warn(
+                    "OLD VIDEO DELETE WARNING:",
+                    oldDeleteError
+                );
+
+            }
+
+        }
+
+
+        showPromoMessage(
+            "Promotional video replaced successfully.",
+            "success"
+        );
+
+        await loadPromotionalVideos();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "REPLACE VIDEO ERROR:",
+            error
+        );
+
+        if (newFilePath) {
+
+            try {
+
+                await supabase.storage
+
+                    .from(
+                        BUCKET_NAME
+                    )
+
+                    .remove([
+                        newFilePath
+                    ]);
+
+            }
+
+            catch (cleanupError) {
+
+                console.warn(
+                    "CLEANUP ERROR:",
+                    cleanupError
+                );
+
+            }
+
+        }
+
+        showPromoMessage(
+            "Video upload failed: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Replace Video";
+
+    }
+
+}
+
+
+/* =====================================================
+   DELETE VIDEO
+====================================================== */
+
+async function deleteVideo(
+    card,
+    button
+) {
+
+    const videoId =
+        card?.dataset.videoId;
+
+    const video =
+        promotionalVideos.find(
+            item =>
+                item.id ===
+                videoId
+        );
+
+    if (!video) {
+        return;
+    }
+
+    const confirmed =
+        confirm(
+            "Delete this promotional video?\n\n" +
+            "This will remove it from the homepage."
+        );
+
+    if (!confirmed) {
+        return;
+    }
+
+    button.disabled =
+        true;
+
+    button.textContent =
+        "Deleting...";
+
+    try {
+
+        await verifyAdminSession();
+
+
+        const {
+            error:
+            dbError
+        } =
+            await supabase
+
+                .from(
+                    "promotional_videos"
+                )
+
+                .delete()
+
+                .eq(
+                    "id",
+                    videoId
+                );
+
+        if (dbError) {
+            throw dbError;
+        }
+
+
+        const storagePath =
+            getStoragePathFromUrl(
+                video.video_url
+            );
+
+        if (storagePath) {
+
+            const {
+                error:
+                storageError
+            } =
+                await supabase.storage
+
+                    .from(
+                        BUCKET_NAME
+                    )
+
+                    .remove([
+                        storagePath
+                    ]);
+
+            if (storageError) {
+
+                console.warn(
+                    "STORAGE DELETE WARNING:",
+                    storageError
+                );
+
+            }
+
+        }
+
+
+        showPromoMessage(
+            "Promotional video deleted successfully.",
+            "success"
+        );
+
+        await loadPromotionalVideos();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "DELETE VIDEO ERROR:",
+            error
+        );
+
+        showPromoMessage(
+            "Failed to delete video: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Delete";
+
+    }
+
+}
+
+
+/* =====================================================
+   ADD VIDEO
+====================================================== */
+
+async function addPromotionalVideo() {
+
+    if (
+        promotionalVideos.length >=
+        MAX_VIDEOS
+    ) {
+
+        showPromoMessage(
+            "You can only have 3 promotional videos.",
+            "error"
+        );
+
+        return;
+
+    }
+
+    addPromotionalVideoBtn.disabled =
+        true;
+
+    addPromotionalVideoBtn.textContent =
+        "Creating...";
+
+    try {
+
+        await verifyAdminSession();
+
+        const usedOrders =
+            promotionalVideos.map(
+                video =>
+                    Number(
+                        video.display_order
+                    )
+            );
+
+        let nextOrder =
+            0;
+
+        while (
+            usedOrders.includes(
+                nextOrder
+            ) &&
+            nextOrder < MAX_VIDEOS
+        ) {
+
+            nextOrder++;
+
+        }
+
+        const {
+            error
+        } =
+            await supabase
+
+                .from(
+                    "promotional_videos"
+                )
+
+                .insert({
+
+                    title:
+                        `Promotion ${nextOrder + 1}`,
+
+                    description:
+                        "Add your promotional message here.",
+
+                    video_url:
+                        "",
+
+                    button_text:
+                        "SHOP NOW",
+
+                    button_link:
+                        "../products.html",
+
+                    display_order:
+                        nextOrder,
+
+                    is_active:
+                        true
+
+                });
+
+        if (error) {
+            throw error;
+        }
+
+        showPromoMessage(
+            "New promotional video slot created.",
+            "success"
+        );
+
+        await loadPromotionalVideos();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "ADD PROMOTIONAL VIDEO ERROR:",
+            error
+        );
+
+        showPromoMessage(
+            "Failed to create promotional video: " +
+            error.message,
+            "error"
+        );
+
+    }
+
+    finally {
+
+        updateAddButton();
+
+    }
+
+}
+
+
+if (
+    addPromotionalVideoBtn
+) {
+
+    addPromotionalVideoBtn.addEventListener(
+        "click",
+        addPromotionalVideo
+    );
+
+}
+
+
+loadPromotionalVideos();
+
+</script>
+
+
+<!-- =====================================================
+     ADMIN AUTHENTICATION
+====================================================== -->
+
+<script type="module">
+
+import {
+    supabase
+} from "./js/supabase.js";
+
+
+async function checkAdminAccess() {
+
+    console.log(
+        "================================="
+    );
+
+    console.log(
+        "ADMIN SETTINGS AUTH CHECK"
+    );
+
+    console.log(
+        "================================="
+    );
+
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await supabase.auth.getSession();
+
+
+        if (sessionError) {
+
+            console.error(
+                "SESSION ERROR:",
+                sessionError
+            );
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        const session =
+            sessionData?.session;
+
+
+        if (!session) {
+
+            console.warn(
+                "NO ADMIN SESSION"
+            );
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        const user =
+            session.user;
+
+
+        console.log(
+            "SESSION USER:",
+            user
+        );
+
+
+        const {
+            data: profile,
+            error: profileError
+        } =
+            await supabase
+
+                .from("profiles")
+
+                .select(`
+                    id,
+                    name,
+                    email,
+                    role,
+                    status
+                `)
+
+                .eq(
+                    "id",
+                    user.id
+                )
+
+                .maybeSingle();
+
+
+        if (profileError) {
+
+            console.error(
+                "PROFILE ERROR:",
+                profileError
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        if (!profile) {
+
+            console.error(
+                "PROFILE NOT FOUND:",
+                user.id
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "ADMIN PROFILE:",
+            profile
+        );
+
+
+        const role =
+            String(
+                profile.role || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (role !== "admin") {
+
+            console.warn(
+                "USER IS NOT ADMIN"
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        const status =
+            String(
+                profile.status || ""
+            )
+            .trim()
+            .toLowerCase();
+
+
+        if (status === "pending") {
+
+            console.warn(
+                "ADMIN ACCOUNT IS PENDING"
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            status === "rejected" ||
+            status === "declined"
+        ) {
+
+            console.warn(
+                "ADMIN ACCOUNT REJECTED"
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            status !== "approved"
+        ) {
+
+            console.warn(
+                "INVALID ADMIN STATUS:",
+                status
+            );
+
+            await supabase.auth.signOut();
+
+            window.location.replace(
+                "./login.html"
+            );
+
+            return;
+
+        }
+
+
+        console.log(
+            "ADMIN AUTHORIZED"
+        );
+
+
+        document.body.classList.add(
+            "admin-authorized"
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "ADMIN AUTHENTICATION ERROR:",
+            error
+        );
+
+
+        try {
+
+            await supabase.auth.signOut();
+
+        }
+
+        catch (signOutError) {
+
+            console.error(
+                "SIGN OUT ERROR:",
+                signOutError
+            );
+
+        }
+
+
+        window.location.replace(
+            "./login.html"
+        );
+
+    }
+
+}
+
+
+/* =================================================
+   LOGOUT FUNCTION
+================================================= */
+
+async function logoutAdmin(
+    button
+) {
+
+    if (button) {
+
+        button.disabled =
+            true;
+
+        button.dataset.originalText =
+            button.textContent;
+
+        button.textContent =
+            "Logging out...";
+
+    }
+
+
+    try {
+
+        const {
+            error
+        } =
+            await supabase.auth.signOut();
+
+
+        if (error) {
+
+            console.error(
+                "LOGOUT ERROR:",
+                error
+            );
+
+
+            if (button) {
+
+                button.disabled =
+                    false;
+
+                button.textContent =
+                    button.dataset.originalText ||
+                    "Logout";
+
+            }
+
+
+            alert(
+                "Logout failed. Please try again."
+            );
+
+            return;
+
+        }
+
+
+        localStorage.removeItem(
+            "userId"
+        );
+
+        localStorage.removeItem(
+            "userName"
+        );
+
+        localStorage.removeItem(
+            "userEmail"
+        );
+
+        localStorage.removeItem(
+            "userPhone"
+        );
+
+        localStorage.removeItem(
+            "userRole"
+        );
+
+        localStorage.removeItem(
+            "adminUserId"
+        );
+
+        localStorage.removeItem(
+            "adminName"
+        );
+
+        localStorage.removeItem(
+            "adminEmail"
+        );
+
+        localStorage.removeItem(
+            "adminAccessToken"
+        );
+
+        localStorage.removeItem(
+            "adminRefreshToken"
+        );
+
+
+        window.location.replace(
+            "./login.html"
+        );
+
+    }
+
+
+    catch (error) {
+
+        console.error(
+            "LOGOUT ERROR:",
+            error
+        );
+
+        window.location.replace(
+            "./login.html"
+        );
+
+    }
+
+}
+
+
+/* =================================================
+   SIDEBAR LOGOUT
+================================================= */
+
+const logoutBtn =
+    document.getElementById(
+        "logoutBtn"
+    );
+
+
+if (logoutBtn) {
+
+    logoutBtn.addEventListener(
+        "click",
+        () => {
+
+            logoutAdmin(
+                logoutBtn
+            );
+
+        }
+    );
+
+}
+
+
+/* =================================================
+   SETTINGS LOGOUT
+================================================= */
+
+const settingsLogoutBtn =
+    document.getElementById(
+        "settingsLogoutBtn"
+    );
+
+
+if (settingsLogoutBtn) {
+
+    settingsLogoutBtn.addEventListener(
+        "click",
+        () => {
+
+            logoutAdmin(
+                settingsLogoutBtn
+            );
+
+        }
+    );
+
+}
+
+
+/* =================================================
+   START AUTH CHECK
+================================================= */
+
+checkAdminAccess();
+
+</script>
+
+
+</body>
+
+</html>
+    
